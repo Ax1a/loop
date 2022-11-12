@@ -19,7 +19,7 @@ public class Character : MonoBehaviour
         _groundChecker = transform.GetChild(0);
     }
 
-    // Update is called once per frame
+    // change to when move only
     void Update()
     {
         _isGrounded = Physics.CheckSphere(_groundChecker.position, GroundDistance, Ground, QueryTriggerInteraction.Ignore);
