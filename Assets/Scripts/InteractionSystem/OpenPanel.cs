@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class OpenPanel : MonoBehaviour
 {
-    public GameObject Panel;
+    [SerializeField] private GameObject Panel;
 
     public void _OpenPanel()
     {
