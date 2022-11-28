@@ -117,14 +117,14 @@ public class Energy : MonoBehaviour
     //update energy timer 
     private void UpdateEnergyTime()
     {
-        if(currEnergy >= maxEnergy)
+        if(currEnergy == maxEnergy)
         {
             timeTxt.text = "Full";
             return;
         }
 
         TimeSpan time = nextEnergyRestore - DateTime.Now;
-        string timeValue = String.Format("{0:D2}:{1:D1}", time.Minutes, time.Seconds);
+        string timeValue = String.Format("{0:00}:{1:00}", time.Minutes, time.Seconds);
         timeTxt.text = timeValue;
     }
 
