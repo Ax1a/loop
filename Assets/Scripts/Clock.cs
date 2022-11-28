@@ -10,10 +10,10 @@ public class Clock : MonoBehaviour
     public TimeFormat timeFormat = TimeFormat.Hour_24;
     public DateFormat dateFormat = DateFormat.MM_DD_YYYY;
     public float secPerMin = 1;
-
+    
     private string _time;
     private string _date;
-
+    
     private bool isAm = false;
 
     private int hr;
@@ -68,14 +68,19 @@ public class Clock : MonoBehaviour
             {
                 min = 0;
                 hr++;
-                if (hr >= maxDay)
+                if(hr >= maxHr) 
                 {
-                    day = 1;
-                    month++;
-                    if (month >= maxMonth)
+                    hr = 0;
+                    day++;
+                    if (day >= maxDay)
                     {
-                        month = 1;
-                        year++;
+                        day = 1;
+                        month++;
+                        if (month >= maxMonth)
+                        {
+                            month = 1;
+                            year++;
+                        }
                     }
                 }
             }
@@ -89,6 +94,7 @@ public class Clock : MonoBehaviour
             timer += Time.deltaTime;
         }
     }
+    
 
     void SetTimeDataString()
     {
