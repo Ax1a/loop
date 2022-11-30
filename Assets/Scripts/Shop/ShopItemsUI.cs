@@ -20,7 +20,7 @@ public class ShopItemsUI : MonoBehaviour
         GetComponent <RectTransform> ().anchoredPosition += pos;
     }
 
-    public void SetCharacterImg(Sprite sprite)
+    public void SetItemImg(Sprite sprite)
     {
         itemImage.sprite = sprite;
     }
@@ -30,13 +30,14 @@ public class ShopItemsUI : MonoBehaviour
         itemName.text = name;
     }
 
-    public void SetItemEnergy(string energy)
+    public void SetItemEnergy(int energy)
     {
-        itemEnergy.text = energy;
+        itemEnergy.text = energy.ToString();
     }
 
-    public void SetItemPrice(string price)
+    public void SetItemPrice(int price)
     {
-        itemPrice.text = price;
+        itemPrice.text = price.ToString();
     }
+
 }
