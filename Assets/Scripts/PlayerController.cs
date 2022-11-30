@@ -28,5 +28,13 @@ public class PlayerController : MonoBehaviour
                 controller.Move(direction * speed * Time.deltaTime);
             }
         }
+
+        //add money press c        
+        #if UNITY_EDITOR
+        if(Input.GetKey(KeyCode.C))
+            DataManager.AddMoney(50);
+        #endif
+
+        GameSharedUI.Instance.UpdateMoneyUITxt();
     }
 }
