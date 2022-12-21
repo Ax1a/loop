@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
                 transform.rotation = Quaternion.Euler(0f, angle, 0f);
                 
                 controller.Move(direction * speed * Time.deltaTime);
+                Debug.Log("test");
             }
         }
 
