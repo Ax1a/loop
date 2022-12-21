@@ -32,6 +32,21 @@ public class Energy : MonoBehaviour
         }
     }
 
+    // setters
+    public void SetCurrentEnergy(int energy) {
+        currEnergy = energy;
+        UpdateEnergy();
+    }
+
+    public void ResetEnergy() {
+        if(currEnergy >= 1)
+        {
+            currEnergy = Math.Min(maxEnergy, currEnergy + (maxEnergy - currEnergy));
+            UpdateEnergy();
+            UpdateEnergyTime();
+        }
+    }
+
     //on click, use energy.
     public void UseEnergy()
     {
