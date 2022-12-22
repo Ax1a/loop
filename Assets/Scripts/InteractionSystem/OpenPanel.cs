@@ -7,7 +7,7 @@ public class OpenPanel : MonoBehaviour
     [SerializeField] private GameObject Panel;
 
     public void _OpenPanel()
-    {
+    {   
         if (Panel != null)
         {
             bool isActive = Panel.activeSelf;
