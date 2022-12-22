@@ -6,13 +6,29 @@ public class Computer : MonoBehaviour, Interactable
 {
     OpenPanel Open;
     [SerializeField] GameObject _computer;
+    [SerializeField] GameObject compCamera;
+
     [SerializeField] private string _prompt;
     public string InteractionPrompt => _prompt;
+    public bool isOpened = false;
 
     public bool Interact(InteractObject interactor)
     {
+        // Enable the Camera
+        compCamera.gameObject.SetActive(true);
+        // // Disable the Camera
+        // compCamera.gameObject.SetActive(false);
+        if (isOpened == false) {
+            StartCoroutine(OpenPanelDelay());   
+        }
+        return true;
+    }
+
+    IEnumerator OpenPanelDelay() {
+        yield return new WaitForSeconds(1);
+
+        isOpened = true;
         Open = _computer.GetComponent<OpenPanel>();
         Open._OpenPanel();
-        return true;
     }
 }

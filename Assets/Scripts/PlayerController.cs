@@ -9,12 +9,25 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float speed = 6f;
 
     [SerializeField] private float turnSmoothTime = 0.1f;
+    private bool panelActive = false;
     float turnSmoothVelocity;
-    public GameObject panelCom;
+    public GameObject[] panels;
     
+
     void Update()
     {
-        if (panelCom.activeInHierarchy == false) {
+        foreach (GameObject panel in panels)
+        {
+            if (panel.activeInHierarchy == true) {
+                panelActive = true;
+                return;
+            }
+            else {
+                panelActive = false;
+            }
+        }
+
+        if (panelActive == false) {
             float horizontal = Input.GetAxisRaw("Horizontal");
             float vertical = Input.GetAxisRaw("Vertical");
             Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
