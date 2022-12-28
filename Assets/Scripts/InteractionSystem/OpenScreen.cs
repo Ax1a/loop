@@ -5,7 +5,9 @@ using UnityEngine;
 public class OpenScreen : MonoBehaviour
 {
     [SerializeField] private GameObject LessonScreen; 
-    [SerializeField] private GameObject DesktopScreen; 
+    [SerializeField] private GameObject DesktopScreen;
+    [SerializeField] private GameObject QuizScreen;
+
     public void openScreen() {
         if (LessonScreen != null)
         {
@@ -15,4 +17,21 @@ public class OpenScreen : MonoBehaviour
             LessonScreen.SetActive(!isActive);
         }
     }
+
+    public void openQuiz()
+    {
+        if (QuizScreen != null)
+        {
+            bool isActive = QuizScreen.activeSelf;
+
+            DesktopScreen.SetActive(isActive);
+            QuizScreen.SetActive(!isActive);
+        }
+    }
+
+
+
+
+
+
 }
