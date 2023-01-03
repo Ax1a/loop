@@ -14,7 +14,7 @@ public class OpenScreen : MonoBehaviour
         {
             bool isActive = LessonScreen.activeSelf;
 
-            DesktopScreen.SetActive(isActive);
+            // DesktopScreen.SetActive(isActive);
             LessonScreen.SetActive(!isActive);
         }
     }
@@ -25,7 +25,7 @@ public class OpenScreen : MonoBehaviour
         {
             bool isActive = QuizScreen.activeSelf;
 
-            DesktopScreen.SetActive(isActive);
+            // DesktopScreen.SetActive(isActive);
             QuizScreen.SetActive(!isActive);
         }
     }
@@ -36,7 +36,7 @@ public class OpenScreen : MonoBehaviour
         {
             bool isActive = PGScreen.activeSelf;
 
-            DesktopScreen.SetActive(isActive);
+            // DesktopScreen.SetActive(isActive);
             PGScreen.SetActive(!isActive);
         }
     }
