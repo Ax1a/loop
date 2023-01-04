@@ -13,8 +13,14 @@ public class InteractObject : MonoBehaviour
 
     private readonly Collider[] _colliders = new Collider[3];
     [SerializeField] private int _numFound;
+    [SerializeField] private KeyCode interactKey;
 
     private Interactable _interactable;
+
+    public KeyCode getInteractKey() {
+        return interactKey;
+    }
+
     void Update()
     {
         _numFound = Physics.OverlapSphereNonAlloc(_interactionPoint.position, _interactionPointRadius, _colliders, _interactableMask);
@@ -26,7 +32,11 @@ public class InteractObject : MonoBehaviour
             if (_interactable != null)
             {
                 if (!_interactionPromptUI.isDisplayed) _interactionPromptUI.SetUp(_interactable.InteractionPrompt);
-                if (Keyboard.current.eKey.wasPressedThisFrame) _interactable.Interact(this);
+                // if (Keyboard.current.eKey.wasPressedThisFrame) _interactable.Interact(this);
+                if (Input.GetKeyDown(interactKey)) 
+                { 
+                    _interactable.Interact(this);
+                } 
             }
         }
         else
