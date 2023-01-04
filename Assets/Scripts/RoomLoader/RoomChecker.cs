@@ -15,18 +15,13 @@ public class RoomChecker : MonoBehaviour
         }
        
         // Kitchen Camera
-        if (roomName == "kitchen" && changedRoom == false) {
+        if (roomName == "kitchen") {
             _camera.transform.position = new Vector3(4.63000011f, 9.67000008f, -8.51000023f);
             changedRoom = true;
         }
         // Main Room Camera
-        else if (roomName == "main" && changedRoom == false) {
+        else if (roomName == "main") {
             _camera.transform.position = new Vector3(-1.98000002f, 9.27999973f, -11.0799999f);
-            changedRoom = true;
         }
-    }
-
-    private void OnTriggerExit(Collider other) {
-        changedRoom = false;
     }
 }
