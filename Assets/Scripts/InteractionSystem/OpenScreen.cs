@@ -9,7 +9,7 @@ public class OpenScreen : MonoBehaviour
     [SerializeField] private GameObject QuizScreen;
     [SerializeField] private GameObject PGScreen;
 
-    public void openScreen() {
+    public void openLesson() {
         if (LessonScreen != null)
         {
             bool isActive = LessonScreen.activeSelf;

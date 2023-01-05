@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public CharacterController controller;
-
+    public GameObject _camera;
     [SerializeField] private float speed = 6f;
 
     [SerializeField] private float turnSmoothTime = 0.1f;
@@ -30,8 +30,10 @@ public class PlayerController : MonoBehaviour
         if (panelActive == false) {
             float horizontal = Input.GetAxisRaw("Horizontal");
             float vertical = Input.GetAxisRaw("Vertical");
-            Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+            Vector3 forward = _camera.transform.forward;
 
+            Vector3 direction = forward * vertical + _camera.transform.right * horizontal;
+            
             if(direction.magnitude >= 0.1f)
             {
                 float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
