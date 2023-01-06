@@ -45,7 +45,7 @@ public class Clock : MonoBehaviour
         YYYY_DD_MM
     }
 
-    private void Awake()
+    private void Start()
     {
         hr = 7;
         min = 0;
@@ -58,7 +58,7 @@ public class Clock : MonoBehaviour
             isAm = true;
         }
     }
-
+    
     void Update()
     {
         if (timer >= secPerMin)
