@@ -18,7 +18,6 @@ using System.Runtime.Serialization.Formatters.Binary;
 public class BinarySerializer
 {
 	static string folderName = "GameData";
-
 	static string persistentDataPath = Application.persistentDataPath;
 	static SurrogateSelector surrogateSelector = GetSurrogateSelector ();
 
@@ -46,6 +45,12 @@ public class BinarySerializer
 		}
 	}
 
+	public static void Delete (string filename) {
+		if (Directory.Exists (GetDirectoryPath ())) {
+			File.Delete (GetFilePath (filename));
+		}
+	}
+
 	/// <summary>
 	/// Save data to disk.
 	/// </summary>
@@ -57,7 +62,6 @@ public class BinarySerializer
 
 		if (IsSerializable <T> ()) {
 			if (HasSaved (filename)) {
-				
 				BinaryFormatter formatter = new BinaryFormatter ();
 
 				formatter.SurrogateSelector = surrogateSelector;

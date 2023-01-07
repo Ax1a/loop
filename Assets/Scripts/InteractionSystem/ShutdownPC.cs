@@ -5,6 +5,7 @@ using UnityEngine;
 public class ShutdownPC : MonoBehaviour
 {
     [SerializeField] private GameObject Panel;
+    [SerializeField] private GameObject _hud;
     [SerializeField] GameObject compCamera;
     [SerializeField] GameObject computer;
     Computer _computer;
@@ -20,6 +21,7 @@ public class ShutdownPC : MonoBehaviour
 
             _computer.isOpened = false;
             compCamera.gameObject.SetActive(false);
+            _hud.gameObject.SetActive(true);
         }
     }
 }
