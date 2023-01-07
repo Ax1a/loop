@@ -6,6 +6,8 @@ public class Computer : MonoBehaviour, Interactable
 {
     OpenPanel Open;
     [SerializeField] GameObject _computer;
+    [SerializeField] GameObject _hud;
+    [SerializeField] GameObject _interactOverlay;
     [SerializeField] GameObject compCamera;
 
     [SerializeField] private string _prompt;
@@ -14,6 +16,10 @@ public class Computer : MonoBehaviour, Interactable
 
     public bool Interact(InteractObject interactor)
     {
+        // Disable HUD
+        _hud.gameObject.SetActive(false);
+        _interactOverlay.SetActive(false);
+
         // Enable the Camera
         compCamera.gameObject.SetActive(true);
         // // Disable the Camera

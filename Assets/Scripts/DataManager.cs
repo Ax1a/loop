@@ -1,6 +1,7 @@
 [System.Serializable] public class PlayerData
 {
     public int money = 0;
+    // public 
 }
 
 public static class DataManager
@@ -43,7 +44,6 @@ public static class DataManager
     static void LoadPlayerData()
     {
         playerData = BinarySerializer.Load<PlayerData>("playerData.txt");
-        UnityEngine.Debug.Log("Player Data Loaded");
     }
 
 
