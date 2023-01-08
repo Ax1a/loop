@@ -26,8 +26,11 @@ public class MainMenu : MonoBehaviour
         // else delete the data and load to the main game
         else {
             popUp.SetActive(true);
-            
         }
+    }
+
+    void SetActiveGO() {
+        popUp.gameObject.SetActive(true);
     }
 
     public void StartNewGame() {

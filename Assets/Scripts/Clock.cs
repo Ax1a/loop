@@ -45,13 +45,14 @@ public class Clock : MonoBehaviour
         YYYY_DD_MM
     }
 
-    private void Start()
+    private void Awake()
     {
-        hr = 7;
-        min = 0;
-        day = 1;
-        month = 1;
-        year = 2022;
+        
+        hr = DataManager.GetHour();
+        min = DataManager.GetMinute();
+        day = DataManager.GetDay();
+        month = DataManager.GetMonth();
+        year = DataManager.GetYear();
 
         if (hr < 12)
         {
@@ -64,22 +65,31 @@ public class Clock : MonoBehaviour
         if (timer >= secPerMin)
         {
             min++;
+            DataManager.SetMinute(min);
+
             if (min >= maxMin)
             {
                 min = 0;
                 hr++;
+                DataManager.SetHour(hr);
+
                 if(hr >= maxHr) 
                 {
                     hr = 0;
                     day++;
+                    DataManager.SetDay(day);
+
                     if (day >= maxDay)
                     {
                         day = 1;
                         month++;
+                        DataManager.SetMonth(month);
+
                         if (month >= maxMonth)
                         {
                             month = 1;
                             year++;
+                            DataManager.SetYear(year);
                         }
                     }
                 }
