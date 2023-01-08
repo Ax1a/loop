@@ -21,6 +21,7 @@ public class Bed : MonoBehaviour, Interactable
         _clock.Minute = 0;
         _clock.Hour = 7;
         _clock.Day += 1;
+        DataManager.SetDay(_clock.Day);
         return true;
     }
 }

@@ -1,7 +1,8 @@
 [System.Serializable] public class PlayerData
 {
     public int money = 0;
-    // public 
+    // public float x,y,z;
+    public int hr = 7, min = 0, day = 1, month = 1, year = 2022;
 }
 
 public static class DataManager
@@ -16,6 +17,51 @@ public static class DataManager
     public static int GetMoney() 
     {
         return playerData.money;
+    }
+
+    public static int GetHour() {
+        return playerData.hr;
+    }
+
+    public static int GetMinute() {
+        return playerData.min;
+    }
+
+    public static int GetDay() {
+        return playerData.day;
+    }
+
+    public static int GetMonth() {
+        return playerData.month;
+    }
+
+    public static int GetYear() {
+        return playerData.year;
+    }
+
+    public static void SetYear(int year) {
+        playerData.year = year;
+        SavePlayerData();
+    }
+
+    public static void SetMonth(int month) {
+        playerData.month = month;
+        SavePlayerData();
+    }
+
+    public static void SetDay(int day) {
+        playerData.day = day;
+        SavePlayerData();
+    }
+
+    public static void SetMinute(int minute) {
+        playerData.min = minute;
+        SavePlayerData();
+    }
+
+    public static void SetHour(int hour) {
+        playerData.hr = hour;
+        SavePlayerData();
     }
 
     public static void AddMoney(int amount)
