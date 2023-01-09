@@ -65,31 +65,26 @@ public class Clock : MonoBehaviour
         if (timer >= secPerMin)
         {
             min++;
-            DataManager.SetMinute(min);
 
             if (min >= maxMin)
             {
                 min = 0;
                 hr++;
-                DataManager.SetHour(hr);
 
                 if(hr >= maxHr) 
                 {
                     hr = 0;
                     day++;
-                    DataManager.SetDay(day);
 
                     if (day >= maxDay)
                     {
                         day = 1;
                         month++;
-                        DataManager.SetMonth(month);
 
                         if (month >= maxMonth)
                         {
                             month = 1;
                             year++;
-                            DataManager.SetYear(year);
                         }
                     }
                 }
