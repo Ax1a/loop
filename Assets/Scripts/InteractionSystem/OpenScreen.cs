@@ -7,7 +7,9 @@ public class OpenScreen : MonoBehaviour
     [SerializeField] private GameObject LessonScreen; 
     [SerializeField] private GameObject DesktopScreen;
     [SerializeField] private GameObject QuizScreen;
+    [SerializeField] private GameObject QuizScreen_2;
     [SerializeField] private GameObject PGScreen;
+    // [SerializeField] public  GameObject quizContent;
 
     public void openLesson() {
         if (LessonScreen != null)
@@ -28,6 +30,23 @@ public class OpenScreen : MonoBehaviour
             // DesktopScreen.SetActive(isActive);
             QuizScreen.SetActive(!isActive);
         }
+        
+        //quizContent.SetActive(true);
+    
+    }
+
+    public void openQuiz_2()
+    {
+        if (QuizScreen_2 != null)
+        {
+            bool isActive = QuizScreen.activeSelf;
+
+            // DesktopScreen.SetActive(isActive);
+            QuizScreen_2.SetActive(!isActive);
+        }
+        
+        //quizContent.SetActive(true);
+    
     }
 
     public void openPG()
