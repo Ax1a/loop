@@ -8,10 +8,11 @@ public class Bed : MonoBehaviour, Interactable
     Energy _energy;
     [SerializeField] GameObject _time;
     [SerializeField] GameObject EnergyPanel;
+    [SerializeField] GameObject indicator;
     [SerializeField] private string _prompt;
     
     public string InteractionPrompt => _prompt;
-
+    
     public bool Interact(InteractObject interactor)
     {
         _clock = _time.GetComponent<Clock>();
@@ -21,7 +22,8 @@ public class Bed : MonoBehaviour, Interactable
         _clock.Minute = 0;
         _clock.Hour = 7;
         _clock.Day += 1;
-        DataManager.SetDay(_clock.Day);
+        DataManager.SetDay(_clock.Day, DataManager.GetMoney());
         return true;
     }
+
 }
