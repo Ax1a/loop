@@ -8,7 +8,7 @@ public class ShopUIScript : MonoBehaviour
 {
 
     [Header ("Shop Layout Settings")]
-    [SerializeField] float itemSpacing = .5f;
+    [SerializeField] float itemSpacing = 1f;
     float itemHeight;
 
     [Header ("Shop UI Elements")]
@@ -30,6 +30,7 @@ public class ShopUIScript : MonoBehaviour
         GenerateShopItemsUI();
     }
 
+    //generates the shop items through the database
     void GenerateShopItemsUI()
     {
         itemHeight = ShopItemsContainer.GetChild(0).GetComponent<RectTransform>().sizeDelta.y;
@@ -43,8 +44,9 @@ public class ShopUIScript : MonoBehaviour
             ShopItemsUI uiItem = Instantiate(itemPrefab, ShopItemsContainer).GetComponent<ShopItemsUI>();
 
             // Add onclick listener per items on loop
-            uiItem.GetComponentInChildren<Button>().onClick.AddListener(delegate {AddItemToInventory(item);});   
+            uiItem.GetComponentInChildren<Button>().onClick.AddListener(delegate {BuyItem(item);});   
             
+            //sets the position of generated items based on parent
             uiItem.SetItemPosition(Vector2.right * x * (itemHeight + itemSpacing));
 
             uiItem.SetItemImg(item.itemImg);
@@ -55,12 +57,15 @@ public class ShopUIScript : MonoBehaviour
     }
 
     // Onclick Function - Add function for storing inventory
-    void AddItemToInventory(ShopItemData i) {
-        Debug.Log("Item Name" + i.itemName);
-        Debug.Log("Item Energy" + i.itemEnergy);
-        Debug.Log("Item Price" + i.price);
+    public Inventory inventory;
+
+    void BuyItem(ShopItemData item) 
+    {
+        inventory.AddItem(item);
+        Debug.Log(inventory.inventoryItems);
     }
 
+    //adding listeners to open and close the shop UI
     void AddShopEvents()
     {
         openShopBtn.onClick.RemoveAllListeners();
