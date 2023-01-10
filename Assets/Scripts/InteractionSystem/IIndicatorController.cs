@@ -17,7 +17,6 @@ public class IIndicatorController : MonoBehaviour
         {
             if (gameObject.layer == LayerMask.NameToLayer(interactableLayer))
             {
-                Debug.Log("works");
                 GameObject go = Instantiate(indicator);
                 go.transform.parent = gameObject.transform;
                 go.transform.localPosition = new Vector3(0f, .25f, 0f);

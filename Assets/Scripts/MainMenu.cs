@@ -7,6 +7,9 @@ public class MainMenu : MonoBehaviour
 {
     [SerializeField] private GameObject continueBtn;
     [SerializeField] private GameObject popUp;
+    [SerializeField] private GameObject loading;
+    LoadingScene _loadScene;
+
     private string FileName = "playerData.txt";
     private void Start() {
         // Display the continue button if there is saved data
@@ -16,12 +19,14 @@ public class MainMenu : MonoBehaviour
         else {
             continueBtn.gameObject.SetActive(false);
         }
+
+        _loadScene = loading.GetComponent<LoadingScene>();
     }
 
-    public void NewGame() {
+    public void NewGame(int sceneID) {
         // If no save data, just load to the main game
         if (!BinarySerializer.HasSaved(FileName)) {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            _loadScene.LoadScene(sceneID);
         }
         // else delete the data and load to the main game
         else {
@@ -33,18 +38,19 @@ public class MainMenu : MonoBehaviour
         popUp.gameObject.SetActive(true);
     }
 
-    public void StartNewGame() {
+    public void StartNewGame(int sceneID) {
         BinarySerializer.Delete(FileName);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        Debug.Log(DataManager.GetDay());
+        _loadScene.LoadScene(sceneID);
     }
 
     public void Cancel() {
         popUp.SetActive(false);
     }
 
-    public void ContinueGame() {
+    public void ContinueGame(int sceneID) {
         if (BinarySerializer.HasSaved(FileName)) {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            _loadScene.LoadScene(sceneID);
         }
     }
 

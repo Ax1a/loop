@@ -11,11 +11,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float turnSmoothTime = 0.1f;
     private bool panelActive = false;
     float turnSmoothVelocity;
-    public GameObject[] panels;
-    
+    [SerializeField] private GameObject[] panels;
+    private GameObject mainUI;
 
     void Update()
     {
+
         foreach (GameObject panel in panels)
         {
             if (panel.activeInHierarchy == true) {

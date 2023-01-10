@@ -6,9 +6,10 @@ public class Bed : MonoBehaviour, Interactable
 {
     Clock _clock;
     Energy _energy;
+    SaveGame _saveGame;
     [SerializeField] GameObject _time;
     [SerializeField] GameObject EnergyPanel;
-    [SerializeField] GameObject indicator;
+    [SerializeField] GameObject _dataMngr;
     [SerializeField] private string _prompt;
     
     public string InteractionPrompt => _prompt;
@@ -17,12 +18,15 @@ public class Bed : MonoBehaviour, Interactable
     {
         _clock = _time.GetComponent<Clock>();
         _energy = EnergyPanel.GetComponent<Energy>();
-        
+        _saveGame = _dataMngr.GetComponent<SaveGame>();
+
         _energy.ResetEnergy();
         _clock.Minute = 0;
         _clock.Hour = 7;
         _clock.Day += 1;
-        DataManager.SetDay(_clock.Day, DataManager.GetMoney());
+        
+        _saveGame.SaveGameState();
+
         return true;
     }
 
