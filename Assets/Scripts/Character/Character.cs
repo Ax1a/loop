@@ -18,6 +18,8 @@ public class Character : MonoBehaviour
     {
         _controller = GetComponent<CharacterController>();
         _groundChecker = transform.GetChild(0);
+        transform.position = DataManager.GetPlayerCoord();
+        Debug.Log(DataManager.GetPlayerCoord());
     }
 
     // change to when move only

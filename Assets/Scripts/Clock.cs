@@ -228,4 +228,13 @@ public class Clock : MonoBehaviour
             day = value;
         }
     }
+
+    public int Month
+    {
+        get { return month; }
+        set
+        {
+            month = value;
+        }
+    }
 }
