@@ -10,6 +10,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject pauseUI;
     [SerializeField] private GameObject interactionUI; 
     [SerializeField] private GameObject dataMngr;
+    [SerializeField] private GameObject shopUI;
     SaveGame _saveGame;
 
     [Header ("Menu Buttons")]
@@ -25,6 +26,10 @@ public class MenuManager : MonoBehaviour
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.Escape)){
+            if(shopUI.activeSelf == true) {
+                shopUI.SetActive(false);
+                return;
+            }
             pauseUI.SetActive(!pauseUI.activeSelf);
             mainUI.SetActive(!mainUI.activeSelf);
 

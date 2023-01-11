@@ -7,6 +7,7 @@ public class MainMenu : MonoBehaviour
 {
     [SerializeField] private GameObject continueBtn;
     [SerializeField] private GameObject popUp;
+    [SerializeField] private GameObject enterNamePopUp;
     [SerializeField] private GameObject loading;
     LoadingScene _loadScene;
 
@@ -26,7 +27,7 @@ public class MainMenu : MonoBehaviour
     public void NewGame(int sceneID) {
         // If no save data, just load to the main game
         if (!BinarySerializer.HasSaved(FileName)) {
-            _loadScene.LoadScene(sceneID);
+            enterNamePopUp.SetActive(true);
         }
         // else delete the data and load to the main game
         else {
@@ -39,9 +40,8 @@ public class MainMenu : MonoBehaviour
     }
 
     public void StartNewGame(int sceneID) {
-        BinarySerializer.Delete(FileName);
-        Debug.Log(DataManager.GetDay());
-        _loadScene.LoadScene(sceneID);
+        popUp.SetActive(false);
+        enterNamePopUp.SetActive(true);
     }
 
     public void Cancel() {

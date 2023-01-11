@@ -47,7 +47,6 @@ public class Clock : MonoBehaviour
 
     private void Awake()
     {
-        
         hr = DataManager.GetHour();
         min = DataManager.GetMinute();
         day = DataManager.GetDay();
