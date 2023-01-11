@@ -12,7 +12,7 @@ public class Energy : MonoBehaviour
     [SerializeField] Slider energyBar;
     private int maxEnergy = 15;
     private int currEnergy;
-    private int restoreTime = 5;
+    [SerializeField] private int restoreTime = 5;
     private DateTime nextEnergyRestore;
     private DateTime lastEnergyRestore;
     private bool isRestoring = false;
