@@ -14,16 +14,33 @@ public class LoadingScene : MonoBehaviour
     }
 
     IEnumerator LoadSceneAsync(int sceneID) {
-        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneID);
-
+        LoadingBarFill.fillAmount = 0;
         LoadingScreen.SetActive(true);
 
+        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneID);
+        operation.allowSceneActivation = false;
+
+        float progress = 0;
+
         while (!operation.isDone) {
-            float progressValue = Mathf.Clamp01(operation.progress / 0.9f);
-            LoadingBarFill.fillAmount = progressValue;
+            progress = Mathf.MoveTowards(progress, operation.progress, Time.deltaTime);
+            LoadingBarFill.fillAmount = progress;
+
+            if (LoadingBarFill.fillAmount >= 0.9f) {
+                LoadingBarFill.fillAmount = 1;
+                operation.allowSceneActivation = true;
+            }
 
             yield return null;
         }
-        LoadingScreen.SetActive(false);
+        // LoadingScreen.SetActive(true);
+
+        // while (!operation.isDone) {
+        //     float progressValue = Mathf.Clamp01(operation.progress / 0.9f);
+        //     LoadingBarFill.fillAmount = progressValue;
+
+            // yield return null;
+        // }
+        // LoadingScreen.SetActive(false);
     }
 }

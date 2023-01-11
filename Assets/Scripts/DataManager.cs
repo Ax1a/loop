@@ -5,6 +5,7 @@ using UnityEngine;
     public int money = 0;
     public Vector3 playerPos = new Vector3(-2.98900008f,6.1f,-4.40799999f);
     public int hr = 7, min = 0, day = 1, month = 1, year = 2022;
+    public string name;
 }
 
 public static class DataManager
@@ -41,8 +42,16 @@ public static class DataManager
         return playerData.year;
     }
 
+    public static string GetPlayerName() {
+        return playerData.name;
+    }
     public static Vector3 GetPlayerCoord() {
         return playerData.playerPos;
+    }
+
+    public static void SetPlayerName(string name) {
+        playerData.name = name;
+        SavePlayerData();
     }
 
     public static void SetPlayerCoord(Vector3 pos) {
