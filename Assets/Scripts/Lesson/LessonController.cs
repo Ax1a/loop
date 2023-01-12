@@ -15,7 +15,6 @@ public class LessonController : MonoBehaviour
     {
         // Set the parent transform
         Transform parent = GameObject.Find("LessonList").transform;
-        
         // Create a button for each string in the array
         for (int i = 0; i < lessonTitles.Length; i++)
         {
@@ -30,8 +29,6 @@ public class LessonController : MonoBehaviour
             // Set the button's parent
             button.transform.SetParent(parent);
         }
-
-
         GameObject.Destroy(parent.GetChild(1).gameObject);
     }
 
@@ -48,6 +45,6 @@ public class LessonController : MonoBehaviour
         }
         
         go.SetActive(true);
-        
     }
+
 }

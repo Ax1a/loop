@@ -34,6 +34,7 @@ public class LessonScreen : MonoBehaviour
         }
     }
 
+    
     void ToggleGameObject(GameObject go) {
         Debug.Log(go);
         if (go.activeInHierarchy == true)
