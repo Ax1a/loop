@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class Win : MonoBehaviour
 {
-    private int ptsToWin= 0;
+    public int ptsToWin= 0;
     private int currPts = 0;
     public GameObject myBlocks;
     public Toggle checkBox;
@@ -16,6 +16,7 @@ public class Win : MonoBehaviour
     public quizTimer timer;
     public initialPosition blocksInitPos;
     public GameObject startPanel;
+    public GameObject WinLosePanel;
 
     //[HideInInspector] public Drag drag;
 
@@ -23,7 +24,7 @@ public class Win : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ptsToWin = myBlocks.transform.childCount;
+       // ptsToWin = myBlocks.transform.childCount;
         gameOverPanel.SetActive(false);
         timer = GameObject.Find("StartPanel").GetComponent<quizTimer>();
         blocksInitPos = GameObject.Find("resetPos").GetComponent<initialPosition>();
@@ -37,7 +38,6 @@ public class Win : MonoBehaviour
         gameOverPanel.SetActive(false);
         blocksInitPos.ResetPositions();
         Debug.Log("Retry");
-
         //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
@@ -50,18 +50,22 @@ public class Win : MonoBehaviour
         {
             //Win Message
             //Check Box
-            transform.GetChild(0).gameObject.SetActive(true);
+            //transform.GetChild(0).gameObject.SetActive(true);
+            WinLosePanel.transform.gameObject.SetActive(true);
+            WinLosePanel.transform.SetAsLastSibling();
+          //  WinLosePanel.transform.GetChild(1).gameObject.SetActive(false);
             checkBox.GetComponent<Toggle>().isOn= true;
             timer.stopTime();   
             Debug.Log("Winner");
             Debug.Log("Points: " + currPts);
         }else{
             Debug.Log("Losser");
+            // WinLosePanel.transform.GetChild(0).gameObject.SetActive(false);
+            // WinLosePanel.transform.GetChild(1).gameObject.SetActive(true);
             gameOverPanel.transform.SetAsLastSibling();
-            transform.GetChild(1).gameObject.SetActive(true);
+            //transform.GetChild(1).gameObject.SetActive(true);
             gameOverPanel.SetActive(true);
             timer.stopTime();
-
         }
     }
 

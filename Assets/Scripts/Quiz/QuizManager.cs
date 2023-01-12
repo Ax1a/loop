@@ -9,36 +9,41 @@ public class QuizManager : MonoBehaviour
 {
 
     public List<QuestAndAns> QnA;
+    public List<QuestAndAns> QnAHolder;
     public GameObject[] options;
     public int currentQuestion;
     // public TextMesh Text;
     public TextMeshProUGUI text;
-
     public GameObject quizPanel;
-    public GameObject mainPanel;
+    public GameObject gameOverPanel;
+
+    public GameObject startPanel;
 
     public TextMeshProUGUI scoreTxt;
     public int scoreCount;
 
+    public quizTimer timer;
     int totalQuestions = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-        generateQuestion();
+        generateQuestion();   
         totalQuestions = QnA.Count;
-        mainPanel.SetActive(false);
+        gameOverPanel.SetActive(false);
+        quizPanel.SetActive(true);
+        timer = GameObject.Find("StartPanel").GetComponent<quizTimer>();
         
     }
-
     public void retry(){
         Debug.Log("Retry");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void gameOver(){
-        quizPanel.SetActive(false);
-        mainPanel.SetActive(true);
+        timer.stopTime();
+        //quizPanel.SetActive(false);
+        gameOverPanel.SetActive(true);
         scoreTxt.text = scoreCount + "/" + totalQuestions;
     }
 

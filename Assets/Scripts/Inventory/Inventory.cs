@@ -43,20 +43,21 @@ public class Inventory : MonoBehaviour
 
     [SerializeField] float itemSpacing = 1f;
     float itemHeight;
-
-
     void Start()
     {
-        // Populate the list UI with the items in the list
+    
+    }
+    void OnEnable()
+    {
         PopulateListUI();
     }
-
+  
     //doesnt work?
 
      public void PopulateListUI()
-
     {
-
+        
+   
     // Instantiate a game object for each item in the list and add it to the list UI
     for(int i = 0; i < inventoryItems.Count; i++)
     {
@@ -68,10 +69,14 @@ public class Inventory : MonoBehaviour
         listItem.GetComponent<InventoryUI>().SetInventoryItemName(invItem.itemName);
         listItem.GetComponent<InventoryUI>().SetInventoryItemEnergy(invItem.itemEnergy);
     }
-
     // Clear the list UI
     Transform parent = GameObject.Find("InventoryItems").transform;
     GameObject.Destroy(parent.GetChild(0).gameObject);
-}
+
+    
+
+    }
+ 
+
    
 }

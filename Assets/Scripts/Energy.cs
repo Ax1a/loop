@@ -64,6 +64,7 @@ public class Energy : MonoBehaviour
 
                 StartCoroutine(RestoreEnergy());
             }
+            Debug.Log("Enery Used. Current Energy:"+currEnergy);
         }
         else
         {
