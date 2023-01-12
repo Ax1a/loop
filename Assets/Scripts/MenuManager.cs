@@ -11,6 +11,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject interactionUI; 
     [SerializeField] private GameObject dataMngr;
     [SerializeField] private GameObject shopUI;
+    [SerializeField] private GameObject inventoryUI;
     SaveGame _saveGame;
 
     [Header ("Menu Buttons")]
@@ -35,6 +36,12 @@ public class MenuManager : MonoBehaviour
 
             if(interactionUI.activeSelf == true) 
                 interactionUI.SetActive(false);
+        }
+        else if(Input.GetKeyDown(KeyCode.B)) {
+            shopUI.SetActive(true);
+        }
+        else if(Input.GetKeyDown(KeyCode.I)) {
+            inventoryUI.SetActive(true);
         }
     }
 
