@@ -19,7 +19,7 @@ public class InputName : MonoBehaviour
     public void SaveName(int sceneID) {
         userName = inputField.text;
 
-        if(userName.Length < 4) {
+        if(userName.Trim().Length < 4) {
             errorText.SetActive(true);
             return;
         }

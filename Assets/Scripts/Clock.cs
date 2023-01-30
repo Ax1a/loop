@@ -52,6 +52,7 @@ public class Clock : MonoBehaviour
         day = DataManager.GetDay();
         month = DataManager.GetMonth();
         year = DataManager.GetYear();
+        SetTimeDataString();
 
         if (hr < 12)
         {
