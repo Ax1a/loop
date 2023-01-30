@@ -4,14 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class MenuManager : MonoBehaviour
+public class UIController : MonoBehaviour
 {
-    [SerializeField] private GameObject mainUI;
-    [SerializeField] private GameObject pauseUI;
-    [SerializeField] private GameObject interactionUI; 
-    [SerializeField] private GameObject dataMngr;
-    [SerializeField] private GameObject shopUI;
-    [SerializeField] private GameObject inventoryUI;
+    [SerializeField] private GameObject dataManager;
+    [SerializeField] private GameObject computerCanvas;
+    [SerializeField] private GameObject[] gameUI;
     SaveGame _saveGame;
 
     [Header ("Menu Buttons")]
@@ -27,21 +24,19 @@ public class MenuManager : MonoBehaviour
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.Escape)){
-            if(shopUI.activeSelf == true) {
-                shopUI.SetActive(false);
-                return;
-            }
-            pauseUI.SetActive(!pauseUI.activeSelf);
-            mainUI.SetActive(!mainUI.activeSelf);
+            if(gameUI[1].activeSelf == true || gameUI[2].activeSelf == true) return;
 
-            if(interactionUI.activeSelf == true) 
-                interactionUI.SetActive(false);
+            ToggleUI("PauseMenu");
         }
         else if(Input.GetKeyDown(KeyCode.B)) {
-            shopUI.SetActive(true);
+            if (gameUI[4].activeSelf == true) return;
+
+            ToggleUI("ShopUI");
         }
         else if(Input.GetKeyDown(KeyCode.I)) {
-            inventoryUI.SetActive(true);
+            if (gameUI[4].activeSelf == true) return;
+
+            ToggleUI("InventoryCanvas");
         }
     }
 
@@ -57,14 +52,25 @@ public class MenuManager : MonoBehaviour
         saveBtn.onClick.AddListener(SaveGameData);
     }
 
+    void ToggleUI(string openUI) {
+        if (computerCanvas.activeSelf == true) return;
+
+        foreach (var ui in gameUI)
+        {
+            ui.SetActive(false);
+        
+            if(ui.name == openUI) ui.SetActive(true);
+        }
+    }
+
     void SaveGameData() {
-        _saveGame = dataMngr.GetComponent<SaveGame>();
+        _saveGame = dataManager.GetComponent<SaveGame>();
         _saveGame.SaveGameState();
     }
 
     void CloseMenu() {
-        pauseUI.SetActive(!pauseUI.activeSelf);
-        mainUI.SetActive(!mainUI.activeSelf);
+        gameUI[4].SetActive(false);
+        gameUI[0].SetActive(true);
     }
 
     void MainMenu() {

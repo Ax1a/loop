@@ -6,6 +6,7 @@ using UnityEngine;
     public Vector3 playerPos = new Vector3(-2.98900008f,6.1f,-4.40799999f);
     public int hr = 7, min = 0, day = 1, month = 1, year = 2022;
     public string name;
+    public int questProgress = 0;
 }
 
 public static class DataManager
@@ -49,6 +50,14 @@ public static class DataManager
         return playerData.playerPos;
     }
 
+    public static int GetQuestProgress() {
+        return playerData.questProgress;
+    }
+
+    public static void SetQuestProgress(int progress) {
+        playerData.questProgress += progress;
+        SavePlayerData();
+    }
     public static void SetPlayerName(string name) {
         playerData.name = name;
         SavePlayerData();

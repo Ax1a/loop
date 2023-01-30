@@ -20,6 +20,7 @@ public class ShopUIScript : MonoBehaviour
 
     [Header ("Shop Events")]
     [SerializeField] GameObject shopUI;
+    [SerializeField] GameObject mainUI;
     [SerializeField] Button openShopBtn;
     [SerializeField] Button closeShopBtn;
 
@@ -83,5 +84,6 @@ public class ShopUIScript : MonoBehaviour
     void closeShop()
     {
         shopUI.SetActive(false);
+        mainUI.SetActive(true);
     }
 }
