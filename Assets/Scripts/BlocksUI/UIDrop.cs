@@ -11,7 +11,7 @@ public class UIDrop : MonoBehaviour, IDropHandler, IPointerClickHandler
     Transform onDragCanvas;
     RectTransform rectTransform;
 
-    string templatePrefabsPath = "prefabs/Blocks/Template/";
+    string templatePrefabsPath = "Prefabs/Blocks/Template/";
 
     public BETargetObject GetParentTargetObject(Transform target)
     {

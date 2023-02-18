@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 public class Drop : MonoBehaviour, IDropHandler 
@@ -8,6 +9,11 @@ public class Drop : MonoBehaviour, IDropHandler
     [SerializeField] public string blockType;
 
     [HideInInspector] public Drag drag;
+
+    // public Transform simpleBlock;
+
+    // private TMP_InputField varInput;
+    // public TextMeshProUGUI log;
     
     public void OnDrop(PointerEventData eventData)
     {
@@ -28,6 +34,13 @@ public class Drop : MonoBehaviour, IDropHandler
                 //Check the correct answer through ID of the blocks
                 if(eventData.pointerDrag.GetComponent<Drag>().id == id)
                 {
+                    // varInput = simpleBlock.GetComponentInChildren<TMP_InputField>();
+                    
+
+                    // string varName = varInput.text;
+
+                    // Debug.Log(varName);
+
                     //to-do: if points was added, it will not generate anymore
                     Debug.Log("Correct");
                     GameObject.Find("Win").GetComponent<Win>().AddPoints();
