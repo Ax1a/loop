@@ -9,6 +9,7 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] Image invItemImage;
     [SerializeField] TMP_Text invItemName;
     [SerializeField] TMP_Text invItemEnergy;
+    [SerializeField] TMP_Text invItemQuantity;
 
     [Space (20f)]
     [SerializeField] Button invItemConsumeBtn;
@@ -32,5 +33,11 @@ public class InventoryUI : MonoBehaviour
     {
         invItemEnergy.text = energy.ToString();
     }
+
+    public void SetInventoryItemQuantity(int quantity)
+    {
+        invItemQuantity.text = quantity.ToString();
+    }
+
 
 }

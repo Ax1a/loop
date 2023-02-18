@@ -6,34 +6,27 @@ public class PlayerController : MonoBehaviour
 {
     public CharacterController controller;
     public GameObject _camera;
-    [SerializeField] private float speed = 6f;
-
-    [SerializeField] private float turnSmoothTime = 0.1f;
-    private bool panelActive = false;
+    private bool _isPanelActive = false;
     float turnSmoothVelocity;
-    [SerializeField] private GameObject[] panels;
     private GameObject mainUI;
+    private Animator _animator;
+    [SerializeField] private float speed = 6f;
+    [SerializeField] private float turnSmoothTime = 0.1f;
+    [SerializeField] private GameObject[] panels;
+
+    private void Start() {
+        _animator = GetComponentInChildren<Animator>();
+    }
 
     void Update()
     {
-
-        foreach (GameObject panel in panels)
-        {
-            if (panel.activeInHierarchy == true) {
-                panelActive = true;
-                return;
-            }
-            else {
-                panelActive = false;
-            }
-        }
-
-        if (panelActive == false) {
+        Debug.Log(_isPanelActive);
+        if (_isPanelActive == false){
             float horizontal = Input.GetAxisRaw("Horizontal");
             float vertical = Input.GetAxisRaw("Vertical");
             Vector3 forward = _camera.transform.forward;
 
-            Vector3 direction = forward * vertical + _camera.transform.right * horizontal;
+            Vector3 direction = (forward * vertical + _camera.transform.right * horizontal).normalized;
             
             if(direction.magnitude >= 0.1f)
             {
@@ -42,6 +35,10 @@ public class PlayerController : MonoBehaviour
                 transform.rotation = Quaternion.Euler(0f, angle, 0f);
                 
                 controller.Move(direction * speed * Time.deltaTime);
+                _animator.SetBool("IsMoving", true);
+            }
+            else {
+                _animator.SetBool("IsMoving", false);
             }
         }
 
@@ -52,5 +49,9 @@ public class PlayerController : MonoBehaviour
         #endif
 
         GameSharedUI.Instance.UpdateMoneyUITxt();
+    }
+
+    public void SetIsPanelActive(bool active) {
+        _isPanelActive = active;
     }
 }

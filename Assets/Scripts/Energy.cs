@@ -24,6 +24,8 @@ public class Energy : MonoBehaviour
             PlayerPrefs.SetInt("currEnergy", 15);
             Load();
             StartCoroutine(RestoreEnergy());
+
+        
         }
         else
         {

@@ -12,7 +12,6 @@ public class Character : MonoBehaviour
     private Transform _groundChecker;
     public LayerMask Ground;
     private Vector3 _velocity;
-    public GameObject panelCom;
 
     void Start()
     {
@@ -24,12 +23,10 @@ public class Character : MonoBehaviour
     // change to when move only
     void Update()
     {
-        if (panelCom.activeInHierarchy == false) {
-            _isGrounded = Physics.CheckSphere(_groundChecker.position, GroundDistance, Ground, QueryTriggerInteraction.Ignore);
-            if (_isGrounded && _velocity.y < 0)
-                _velocity.y = 0f;
-            _velocity.y += Gravity * Time.deltaTime;
-            _controller.Move(_velocity * Time.deltaTime);
-        }
+        _isGrounded = Physics.CheckSphere(_groundChecker.position, GroundDistance, Ground, QueryTriggerInteraction.Ignore);
+        if (_isGrounded && _velocity.y < 0)
+            _velocity.y = 0f;
+        _velocity.y += Gravity * Time.deltaTime;
+        _controller.Move(_velocity * Time.deltaTime);
     }
 }

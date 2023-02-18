@@ -9,6 +9,9 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject dataManager;
     [SerializeField] private GameObject computerCanvas;
     [SerializeField] private GameObject[] gameUI;
+    [SerializeField] private GameObject[] tabMenus;
+    [SerializeField] private GameObject Character;
+    PlayerController _playerController;
     SaveGame _saveGame;
 
     [Header ("Menu Buttons")]
@@ -16,27 +19,49 @@ public class UIController : MonoBehaviour
     [SerializeField] private Button saveBtn;
     [SerializeField] private Button optionBtn;
     [SerializeField] private Button quitBtn;
+    private bool _anyActive;
 
     private void Start() {
         AddButtonEvents();
+        _playerController = Character.GetComponent<PlayerController>();
     }
 
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.Escape)){
-            if(gameUI[1].activeSelf == true || gameUI[2].activeSelf == true) return;
+            if(gameUI[1].activeSelf == true) return;
 
             ToggleUI("PauseMenu");
         }
         else if(Input.GetKeyDown(KeyCode.B)) {
-            if (gameUI[4].activeSelf == true) return;
+            if (gameUI[3].activeSelf == true) return;
 
-            ToggleUI("ShopUI");
+            gameUI[1].SetActive(true);
+            tabMenus[0].SetActive(true);
+            gameUI[0].SetActive(false);
         }
-        else if(Input.GetKeyDown(KeyCode.I)) {
-            if (gameUI[4].activeSelf == true) return;
+        // else if(Input.GetKeyDown(KeyCode.I)) {
+        //     if (gameUI[4].activeSelf == true) return;
 
-            ToggleUI("InventoryCanvas");
+        //     ToggleUI("InventoryCanvas");
+        // }
+
+        foreach (var UI in gameUI)
+        {
+            if (UI.activeSelf == true && (UI.name != "Main UI" && UI.name != "InteractImage")) {
+                _anyActive = true;
+                break;
+            }
+            else {
+                _anyActive = false;
+            }
+        }
+
+        if (_anyActive == true) {
+            _playerController.SetIsPanelActive(true);
+        }
+        else {
+            _playerController.SetIsPanelActive(false);
         }
     }
 
