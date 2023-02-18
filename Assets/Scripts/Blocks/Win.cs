@@ -12,11 +12,16 @@ public class Win : MonoBehaviour
     public GameObject myBlocks;
     public Toggle checkBox;
     public GameObject gameOverPanel;
-
     public quizTimer timer;
     public initialPosition blocksInitPos;
     public GameObject startPanel;
     public GameObject WinLosePanel;
+    public Transform simpleBlock;
+
+    private TMP_InputField input;
+
+    public TextMeshProUGUI output;
+
 
     //[HideInInspector] public Drag drag;
 
@@ -58,6 +63,16 @@ public class Win : MonoBehaviour
             timer.stopTime();   
             Debug.Log("Winner");
             Debug.Log("Points: " + currPts);
+
+            input = simpleBlock.GetComponentInChildren<TMP_InputField>();
+
+            // string varName = input.text;
+
+            output.text = input.text;
+            
+
+
+
         }else{
             Debug.Log("Losser");
             // WinLosePanel.transform.GetChild(0).gameObject.SetActive(false);
