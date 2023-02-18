@@ -1,12 +1,19 @@
 using UnityEngine;
+using System.Collections.Generic;
 [System.Serializable] public class PlayerData
-{
-    
+{ 
     public int money = 0;
     public Vector3 playerPos = new Vector3(-2.98900008f,6.1f,-4.40799999f);
     public int hr = 7, min = 0, day = 1, month = 1, year = 2022;
     public string name;
     public int questProgress = 0;
+    public Dictionary<string, int> programmingLanguage = new Dictionary<string, int>() {
+        {"c++", -1},
+        {"java", -1},
+        {"python", -1}
+    };
+
+    public Dictionary<string, int> inventoryItems = new Dictionary<string, int>();
 }
 
 public static class DataManager
@@ -52,6 +59,34 @@ public static class DataManager
 
     public static int GetQuestProgress() {
         return playerData.questProgress;
+    }
+
+    public static int GetProgrammingLanguage() {
+        return playerData.questProgress;
+    }
+
+    public static void SetProgrammingLanguage(string key, int value)
+    {
+        if (playerData.programmingLanguage.ContainsKey(key))
+        {
+            playerData.programmingLanguage[key] = value;
+        }
+        else
+        {
+            playerData.programmingLanguage.Add(key, value);
+        }
+    }
+
+    public static int GetProgrammingLanguage(string key)
+    {
+        int result = -1;
+        PlayerData playerData = new PlayerData();
+        if (playerData.programmingLanguage.ContainsKey(key))
+        {
+            result = playerData.programmingLanguage[key];
+        }
+
+        return result;
     }
 
     public static void SetQuestProgress(int progress) {

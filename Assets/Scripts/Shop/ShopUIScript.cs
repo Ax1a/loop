@@ -62,7 +62,13 @@ public class ShopUIScript : MonoBehaviour
 
     void BuyItem(ShopItemData item) 
     {
-        inventory.AddItem(item);
+        if(DataManager.CanSpendMoney(item.price)) {
+            inventory.AddItem(item);
+            DataManager.SpendMoney(item.price);
+        }
+        else {
+            Debug.Log("Insufficient money");
+        }
         Debug.Log(inventory.inventoryItems);
     }
 

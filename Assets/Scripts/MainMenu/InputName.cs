@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Threading.Tasks;
 
 public class InputName : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class InputName : MonoBehaviour
         _loadScene = loading.GetComponent<LoadingScene>();
     }
 
-    public void SaveName(int sceneID) {
+    public async void SaveName(int sceneID) {
         userName = inputField.text;
 
         if(userName.Trim().Length < 4) {
@@ -28,7 +29,7 @@ public class InputName : MonoBehaviour
         transform.gameObject.SetActive(false);
 
         if(BinarySerializer.HasSaved(fileName)) {
-            BinarySerializer.Delete(fileName);
+            await Task.Run(() => BinarySerializer.Delete(fileName));
         }
 
         DataManager.SetPlayerName(userName);
