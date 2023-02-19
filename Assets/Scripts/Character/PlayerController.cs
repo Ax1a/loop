@@ -20,7 +20,6 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(_isPanelActive);
         if (_isPanelActive == false){
             float horizontal = Input.GetAxisRaw("Horizontal");
             float vertical = Input.GetAxisRaw("Vertical");

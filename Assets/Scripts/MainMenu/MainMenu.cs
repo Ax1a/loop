@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    [SerializeField] private GameObject mainMenu;
     [SerializeField] private GameObject continueBtn;
     [SerializeField] private GameObject popUp;
-    [SerializeField] private GameObject enterNamePopUp;
+    [SerializeField] private GameObject characterCreation;
     [SerializeField] private GameObject loading;
     LoadingScene _loadScene;
 
@@ -27,7 +27,8 @@ public class MainMenu : MonoBehaviour
     public void NewGame(int sceneID) {
         // If no save data, just load to the main game
         if (!BinarySerializer.HasSaved(FileName)) {
-            enterNamePopUp.SetActive(true);
+            mainMenu.SetActive(false);
+            characterCreation.SetActive(true);
         }
         // else delete the data and load to the main game
         else {
@@ -39,9 +40,10 @@ public class MainMenu : MonoBehaviour
         popUp.gameObject.SetActive(true);
     }
 
-    public void StartNewGame(int sceneID) {
+    public void StartNewGame() {
         popUp.SetActive(false);
-        enterNamePopUp.SetActive(true);
+        mainMenu.SetActive(false);
+        characterCreation.SetActive(true);
     }
 
     public void Cancel() {
@@ -52,6 +54,7 @@ public class MainMenu : MonoBehaviour
         if (BinarySerializer.HasSaved(FileName)) {
             _loadScene.LoadScene(sceneID);
         }
+        mainMenu.SetActive(false);
     }
 
     public void QuitGame() {
