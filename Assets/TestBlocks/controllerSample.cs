@@ -36,6 +36,10 @@ public class controllerSample : MonoBehaviour
     private TMP_InputField varInput;
 
     public Transform newVarParent;
+
+    string varName;
+
+    dynamicInputField resize;
     
     public void createVar()
     {   
@@ -43,16 +47,17 @@ public class controllerSample : MonoBehaviour
     }
     public void go()
     {   
-        varInput = varPanel.GetComponentInChildren<TMP_InputField>();
-
-        string varName = varInput.text;
-        
-        Instantiate(newVar,newVarParent);
-
-        newVar.name = "CloneVar";
+        varName = varPanel.GetComponentInChildren<TMP_InputField>().text;
         newVar.transform.GetChild(0).GetChild(0).GetComponent<TMP_InputField>().text = varName;
-        Debug.Log(varName);
+        Debug.Log("The variable name is: " + varName);
+        newVar.name = "OperationGetVariable";
+        Instantiate(newVar, newVarParent);
+
+        
     }
+
+
+   
     public void Paly()
     {
         sequence.Clear();
