@@ -27,14 +27,13 @@ public class LessonScreen : MonoBehaviour
             GameObject button = Instantiate(buttonPrefab, container);
 
             button.GetComponent<Image>().sprite = lessonIcon[index];
-            //button.GetComponentInChildren<Text>().text = lessonName[index];
+            button.GetComponentInChildren<TextMeshProUGUI>().text = lessonName[index];
 
             //adds different onclick for buttons
             button.GetComponent<Button>().onClick.AddListener(delegate {ToggleGameObject(lessonContents[index]);});  
         }
     }
 
-    
     void ToggleGameObject(GameObject go) {
         Debug.Log(go);
         if (go.activeInHierarchy == true)
