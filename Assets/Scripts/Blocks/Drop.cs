@@ -7,9 +7,7 @@ public class Drop : MonoBehaviour, IDropHandler
 {
     public int id;
     [SerializeField] public string blockType;
-
     [HideInInspector] public Drag drag;
-
     // public Transform simpleBlock;
 
     // private TMP_InputField varInput;
@@ -27,20 +25,14 @@ public class Drop : MonoBehaviour, IDropHandler
             {
                 eventData.pointerDrag.GetComponent<RectTransform>().transform.position =
                 GetComponent<RectTransform>().transform.position;
-                // GameObject dropped = eventData.pointerDrag;
-                // Drag drag = dropped.GetComponent<Drag>();
-                // drag.parentAfterDrag = transform;
                 Debug.Log("Dropped Item");
                 //Check the correct answer through ID of the blocks
                 if(eventData.pointerDrag.GetComponent<Drag>().id == id)
                 {
                     // varInput = simpleBlock.GetComponentInChildren<TMP_InputField>();
-                    
-
                     // string varName = varInput.text;
-
-                    // Debug.Log(varName);
-
+                    // Debug.Log(varName);  
+        
                     //to-do: if points was added, it will not generate anymore
                     Debug.Log("Correct");
                     GameObject.Find("Win").GetComponent<Win>().AddPoints();
@@ -56,5 +48,7 @@ public class Drop : MonoBehaviour, IDropHandler
                 Debug.Log("ResetPosition");
             }
         }
+        
+
     }
 }

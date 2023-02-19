@@ -6,23 +6,16 @@ using UnityEngine.UI;
 
 public class Drag : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
+   
     private RectTransform rect;
     private CanvasGroup canvasGroup;
     private Vector2 initPos;
     public int id;
     public GameObject original;
-    // public GameObject clone;
-    // public Vector3 offset;
-
     public Transform originalObject;
-
    public Transform parentAfterDrag;
-
     public GameObject parentObject;
-    //public Image image;
-
     [SerializeField] private Canvas canvas;
-
     [SerializeField] public string blockType;
 
 
@@ -33,9 +26,7 @@ public class Drag : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndD
     }
 
     void Start(){
-        initPos = transform.position;
-        
-        
+        initPos = transform.position;  
     }
 
     public void InstantiateNewObject(){
@@ -51,10 +42,7 @@ public class Drag : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndD
         transform.SetAsLastSibling();
        // image.raycastTarget = false;
         // canvasGroup.alpha = .6f;
-        canvasGroup.blocksRaycasts = false;
-        
-            
-            
+        canvasGroup.blocksRaycasts = false;    
     }
 
     public void OnDrag(PointerEventData eventData)

@@ -69,9 +69,6 @@ public class Win : MonoBehaviour
             // string varName = input.text;
 
             output.text = input.text;
-            
-
-
 
         }else{
             Debug.Log("Losser");
