@@ -7,6 +7,7 @@ using System.Collections.Generic;
     public int hr = 7, min = 0, day = 1, month = 1, year = 2022;
     public string name;
     public int questProgress = 0;
+    public int reachedLesson; 
     public Dictionary<string, int> programmingLanguage = new Dictionary<string, int>() {
         {"c++", -1},
         {"java", -1},
@@ -143,6 +144,26 @@ public static class DataManager
     {
         playerData.money -= amount;
         SavePlayerData();
+    }
+
+    public static int getReachedLesson ()
+    {
+        return playerData.reachedLesson; 
+    }
+
+    public static void addReachedLesson (int lesson)
+    {
+        playerData.reachedLesson += lesson;
+        SavePlayerData();
+    }
+
+
+// resetLevel() is for testing purpose only must remove after.
+    public static void resetLevel ()
+    {
+        playerData.reachedLesson = 1;
+        SavePlayerData();
+
     }
 
     static void SavePlayerData()
