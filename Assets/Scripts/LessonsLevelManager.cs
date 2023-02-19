@@ -9,8 +9,6 @@ public class LessonsLevelManager : MonoBehaviour
     void Start()
     {
         DataManager.addReachedLesson(1);
-
-
     }
     void Update()
     {
