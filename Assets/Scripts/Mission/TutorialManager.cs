@@ -32,6 +32,12 @@ public class TutorialManager : MonoBehaviour
 
     private void Start() {
         SetNextTutorial(DataManager.GetQuestProgress());
+
+        if(DataManager.GetQuestProgress() == 0) {
+            BotGuide.Instance.AddDialogue("Welcome to the game! Before you get started, let's go over the controls."); 
+            BotGuide.Instance.AddDialogue(" You can move your character with the arrow keys or WASD."); 
+            BotGuide.Instance.ShowDialogue();
+        }
     }
 
     private void Update() {
@@ -42,6 +48,16 @@ public class TutorialManager : MonoBehaviour
         SetNextTutorial(currentTutorial.Order + 1);
         DataManager.SetQuestProgress(1);
         Debug.Log("Completed");
+
+        
+        if (DataManager.GetQuestProgress() == 1) {
+            BotGuide.Instance.AddDialogue("To access the Shop, press the 'B' key on your keyboard. To open your Inventory, press the 'I' key."); 
+            BotGuide.Instance.ShowDialogue();
+        }
+        if (DataManager.GetQuestProgress() == 2) {
+            BotGuide.Instance.AddDialogue("You can interact with certain objects in the game using the E key. When you see an object with the 'Interact' prompt above it, just press E to interact with it. Give it a try on that nearby object now!"); 
+            BotGuide.Instance.ShowDialogue();
+        }
     }
 
     public void SetNextTutorial(int currentOrder) {
@@ -68,6 +84,8 @@ public class TutorialManager : MonoBehaviour
 
     public void CompletedAllTutorials() {
         descriptionText.text = "You have completed all the tutorials";
+        BotGuide.Instance.AddDialogue("Great job! You've got the hang of it. Remember, you can interact with lots of different objects throughout the game, so keep your eyes peeled for that 'Interact' prompt. Happy exploring!"); 
+        BotGuide.Instance.ShowDialogue();
         tutorialPrefab.SetActive(false);
     }
 

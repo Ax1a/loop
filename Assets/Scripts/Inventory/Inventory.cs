@@ -32,6 +32,7 @@ public class Inventory : MonoBehaviour
 
         // Add the InventoryItemData object to the inventory
         inventoryItems.Add(inventoryItem);
+        PopulateListUI();
     }
 
 
@@ -45,15 +46,6 @@ public class Inventory : MonoBehaviour
     //public 
 
     //populating inventory UI
-
-
-    void OnEnable()
-    {
-        PopulateListUI();
-    }
-  
-    //doesnt work?
-
     public void PopulateListUI()
     {
     // Instantiate a game object for each item in the list and add it to the list UI
@@ -68,9 +60,9 @@ public class Inventory : MonoBehaviour
             listItem.GetComponent<InventoryUI>().SetInventoryItemEnergy(invItem.itemEnergy);
         }
         // Clear the list UI
-        Transform parent = GameObject.Find("InventoryItems").transform;
+        // Transform parent = GameObject.Find("InventoryItems").transform;
 
-        if(parent.childCount != 0) GameObject.Destroy(parent.GetChild(0).gameObject);
+        if(listItemParent.childCount != 0) GameObject.Destroy(listItemParent.GetChild(0).gameObject);
     }
 
     public void closeInventory() {

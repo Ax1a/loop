@@ -62,23 +62,16 @@ public static class DataManager
         return playerData.questProgress;
     }
 
-    public static int GetProgrammingLanguage() {
-        return playerData.questProgress;
-    }
-
-    public static void SetProgrammingLanguage(string key, int value)
+    public static void AddProgrammingLanguageProgress(string key)
     {
         if (playerData.programmingLanguage.ContainsKey(key))
         {
-            playerData.programmingLanguage[key] = value;
-        }
-        else
-        {
-            playerData.programmingLanguage.Add(key, value);
+            playerData.programmingLanguage[key] += 1;
+            SavePlayerData();
         }
     }
 
-    public static int GetProgrammingLanguage(string key)
+    public static int GetProgrammingLanguageProgress(string key)
     {
         int result = -1;
         PlayerData playerData = new PlayerData();
@@ -172,7 +165,7 @@ public static class DataManager
         UnityEngine.Debug.Log("Player Data Saved");
     }
 
-    static void LoadPlayerData()
+    public static void LoadPlayerData()
     {
         playerData = BinarySerializer.Load<PlayerData>("playerData.txt");
     }

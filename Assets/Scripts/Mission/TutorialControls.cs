@@ -13,6 +13,7 @@ public class TutorialControls : Tutorial
                 Keys.RemoveAt(i);
 
                 // Add change color text here when completed
+                if (Input.inputString == "b") DataManager.AddMoney(20);
                 break;
             }
         }

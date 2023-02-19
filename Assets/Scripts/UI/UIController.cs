@@ -39,12 +39,18 @@ public class UIController : MonoBehaviour
             gameUI[1].SetActive(true);
             tabMenus[0].SetActive(true);
             gameUI[0].SetActive(false);
-        }
-        // else if(Input.GetKeyDown(KeyCode.I)) {
-        //     if (gameUI[4].activeSelf == true) return;
 
-        //     ToggleUI("InventoryCanvas");
-        // }
+            if (tabMenus[1].activeSelf == true) tabMenus[1].SetActive(false);
+        }
+        else if(Input.GetKeyDown(KeyCode.I)) {
+            if (gameUI[3].activeSelf == true) return;
+
+            gameUI[1].SetActive(true);
+            tabMenus[1].SetActive(true);
+            gameUI[0].SetActive(false);
+
+            if (tabMenus[0].activeSelf == true) tabMenus[0].SetActive(false);
+        }
 
         foreach (var UI in gameUI)
         {
@@ -94,7 +100,7 @@ public class UIController : MonoBehaviour
     }
 
     void CloseMenu() {
-        gameUI[4].SetActive(false);
+        gameUI[3].SetActive(false);
         gameUI[0].SetActive(true);
     }
 
