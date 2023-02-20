@@ -24,6 +24,8 @@ public class TutorialInteract : Tutorial
                 GameObject.Destroy(child.gameObject);
             }
 
+            BotGuide.Instance.AddDialogue("Great job! You've got the hang of it. Remember, you can interact with lots of different objects throughout the game, so keep your eyes peeled for that 'Interact' prompt. Happy exploring!"); 
+            BotGuide.Instance.ShowDialogue();
             TutorialManager.Instance.CompletedTutorial();
         }
     }
