@@ -62,6 +62,8 @@ public class Clock : MonoBehaviour
     
     void Update()
     {
+        if (BotGuide.Instance.guideIsActive()) return;
+
         if (timer >= secPerMin)
         {
             min++;

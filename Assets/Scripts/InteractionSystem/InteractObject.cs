@@ -21,6 +21,12 @@ public class InteractObject : MonoBehaviour
         return interactKey;
     }
 
+    public bool NearInteractable() {
+        if (_numFound > 0) return true;
+
+        return false;
+    }
+
     void Update()
     {
         _numFound = Physics.OverlapSphereNonAlloc(_interactionPoint.position, _interactionPointRadius, _colliders, _interactableMask);

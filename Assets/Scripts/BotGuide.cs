@@ -8,6 +8,8 @@ public class BotGuide : MonoBehaviour
     public List<string> _dialogues = new List<string>();
     [SerializeField] private GameObject guideBot;
     [SerializeField] private TextMeshProUGUI dialogueText;
+    private bool isActive;
+    
 
     private static BotGuide _instance;
     public static BotGuide Instance {
@@ -31,9 +33,11 @@ public class BotGuide : MonoBehaviour
         if (_dialogues?.Count > 0) {
             dialogueText.text = _dialogues[0];
             guideBot.SetActive(true);   
+            isActive = true;
         }   
         else {
             guideBot.SetActive(false);   
+            isActive = false;
         }
     }
 
@@ -42,5 +46,9 @@ public class BotGuide : MonoBehaviour
             _dialogues.RemoveAt(0);
             ShowDialogue();
         }
+    }
+
+    public bool guideIsActive() {
+        return isActive;
     }
 }

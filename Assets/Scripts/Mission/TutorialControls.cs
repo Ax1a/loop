@@ -5,7 +5,7 @@ using UnityEngine;
 public class TutorialControls : Tutorial
 {
     public List<string> Keys = new List<string>();
-
+    
     public override void CheckIfHappening()
     {
         for (int i = 0; i < Keys.Count; i++) {
@@ -13,12 +13,23 @@ public class TutorialControls : Tutorial
                 Keys.RemoveAt(i);
 
                 // Add change color text here when completed
-                if (Input.inputString == "b") DataManager.AddMoney(20);
+                if (Input.inputString == "b") {
+                    DataManager.AddMoney(20);
+                    BotGuide.Instance.AddDialogue("Great! You have been given 20 currency units to spend."); 
+                    BotGuide.Instance.AddDialogue("Perhaps you could treat yourself to a nice cup of coffee? Try clicking the buy button of an item.");
+                    BotGuide.Instance.ShowDialogue();
+                }
+                if (Input.inputString == "i") {
+                    BotGuide.Instance.AddDialogue("Great job! In the inventory, you can browse your items, or use them if needed.");
+                    BotGuide.Instance.AddDialogue("Now let's close the inventory to continue the tutorial.");
+                    BotGuide.Instance.ShowDialogue();
+                }
                 break;
             }
         }
 
         if (Keys.Count == 0){
+            // Debug.Log(TutorialManager.Instance.checkIfPanelActive());
             Transform parent = GameObject.Find("Contents").transform;
             int objCount = parent.childCount;
 

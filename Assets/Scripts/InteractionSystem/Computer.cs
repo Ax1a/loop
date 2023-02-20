@@ -17,7 +17,7 @@ public class Computer : MonoBehaviour, Interactable
     public bool Interact(InteractObject interactor)
     {
         // Disable HUD
-        _hud.gameObject.SetActive(false);
+        // _hud.gameObject.SetActive(false);
         _interactOverlay.SetActive(false);
 
         // Enable the Camera

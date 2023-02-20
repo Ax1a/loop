@@ -9,6 +9,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject popUp;
     [SerializeField] private GameObject characterCreation;
     [SerializeField] private GameObject loading;
+    [SerializeField] private GameObject characterCamera;
     LoadingScene _loadScene;
 
     private string FileName = "playerData.txt";
@@ -44,6 +45,7 @@ public class MainMenu : MonoBehaviour
         popUp.SetActive(false);
         mainMenu.SetActive(false);
         characterCreation.SetActive(true);
+        characterCamera.SetActive(true);
     }
 
     public void Cancel() {
