@@ -24,6 +24,7 @@ public class CharacterCreation : MonoBehaviour
     [SerializeField] private TextMeshProUGUI selectedLanguageTxt;
     [SerializeField] private Image selectedLanguageImg;
     [SerializeField] private Sprite[] languageSprites;
+    [SerializeField] private GameObject characterCamera;
 
     LoadingScene _loadScene;
     private string userName;
@@ -86,6 +87,7 @@ public class CharacterCreation : MonoBehaviour
         else {
             gameObject.SetActive(false);
             mainMenu.SetActive(true);
+            characterCamera.SetActive(false);
         }
 
     }

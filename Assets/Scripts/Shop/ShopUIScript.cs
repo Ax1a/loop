@@ -65,6 +65,11 @@ public class ShopUIScript : MonoBehaviour
         if(DataManager.CanSpendMoney(item.price)) {
             inventory.AddItem(item);
             DataManager.SpendMoney(item.price);
+
+            if (DataManager.GetQuestProgress() == 1) {
+                BotGuide.Instance.AddDialogue("Great! You can check your inventory by pressing the 'I' key. It's a great way to keep track of your items and make sure you're well-stocked."); 
+                BotGuide.Instance.ShowDialogue();
+            }
         }
         else {
             Debug.Log("Insufficient money");

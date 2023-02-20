@@ -12,7 +12,6 @@ public class PlayerController : MonoBehaviour
     private Animator _animator;
     [SerializeField] private float speed = 6f;
     [SerializeField] private float turnSmoothTime = 0.1f;
-    [SerializeField] private GameObject[] panels;
 
     private void Start() {
         _animator = GetComponentInChildren<Animator>();
@@ -40,6 +39,9 @@ public class PlayerController : MonoBehaviour
                 _animator.SetBool("IsMoving", false);
             }
         }
+        else {
+            _animator.SetBool("IsMoving", false);
+        }
 
         //add money press c        
         #if UNITY_EDITOR
@@ -52,5 +54,9 @@ public class PlayerController : MonoBehaviour
 
     public void SetIsPanelActive(bool active) {
         _isPanelActive = active;
+    }
+
+    public bool IsPanelActive() {
+        return _isPanelActive;
     }
 }

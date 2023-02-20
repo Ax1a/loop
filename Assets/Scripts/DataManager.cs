@@ -8,6 +8,7 @@ using System.Collections.Generic;
     public string name;
     public int questProgress = 0;
     public int reachedLesson; 
+    public List<Inventory> inventoryList;
     public Dictionary<string, int> programmingLanguage = new Dictionary<string, int>() {
         {"c++", -1},
         {"java", -1},

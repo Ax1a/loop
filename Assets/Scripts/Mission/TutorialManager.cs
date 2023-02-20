@@ -8,12 +8,15 @@ public class TutorialManager : MonoBehaviour
 {
     public List<Tutorial> Tutorials = new List<Tutorial>();
 
-
     [Header("Tutorial Objects")]
     public TextMeshProUGUI descriptionText;
     public TextMeshProUGUI titleText;
     public TextMeshProUGUI requirementText;
     public GameObject tutorialPrefab;
+    [SerializeField] private GameObject Character;
+    [SerializeField] private GameObject tabCanvas;
+    PlayerController _playerController;
+    private bool _activated = false;
 
     private static TutorialManager _instance;
     public static TutorialManager Instance {
@@ -32,30 +35,35 @@ public class TutorialManager : MonoBehaviour
 
     private void Start() {
         SetNextTutorial(DataManager.GetQuestProgress());
+        _playerController = Character.GetComponent<PlayerController>();
 
         if(DataManager.GetQuestProgress() == 0) {
             BotGuide.Instance.AddDialogue("Welcome to the game! Before you get started, let's go over the controls."); 
-            BotGuide.Instance.AddDialogue(" You can move your character with the arrow keys or WASD."); 
+            BotGuide.Instance.AddDialogue("You can move your character with the arrow keys or WASD."); 
             BotGuide.Instance.ShowDialogue();
         }
     }
 
     private void Update() {
+        if (_playerController.IsPanelActive() == true) return;
+
+        if (DataManager.GetQuestProgress() == 2 && _activated == false) {
+            BotGuide.Instance.AddDialogue("You can interact with certain objects in the game using the E key."); 
+            BotGuide.Instance.AddDialogue("When you see an object with the 'Interact' prompt above it, just press E to interact with it. Give it a try on that nearby object now!"); 
+            BotGuide.Instance.ShowDialogue();
+            _activated = true;
+        }
+        
         if (currentTutorial) currentTutorial.CheckIfHappening();
+
     }
 
     public void CompletedTutorial() {
         SetNextTutorial(currentTutorial.Order + 1);
         DataManager.SetQuestProgress(1);
-        Debug.Log("Completed");
 
-        
         if (DataManager.GetQuestProgress() == 1) {
             BotGuide.Instance.AddDialogue("To access the Shop, press the 'B' key on your keyboard. To open your Inventory, press the 'I' key."); 
-            BotGuide.Instance.ShowDialogue();
-        }
-        if (DataManager.GetQuestProgress() == 2) {
-            BotGuide.Instance.AddDialogue("You can interact with certain objects in the game using the E key. When you see an object with the 'Interact' prompt above it, just press E to interact with it. Give it a try on that nearby object now!"); 
             BotGuide.Instance.ShowDialogue();
         }
     }
