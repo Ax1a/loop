@@ -84,8 +84,6 @@ public class TutorialManager : MonoBehaviour
 
     public void CompletedAllTutorials() {
         descriptionText.text = "You have completed all the tutorials";
-        BotGuide.Instance.AddDialogue("Great job! You've got the hang of it. Remember, you can interact with lots of different objects throughout the game, so keep your eyes peeled for that 'Interact' prompt. Happy exploring!"); 
-        BotGuide.Instance.ShowDialogue();
         tutorialPrefab.SetActive(false);
     }
 
