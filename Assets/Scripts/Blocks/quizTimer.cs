@@ -14,8 +14,7 @@ public class quizTimer : MonoBehaviour
     public float currTime= 0f;
     public float startingTime = 0f;
  
-    public GameObject newPanel;
-
+    public GameObject gameOverPanel;
     public GameObject startPanel;
     [HideInInspector] public bool isStart = false;
     [SerializeField]public TextMeshProUGUI countDownText;
@@ -38,7 +37,7 @@ public class quizTimer : MonoBehaviour
         }
 
         currTime = startingTime;
-        newPanel.SetActive(false);
+        gameOverPanel.SetActive(false);
 
     }
 
@@ -67,8 +66,9 @@ public class quizTimer : MonoBehaviour
     public void resetTime()
     {  
       
-            currTime = startingTime;
-            Debug.Log("Reset the timer");
+        currTime = startingTime;
+        isStart = true;
+        Debug.Log("Reset the timer");
              
        
     }
@@ -87,7 +87,7 @@ public class quizTimer : MonoBehaviour
             if(currTime <= 0 )
             {
                 currTime = 0;
-                newPanel.SetActive(true);
+                gameOverPanel.SetActive(true);
                 isStart = false;
             }               
         } 
