@@ -9,7 +9,6 @@ public class QuizManager : MonoBehaviour
 {
 
     public List<QuestAndAns> QnA;
-    public List<QuestAndAns> QnAHolder;
     private QuestAndAns currentQuestion;
     private int _questionIndex;
     public GameObject[] options;
@@ -24,7 +23,7 @@ public class QuizManager : MonoBehaviour
     public TextMeshProUGUI scoreTxt;
     public int scoreCount;
 
-    public quizTimer timer;
+    private quizTimer timer;
     int totalQuestions = 0;
 
     // Start is called before the first frame update
@@ -44,6 +43,7 @@ public class QuizManager : MonoBehaviour
         _questionIndex = 0;
         scoreCount = 0;
         gameOverPanel.SetActive(false);
+        timer.resetTime();
     }
 
     private void ShuffleQuestions() {
@@ -74,8 +74,6 @@ public class QuizManager : MonoBehaviour
     }
 
     public void Wrong(){
-        // QnA.RemoveAt(currentQuestion);
-        // generateQuestion();
         SetCurrentQuestion(_questionIndex);
     }
 
@@ -86,8 +84,6 @@ public class QuizManager : MonoBehaviour
         };
 
         currentQuestion = QnA[questionIndex];
-
-        Debug.Log(currentQuestion.Questions);
 
         text.text = currentQuestion.Questions;
 
@@ -102,18 +98,5 @@ public class QuizManager : MonoBehaviour
 
         _questionIndex += 1;
     }
-
-    void GenerateQuestion()
-    {
-        // if(QnA.Count > 0){
-        //     currentQuestion = Random.Range(0, QnA.Count);
-        //     text.text = QnA[currentQuestion].Questions;
-        //     setAnswer();
-        // }else{
-        //     Debug.Log("Out of Questions");
-        //     gameOver();
-        // }
-    }
-
     
 }
