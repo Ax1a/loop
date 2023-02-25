@@ -5,8 +5,8 @@ using DG.Tweening;
 
 public class UIPopup : MonoBehaviour
 {
-    [SerializeField] float showTime = 0.3f, hideTime = 0.2f;
-    [SerializeField] Ease showEase = Ease.OutBack, hideEase = Ease.InBack;
+    [SerializeField] float showTime = 0.3f;
+    [SerializeField] Ease showEase = Ease.OutBack;
     [SerializeField] Transform tweenGO;
 
     private void OnEnable() {

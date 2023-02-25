@@ -8,7 +8,17 @@ public class SaveGame : MonoBehaviour
     [SerializeField] private GameObject player;
     Energy _energy;
     Clock _timeAndDate;
-        
+
+    public static SaveGame Instance;
+
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+    }
+
     public void SaveGameState() {
         _timeAndDate = timeAndDate.GetComponent<Clock>();
 

@@ -20,6 +20,7 @@ public class ShutdownPC : MonoBehaviour
             Panel.SetActive(!isActive);
 
             _computer.isOpened = false;
+            UIController.Instance.SetPanelActive(false);
             compCamera.gameObject.SetActive(false);
             _hud.gameObject.SetActive(true);
         }

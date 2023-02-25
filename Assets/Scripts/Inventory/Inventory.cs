@@ -65,6 +65,10 @@ public class Inventory : MonoBehaviour
         if(listItemParent.childCount != 0) GameObject.Destroy(listItemParent.GetChild(0).gameObject);
     }
 
+    public void UseItem(InventoryItemData itemData) {
+        // DataManager
+    }
+
     public void closeInventory() {
         gameObject.SetActive(false);
         mainUI.SetActive(true);

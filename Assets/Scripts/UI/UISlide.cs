@@ -5,8 +5,8 @@ using DG.Tweening;
 
 public class UISlide : MonoBehaviour
 {
-    [SerializeField] float showTime = 0.3f, hideTime = 0.2f, position = 500f;
-    [SerializeField] Ease showEase = Ease.OutBack, hideEase = Ease.InBack;
+    [SerializeField] float showTime = 0.3f, position = 500f;
+    [SerializeField] Ease showEase = Ease.OutBack;
     [SerializeField] Transform tweenGO;
 
     private void OnEnable() {

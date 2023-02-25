@@ -16,6 +16,10 @@ public class Clock : MonoBehaviour
     
     private bool isAm = false;
 
+    [Header("Skybox")]
+    [SerializeField] private Material DaySkybox;
+    [SerializeField] private Material NightSkybox;
+
     private int hr;
     private int min;
 
@@ -58,6 +62,9 @@ public class Clock : MonoBehaviour
         {
             isAm = true;
         }
+        else {
+            isAm = false;
+        }
     }
     
     void Update()
@@ -72,6 +79,14 @@ public class Clock : MonoBehaviour
             {
                 min = 0;
                 hr++;
+
+                if (hr < 12)
+                {
+                    isAm = true;
+                }
+                else {
+                    isAm = false;
+                }
 
                 if(hr >= maxHr) 
                 {
@@ -102,6 +117,11 @@ public class Clock : MonoBehaviour
         }
     }
     
+    public void NextDay() {
+        min = 0;
+        hr = 7;
+        day += 1;
+    }
 
     void SetTimeDataString()
     {
