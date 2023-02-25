@@ -3933,11 +3933,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 1
-  original: {fileID: 0}
-  originalObject: {fileID: 0}
   parentAfterDrag: {fileID: 0}
   parentObject: {fileID: 1561213003}
-  canvas: {fileID: 0}
   blockType: Operation
 --- !u!114 &82455773
 MonoBehaviour:
@@ -4521,11 +4518,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 1
-  original: {fileID: 0}
-  originalObject: {fileID: 0}
   parentAfterDrag: {fileID: 0}
   parentObject: {fileID: 1734837845}
-  canvas: {fileID: 2039154031}
   blockType: simple
 --- !u!225 &86801357
 CanvasGroup:
@@ -5835,7 +5829,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1953404085}
         m_TargetAssemblyTypeName: LessonsLevelManager, Assembly-CSharp
-        m_MethodName: levelComplete
+        m_MethodName: addReachedLesson
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6183,7 +6177,6 @@ MonoBehaviour:
   myBlocks: {fileID: 1210206948}
   checkBox: {fileID: 606666022}
   gameOverPanel: {fileID: 696235201}
-  timer: {fileID: 0}
   blocksInitPos: {fileID: 0}
   startPanel: {fileID: 463857452}
   WinLosePanel: {fileID: 80501664}
@@ -9112,10 +9105,6 @@ MonoBehaviour:
   moneyUITxt:
   - {fileID: 1965525341}
   - {fileID: 1856179486}
-  lessonBtn:
-  - {fileID: 846419982}
-  - {fileID: 1297877194}
-  - {fileID: 1448021440}
 --- !u!1 &190893992
 GameObject:
   m_ObjectHideFlags: 0
@@ -13171,11 +13160,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
-  original: {fileID: 0}
-  originalObject: {fileID: 283922938}
   parentAfterDrag: {fileID: 0}
   parentObject: {fileID: 1561213003}
-  canvas: {fileID: 0}
   blockType: 
 --- !u!225 &283922940
 CanvasGroup:
@@ -14192,7 +14178,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &293311195
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14334,20 +14320,17 @@ MonoBehaviour:
     - console
     - '" "'
     CorrectAns: 3
-  QnAHolder: []
   options:
   - {fileID: 1457143134}
   - {fileID: 185480697}
   - {fileID: 203763097}
   - {fileID: 213611982}
-  currentQuestion: 0
   text: {fileID: 2116404126}
   quizPanel: {fileID: 483676879}
   gameOverPanel: {fileID: 1443809388}
   startPanel: {fileID: 0}
   scoreTxt: {fileID: 952157062}
   scoreCount: 0
-  timer: {fileID: 0}
 --- !u!224 &293939497
 RectTransform:
   m_ObjectHideFlags: 0
@@ -16862,11 +16845,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
-  original: {fileID: 0}
-  originalObject: {fileID: 0}
   parentAfterDrag: {fileID: 0}
   parentObject: {fileID: 1561213003}
-  canvas: {fileID: 0}
   blockType: Operation
 --- !u!114 &340848689
 MonoBehaviour:
@@ -16958,20 +16938,17 @@ MonoBehaviour:
     - '#include <iostream>'
     - main()
     CorrectAns: 4
-  QnAHolder: []
   options:
   - {fileID: 836291627}
   - {fileID: 1649516167}
   - {fileID: 516318852}
   - {fileID: 703889805}
-  currentQuestion: 0
   text: {fileID: 1098255552}
   quizPanel: {fileID: 1209465236}
   gameOverPanel: {fileID: 865580431}
   startPanel: {fileID: 0}
   scoreTxt: {fileID: 206078709}
   scoreCount: 0
-  timer: {fileID: 0}
 --- !u!224 &342640730
 RectTransform:
   m_ObjectHideFlags: 0
@@ -17732,11 +17709,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
-  original: {fileID: 0}
-  originalObject: {fileID: 0}
   parentAfterDrag: {fileID: 0}
   parentObject: {fileID: 1561213003}
-  canvas: {fileID: 0}
   blockType: Simple
 --- !u!114 &350926035
 MonoBehaviour:
@@ -22008,6 +21982,8 @@ MonoBehaviour:
   requirementText: {fileID: 3581991559909924433, guid: 3dc5b6cbae7f1c8498ae741615d49e4e,
     type: 3}
   tutorialPrefab: {fileID: 1191651925}
+  Character: {fileID: 0}
+  tabCanvas: {fileID: 0}
 --- !u!114 &437705871
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22688,11 +22664,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 2
-  original: {fileID: 0}
-  originalObject: {fileID: 0}
   parentAfterDrag: {fileID: 0}
   parentObject: {fileID: 1561213003}
-  canvas: {fileID: 0}
   blockType: Operation
 --- !u!114 &450925282
 MonoBehaviour:
@@ -24420,7 +24393,7 @@ MonoBehaviour:
   difficulty: 2
   currTime: 0
   startingTime: 0
-  newPanel: {fileID: 696235201}
+  gameOverPanel: {fileID: 0}
   startPanel: {fileID: 463857452}
   isStart: 0
   countDownText: {fileID: 754856448}
@@ -25159,7 +25132,6 @@ MonoBehaviour:
   _camera: {fileID: 1455879008}
   speed: 1.8
   turnSmoothTime: 0.1
-  panels: []
 --- !u!114 &482760899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29045,11 +29017,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
-  original: {fileID: 0}
-  originalObject: {fileID: 0}
   parentAfterDrag: {fileID: 0}
   parentObject: {fileID: 0}
-  canvas: {fileID: 0}
   blockType: 
 --- !u!114 &554575192
 MonoBehaviour:
@@ -37488,11 +37457,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 3
-  original: {fileID: 0}
-  originalObject: {fileID: 0}
   parentAfterDrag: {fileID: 0}
   parentObject: {fileID: 1561213003}
-  canvas: {fileID: 0}
   blockType: Simple
 --- !u!114 &733147401
 MonoBehaviour:
@@ -38192,11 +38158,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
-  original: {fileID: 0}
-  originalObject: {fileID: 0}
   parentAfterDrag: {fileID: 0}
   parentObject: {fileID: 1561213003}
-  canvas: {fileID: 0}
   blockType: Operation
 --- !u!114 &745552876
 MonoBehaviour:
@@ -41885,10 +41848,10 @@ RectTransform:
   m_Father: {fileID: 1953404081}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 139.945, y: -130}
-  m_SizeDelta: {x: 219.89, y: 200}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &846419982
 MonoBehaviour:
@@ -41939,7 +41902,7 @@ MonoBehaviour:
         m_MethodName: openScreen
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 195356284}
+          m_ObjectArgument: {fileID: 1982805982}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -50270,11 +50233,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
-  original: {fileID: 0}
-  originalObject: {fileID: 0}
   parentAfterDrag: {fileID: 0}
   parentObject: {fileID: 1561213003}
-  canvas: {fileID: 0}
   blockType: Simple
 --- !u!114 &1019067200
 MonoBehaviour:
@@ -58108,11 +58068,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
-  original: {fileID: 0}
-  originalObject: {fileID: 0}
   parentAfterDrag: {fileID: 0}
   parentObject: {fileID: 1561213003}
-  canvas: {fileID: 0}
   blockType: Simple
 --- !u!114 &1181756575
 MonoBehaviour:
@@ -59261,11 +59218,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
-  original: {fileID: 0}
-  originalObject: {fileID: 0}
   parentAfterDrag: {fileID: 0}
   parentObject: {fileID: 0}
-  canvas: {fileID: 0}
   blockType: 
 --- !u!114 &1208691245
 MonoBehaviour:
@@ -61856,11 +61810,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
-  original: {fileID: 0}
-  originalObject: {fileID: 0}
   parentAfterDrag: {fileID: 0}
   parentObject: {fileID: 1561213003}
-  canvas: {fileID: 0}
   blockType: Simple
 --- !u!114 &1263045674
 MonoBehaviour:
@@ -64180,10 +64131,10 @@ RectTransform:
   m_Father: {fileID: 1953404081}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 395.435, y: -130}
-  m_SizeDelta: {x: 219.89, y: 200}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1297877194
 MonoBehaviour:
@@ -70828,7 +70779,7 @@ MonoBehaviour:
   difficulty: 2
   currTime: 0
   startingTime: 0
-  newPanel: {fileID: 865580431}
+  gameOverPanel: {fileID: 0}
   startPanel: {fileID: 1444345669}
   isStart: 0
   countDownText: {fileID: 1917291020}
@@ -71081,10 +71032,10 @@ RectTransform:
   m_Father: {fileID: 1953404081}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 650.925, y: -130}
-  m_SizeDelta: {x: 219.89, y: 200}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1448021440
 MonoBehaviour:
@@ -78947,11 +78898,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
-  original: {fileID: 0}
-  originalObject: {fileID: 0}
   parentAfterDrag: {fileID: 0}
   parentObject: {fileID: 1561213003}
-  canvas: {fileID: 0}
   blockType: 
 --- !u!1 &1633209213
 GameObject:
@@ -80745,6 +80693,7 @@ MonoBehaviour:
   Explanation: 'Press the key to interact:'
   Requirement:
   - '[ E ] - Interact'
+  Interactor: {fileID: 0}
   Keys:
   - e
 --- !u!1 &1679549754
@@ -83029,11 +82978,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 1
-  original: {fileID: 0}
-  originalObject: {fileID: 0}
   parentAfterDrag: {fileID: 0}
   parentObject: {fileID: 1561213003}
-  canvas: {fileID: 0}
   blockType: Operation
 --- !u!114 &1734952744
 MonoBehaviour:
@@ -85579,11 +85525,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
-  original: {fileID: 0}
-  originalObject: {fileID: 0}
   parentAfterDrag: {fileID: 0}
   parentObject: {fileID: 0}
-  canvas: {fileID: 0}
   blockType: 
 --- !u!114 &1785922462
 MonoBehaviour:
@@ -93304,6 +93247,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ce792c227b46854aa35b0d5ca164a70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lessonBtn:
+  - {fileID: 846419982}
+  - {fileID: 1297877194}
+  - {fileID: 1448021440}
 --- !u!1 &1956520552
 GameObject:
   m_ObjectHideFlags: 0
@@ -96441,11 +96388,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
-  original: {fileID: 0}
-  originalObject: {fileID: 0}
   parentAfterDrag: {fileID: 0}
   parentObject: {fileID: 0}
-  canvas: {fileID: 0}
   blockType: 
 --- !u!114 &2013808116
 MonoBehaviour:
@@ -98363,11 +98307,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
-  original: {fileID: 0}
-  originalObject: {fileID: 0}
   parentAfterDrag: {fileID: 0}
   parentObject: {fileID: 1561213003}
-  canvas: {fileID: 0}
   blockType: 
 --- !u!225 &2058458417
 CanvasGroup:
@@ -99396,7 +99337,7 @@ MonoBehaviour:
   difficulty: 2
   currTime: 0
   startingTime: 0
-  newPanel: {fileID: 1443809388}
+  gameOverPanel: {fileID: 0}
   startPanel: {fileID: 2070282267}
   isStart: 0
   countDownText: {fileID: 1909020025}
@@ -99528,11 +99469,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
-  original: {fileID: 0}
-  originalObject: {fileID: 0}
   parentAfterDrag: {fileID: 0}
   parentObject: {fileID: 1561213003}
-  canvas: {fileID: 0}
   blockType: Operation
 --- !u!114 &2071163359
 MonoBehaviour:
@@ -105099,11 +105037,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 1
-  original: {fileID: 0}
-  originalObject: {fileID: 0}
   parentAfterDrag: {fileID: 0}
   parentObject: {fileID: 1930016465}
-  canvas: {fileID: 2039154031}
   blockType: simple
 --- !u!222 &6198686798808427935
 CanvasRenderer:

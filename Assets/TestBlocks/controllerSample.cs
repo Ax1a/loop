@@ -48,12 +48,10 @@ public class controllerSample : MonoBehaviour
     public void go()
     {   
         varName = varPanel.GetComponentInChildren<TMP_InputField>().text;
-        newVar.transform.GetChild(0).GetChild(0).GetComponent<TMP_InputField>().text = varName;
+        newVar.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = varName;
         Debug.Log("The variable name is: " + varName);
-        newVar.name = "OperationGetVariable";
+        newVar.name = "variable";
         Instantiate(newVar, newVarParent);
-
-        
     }
 
 

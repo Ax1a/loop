@@ -5,26 +5,65 @@ using UnityEngine.UI;
 
 public class LessonsLevelManager : MonoBehaviour
 {
-    GameSharedUI gameSharedUI;
+    public Button[] lessonBtn;
+    int reachedLesson;
+
     void Start()
     {
-        DataManager.addReachedLesson(1);
+        addReachedLesson();
+        GameSharedUI.Instance.updateButtonDisabled();
+        reachedLesson = DataManager.getReachedLesson();
+        Debug.Log(reachedLesson);
+       
     }
     void Update()
     {
-        GameSharedUI.Instance.updateButtonDisabled();
+        
     }
+
+    // public void addLesson()
+    // {
+    //     addReachedLesson();
+   
+
+    //     //updateButtonDisabled();
+    // }
     public void resetLesonLevel()
     {
         DataManager.resetLevel();
+        GameSharedUI.Instance.updateButtonDisabled();
         Debug.Log("Level Reset");
 
     }
 
-    public void levelComplete()
+    public void addReachedLesson()
     {
-
+      
         DataManager.addReachedLesson(1);
+        GameSharedUI.Instance.updateButtonDisabled();
+        Debug.Log(reachedLesson);
 
+      
+        // updateButtonDisabled();
     }
+
+    // public void updateButtonDisabled()
+    // {
+    //     foreach (Button btn in lessonBtn)
+    //     {
+    //         btn.interactable = false;
+    //     }
+
+    //     if (lessonBtn.Length >= reachedLesson)
+    //     {
+    //         for (int i = 0; i < reachedLesson; i++)
+    //         {
+    //             lessonBtn[i].interactable = true;
+    //         }
+    //     }
+    //     else
+    //     {
+    //         Debug.Log("No Levels Left");
+    //     }
+    // }
 }

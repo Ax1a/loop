@@ -17,6 +17,8 @@ public class initialPosition : MonoBehaviour, IDropHandler
         {
             initialPositions[i] = objects[i].transform.position;
         }
+
+         
     }
 
     public void ResetPositions()
@@ -34,8 +36,6 @@ public class initialPosition : MonoBehaviour, IDropHandler
         if (eventData.pointerDrag != null){
             
             eventData.pointerDrag.GetComponent<Drag>().ResetPos();
-            
-            
         }
     }
 }

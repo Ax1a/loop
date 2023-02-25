@@ -21,10 +21,14 @@ public class LessonController : MonoBehaviour
             int index = i;
             // Instantiate the button
             GameObject button = GameObject.Instantiate(lessonBtnPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+            
+                            
+
             // Set the button's text
             button.GetComponentInChildren<TextMeshProUGUI>().text = lessonTitles[i];
             
-            button.GetComponentInChildren<Button>().onClick.AddListener(delegate {ToggleGameObject(lessonContents[index]);});   
+            button.GetComponentInChildren<Button>().onClick.AddListener(delegate {ToggleGameObject(lessonContents[index]);});  
+
             
             // Set the button's parent
             button.transform.SetParent(parent);

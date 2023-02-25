@@ -11,6 +11,9 @@ public class GameSharedUI : MonoBehaviour
 
     public static GameSharedUI Instance;
 
+    public Button[] lessonBtn;
+    int reachedLesson;
+
 
     void Awake()
     {
@@ -24,11 +27,6 @@ public class GameSharedUI : MonoBehaviour
 
     [SerializeField] TMP_Text[] moneyUITxt;
 
-    public Button[] lessonBtn;
-
-
-    int reachedLesson;
-
     void Start()
     {
 
@@ -37,7 +35,6 @@ public class GameSharedUI : MonoBehaviour
 
     void Update()
     {
-        this.reachedLesson = DataManager.getReachedLesson();
 
     }
 
