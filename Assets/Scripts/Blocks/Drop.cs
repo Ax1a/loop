@@ -14,10 +14,8 @@ public class Drop : MonoBehaviour, IDropHandler
     // public TextMeshProUGUI log;
     
     public void OnDrop(PointerEventData eventData)
-    {
-        
+    { 
         if (eventData.pointerDrag != null){
-
             //Check the block type of the blocks
             //if block type is same, it will snap to position of blank spaces.
             //if not, it will reset the position.  
@@ -32,7 +30,6 @@ public class Drop : MonoBehaviour, IDropHandler
                     // varInput = simpleBlock.GetComponentInChildren<TMP_InputField>();
                     // string varName = varInput.text;
                     // Debug.Log(varName);  
-        
                     //to-do: if points was added, it will not generate anymore
                     Debug.Log("Correct");
                     GameObject.Find("Win").GetComponent<Win>().AddPoints();
@@ -47,8 +44,6 @@ public class Drop : MonoBehaviour, IDropHandler
                 eventData.pointerDrag.GetComponent<Drag>().ResetPos();
                 Debug.Log("ResetPosition");
             }
-        }
-        
-
+        }  
     }
 }

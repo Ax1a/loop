@@ -8,9 +8,7 @@ public class quizTimer : MonoBehaviour
     public enum Difficulty {
         easy, medium, hard
     }
-
     public Difficulty difficulty;
-
     public float currTime= 0f;
     public float startingTime = 0f;
  
@@ -18,8 +16,6 @@ public class quizTimer : MonoBehaviour
     public GameObject startPanel;
     [HideInInspector] public bool isStart = false;
     [SerializeField]public TextMeshProUGUI countDownText;
-
-    // Start is called before the first frame update
     void Start()
     {
         //Define starting time based on difficulty levels.. 
@@ -73,6 +69,11 @@ public class quizTimer : MonoBehaviour
        
     }
 
+    public void res()
+    {
+        isStart = false;
+    }
+
     void Update()
     {  
         //Decrease the time when the timer is starting. 
@@ -88,6 +89,7 @@ public class quizTimer : MonoBehaviour
             {
                 currTime = 0;
                 gameOverPanel.SetActive(true);
+                gameOverPanel.transform.SetAsLastSibling();
                 isStart = false;
             }               
         } 
