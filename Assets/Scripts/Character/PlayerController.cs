@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (_isPanelActive == false){
+        if (_isPanelActive == false && BotGuide.Instance.guideIsActive() == false){
             float horizontal = Input.GetAxisRaw("Horizontal");
             float vertical = Input.GetAxisRaw("Vertical");
             Vector3 forward = _camera.transform.forward;

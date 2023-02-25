@@ -13,9 +13,8 @@ public class TutorialManager : MonoBehaviour
     public TextMeshProUGUI titleText;
     public TextMeshProUGUI requirementText;
     public GameObject tutorialPrefab;
-    [SerializeField] private GameObject Character;
     [SerializeField] private GameObject tabCanvas;
-    PlayerController _playerController;
+    [SerializeField] private GameObject content;
     private bool _activated = false;
 
     private static TutorialManager _instance;
@@ -35,7 +34,6 @@ public class TutorialManager : MonoBehaviour
 
     private void Start() {
         SetNextTutorial(DataManager.GetQuestProgress());
-        _playerController = Character.GetComponent<PlayerController>();
 
         if(DataManager.GetQuestProgress() == 0) {
             BotGuide.Instance.AddDialogue("Welcome to the game! Before you get started, let's go over the controls."); 
@@ -45,17 +43,15 @@ public class TutorialManager : MonoBehaviour
     }
 
     private void Update() {
-        if (_playerController.IsPanelActive() == true) return;
-
+        if (currentTutorial && BotGuide.Instance.guideIsActive() == false) currentTutorial.CheckIfHappening();
+        if (UIController.Instance.otherPanelActive() == true) return;
+        
         if (DataManager.GetQuestProgress() == 2 && _activated == false) {
             BotGuide.Instance.AddDialogue("You can interact with certain objects in the game using the E key."); 
             BotGuide.Instance.AddDialogue("When you see an object with the 'Interact' prompt above it, just press E to interact with it. Give it a try on that nearby object now!"); 
             BotGuide.Instance.ShowDialogue();
             _activated = true;
         }
-        
-        if (currentTutorial) currentTutorial.CheckIfHappening();
-
     }
 
     public void CompletedTutorial() {
@@ -78,7 +74,7 @@ public class TutorialManager : MonoBehaviour
 
         descriptionText.text = currentTutorial.Explanation;        
         titleText.text = currentTutorial.Title;
-        Transform parent = GameObject.Find("Contents").transform;
+        Transform parent = content.transform;
 
         foreach (var req in currentTutorial.Requirement)
         {

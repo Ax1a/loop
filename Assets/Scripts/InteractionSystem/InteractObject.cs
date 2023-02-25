@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-
 public class InteractObject : MonoBehaviour
 {
     [SerializeField] private Transform _interactionPoint;

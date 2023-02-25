@@ -8,6 +8,7 @@ public class InteractionPromptUI : MonoBehaviour
     [SerializeField] private GameObject _uiPanel;
     [SerializeField] private GameObject _interactor;
     [SerializeField] private TextMeshProUGUI _promptText;
+    [SerializeField] private TextMeshProUGUI _promptKeyText;
     InteractObject interact;
 
     void Start()
@@ -19,7 +20,8 @@ public class InteractionPromptUI : MonoBehaviour
     public bool isDisplayed = false;
     public void SetUp(string promptText)
     {
-        _promptText.text = "[" + interact.getInteractKey() + "] " + promptText;
+        _promptText.text = promptText;
+        _promptKeyText.text = interact.getInteractKey().ToString();
         _uiPanel.SetActive(true);
         isDisplayed = true;
     }

@@ -154,15 +154,7 @@ public class CharacterCreation : MonoBehaviour
     // Function for choosing programming languages
     private void SelectButton(int index)
     {
-        // Deselect the previously selected button
-        if (selectedIndex >= 0)
-        {
-            progLanguageBtns[selectedIndex].GetComponent<Image>().color = deselectedColor;
-        }
-
         // Select the new button
         selectedIndex = index;
-
-        progLanguageBtns[selectedIndex].GetComponent<Image>().color = selectedColor;
     }
 }

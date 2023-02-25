@@ -5,6 +5,7 @@ using UnityEngine;
 public class TutorialControls : Tutorial
 {
     public List<string> Keys = new List<string>();
+    [SerializeField] private GameObject contents;
     
     public override void CheckIfHappening()
     {
@@ -29,18 +30,19 @@ public class TutorialControls : Tutorial
         }
 
         if (Keys.Count == 0){
-            // Debug.Log(TutorialManager.Instance.checkIfPanelActive());
-            Transform parent = GameObject.Find("Contents").transform;
-            int objCount = parent.childCount;
+            if (contents.activeSelf == true) {
+                Transform parent = contents.transform;
+                int objCount = parent.childCount;
 
-            if(objCount == 0) return;
+                if(objCount == 0) return;
 
-            foreach (Transform child in parent.transform)
-            {
-                GameObject.Destroy(child.gameObject);
+                foreach (Transform child in parent.transform)
+                {
+                    GameObject.Destroy(child.gameObject);
+                }
+
+                TutorialManager.Instance.CompletedTutorial();
             }
-
-            TutorialManager.Instance.CompletedTutorial();
         }
     }
 }

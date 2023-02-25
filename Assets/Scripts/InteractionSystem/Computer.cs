@@ -25,6 +25,7 @@ public class Computer : MonoBehaviour, Interactable
         // // Disable the Camera
         // compCamera.gameObject.SetActive(false);
         if (isOpened == false) {
+            UIController.Instance.SetPanelActive(true);
             StartCoroutine(OpenPanelDelay());   
         }
         return true;
