@@ -1,18 +1,23 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
 
 public class LogInAnimation : MonoBehaviour
 {
+    [Header("Instances")]
     [SerializeField] private GameObject logInPanel;
-    [SerializeField] private float typingSpeed = 0.5f;
+    [SerializeField] private GameObject desktopScreen;
     [SerializeField] private CanvasGroup canvasGroup;
-    [SerializeField] private float animationDuration = 0.5f;
     [SerializeField] private TextMeshProUGUI passwordText;
     [SerializeField] private TextMeshProUGUI loginText;
+    [SerializeField] private Image loginBtn;
     [SerializeField] private GameObject loading;
+
+    [Header("Params")]
+    [SerializeField] private float typingSpeed = 0.5f;
+    [SerializeField] private float animationDuration = 0.5f;
 
     private Tween fadeTween;
 
@@ -21,6 +26,7 @@ public class LogInAnimation : MonoBehaviour
     }
 
     IEnumerator PlayLoginAnimation() {
+        desktopScreen.SetActive(false);
         logInPanel.SetActive(true);
         passwordText.text = "";
 
@@ -31,15 +37,23 @@ public class LogInAnimation : MonoBehaviour
         }
 
         loginText.gameObject.SetActive(false);
+
+        Color loginPressedColor;
+        if (ColorUtility.TryParseHtmlString("#E1E2E3", out loginPressedColor))
+        {
+            loginBtn.color = loginPressedColor;
+        }
         loading.SetActive(true);
         yield return new WaitForSeconds(1f);
 
+        desktopScreen.SetActive(true);
         FadeOut();
         yield return new WaitForSeconds(animationDuration);
         logInPanel.SetActive(false);
 
         // Reset
         canvasGroup.alpha = 1;
+        loginBtn.color = Color.white;
         loginText.gameObject.SetActive(true);
         loading.SetActive(false);
     }
