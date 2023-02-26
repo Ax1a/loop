@@ -8,14 +8,11 @@ public class LessonsLevelManager : MonoBehaviour
     public Button[] lessonBtn;
     int reachedLesson;
 
-    void Awake()
-    {
-        updateButtonDisabled();
 
-    }
     void Start()
     {
         reachedLesson = DataManager.getReachedLesson();
+        updateButtonDisabled();
         // addReachedLesson();
         Debug.Log("reached lesson" + reachedLesson);
 
