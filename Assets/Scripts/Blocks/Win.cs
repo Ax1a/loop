@@ -20,9 +20,15 @@ public class Win : MonoBehaviour
     private TMP_InputField input;
     public TextMeshProUGUI output;
 
-
+    public static Win Instance;
     //[HideInInspector] public Drag drag;
 
+    private void Awake() {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
