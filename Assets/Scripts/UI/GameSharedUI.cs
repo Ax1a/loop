@@ -11,7 +11,7 @@ public class GameSharedUI : MonoBehaviour
 
     public static GameSharedUI Instance;
 
-    public Button[] lessonBtn;
+
 
 
     void Awake()
@@ -23,14 +23,14 @@ public class GameSharedUI : MonoBehaviour
     }
 
     #endregion
-
+ 
     [SerializeField] TMP_Text[] moneyUITxt;
 
     void Start()
     {
 
         UpdateMoneyUITxt();
-   
+       
     }
 
     void Update()
@@ -50,5 +50,6 @@ public class GameSharedUI : MonoBehaviour
     {
         textMesh.text = value.ToString();
     }
+
 
 }
