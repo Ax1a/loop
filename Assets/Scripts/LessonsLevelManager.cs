@@ -8,6 +8,15 @@ public class LessonsLevelManager : MonoBehaviour
     public Button[] lessonBtn;
     int reachedLesson;
 
+    public static LessonsLevelManager Instance;
+
+    private void Awake()
+    {
+        if(Instance == null)
+        {
+            Instance = this;
+        }
+    }
 
     void Start()
     {
@@ -15,6 +24,8 @@ public class LessonsLevelManager : MonoBehaviour
         updateButtonDisabled();
         // addReachedLesson();
         Debug.Log("reached lesson" + reachedLesson);
+
+            
 
     }
 
@@ -41,9 +52,12 @@ public class LessonsLevelManager : MonoBehaviour
 //activate if level is reached.
     public void updateButtonDisabled()
     {
+        
         foreach (Button btn in lessonBtn)
         {
+            Image image = btn.GetComponent<Image>();
             btn.interactable = false;
+            
         }
 
         if (lessonBtn.Length >= reachedLesson)

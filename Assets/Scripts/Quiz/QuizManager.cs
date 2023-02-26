@@ -26,6 +26,18 @@ public class QuizManager : MonoBehaviour
     private quizTimer timer;
     int totalQuestions = 0;
 
+    //bool isComplete = false;
+
+    public static QuizManager Instance;
+
+    private void Awake()
+    {
+        if(Instance == null)
+        {
+            Instance = this;
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,9 +48,13 @@ public class QuizManager : MonoBehaviour
         timer = GameObject.Find("StartPanel").GetComponent<quizTimer>();
         
     }
+
+    public int GetScore()
+    {
+        return scoreCount;
+    }
+
     public void Retry(){
-        // Debug.Log("Retry");
-        // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         ShuffleQuestions();
         _questionIndex = 0;
         scoreCount = 0;
@@ -63,6 +79,7 @@ public class QuizManager : MonoBehaviour
         //quizPanel.SetActive(false);
         gameOverPanel.SetActive(true);
         scoreTxt.text = scoreCount + "/" + totalQuestions;
+      //  isComplete = true;
     }
 
     public void Correct(){
@@ -98,5 +115,26 @@ public class QuizManager : MonoBehaviour
 
         _questionIndex += 1;
     }
+
+    //To be fix! 
+
+    // public void LevelCompleted()
+    // {
+    //     if(isComplete)
+    //     {
+    //         Debug.Log("Level is completed");
+    //         DataManager.addReachedLesson();
+    //         LessonsLevelManager.Instance.addReachedLesson();
+    //         LessonsLevelManager.Instance.updateButtonDisabled();
+    //     }
+    //     else
+    //     {
+    //         DataManager.addReachedLesson();
+
+    //     }
+        
+    // }
+
+
     
 }
