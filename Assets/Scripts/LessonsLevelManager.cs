@@ -8,62 +8,61 @@ public class LessonsLevelManager : MonoBehaviour
     public Button[] lessonBtn;
     int reachedLesson;
 
+    void Awake()
+    {
+        updateButtonDisabled();
+
+    }
     void Start()
     {
-        addReachedLesson();
-        GameSharedUI.Instance.updateButtonDisabled();
         reachedLesson = DataManager.getReachedLesson();
-        Debug.Log(reachedLesson);
-       
-    }
-    void Update()
-    {
-        
+        // addReachedLesson();
+        Debug.Log("reached lesson" + reachedLesson);
+
     }
 
-    // public void addLesson()
-    // {
-    //     addReachedLesson();
-   
-
-    //     //updateButtonDisabled();
-    // }
+    //for testing only 
+    //must remove in final build
     public void resetLesonLevel()
     {
         DataManager.resetLevel();
-        GameSharedUI.Instance.updateButtonDisabled();
+        reachedLesson = 1;
+        updateButtonDisabled();
         Debug.Log("Level Reset");
+        Debug.Log("reached lesson" + reachedLesson);
 
     }
-
+//function for adding level
     public void addReachedLesson()
     {
-      
-        DataManager.addReachedLesson(1);
-        GameSharedUI.Instance.updateButtonDisabled();
-        Debug.Log(reachedLesson);
-
-      
-        // updateButtonDisabled();
+        DataManager.addReachedLesson();
+        reachedLesson++;
+        updateButtonDisabled();
     }
 
-    // public void updateButtonDisabled()
-    // {
-    //     foreach (Button btn in lessonBtn)
-    //     {
-    //         btn.interactable = false;
-    //     }
+//disable all button
+//activate if level is reached.
+    public void updateButtonDisabled()
+    {
+        foreach (Button btn in lessonBtn)
+        {
+            btn.interactable = false;
+        }
 
-    //     if (lessonBtn.Length >= reachedLesson)
-    //     {
-    //         for (int i = 0; i < reachedLesson; i++)
-    //         {
-    //             lessonBtn[i].interactable = true;
-    //         }
-    //     }
-    //     else
-    //     {
-    //         Debug.Log("No Levels Left");
-    //     }
-    // }
+        if (lessonBtn.Length >= reachedLesson)
+        {
+            for (int i = 0; i < reachedLesson; i++)
+            {
+                lessonBtn[i].interactable = true;
+            }
+        }
+        else
+        {
+            foreach (Button btn in lessonBtn)
+            {
+                btn.interactable = true;
+            }
+            Debug.Log("No Levels Left");
+        }
+    }
 }

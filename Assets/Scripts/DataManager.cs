@@ -14,6 +14,11 @@ using System.Collections.Generic;
         {"java", -1},
         {"python", -1}
     };
+    // public Dictionary<string, int> playerReachedLevels = new Dictionary<string, int>() {
+    //     {"c++", 1},
+    //     {"java", 1},
+    //     {"python", 1}
+    // };
 
     public Dictionary<string, int> inventoryItems = new Dictionary<string, int>();
 }
@@ -140,13 +145,36 @@ public static class DataManager
         SavePlayerData();
     }
 
-    public static int getReachedLesson ()
+    // public static void AddLevelProgress(string key)
+    // {
+    //     if (playerData.playerReachedLevels.ContainsKey(key))
+    //     {
+    //         playerData.playerReachedLevels[key] += 1;
+    //         SavePlayerData();
+    //     }
+        
+    // }
+    // public static int GetLevelProgress(string key)
+    // {
+    //     int result = 0;
+    //     PlayerData playerData = new PlayerData();
+    //     if (playerData.playerReachedLevels.ContainsKey(key))
+    //     {
+    //         result = playerData.playerReachedLevels[key];
+    //     }
+
+    //     return result;
+    // }
+
+
+    public static int getReachedLesson()
     {
         return playerData.reachedLesson; 
     }
 
-    public static void addReachedLesson (int lesson)
+    public static void addReachedLesson ()
     {
+        int lesson = 1;
         playerData.reachedLesson += lesson;
         SavePlayerData();
     }

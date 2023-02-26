@@ -5,15 +5,14 @@ using UnityEngine.UI;
 using TMPro;
 public class LessonScreen : MonoBehaviour
 {
-    
+
     public GameObject buttonPrefab;
     public Sprite[] lessonIcon;
     public string[] lessonName;
     public Transform container;
     public Transform parentObject;
 
-    //int level = 2;
-
+    
     [SerializeField] GameObject[] lessonContents;
 
     void Start()
@@ -22,15 +21,16 @@ public class LessonScreen : MonoBehaviour
         Transform parent = parentObject;
         Destroy(parent.GetChild(0).gameObject);
         btn();
-        
+
     }
 
     void btn()
     {
 
         for (int i = 0; i < lessonIcon.Length; i++)
-        { 
+        {
             GameObject button = Instantiate(buttonPrefab, container);
+            
             //populates buttons
             int index = i;
 
@@ -39,32 +39,13 @@ public class LessonScreen : MonoBehaviour
             button.GetComponentInChildren<TextMeshProUGUI>().text = lessonName[index];
 
             //adds different onclick for buttons
-            button.GetComponent<Button>().onClick.AddListener(delegate {ToggleGameObject(lessonContents[index]);});  
-            
-            // button.GetComponentInChildren<Button>().interactable = false;
+            button.GetComponent<Button>().onClick.AddListener(delegate { ToggleGameObject(lessonContents[index]); });
 
-            // if(lessonIcon.Length >= level)
-            // {
-
-            // } 
+           
         }
-
-        // if(lessonIcon.Length >= level)
-        // {
-            
-        //     for (int i = 0; i < level; i++)
-        //     {
-        //         // lessonBtn[i].interactable = true;
-        //         button.GetComponentInChildren<Button>().interactable = true; 
-
-        //     }
-
-        // }
-
-
     }
-
-    void ToggleGameObject(GameObject go) {
+    void ToggleGameObject(GameObject go)
+    {
         Debug.Log(go);
         if (go.activeInHierarchy == true)
         {
@@ -75,7 +56,7 @@ public class LessonScreen : MonoBehaviour
         {
             item.SetActive(false);
         }
-        
+
         go.SetActive(true);
     }
 }
