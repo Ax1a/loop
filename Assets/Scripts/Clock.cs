@@ -56,7 +56,6 @@ public class Clock : MonoBehaviour
         day = DataManager.GetDay();
         month = DataManager.GetMonth();
         year = DataManager.GetYear();
-        SetTimeDataString();
 
         if (hr < 12)
         {
@@ -65,6 +64,8 @@ public class Clock : MonoBehaviour
         else {
             isAm = false;
         }
+
+        SetTimeDataString();
     }
     
     void Update()

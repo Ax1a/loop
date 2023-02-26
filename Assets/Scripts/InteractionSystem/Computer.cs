@@ -16,7 +16,7 @@ public class Computer : MonoBehaviour, Interactable
 
     public bool Interact(InteractObject interactor)
     {
-        // Disable HUD
+        // Disable HUD (Fix error when disabled)
         // _hud.gameObject.SetActive(false);
         _interactOverlay.SetActive(false);
 

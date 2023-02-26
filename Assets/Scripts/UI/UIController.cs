@@ -18,11 +18,6 @@ public class UIController : MonoBehaviour
     [SerializeField] private Button optionBtn;
     [SerializeField] private Button quitBtn;
 
-    [Header ("Keyboard Shortcuts")]
-    [SerializeField] private KeyCode shop;
-    [SerializeField] private KeyCode inventory;
-    [SerializeField] private KeyCode menu;
-
     private bool _anyActive;
     public static UIController Instance;
 
@@ -43,13 +38,13 @@ public class UIController : MonoBehaviour
     {
         if (BotGuide.Instance.guideIsActive()) return;
 
-        if(Input.GetKeyDown(menu)){
+        if(Input.GetKeyDown(InputManager.Instance.menu)){
             ToggleUI("PauseMenu");
         }
-        else if(Input.GetKeyDown(shop)) {
+        else if(Input.GetKeyDown(InputManager.Instance.shop)) {
             ToggleTab("Tab1");
         }
-        else if(Input.GetKeyDown(inventory)) {
+        else if(Input.GetKeyDown(InputManager.Instance.inventory)) {
             ToggleTab("Tab2");
         }
 
@@ -114,6 +109,7 @@ public class UIController : MonoBehaviour
 
     void SaveGameData() {
         SaveGame.Instance.SaveGameState();
+        CloseUI(2);
     }
 
     public void CloseUI(int index) {

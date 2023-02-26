@@ -6,22 +6,19 @@ using UnityEngine;
 public class InteractionPromptUI : MonoBehaviour
 {
     [SerializeField] private GameObject _uiPanel;
-    [SerializeField] private GameObject _interactor;
     [SerializeField] private TextMeshProUGUI _promptText;
     [SerializeField] private TextMeshProUGUI _promptKeyText;
-    InteractObject interact;
 
     void Start()
     {
         _uiPanel.SetActive(false);
-        interact = _interactor.GetComponent<InteractObject>();
     }
 
     public bool isDisplayed = false;
     public void SetUp(string promptText)
     {
         _promptText.text = promptText;
-        _promptKeyText.text = interact.getInteractKey().ToString();
+        _promptKeyText.text = InputManager.Instance.interact.ToString();
         _uiPanel.SetActive(true);
         isDisplayed = true;
     }

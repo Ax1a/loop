@@ -16,7 +16,7 @@ public class BotGuide : MonoBehaviour
     [Header("Params")]
     [SerializeField] private float typingSpeed = 0.04f;
     PlayerController playerController;
-    private bool isActive, canContinueNextLine, canSkip;
+    private bool isActive, canContinueNextLine, canSkip, playerSkipped;
 
     private Coroutine displayLineCoroutine;
     
@@ -39,14 +39,14 @@ public class BotGuide : MonoBehaviour
 
     private void Update() {
         if (canContinueNextLine) {
-            continueText.gameObject.SetActive(true);
-            if (Input.GetMouseButtonDown(0) && _dialogues?.Count > 0) {
+            if ((Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space)) && _dialogues?.Count > 0) {
                 _dialogues.RemoveAt(0);
                 ShowDialogue();
             }
         }
-        else {
-            continueText.gameObject.SetActive(false);
+
+        if ((Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space)) && canSkip) {
+            playerSkipped = true;
         }
     }
 
@@ -73,12 +73,19 @@ public class BotGuide : MonoBehaviour
     private IEnumerator DisplayLine(string line) {
         canContinueNextLine = false;
         dialogueText.text = "";
+        continueText.gameObject.SetActive(false);
 
         StartCoroutine(CanSkip());
 
-        foreach (var letter in line.ToCharArray())
+        foreach (char letter in line.ToCharArray())
         {
-            if (Input.GetMouseButtonDown(0) && canSkip) {
+            // if ((Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space)) && canSkip) {
+            //     dialogueText.text = line;
+            //     break;
+            // }
+
+            if (canSkip && playerSkipped) {
+                playerSkipped = false;
                 dialogueText.text = line;
                 break;
             }
@@ -89,14 +96,15 @@ public class BotGuide : MonoBehaviour
 
         canContinueNextLine = true;
         canSkip = false;
+        continueText.gameObject.SetActive(true);
     }
 
     private IEnumerator CanSkip()
-        {
-            canSkip = false; //Making sure the variable is false.
-            yield return new WaitForSeconds(0.03f);
-            canSkip = true;
-        }
+    {
+        canSkip = false; //Making sure the variable is false.
+        yield return new WaitForSeconds(0.05f);
+        canSkip = true;
+    }
 
     public bool guideIsActive() {
         return isActive;

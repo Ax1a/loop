@@ -15,6 +15,8 @@ public class ShopUIScript : MonoBehaviour
     [SerializeField] Transform ShopMenu;
     [SerializeField] Transform ShopItemsContainer;
     [SerializeField] GameObject itemPrefab;
+    [SerializeField] TextMeshProUGUI insufficientFunds;
+    [SerializeField] TextMeshProUGUI reduceFunds;
     [Space (20)]
     [SerializeField] ShopItemsDatabase itemsDB;
 
@@ -63,8 +65,11 @@ public class ShopUIScript : MonoBehaviour
     void BuyItem(ShopItemData item) 
     {
         if(DataManager.CanSpendMoney(item.price)) {
+            insufficientFunds.gameObject.SetActive(false);
+
             inventory.AddItem(item);
             DataManager.SpendMoney(item.price);
+            StartCoroutine(showReduceFunds(item.price));
 
             if (DataManager.GetQuestProgress() == 1) {
                 BotGuide.Instance.AddDialogue("Great! You can grab a food or beverage when you need an energy."); 
@@ -73,9 +78,22 @@ public class ShopUIScript : MonoBehaviour
             }
         }
         else {
-            Debug.Log("Insufficient money");
+            StartCoroutine(showInsufficientText());
         }
         Debug.Log(inventory.inventoryItems);
+    }
+
+    IEnumerator showInsufficientText() {
+        insufficientFunds.gameObject.SetActive(true);
+        yield return new WaitForSeconds(1.5f);
+        insufficientFunds.gameObject.SetActive(false);
+    }
+
+    IEnumerator showReduceFunds(int price) {
+        reduceFunds.gameObject.SetActive(true);
+        reduceFunds.text = "-" + price.ToString();
+        yield return new WaitForSeconds(1.5f);
+        reduceFunds.gameObject.SetActive(false);
     }
 
     //adding listeners to open and close the shop UI

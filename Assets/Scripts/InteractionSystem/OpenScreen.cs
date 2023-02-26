@@ -2,14 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class OpenScreen : MonoBehaviour
 {
+    [SerializeField] private GameObject[] taskbarIcons;
     public void openScreen(GameObject panel)
     {
         if (panel != null)
         {
             bool isActive = panel.activeSelf;
+
+            if (panel.name == "Lesson Screen") taskbarIcons[0].SetActive(!isActive);
             panel.SetActive(!isActive);
         }
     }
