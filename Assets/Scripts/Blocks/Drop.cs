@@ -26,10 +26,7 @@ public class Drop : MonoBehaviour, IDropHandler
                 Debug.Log("Dropped Item");
                 //Check the correct answer through ID of the blocks
                 if(eventData.pointerDrag.GetComponent<Drag>().id == id)
-                {
-                    // varInput = simpleBlock.GetComponentInChildren<TMP_InputField>();
-                    // string varName = varInput.text;
-                    // Debug.Log(varName);  
+                { 
                     //to-do: if points was added, it will not generate anymore
                     Debug.Log("Correct");
                     GameObject.Find("Win").GetComponent<Win>().AddPoints();

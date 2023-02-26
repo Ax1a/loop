@@ -12,7 +12,6 @@ public class GameSharedUI : MonoBehaviour
     public static GameSharedUI Instance;
 
     public Button[] lessonBtn;
-    int reachedLesson;
 
 
     void Awake()
@@ -31,6 +30,7 @@ public class GameSharedUI : MonoBehaviour
     {
 
         UpdateMoneyUITxt();
+   
     }
 
     void Update()
@@ -51,23 +51,4 @@ public class GameSharedUI : MonoBehaviour
         textMesh.text = value.ToString();
     }
 
-    public void updateButtonDisabled()
-    {
-        foreach (Button btn in lessonBtn)
-        {
-            btn.interactable = false;
-        }
-
-        if (lessonBtn.Length >= reachedLesson)
-        {
-            for (int i = 0; i < reachedLesson; i++)
-            {
-                lessonBtn[i].interactable = true;
-            }
-        }
-        else
-        {
-            Debug.Log("No Levels Left");
-        }
-    }
 }
