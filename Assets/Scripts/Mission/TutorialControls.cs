@@ -15,8 +15,8 @@ public class TutorialControls : Tutorial
 
                 // Add change color text here when completed
                 if (Input.inputString == "b") {
-                    DataManager.AddMoney(20);
-                    BotGuide.Instance.AddDialogue("Great! You have been given 20 currency units to spend."); 
+                    DataManager.AddMoney(15);
+                    BotGuide.Instance.AddDialogue("Great! You have been given 15 currency units to spend."); 
                     BotGuide.Instance.AddDialogue("Perhaps you could treat yourself to a nice cup of coffee? Try clicking the buy button of an item.");
                     BotGuide.Instance.ShowDialogue();
                 }

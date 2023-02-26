@@ -12,13 +12,8 @@ public class InteractObject : MonoBehaviour
 
     private readonly Collider[] _colliders = new Collider[3];
     [SerializeField] private int _numFound;
-    [SerializeField] private KeyCode interactKey;
 
     private Interactable _interactable;
-
-    public KeyCode getInteractKey() {
-        return interactKey;
-    }
 
     public bool NearInteractable() {
         if (_numFound > 0) return true;
@@ -38,7 +33,7 @@ public class InteractObject : MonoBehaviour
             {
                 if (!_interactionPromptUI.isDisplayed) _interactionPromptUI.SetUp(_interactable.InteractionPrompt);
                 // if (Keyboard.current.eKey.wasPressedThisFrame) _interactable.Interact(this);
-                if (Input.GetKeyDown(interactKey)) 
+                if (Input.GetKeyDown(InputManager.Instance.interact)) 
                 { 
                     _interactable.Interact(this);
                 } 
