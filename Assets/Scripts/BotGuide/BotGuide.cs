@@ -16,6 +16,18 @@ public class BotGuide : MonoBehaviour
     
     [Header("Params")]
     [SerializeField] private float typingSpeed = 0.04f;
+
+    [Header("Audio")]
+    [SerializeField] private AudioClip[] dialogueTypingSoundClips;
+    [Range (1,5)]
+    [SerializeField] private int frequencyLevel = 2;
+    [Range (-3,3)]
+    [SerializeField] private float minPitch = 0.5f;
+    [Range (-3,3)]
+    [SerializeField] private float maxPitch = 3f;
+    [SerializeField] private bool stopAudioSource;
+    private AudioSource audioSource;
+
     PlayerController playerController;
     private bool isActive, canContinueNextLine, canSkip, playerSkipped;
 
@@ -36,6 +48,7 @@ public class BotGuide : MonoBehaviour
 
     private void OnEnable() {
         playerController = character.GetComponent<PlayerController>();
+        audioSource = this.gameObject.AddComponent<AudioSource>();
     }
 
     private void Update() {
@@ -74,25 +87,22 @@ public class BotGuide : MonoBehaviour
 
     private IEnumerator DisplayLine(string line) {
         canContinueNextLine = false;
-        dialogueText.text = "";
+        dialogueText.text = line;
+        dialogueText.maxVisibleCharacters = 0;
         continueText.gameObject.SetActive(false);
 
         StartCoroutine(CanSkip());
 
         foreach (char letter in line.ToCharArray())
         {
-            // if ((Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space)) && canSkip) {
-            //     dialogueText.text = line;
-            //     break;
-            // }
-
             if (canSkip && playerSkipped) {
                 playerSkipped = false;
-                dialogueText.text = line;
+                dialogueText.maxVisibleCharacters = line.Length;
                 break;
             }
+            PlayDialogueSound(dialogueText.maxVisibleCharacters, dialogueText.text[dialogueText.maxVisibleCharacters]);
+            dialogueText.maxVisibleCharacters++;
 
-            dialogueText.text += letter;
             yield return new WaitForSeconds(typingSpeed);
         }
 
@@ -100,6 +110,36 @@ public class BotGuide : MonoBehaviour
         canContinueNextLine = true;
         canSkip = false;
         continueText.gameObject.SetActive(true);
+    }
+
+    private void PlayDialogueSound(int currentDisplayedCharacterCount, char currentCharacter) {
+        if (currentDisplayedCharacterCount % frequencyLevel == 0) {
+            // Fix overlapping sound
+            if (stopAudioSource) audioSource.Stop();
+
+            AudioClip soundClip = null;
+
+            int hashCode = currentCharacter.GetHashCode();
+            // Sound clip
+            int predictableIndex = hashCode % dialogueTypingSoundClips.Length;
+            soundClip = dialogueTypingSoundClips[predictableIndex];
+            // Pitch
+            int minPitchInt = (int) (minPitch * 100);
+            int maxPitchInt = (int) (maxPitch * 100);
+            int pitchRangeInt = maxPitchInt - minPitchInt;
+
+            if (pitchRangeInt != 0) {
+                int predictablePitchInt = (hashCode % pitchRangeInt) + minPitchInt;
+                float predictablePitch = predictablePitchInt / 100f;
+                audioSource.pitch = predictablePitch;
+            }
+            else {
+                audioSource.pitch = minPitch;
+            }
+
+            // Play sound each letter
+            audioSource.PlayOneShot(soundClip);
+        }
     }
 
     private IEnumerator CanSkip()
