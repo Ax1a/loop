@@ -7,6 +7,8 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject mainMenu;
     [SerializeField] private GameObject continueBtn;
     [SerializeField] private GameObject popUp;
+    [SerializeField] private GameObject optionsPopUp;
+    [SerializeField] private GameObject musicSettingPopUp;
     [SerializeField] private GameObject characterCreation;
     [SerializeField] private GameObject loading;
     [SerializeField] private GameObject characterCamera;
@@ -46,10 +48,39 @@ public class MainMenu : MonoBehaviour
         mainMenu.SetActive(false);
         characterCreation.SetActive(true);
         characterCamera.SetActive(true);
+        
+    }
+
+    public void Options() {
+        
+        optionsPopUp.SetActive(true);
+
+    }
+
+    public void SoundOption(){
+        
+        optionsPopUp.SetActive(false);
+        musicSettingPopUp.SetActive(true);
+
     }
 
     public void Cancel() {
+      
+        if (popUp.activeSelf)
+        {
         popUp.SetActive(false);
+        }
+
+        if (optionsPopUp.activeSelf)
+        {
+        optionsPopUp.SetActive(false);
+        }
+
+        if (musicSettingPopUp.activeSelf)
+        {
+        musicSettingPopUp.SetActive(false);
+        }
+
     }
 
     public void ContinueGame(int sceneID) {
