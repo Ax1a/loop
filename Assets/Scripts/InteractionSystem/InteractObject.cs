@@ -9,6 +9,7 @@ public class InteractObject : MonoBehaviour
     [SerializeField] private float _interactionPointRadius = 0.5f;
     [SerializeField] private LayerMask _interactableMask;
     [SerializeField] private InteractionPromptUI _interactionPromptUI;
+    Outline outline;
 
     private readonly Collider[] _colliders = new Collider[3];
     [SerializeField] private int _numFound;
@@ -28,20 +29,19 @@ public class InteractObject : MonoBehaviour
         if (_numFound > 0)
         {
             _interactable = _colliders[0].GetComponent<Interactable>();
+            outline = _colliders[0].GetComponent<Outline>();
 
             if (_interactable != null)
             {
+                if (outline != null) outline.enabled = true;
                 if (!_interactionPromptUI.isDisplayed) _interactionPromptUI.SetUp(_interactable.InteractionPrompt);
-                // if (Keyboard.current.eKey.wasPressedThisFrame) _interactable.Interact(this);
-                if (Input.GetKeyDown(InputManager.Instance.interact)) 
-                { 
-                    _interactable.Interact(this);
-                } 
+                if (Input.GetKeyDown(InputManager.Instance.interact)) _interactable.Interact(this);
             }
         }
         else
         {
             if (_interactable != null) _interactable = null;
+            if (outline != null) outline.enabled = false;
             if (_interactionPromptUI.isDisplayed) _interactionPromptUI.Close();
         }
     }
