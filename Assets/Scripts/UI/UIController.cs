@@ -38,7 +38,7 @@ public class UIController : MonoBehaviour
     {
         if (BotGuide.Instance.guideIsActive()) return;
 
-        if(Input.GetKeyDown(InputManager.Instance.menu)){
+        if(Input.GetKeyDown(InputManager.Instance.exit) && _anyActive == false){
             ToggleUI("PauseMenu");
         }
         else if(Input.GetKeyDown(InputManager.Instance.shop)) {
@@ -68,7 +68,7 @@ public class UIController : MonoBehaviour
         saveBtn.onClick.AddListener(SaveGameData);
     }
 
-    void ToggleTab(string tabToOpen) {
+    public void ToggleTab(string tabToOpen) {
         ToggleUI("TabMenuCanvas");
 
         // Open the tab based on parameter
@@ -86,7 +86,6 @@ public class UIController : MonoBehaviour
         foreach (var ui in gameUI)
         {
             if (ui.activeSelf == true && (ui.name != uiToOpen && ui.name != "InteractImage" && ui.name != "Guide")) {
-                Debug.Log(ui.name);
                 otherUIIsOpen = true;
                 break;
             }

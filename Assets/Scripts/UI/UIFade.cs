@@ -31,9 +31,9 @@ public class UIFade : MonoBehaviour
 				});
 		}
 
-		private void OnDisable() {
-				FadeOut();
-		}
+		// private void OnDisable() {
+		// 		FadeOut();
+		// }
 
     private void Fade(float endValue, float duration, TweenCallback onEnd)
 		{

@@ -23,6 +23,7 @@ using System.Collections.Generic;
     public Dictionary<string, int> inventoryItems = new Dictionary<string, int>();
 }
 
+
 public static class DataManager
 {
     static PlayerData playerData = new PlayerData();

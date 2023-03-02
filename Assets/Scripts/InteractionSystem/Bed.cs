@@ -21,6 +21,7 @@ public class Bed : MonoBehaviour, Interactable
 
         if (_clock.Hour < 17) {
             sleepConfirmation.SetActive(true);
+            UIController.Instance.SetPanelActive(true);
         }
         else {
             StartCoroutine(SleepingPopUp.Instance.ShowPopUp());
@@ -31,6 +32,7 @@ public class Bed : MonoBehaviour, Interactable
 
     public void CancelSleep() {
         sleepConfirmation.SetActive(false);
+        UIController.Instance.SetPanelActive(false);
     }
 
     public void ContinueSleep() {
