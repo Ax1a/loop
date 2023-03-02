@@ -6,7 +6,7 @@ public class InputManager : MonoBehaviour
 {
     public KeyCode shop;
     public KeyCode inventory;
-    public KeyCode menu;
+    public KeyCode exit;
     public KeyCode interact;
 
     public static InputManager Instance;

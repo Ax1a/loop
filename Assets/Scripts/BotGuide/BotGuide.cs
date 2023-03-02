@@ -25,6 +25,9 @@ public class BotGuide : MonoBehaviour
     [SerializeField] private float minPitch = 0.5f;
     [Range (-3,3)]
     [SerializeField] private float maxPitch = 3f;
+    [Range (0,1)]
+    [SerializeField] private float dialogueVolume = 1f;
+
     [SerializeField] private bool stopAudioSource;
     private AudioSource audioSource;
 
@@ -49,6 +52,7 @@ public class BotGuide : MonoBehaviour
     private void OnEnable() {
         playerController = character.GetComponent<PlayerController>();
         audioSource = this.gameObject.AddComponent<AudioSource>();
+        audioSource.volume = dialogueVolume;
     }
 
     private void Update() {

@@ -20,16 +20,11 @@ public class ShopUIScript : MonoBehaviour
     [Space (20)]
     [SerializeField] ShopItemsDatabase itemsDB;
 
-    [Header ("Shop Events")]
-    [SerializeField] GameObject shopUI;
-    [SerializeField] GameObject mainUI;
-    [SerializeField] Button openShopBtn;
-    [SerializeField] Button closeShopBtn;
+    private Coroutine showCoroutineReduce, showCoroutineInsufficient;
 
     // Start is called before the first frame update
     void Start()
     {
-        AddShopEvents();
         GenerateShopItemsUI();
     }
 
@@ -69,8 +64,9 @@ public class ShopUIScript : MonoBehaviour
 
             inventory.AddItem(item);
             DataManager.SpendMoney(item.price);
-            StartCoroutine(showReduceFunds(item.price));
-
+            if (showCoroutineReduce != null) StopCoroutine(showCoroutineReduce);
+            showCoroutineReduce = StartCoroutine(showReduceFunds(item.price));
+            
             if (DataManager.GetQuestProgress() == 1) {
                 BotGuide.Instance.AddDialogue("Great! You can grab a food or beverage when you need an energy."); 
                 BotGuide.Instance.AddDialogue("Now let's close the shop to continue the tutorial.");
@@ -78,7 +74,8 @@ public class ShopUIScript : MonoBehaviour
             }
         }
         else {
-            StartCoroutine(showInsufficientText());
+            if (showCoroutineInsufficient != null) StopCoroutine(showCoroutineInsufficient);
+            showCoroutineInsufficient = StartCoroutine(showInsufficientText());
         }
         Debug.Log(inventory.inventoryItems);
     }
@@ -94,26 +91,5 @@ public class ShopUIScript : MonoBehaviour
         reduceFunds.text = "-" + price.ToString();
         yield return new WaitForSeconds(1.5f);
         reduceFunds.gameObject.SetActive(false);
-    }
-
-    //adding listeners to open and close the shop UI
-    void AddShopEvents()
-    {
-        openShopBtn.onClick.RemoveAllListeners();
-        openShopBtn.onClick.AddListener(openShop);
-
-        closeShopBtn.onClick.RemoveAllListeners();
-        closeShopBtn.onClick.AddListener(closeShop);
-    }
-
-    void openShop()
-    {
-        shopUI.SetActive(true);
-    }
-
-    void closeShop()
-    {
-        shopUI.SetActive(false);
-        mainUI.SetActive(true);
     }
 }

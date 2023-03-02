@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class TabMenuScript : MonoBehaviour
 {
-    public GameObject[] tabs;
+    [SerializeField] private GameObject[] mainTabs;
 
-    public void SelectTab(int tab) {
-        for (int i = 0; i < tabs.Length; i++)
+    public void SelectMainTab(int tab) {
+        for (int i = 0; i < mainTabs.Length; i++)
         {   
-            tabs[i].SetActive(false);
+            mainTabs[i].SetActive(false);
         }
 
-        tabs[tab - 1].SetActive(true);
+        mainTabs[tab - 1].SetActive(true);
     }
 }
