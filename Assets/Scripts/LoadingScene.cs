@@ -10,6 +10,7 @@ public class LoadingScene : MonoBehaviour
     [SerializeField] Image LoadingBarFill;
 
     public void LoadScene(int sceneID) {
+        AudioManager.Instance.PlayMusic("Theme_2");
         StartCoroutine(LoadSceneAsync(sceneID));
     }
 

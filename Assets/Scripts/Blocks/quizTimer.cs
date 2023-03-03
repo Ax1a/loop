@@ -16,6 +16,13 @@ public class quizTimer : MonoBehaviour
     public GameObject startPanel;
     [HideInInspector] public bool isStart = false;
     [SerializeField]public TextMeshProUGUI countDownText;
+    public static quizTimer Instance;
+    private void Awake() {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+    }
     void Start()
     {
         //Define starting time based on difficulty levels.. 

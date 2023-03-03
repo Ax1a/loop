@@ -23,14 +23,13 @@ public class Win : MonoBehaviour
     public static Win Instance;
     //[HideInInspector] public Drag drag;
 
-    private void Awake() {
+    private void Awake()
+    {
         if (Instance == null)
         {
             Instance = this;
         }
     }
-
-    // Start is called before the first frame update
     void Start()
     {
         // ptsToWin = myBlocks.transform.childCount;
@@ -49,12 +48,6 @@ public class Win : MonoBehaviour
         blocksInitPos.ResetPositions();
         Debug.Log("Retry");
     }
-
-    public void resPos()
-    {
-        // myBlocks.transform.position = initPos;
-    }
-
     public void validate()
     {
         if (currPts >= ptsToWin)
@@ -65,14 +58,12 @@ public class Win : MonoBehaviour
             timer.stopTime();
             Debug.Log("Winner");
             Debug.Log("Points: " + currPts);
-
+ 
             if (simpleBlock != null)
             {
                 input = simpleBlock.GetComponentInChildren<TMP_InputField>();
                 output.text = input.text;
-
             }
-
         }
         else
         {
@@ -86,6 +77,17 @@ public class Win : MonoBehaviour
     {
         currPts += 1;
         Debug.Log(currPts);
+    }
+
+    public float ComputedReward(int score, float time)
+    {
+        // Calculate the raw score based on the player's score and time
+        float rawScore = score * Mathf.Pow(2f, -time);
+
+        // Compute the reward by rounding the raw score to the nearest integer
+        // int reward = Mathf.RoundToInt(rawScore);
+
+        return rawScore;
     }
 
 }

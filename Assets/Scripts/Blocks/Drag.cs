@@ -74,7 +74,7 @@ public class Drag : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndD
     public void OnPointerDown(PointerEventData eventData)
     {
       //  InstantiateNewObject();
-        Debug.Log("OnPointerDown");
+        AudioManager.Instance.PlaySfx("Pop");
     }
     public void ResetPos(){
         transform.position = initPos;

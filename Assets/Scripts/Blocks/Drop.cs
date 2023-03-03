@@ -30,9 +30,11 @@ public class Drop : MonoBehaviour, IDropHandler
                     //to-do: if points was added, it will not generate anymore
                     Debug.Log("Correct");
                     GameObject.Find("Win").GetComponent<Win>().AddPoints();
+                    AudioManager.Instance.PlaySfx("Pop");
                 }
                 else
                 {
+                    AudioManager.Instance.PlaySfx("Pop");
                     Debug.Log("Wrong");
                 }
             }
