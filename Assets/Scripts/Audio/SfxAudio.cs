@@ -13,4 +13,9 @@ public class SfxAudio : MonoBehaviour
     {
         AudioManager.Instance.PlaySfx("Click");
     }
+
+    public void btnHoverAudio () 
+    {
+        AudioManager.Instance.PlaySfx("Hover");
+    }
 }

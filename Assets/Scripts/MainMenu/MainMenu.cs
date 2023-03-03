@@ -29,6 +29,7 @@ public class MainMenu : MonoBehaviour
     }
 
     public void NewGame(int sceneID) {
+        AudioManager.Instance.PlaySfx("Button");
         // If no save data, just load to the main game
         if (!BinarySerializer.HasSaved(FileName)) {
             mainMenu.SetActive(false);
@@ -56,14 +57,12 @@ public class MainMenu : MonoBehaviour
     public void Options() {
         AudioManager.Instance.PlaySfx("Button");
         optionsPopUp.SetActive(true);
-
     }
 
     public void SoundOption(){
         AudioManager.Instance.PlaySfx("Button");
         optionsPopUp.SetActive(false);
         musicSettingPopUp.SetActive(true);
-
     }
 
     public void Cancel() {
@@ -82,7 +81,6 @@ public class MainMenu : MonoBehaviour
         {
         musicSettingPopUp.SetActive(false);
         }
-
     }
 
     public void ContinueGame(int sceneID) {
