@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     private Animator _animator;
     [SerializeField] private float speed = 6f;
     [SerializeField] private float turnSmoothTime = 0.1f;
-
+     
     private void Start() {
         _animator = GetComponentInChildren<Animator>();
     }
@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
             Vector3 forward = _camera.transform.forward;
 
             Vector3 direction = (forward * vertical + _camera.transform.right * horizontal).normalized;
+            
             
             if(direction.magnitude >= 0.1f)
             {

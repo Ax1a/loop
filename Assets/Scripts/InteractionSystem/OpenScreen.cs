@@ -12,7 +12,6 @@ public class OpenScreen : MonoBehaviour
         if (panel != null)
         {
             bool isActive = panel.activeSelf;
-
             if (panel.name == "Lesson Screen") taskbarIcons[0].SetActive(!isActive);
             panel.SetActive(!isActive);
         }

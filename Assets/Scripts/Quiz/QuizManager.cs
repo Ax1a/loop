@@ -87,13 +87,10 @@ public class QuizManager : MonoBehaviour
         SetCurrentQuestion(_questionIndex);
         // QnA.RemoveAt(currentQuestion);
         // generateQuestion();
-        
     }
-
     public void Wrong(){
         SetCurrentQuestion(_questionIndex);
     }
-
     void SetCurrentQuestion(int questionIndex){
         if (questionIndex >= QnA.Count) {
             GameOver();

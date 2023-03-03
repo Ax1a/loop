@@ -21,6 +21,7 @@ public class InteractionPromptUI : MonoBehaviour
         _promptKeyText.text = InputManager.Instance.interact.ToString();
         _uiPanel.SetActive(true);
         isDisplayed = true;
+        AudioManager.Instance.PlaySfx("Interact");
     }
 
     public void Close()

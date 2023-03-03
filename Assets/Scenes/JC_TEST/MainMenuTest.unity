@@ -3483,7 +3483,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -13735,10 +13735,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicSounds:
   - soundName: Theme
-    clip: {fileID: 8300000, guid: e92996c112fe2644ea752e9d09c790c8, type: 3}
+    clip: {fileID: 8300000, guid: 2f3f3e281ab986b40b1047a0fe7fe40f, type: 3}
+  - soundName: Theme_2
+    clip: {fileID: 8300000, guid: d89daf4773c9d3c4cbc5e183d7c83dfa, type: 3}
   sfxSounds:
   - soundName: Block Drag
     clip: {fileID: 8300000, guid: c7e9be103f78a9d488271218feea26e2, type: 3}
+  - soundName: Button
+    clip: {fileID: 8300000, guid: 2e386c352455fbe4c99aa5654d3196df, type: 3}
+  - soundName: Walk
+    clip: {fileID: 8300000, guid: bb030ed12f273d64aa62a9941977afb2, type: 3}
   musicSource: {fileID: 269110719}
   sfxSource: {fileID: 1670716019}
 --- !u!1001 &1194084916
@@ -17505,7 +17511,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
