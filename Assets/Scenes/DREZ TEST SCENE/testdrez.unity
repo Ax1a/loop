@@ -1669,9 +1669,9 @@ PrefabInstance:
         type: 3}
       propertyPath: m_text
       value: "\nA function is a collection of statements that execute sequentially,
-        it is also a reusable sequence of statements designed to do a particular job.
-        The C++ standard library comes with plenty of already-written functions for
-        you to use -- however, it\u2019s just as common to write your own. Functions
+        it is also a reusable sequence of statements designed to do a particular
+        job. The C++ standard library comes with plenty of already-written functions
+        for you to use -- however, it\u2019s just as common to write your own. Functions
         that you write yourself are called user-defined functions."
       objectReference: {fileID: 0}
     - target: {fileID: 7268993380743664753, guid: 8f909877bb78fea479c142727e7d9411,
@@ -1941,6 +1941,90 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 36986705}
   m_CullTransparentMesh: 1
+--- !u!1 &38115024
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 38115025}
+  - component: {fileID: 38115027}
+  - component: {fileID: 38115026}
+  m_Layer: 0
+  m_Name: Cylinder (1)
+  m_TagString: Player
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &38115025
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 38115024}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.6, y: 0, z: 4.67}
+  m_LocalScale: {x: 1.0079412, y: 1.2316034, z: 1.0079412}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 358066315}
+  m_Father: {fileID: 482760896}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &38115026
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 38115024}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 58a5255f1402cf8498f3ba3759d0ac88, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &38115027
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 38115024}
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &53815646
 GameObject:
   m_ObjectHideFlags: 0
@@ -3895,10 +3979,10 @@ PrefabInstance:
       propertyPath: m_text
       value: '
 
-        Sequential logic as the name suggests follows a serial or sequential flow
-        in which the flow depends on the series of instructions given to the computer.
-        Unless new instructions are given, the modules are executed in the obvious
-        sequence. '
+        Sequential logic as the name suggests follows a serial or
+        sequential flow in which the flow depends on the series of instructions given
+        to the computer. Unless new instructions are given, the modules are executed
+        in the obvious sequence. '
       objectReference: {fileID: 0}
     - target: {fileID: 7268993380743664753, guid: 8f909877bb78fea479c142727e7d9411,
         type: 3}
@@ -7199,10 +7283,10 @@ PrefabInstance:
       propertyPath: m_text
       value: '
 
-        To declare an array, define the variable type, specify the name of the array
-        followed by square brackets, and specify the number of elements it should
-        store. To insert values to it, we can use an array literal - place the values
-        in a comma-separated list, inside curly braces:'
+        To declare an array, define the variable type, specify the
+        name of the array followed by square brackets, and specify the number of
+        elements it should store. To insert values to it, we can use an array literal
+        - place the values in a comma-separated list, inside curly braces:'
       objectReference: {fileID: 0}
     - target: {fileID: 7268993380743664753, guid: 8f909877bb78fea479c142727e7d9411,
         type: 3}
@@ -7441,9 +7525,9 @@ PrefabInstance:
       propertyPath: m_text
       value: '
 
-        An Object is an instance of a Class. When a class is defined, no memory is
-        allocated but when it is instantiated (i.e. an object is created) memory is
-        allocated.'
+        An Object is an instance of a Class. When a class is defined,
+        no memory is allocated but when it is instantiated (i.e. an object is created)
+        memory is allocated.'
       objectReference: {fileID: 0}
     - target: {fileID: 7268993380535108734, guid: 8f909877bb78fea479c142727e7d9411,
         type: 3}
@@ -10503,7 +10587,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
-  m_LocalRotation: {x: 0.24737324, y: 0.028431376, z: -0.0072620925, w: 0.9684758}
+  m_LocalRotation: {x: 0.24737325, y: 0.028431412, z: -0.0072621023, w: 0.9684758}
   m_LocalPosition: {x: -1.932, y: 8.82, z: -10.249}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -12274,6 +12358,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 349878804}
   m_CullTransparentMesh: 1
+--- !u!1 &358066314
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 358066315}
+  m_Layer: 0
+  m_Name: InteractionPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &358066315
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 358066314}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.93, z: 0.865}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 38115025}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &363049826
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13579,8 +13694,8 @@ PrefabInstance:
       propertyPath: m_text
       value: "\nThe first line is informally called the function header, and it tells
         the compiler about the existence of a function, what the function is called,
-        and some other information that we\u2019ll cover in future lessons (like the
-        return type and parameter types). The curly braces and statements in-between
+        and some other information that we\u2019ll cover in future lessons (like
+        the return type and parameter types). The curly braces and statements in-between
         are called the function body. This is where the statements that determine
         what your function does will go."
       objectReference: {fileID: 0}
@@ -15885,6 +16000,8 @@ Transform:
   - {fileID: 1081644224}
   - {fileID: 443922539}
   - {fileID: 832149258}
+  - {fileID: 38115025}
+  - {fileID: 1434054488}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -16804,9 +16921,9 @@ PrefabInstance:
       propertyPath: m_text
       value: '
 
-        To create a class, simply use the keyword "class" and assign a name for your
-        class. The body of the class is defined inside the curly brackets and terminated
-        by a semicolon at the end.'
+        To create a class, simply use the keyword "class" and assign
+        a name for your class. The body of the class is defined inside the curly
+        brackets and terminated by a semicolon at the end.'
       objectReference: {fileID: 0}
     - target: {fileID: 7268993380743664753, guid: 8f909877bb78fea479c142727e7d9411,
         type: 3}
@@ -20991,8 +21108,8 @@ PrefabInstance:
       propertyPath: m_text
       value: '
 
-        The keyword char represent characters. It is 1 byte in size. Single quotes
-        '' '' are used to enclose characters in C++.'
+        The keyword char represent characters. It is 1 byte in size.
+        Single quotes '' '' are used to enclose characters in C++.'
       objectReference: {fileID: 0}
     - target: {fileID: 7268993380743664753, guid: 8f909877bb78fea479c142727e7d9411,
         type: 3}
@@ -21537,10 +21654,10 @@ PrefabInstance:
       propertyPath: m_text
       value: '
 
-        You can do a lot of things with array such as accessing and changing the elements
-        inside of it. You access an array element by referring to the index number
-        inside square brackets [], and to change the value of a specific element,
-        refer to the index number.'
+        You can do a lot of things with array such as accessing and
+        changing the elements inside of it. You access an array element by referring
+        to the index number inside square brackets [], and to change the value of
+        a specific element, refer to the index number.'
       objectReference: {fileID: 0}
     - target: {fileID: 7268993380743664753, guid: 8f909877bb78fea479c142727e7d9411,
         type: 3}
@@ -21798,9 +21915,9 @@ PrefabInstance:
       propertyPath: m_text
       value: '
 
-        Selection Logic simply involves a number of conditions or parameters which
-        decides one out of several written modules. The structures which use these
-        type of logic are known as Conditional Structures.'
+        Selection Logic simply involves a number of conditions or
+        parameters which decides one out of several written modules. The structures
+        which use these type of logic are known as Conditional Structures.'
       objectReference: {fileID: 0}
     - target: {fileID: 7268993380743664753, guid: 8f909877bb78fea479c142727e7d9411,
         type: 3}
@@ -23402,13 +23519,14 @@ PrefabInstance:
       propertyPath: m_text
       value: '
 
-        Declared functions are not executed immediately. They are "saved for later
-        use", and will be executed later, when they are called.
+        Declared functions are not executed immediately. They are
+        "saved for later use", and will be executed later, when they are called.
 
 
 
-        To call a function, write the function''s name followed by two parentheses
-        () and a semicolon ;. For example: myFunction();'
+        To
+        call a function, write the function''s name followed by two parentheses ()
+        and a semicolon ;. For example: myFunction();'
       objectReference: {fileID: 0}
     - target: {fileID: 7268993380743664753, guid: 8f909877bb78fea479c142727e7d9411,
         type: 3}
@@ -24662,10 +24780,10 @@ PrefabInstance:
     - target: {fileID: 7268993380535108734, guid: 8f909877bb78fea479c142727e7d9411,
         type: 3}
       propertyPath: m_text
-      value: "What happens if two operators in the same expression have the same precedence
-        level? For example, in the expression 3 * 4 / 2, the multiplication and division
-        operators are both precedence level 5. In this case, the compiler can\u2019t
-        rely upon precedence alone to determine how to evaluate the result.\r\n\r\nIf
+      value: "What happens if two operators in the same expression have the same
+        precedence level? For example, in the expression 3 * 4 / 2, the multiplication
+        and division operators are both precedence level 5. In this case, the compiler
+        can\u2019t rely upon precedence alone to determine how to evaluate the result.\r\n\r\nIf
         two operators with the same precedence level are adjacent to each other in
         an expression, the operator\u2019s associativity tells the compiler whether
         to evaluate the operators from left to right or from right to left. "
@@ -25778,8 +25896,8 @@ PrefabInstance:
       propertyPath: m_text
       value: '
 
-        float is the keyword used to hold floating-point numbers (decimals and exponentials).
-        The float variable has a size of 4 bytes.'
+        float is the keyword used to hold floating-point numbers
+        (decimals and exponentials). The float variable has a size of 4 bytes.'
       objectReference: {fileID: 0}
     - target: {fileID: 7268993380743664753, guid: 8f909877bb78fea479c142727e7d9411,
         type: 3}
@@ -26309,12 +26427,13 @@ PrefabInstance:
       propertyPath: m_text
       value: '
 
-        Welcome to LOOP! Before you jump into coding, let us show you how the game
-        works!
+        Welcome to LOOP! Before you jump into coding, let us show
+        you how the game works!
 
 
-        In this Tutorial Lesson, you will be able to learn how to use the functions
-        in the game UI that can help you do your missions!'
+        In this Tutorial Lesson, you will be able
+        to learn how to use the functions in the game UI that can help you do your
+        missions!'
       objectReference: {fileID: 0}
     - target: {fileID: 2311345071359125975, guid: 8e0ffb1b5bc0f2c47a250157d2e84112,
         type: 3}
@@ -31460,8 +31579,8 @@ PrefabInstance:
       propertyPath: m_text
       value: '
 
-        Arrays are used to store multiple values in a single variable, instead of
-        declaring separate variables for each value.'
+        Arrays are used to store multiple values in a single variable,
+        instead of declaring separate variables for each value.'
       objectReference: {fileID: 0}
     - target: {fileID: 7268993380743664753, guid: 8f909877bb78fea479c142727e7d9411,
         type: 3}
@@ -40867,12 +40986,11 @@ PrefabInstance:
       propertyPath: m_text
       value: "\nC++ excels in situations where high performance and precise control
         over memory and other resources is needed. Here are a few common types of
-        applications that most likely would be written in C++:\r\n\r\n    Video games\r\n
-        Real-time systems (e.g. for transportation, manufacturing, etc\u2026)\r\n
-        High-performance financial applications (e.g. high frequency trading)\r\n
-        Graphical applications and simulations\r\n    Productivity / office applications\r\n
-        Embedded software\r\n    Audio and video processing\r\n    Artificial intelligence
-        and neural networks"
+        applications that most likely would be written in C++:\r\n\r\n    Video games\r\nReal-time
+        systems (e.g. for transportation, manufacturing, etc\u2026)\r\nHigh-performance
+        financial applications (e.g. high frequency trading)\r\nGraphical applications
+        and simulations\r\n    Productivity / office applications\r\nEmbedded software\r\n   
+        Audio and video processing\r\n    Artificial intelligence and neural networks"
       objectReference: {fileID: 0}
     - target: {fileID: 2311345071359125972, guid: 8e0ffb1b5bc0f2c47a250157d2e84112,
         type: 3}
@@ -43407,6 +43525,37 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1426925905}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1429534148
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1429534149}
+  m_Layer: 0
+  m_Name: InteractionPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1429534149
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1429534148}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.93, z: 0.865}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1434054488}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1432225080
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -43488,6 +43637,90 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1432225080}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1434054487
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1434054488}
+  - component: {fileID: 1434054490}
+  - component: {fileID: 1434054489}
+  m_Layer: 0
+  m_Name: Cylinder (2)
+  m_TagString: Player
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1434054488
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1434054487}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.53, y: 0, z: 4.67}
+  m_LocalScale: {x: 1.0079412, y: 1.2316034, z: 1.0079412}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1429534149}
+  m_Father: {fileID: 482760896}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &1434054489
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1434054487}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 58a5255f1402cf8498f3ba3759d0ac88, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1434054490
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1434054487}
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1436919951
 GameObject:
   m_ObjectHideFlags: 0
@@ -44107,7 +44340,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1455879008}
-  m_LocalRotation: {x: 0.24737324, y: 0.028431376, z: -0.0072620925, w: 0.9684758}
+  m_LocalRotation: {x: 0.24737325, y: 0.028431412, z: -0.0072621023, w: 0.9684758}
   m_LocalPosition: {x: -1.932, y: 8.82, z: -10.249}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -52934,11 +53167,11 @@ PrefabInstance:
       propertyPath: m_text
       value: '
 
-        We often want our types to not only hold data, but provide functions that
-        work with the data as well. In C++, this is typically done via the class keyword.
-        The class keyword defines a new program-defined type called a class. A class
-        declaration does not allocate any memory. It only defines what the class looks
-        like.'
+        We often want our types to not only hold data, but provide
+        functions that work with the data as well. In C++, this is typically done
+        via the class keyword. The class keyword defines a new program-defined type
+        called a class. A class declaration does not allocate any memory. It only
+        defines what the class looks like.'
       objectReference: {fileID: 0}
     - target: {fileID: 7268993380743664753, guid: 8f909877bb78fea479c142727e7d9411,
         type: 3}
@@ -54011,8 +54244,8 @@ PrefabInstance:
       propertyPath: m_text
       value: In mathematics, an operation is a mathematical calculation involving
         zero or more input values (called operands) that produces a new value (called
-        an output value). The specific operation to be performed is denoted by a construct
-        (typically a symbol or pair of symbols) called an operator.
+        an output value). The specific operation to be performed is denoted by a
+        construct (typically a symbol or pair of symbols) called an operator.
       objectReference: {fileID: 0}
     - target: {fileID: 7268993380743664753, guid: 8f909877bb78fea479c142727e7d9411,
         type: 3}
@@ -61861,12 +62094,13 @@ PrefabInstance:
     - target: {fileID: 7268993380535108734, guid: 8f909877bb78fea479c142727e7d9411,
         type: 3}
       propertyPath: m_text
-      value: 'A variable is a named region of memory that contains a value which is
-        a single piece of data stored in memory.
+      value: 'A variable is a named region of memory that contains a value which
+        is a single piece of data stored in memory.
 
 
-        In this Tutorial Lesson, you will be able to learn how to create a variable
-        and assign it with values and data types!
+        In this Tutorial Lesson,
+        you will be able to learn how to create a variable and assign it with values
+        and data types!
 
 
 '
