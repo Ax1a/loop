@@ -1,4 +1,4 @@
-# loop
+# LOOP
 Simulation of programming life
 
 Add to .git/config on project file<br>
