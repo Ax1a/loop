@@ -55,8 +55,8 @@ public class TutorialManager : MonoBehaviour
     }
 
     public void CompletedTutorial() {
-        SetNextTutorial(currentTutorial.Order + 1);
         DataManager.SetQuestProgress(1);
+        SetNextTutorial(currentTutorial.Order + 1);
 
         if (DataManager.GetQuestProgress() == 1) {
             BotGuide.Instance.AddDialogue("To access the Shop, press the 'B' key on your keyboard. To open your Inventory, press the 'I' key."); 
@@ -89,6 +89,7 @@ public class TutorialManager : MonoBehaviour
     public void CompletedAllTutorials() {
         descriptionText.text = "You have completed all the tutorials";
         tutorialPrefab.SetActive(false);
+        SaveGame.Instance.SaveGameState();
     }
 
     public Tutorial GetTutorialByOrder(int Order) {

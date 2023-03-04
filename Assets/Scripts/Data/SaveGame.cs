@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SaveGame : MonoBehaviour
 {
@@ -20,6 +21,11 @@ public class SaveGame : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
     public void SaveGameState() {
         StartCoroutine(SavingAnimation());
         
@@ -30,11 +36,18 @@ public class SaveGame : MonoBehaviour
         DataManager.SetHour(_timeAndDate.Hour);
         DataManager.SetMonth(_timeAndDate.Month);
         DataManager.SetMinute(_timeAndDate.Minute);
+        
+        DataManager.SavePlayerData();
     }
 
     IEnumerator SavingAnimation() {
         savingAnimation.SetActive(true);
         yield return new WaitForSeconds(2.5f);
         savingAnimation.SetActive(false);
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        DataManager.LoadPlayerData();
     }
 }

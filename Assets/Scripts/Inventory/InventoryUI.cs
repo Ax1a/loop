@@ -36,7 +36,7 @@ public class InventoryUI : MonoBehaviour
 
     public void SetInventoryItemQuantity(int quantity)
     {
-        invItemQuantity.text = quantity.ToString();
+        invItemQuantity.text = "x " + quantity.ToString();
     }
 
 

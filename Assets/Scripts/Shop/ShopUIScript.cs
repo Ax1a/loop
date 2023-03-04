@@ -17,6 +17,7 @@ public class ShopUIScript : MonoBehaviour
     [SerializeField] GameObject itemPrefab;
     [SerializeField] TextMeshProUGUI insufficientFunds;
     [SerializeField] TextMeshProUGUI reduceFunds;
+    [SerializeField] GameObject placeholderItem;
     [Space (20)]
     [SerializeField] ShopItemsDatabase itemsDB;
 
@@ -52,6 +53,10 @@ public class ShopUIScript : MonoBehaviour
             uiItem.SetItemEnergy(item.itemEnergy);
             uiItem.SetItemPrice(item.price);
         }
+
+        for(int j = 0; j < 24 - itemsDB.itemsCount; j++) {
+            Instantiate(placeholderItem, ShopItemsContainer);
+        }
     }
 
     // Onclick Function - Add function for storing inventory
@@ -62,10 +67,11 @@ public class ShopUIScript : MonoBehaviour
         if(DataManager.CanSpendMoney(item.price)) {
             insufficientFunds.gameObject.SetActive(false);
 
-            inventory.AddItem(item);
+            DataManager.AddInventoryItem(item);
             DataManager.SpendMoney(item.price);
+            
             if (showCoroutineReduce != null) StopCoroutine(showCoroutineReduce);
-            showCoroutineReduce = StartCoroutine(showReduceFunds(item.price));
+            showCoroutineReduce = StartCoroutine(ShowReduceFunds(item.price));
             
             if (DataManager.GetQuestProgress() == 1) {
                 BotGuide.Instance.AddDialogue("Great! You can grab a food or beverage when you need an energy."); 
@@ -75,18 +81,22 @@ public class ShopUIScript : MonoBehaviour
         }
         else {
             if (showCoroutineInsufficient != null) StopCoroutine(showCoroutineInsufficient);
-            showCoroutineInsufficient = StartCoroutine(showInsufficientText());
+            showCoroutineInsufficient = StartCoroutine(ShowInsufficientText());
         }
-        Debug.Log(inventory.inventoryItems);
     }
 
-    IEnumerator showInsufficientText() {
+    private void OnDisable() {
+        insufficientFunds.gameObject.SetActive(false);
+        reduceFunds.gameObject.SetActive(false);
+    }
+
+    IEnumerator ShowInsufficientText() {
         insufficientFunds.gameObject.SetActive(true);
         yield return new WaitForSeconds(1.5f);
         insufficientFunds.gameObject.SetActive(false);
     }
 
-    IEnumerator showReduceFunds(int price) {
+    IEnumerator ShowReduceFunds(int price) {
         reduceFunds.gameObject.SetActive(true);
         reduceFunds.text = "-" + price.ToString();
         yield return new WaitForSeconds(1.5f);
