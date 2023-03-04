@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.764
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.27449334, g: 0.5736158, b: 0.6160458, a: 0.764}
+  m_IndirectSpecularColor: {r: 0.27449328, g: 0.57361573, b: 0.6160458, a: 0.764}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -299,6 +299,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac1c4549ed033224981de72f20b26bf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  taskbarIcons: []
   lessons: []
 --- !u!114 &4272713
 MonoBehaviour:
@@ -839,6 +840,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac1c4549ed033224981de72f20b26bf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  taskbarIcons: []
   lessons: []
 --- !u!1 &23117296
 GameObject:
@@ -4413,6 +4415,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac1c4549ed033224981de72f20b26bf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  taskbarIcons: []
   lessons: []
 --- !u!114 &128858183
 MonoBehaviour:
@@ -5258,6 +5261,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac1c4549ed033224981de72f20b26bf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  taskbarIcons: []
   lessons: []
 --- !u!4 &156096548 stripped
 Transform:
@@ -6805,6 +6809,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac1c4549ed033224981de72f20b26bf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  taskbarIcons: []
   lessons: []
 --- !u!114 &206017782
 MonoBehaviour:
@@ -10417,6 +10422,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac1c4549ed033224981de72f20b26bf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  taskbarIcons: []
   lessons: []
 --- !u!1 &330585543
 GameObject:
@@ -10497,7 +10503,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
-  m_LocalRotation: {x: 0.24737325, y: 0.028431412, z: -0.0072621023, w: 0.9684758}
+  m_LocalRotation: {x: 0.24737324, y: 0.028431376, z: -0.0072620925, w: 0.9684758}
   m_LocalPosition: {x: -1.932, y: 8.82, z: -10.249}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -14800,8 +14806,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _uiPanel: {fileID: 2108590212}
-  _interactor: {fileID: 482760895}
   _promptText: {fileID: 101782983}
+  _promptKeyText: {fileID: 0}
   isDisplayed: 0
 --- !u!1 &447476918
 GameObject:
@@ -15814,11 +15820,6 @@ MonoBehaviour:
   _camera: {fileID: 1455879008}
   speed: 1.8
   turnSmoothTime: 0.1
-  panels:
-  - {fileID: 2039154027}
-  - {fileID: 652601547}
-  - {fileID: 1666868815}
-  - {fileID: 674754095}
 --- !u!114 &482760899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15838,7 +15839,6 @@ MonoBehaviour:
     m_Bits: 64
   _interactionPromptUI: {fileID: 443922543}
   _numFound: 0
-  interactKey: 101
 --- !u!114 &482760900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15856,7 +15856,6 @@ MonoBehaviour:
   Ground:
     serializedVersion: 2
     m_Bits: 128
-  panelCom: {fileID: 2039154027}
 --- !u!1 &484010700
 GameObject:
   m_ObjectHideFlags: 0
@@ -16362,6 +16361,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac1c4549ed033224981de72f20b26bf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  taskbarIcons: []
   lessons: []
 --- !u!114 &490770496
 MonoBehaviour:
@@ -18185,6 +18185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac1c4549ed033224981de72f20b26bf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  taskbarIcons: []
   lessons: []
 --- !u!1001 &547394556
 PrefabInstance:
@@ -18844,11 +18845,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
-  original: {fileID: 0}
-  originalObject: {fileID: 0}
   parentAfterDrag: {fileID: 0}
-  parentObject: {fileID: 0}
-  canvas: {fileID: 0}
   blockType: 
 --- !u!114 &554575192
 MonoBehaviour:
@@ -20550,11 +20547,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
-  original: {fileID: 0}
-  originalObject: {fileID: 0}
   parentAfterDrag: {fileID: 0}
-  parentObject: {fileID: 0}
-  canvas: {fileID: 0}
   blockType: 
 --- !u!114 &641242353
 MonoBehaviour:
@@ -21231,18 +21224,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 652601542}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &652601546 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1461552341696407159, guid: cb3b6e1706fe49d4aad42c8bfeffdbde,
-    type: 3}
-  m_PrefabInstance: {fileID: 652601542}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &652601547 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1461552340965809309, guid: cb3b6e1706fe49d4aad42c8bfeffdbde,
@@ -22014,6 +21995,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac1c4549ed033224981de72f20b26bf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  taskbarIcons: []
   lessons: []
 --- !u!114 &669527199
 MonoBehaviour:
@@ -26355,6 +26337,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac1c4549ed033224981de72f20b26bf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  taskbarIcons: []
   lessons: []
 --- !u!114 &792063708
 MonoBehaviour:
@@ -27854,6 +27837,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac1c4549ed033224981de72f20b26bf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  taskbarIcons: []
   lessons: []
 --- !u!114 &835553843
 MonoBehaviour:
@@ -28577,6 +28561,8 @@ MonoBehaviour:
   _hud: {fileID: 1227623050}
   compCamera: {fileID: 1400193439}
   computer: {fileID: 13272928}
+  loginAnimation: {fileID: 0}
+  screens: []
 --- !u!224 &864507710 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1107017144577083454, guid: ddd900d4e8af5784b8f5e8c580b59a7e,
@@ -29172,6 +29158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac1c4549ed033224981de72f20b26bf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  taskbarIcons: []
   lessons: []
 --- !u!114 &889529491
 MonoBehaviour:
@@ -29826,6 +29813,8 @@ MonoBehaviour:
   timeFormat: 1
   dateFormat: 0
   secPerMin: 1
+  DaySkybox: {fileID: 0}
+  NightSkybox: {fileID: 0}
 --- !u!1001 &939291941
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30389,6 +30378,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac1c4549ed033224981de72f20b26bf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  taskbarIcons: []
   lessons:
   - {fileID: 779551915}
   - {fileID: 777320045}
@@ -32131,6 +32121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac1c4549ed033224981de72f20b26bf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  taskbarIcons: []
   lessons:
   - {fileID: 1100567836}
   - {fileID: 646241492}
@@ -33644,6 +33635,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac1c4549ed033224981de72f20b26bf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  taskbarIcons: []
   lessons: []
 --- !u!114 &1057147590
 MonoBehaviour:
@@ -34960,11 +34952,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
-  original: {fileID: 0}
-  originalObject: {fileID: 0}
   parentAfterDrag: {fileID: 0}
-  parentObject: {fileID: 0}
-  canvas: {fileID: 0}
   blockType: 
 --- !u!114 &1081813848
 MonoBehaviour:
@@ -36525,6 +36513,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac1c4549ed033224981de72f20b26bf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  taskbarIcons: []
   lessons: []
 --- !u!114 &1149050468
 MonoBehaviour:
@@ -36790,11 +36779,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
-  original: {fileID: 0}
-  originalObject: {fileID: 0}
   parentAfterDrag: {fileID: 0}
-  parentObject: {fileID: 0}
-  canvas: {fileID: 0}
   blockType: 
 --- !u!114 &1164454209
 MonoBehaviour:
@@ -37893,11 +37878,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
-  original: {fileID: 0}
-  originalObject: {fileID: 0}
   parentAfterDrag: {fileID: 0}
-  parentObject: {fileID: 0}
-  canvas: {fileID: 0}
   blockType: 
 --- !u!114 &1208691245
 MonoBehaviour:
@@ -40236,6 +40217,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac1c4549ed033224981de72f20b26bf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  taskbarIcons: []
   lessons:
   - {fileID: 2311345071479120172}
   - {fileID: 317454974}
@@ -40293,7 +40275,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfebe775c95d4854880a478ce279443a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energyTxt: {fileID: 216313607}
+  energyTxts: []
   timeTxt: {fileID: 73397280}
   energyBar: {fileID: 1937962848}
   restoreTime: 5
@@ -41869,6 +41851,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac1c4549ed033224981de72f20b26bf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  taskbarIcons: []
   lessons: []
 --- !u!114 &1368590216
 MonoBehaviour:
@@ -43922,7 +43905,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1455879008}
-  m_LocalRotation: {x: 0.24737325, y: 0.028431412, z: -0.0072621023, w: 0.9684758}
+  m_LocalRotation: {x: 0.24737324, y: 0.028431376, z: -0.0072620925, w: 0.9684758}
   m_LocalPosition: {x: -1.932, y: 8.82, z: -10.249}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -43984,6 +43967,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac1c4549ed033224981de72f20b26bf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  taskbarIcons: []
   lessons: []
 --- !u!114 &1455926959
 MonoBehaviour:
@@ -48729,10 +48713,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 949b1985fd6023745b694cb34886b975, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventoryItems: []
+  placeholder: {fileID: 0}
+  mainUI: {fileID: 0}
+  inventoryUI: {fileID: 0}
+  fullEnergyTxt: {fileID: 0}
   listItemPrefab: {fileID: 2743867275818766705, guid: 94584bc880036fe47a38239ed0262741,
     type: 3}
   listItemParent: {fileID: 286600675}
+  shopDB: {fileID: 0}
   itemSpacing: 1
 --- !u!114 &1666868818
 MonoBehaviour:
@@ -50144,6 +50132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac1c4549ed033224981de72f20b26bf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  taskbarIcons: []
   lessons: []
 --- !u!114 &1734372790
 MonoBehaviour:
@@ -50396,6 +50385,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac1c4549ed033224981de72f20b26bf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  taskbarIcons: []
   lessons: []
 --- !u!114 &1752096231
 MonoBehaviour:
@@ -50457,6 +50447,103 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 32.596924}
   m_SizeDelta: {x: -26.927, y: -118.36}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1758273121
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1758273125}
+  - component: {fileID: 1758273124}
+  - component: {fileID: 1758273123}
+  - component: {fileID: 1758273122}
+  m_Layer: 0
+  m_Name: Cube
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &1758273122
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1758273121}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1758273123
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1758273121}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1758273124
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1758273121}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1758273125
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1758273121}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.54, y: 7.91, z: -3.0502687}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1759515468
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -51392,11 +51479,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
-  original: {fileID: 0}
-  originalObject: {fileID: 0}
   parentAfterDrag: {fileID: 0}
-  parentObject: {fileID: 0}
-  canvas: {fileID: 0}
   blockType: 
 --- !u!114 &1785922462
 MonoBehaviour:
@@ -52437,6 +52520,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac1c4549ed033224981de72f20b26bf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  taskbarIcons: []
   lessons: []
 --- !u!114 &1802352496
 MonoBehaviour:
@@ -54458,6 +54542,7 @@ Transform:
   - {fileID: 111831710}
   - {fileID: 400736679}
   - {fileID: 1231798912}
+  - {fileID: 2097145702}
   m_Father: {fileID: 23760771}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -55377,10 +55462,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 120dedc02fd69c2489fbad7b6da1a52d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _time: {fileID: 934606256}
+  Time: {fileID: 0}
   EnergyPanel: {fileID: 1319454898}
-  _dataMngr: {fileID: 437705867}
   _prompt: Go to sleep
+  sleepConfirmation: {fileID: 0}
 --- !u!65 &1962830526
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -56296,6 +56381,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac1c4549ed033224981de72f20b26bf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  taskbarIcons: []
   lessons: []
 --- !u!114 &1994554838
 MonoBehaviour:
@@ -57008,11 +57094,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
-  original: {fileID: 0}
-  originalObject: {fileID: 0}
   parentAfterDrag: {fileID: 0}
-  parentObject: {fileID: 0}
-  canvas: {fileID: 0}
   blockType: 
 --- !u!114 &2013808116
 MonoBehaviour:
@@ -57512,6 +57594,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac1c4549ed033224981de72f20b26bf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  taskbarIcons: []
   lessons: []
 --- !u!1 &2046026179
 GameObject:
@@ -57941,10 +58024,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainUI: {fileID: 1227623050}
-  pauseUI: {fileID: 674754095}
-  interactionUI: {fileID: 2108590212}
-  dataMngr: {fileID: 437705867}
-  shopUI: {fileID: 0}
+  gameUI: []
+  tabMenus: []
+  Character: {fileID: 0}
   continueBtn: {fileID: 1029093188}
   saveBtn: {fileID: 951976790}
   optionBtn: {fileID: 2105936251}
@@ -58855,6 +58937,108 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2091422260}
   m_CullTransparentMesh: 1
+--- !u!1001 &2097145701
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 2
+    m_TransformParent: {fileID: 1898372598}
+    m_Modifications:
+    - target: {fileID: 589296751684369362, guid: 041863caed3261e44931834c81ecd97c,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 589296751684369362, guid: 041863caed3261e44931834c81ecd97c,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -7.29
+      objectReference: {fileID: 0}
+    - target: {fileID: 589296751684369362, guid: 041863caed3261e44931834c81ecd97c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 8.484399
+      objectReference: {fileID: 0}
+    - target: {fileID: 589296751684369362, guid: 041863caed3261e44931834c81ecd97c,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 3.71
+      objectReference: {fileID: 0}
+    - target: {fileID: 589296751684369362, guid: 041863caed3261e44931834c81ecd97c,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.39827335
+      objectReference: {fileID: 0}
+    - target: {fileID: 589296751684369362, guid: 041863caed3261e44931834c81ecd97c,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 589296751684369362, guid: 041863caed3261e44931834c81ecd97c,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.91726685
+      objectReference: {fileID: 0}
+    - target: {fileID: 589296751684369362, guid: 041863caed3261e44931834c81ecd97c,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 589296751684369362, guid: 041863caed3261e44931834c81ecd97c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 589296751684369362, guid: 041863caed3261e44931834c81ecd97c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 226.941
+      objectReference: {fileID: 0}
+    - target: {fileID: 589296751684369362, guid: 041863caed3261e44931834c81ecd97c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 589296751684855794, guid: 041863caed3261e44931834c81ecd97c,
+        type: 3}
+      propertyPath: m_Name
+      value: OfficeChair_01 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 589296751684855794, guid: 041863caed3261e44931834c81ecd97c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 64699182135124538, guid: 041863caed3261e44931834c81ecd97c, type: 3}
+    m_AddedGameObjects: []
+  m_SourcePrefab: {fileID: 100100000, guid: 041863caed3261e44931834c81ecd97c, type: 3}
+--- !u!4 &2097145702 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 589296751684369362, guid: 041863caed3261e44931834c81ecd97c,
+    type: 3}
+  m_PrefabInstance: {fileID: 2097145701}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2097145703 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 589296751684855794, guid: 041863caed3261e44931834c81ecd97c,
+    type: 3}
+  m_PrefabInstance: {fileID: 2097145701}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &2097145704
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2097145703}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.6433295, y: 1.0644549, z: 0.6426521}
+  m_Center: {x: -0.00013768685, y: 0.534795, z: 0.015233753}
 --- !u!1 &2099812828
 GameObject:
   m_ObjectHideFlags: 0
@@ -59735,10 +59919,10 @@ MonoBehaviour:
   ShopItemsContainer: {fileID: 652601544}
   itemPrefab: {fileID: 3798607557566228084, guid: 6fa5304e86407cb418f9742993a2d977,
     type: 3}
+  insufficientFunds: {fileID: 0}
+  reduceFunds: {fileID: 0}
+  placeholderItem: {fileID: 0}
   itemsDB: {fileID: 11400000, guid: a9d71d42e8a504b42b3ebd095f042e85, type: 2}
-  shopUI: {fileID: 652601547}
-  openShopBtn: {fileID: 652601546}
-  closeShopBtn: {fileID: 652601546}
   inventory: {fileID: 1666868817}
 --- !u!114 &2122021134
 MonoBehaviour:
@@ -60519,11 +60703,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
-  original: {fileID: 0}
-  originalObject: {fileID: 0}
   parentAfterDrag: {fileID: 0}
-  parentObject: {fileID: 0}
-  canvas: {fileID: 0}
   blockType: 
 --- !u!114 &2145016133
 MonoBehaviour:
