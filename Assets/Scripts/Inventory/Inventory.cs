@@ -6,67 +6,96 @@ using TMPro;
 
 public class Inventory : MonoBehaviour
 {
-    //list for inventory to store items
-    public List<InventoryItemData> inventoryItems;
-
-     // Prefab for the list item
-    public GameObject listItemPrefab;
+    [Header ("Inventory UI Elements")]
+    [SerializeField] private GameObject placeholder;
     public GameObject mainUI;
     public GameObject inventoryUI;
-
+    [SerializeField] private TextMeshProUGUI fullEnergyTxt;
+     // Prefab for the list item
+    public GameObject listItemPrefab;
     // Parent object for the list items
     public Transform listItemParent;
 
+    [Header ("Instances")]
+    [SerializeField] private ShopItemsDatabase shopDB;
     [SerializeField] float itemSpacing = 1f;
     float itemHeight;
+    Coroutine showFullEnergyCoroutine;
 
-    public void AddItem(ShopItemData item)
-    {
-
-        InventoryItemData inventoryItem = new InventoryItemData();
-
-        // Assign the values from the ShopItemData object to the fields of the InventoryItemData object
-        inventoryItem.itemImg = item.itemImg;
-        inventoryItem.itemName = item.itemName;
-        inventoryItem.itemEnergy = item.itemEnergy;
-
-        // Add the InventoryItemData object to the inventory
-        inventoryItems.Add(inventoryItem);
+    private void OnEnable() {
         PopulateListUI();
     }
 
-
-    public int inventoryItemsCount
-    {
-        get
-        {
-            return inventoryItems.Count;
-        }
-    }
-    //public 
-
-    //populating inventory UI
+    // Populating inventory UI
     public void PopulateListUI()
     {
-    // Instantiate a game object for each item in the list and add it to the list UI
-        for(int i = 0; i < inventoryItems.Count; i++)
-        {
-            InventoryItemData invItem = inventoryItems[i];
-            GameObject listItem = Instantiate(listItemPrefab, listItemParent);
-            
-            // Set the values for the list item
-            listItem.GetComponent<InventoryUI>().SetInventoryItemImg(invItem.itemImg);
-            listItem.GetComponent<InventoryUI>().SetInventoryItemName(invItem.itemName);
-            listItem.GetComponent<InventoryUI>().SetInventoryItemEnergy(invItem.itemEnergy);
+        if (listItemParent.childCount != 0) {
+            foreach (Transform item in listItemParent.transform)
+            {
+                GameObject.Destroy(item.gameObject);
+            }
         }
-        // Clear the list UI
-        // Transform parent = GameObject.Find("InventoryItems").transform;
+        // Display all the inventory items based on the item name
+        for(int i = 0; i < DataManager.GetInventoryListCount(); i++)
+        {
+            // Loop through shop item database
+            foreach (var item in shopDB.items)
+            {
+                if (item.itemName == DataManager.GetInventoryItemName(i)) {
+                    GameObject listItem = Instantiate(listItemPrefab, listItemParent);
+                    // Get the parent GameObject
+                    Transform parentObject = listItem.transform;
+                    // Set the values for the list item
+                    listItem.GetComponent<InventoryUI>().SetInventoryItemImg(item.itemImg);
+                    listItem.GetComponent<InventoryUI>().SetInventoryItemName(item.itemName);
+                    listItem.GetComponent<InventoryUI>().SetInventoryItemEnergy(item.itemEnergy);
+                    listItem.GetComponent<InventoryUI>().SetInventoryItemQuantity(DataManager.GetInventoryItemQuantity(i));
+                    listItem.GetComponentInChildren<Button>().onClick.AddListener(delegate {UseItem(item.itemName, parentObject);});   
+                }
+            }
+        }
 
-        if(listItemParent.childCount != 0) GameObject.Destroy(listItemParent.GetChild(0).gameObject);
+        for(int j = 0; j < 24 - DataManager.GetInventoryListCount(); j++) {
+            Instantiate(placeholder, listItemParent);
+        }
     }
 
-    public void UseItem(InventoryItemData itemData) {
-        // DataManager
+    public void UseItem(string name, Transform parent) {
+        if (Energy.Instance.GetCurrentEnergy() >= 15) {
+            if (showFullEnergyCoroutine != null) StopCoroutine(showFullEnergyCoroutine);
+
+            showFullEnergyCoroutine = StartCoroutine(ShowFullEnergyTxt());
+        }
+        else {
+            foreach (var item in DataManager.GetInventoryList())
+            {
+                if(name == item.name) {
+                    DataManager.ReduceItemQuantity(name);
+                    
+                    Energy.Instance.SetCurrentEnergy(item.energy + Energy.Instance.GetCurrentEnergy());
+                    Energy.Instance.UpdateEnergyTime();
+                    // Update UI of item
+                    parent.GetComponent<InventoryUI>().SetInventoryItemQuantity(item.quantity);
+
+                    if (item.quantity == 0) {
+                        DataManager.RemoveInventoryItem(name);
+                        Destroy(parent.gameObject);
+                        Instantiate(placeholder, listItemParent);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    private void OnDisable() {
+        fullEnergyTxt.gameObject.SetActive(false);
+    }
+
+    IEnumerator ShowFullEnergyTxt() {
+        fullEnergyTxt.gameObject.SetActive(true);
+        yield return new WaitForSeconds(1.5f);
+        fullEnergyTxt.gameObject.SetActive(false);
     }
 
     public void closeInventory() {

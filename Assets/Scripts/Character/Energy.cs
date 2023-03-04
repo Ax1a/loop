@@ -7,7 +7,7 @@ using TMPro;
 
 public class Energy : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI energyTxt;
+    [SerializeField] TextMeshProUGUI[] energyTxts;
     [SerializeField] TextMeshProUGUI timeTxt;
     [SerializeField] Slider energyBar;
     private int maxEnergy = 15;
@@ -17,24 +17,37 @@ public class Energy : MonoBehaviour
     private DateTime lastEnergyRestore;
     private bool isRestoring = false;
 
+    public static Energy Instance;
+
+    private void Awake() {
+        if (Instance == null) {
+            Instance = this;
+        }
+    }
+
     void Start()
     {
         if(!PlayerPrefs.HasKey("currEnergy"))
         {
             PlayerPrefs.SetInt("currEnergy", 15);
             Load();
+            UpdateEnergy();
             StartCoroutine(RestoreEnergy());
-
-        
         }
         else
         {
             Load();
+            UpdateEnergy();
             StartCoroutine(RestoreEnergy());
         }
     }
 
-    // setters
+    // Getters
+    public int GetCurrentEnergy() {
+        return currEnergy;
+    }
+
+    // Setters
     public void SetCurrentEnergy(int energy) {
         currEnergy = energy;
         UpdateEnergy();
@@ -66,7 +79,7 @@ public class Energy : MonoBehaviour
 
                 StartCoroutine(RestoreEnergy());
             }
-            Debug.Log("Enery Used. Current Energy:"+currEnergy);
+            Debug.Log("Energy Used. Current Energy:"+currEnergy);
         }
         else
         {
@@ -127,15 +140,18 @@ public class Energy : MonoBehaviour
     //update energy 
     private void UpdateEnergy()
     {
-        energyTxt.text = currEnergy.ToString() + "/" + maxEnergy.ToString();
+        foreach (var txt in energyTxts)
+        {
+            txt.text = currEnergy.ToString() + "/" + maxEnergy.ToString();
+        }
         energyBar.maxValue = maxEnergy;
         energyBar.value = currEnergy;
     }
 
     //update energy timer 
-    private void UpdateEnergyTime()
+    public void UpdateEnergyTime()
     {
-        if(currEnergy == maxEnergy)
+        if(currEnergy >= maxEnergy)
         {
             timeTxt.text = "Full";
             return;
