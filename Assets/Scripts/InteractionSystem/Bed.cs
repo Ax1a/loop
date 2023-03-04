@@ -15,9 +15,10 @@ public class Bed : MonoBehaviour, Interactable
     
     public bool Interact(InteractObject interactor)
     {
-        _energy = EnergyPanel.GetComponent<Energy>();
+        // _energy = EnergyPanel.GetComponent<Energy>();
         _clock = Time.GetComponent<Clock>();
-        _energy.ResetEnergy();
+        // _energy.ResetEnergy();
+        Energy.Instance.ResetEnergy();
 
         if (_clock.Hour < 17) {
             sleepConfirmation.SetActive(true);
