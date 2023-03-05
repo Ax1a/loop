@@ -11,6 +11,7 @@ public class Inventory : MonoBehaviour
     public GameObject mainUI;
     public GameObject inventoryUI;
     [SerializeField] private TextMeshProUGUI fullEnergyTxt;
+    [SerializeField] private TextMeshProUGUI addEnergyTxt;
      // Prefab for the list item
     public GameObject listItemPrefab;
     // Parent object for the list items
@@ -20,7 +21,7 @@ public class Inventory : MonoBehaviour
     [SerializeField] private ShopItemsDatabase shopDB;
     [SerializeField] float itemSpacing = 1f;
     float itemHeight;
-    Coroutine showFullEnergyCoroutine;
+    Coroutine showFullEnergyCoroutine, showAddEnergyCoroutine;
 
     private void OnEnable() {
         PopulateListUI();
@@ -77,6 +78,11 @@ public class Inventory : MonoBehaviour
                     // Update UI of item
                     parent.GetComponent<InventoryUI>().SetInventoryItemQuantity(item.quantity);
 
+                    // Display added energy
+                    if (showAddEnergyCoroutine != null) StopCoroutine(showAddEnergyCoroutine);
+
+                    showAddEnergyCoroutine = StartCoroutine(ShowAddEnergyTxt(item.energy));
+
                     if (item.quantity == 0) {
                         DataManager.RemoveInventoryItem(name);
                         Destroy(parent.gameObject);
@@ -90,12 +96,20 @@ public class Inventory : MonoBehaviour
 
     private void OnDisable() {
         fullEnergyTxt.gameObject.SetActive(false);
+        addEnergyTxt.gameObject.SetActive(false);
     }
 
     IEnumerator ShowFullEnergyTxt() {
         fullEnergyTxt.gameObject.SetActive(true);
         yield return new WaitForSeconds(1.5f);
         fullEnergyTxt.gameObject.SetActive(false);
+    }
+
+    IEnumerator ShowAddEnergyTxt(int energy) {
+        addEnergyTxt.gameObject.SetActive(true);
+        addEnergyTxt.text = "+ " + energy.ToString();
+        yield return new WaitForSeconds(1.5f);
+        addEnergyTxt.gameObject.SetActive(false);
     }
 
     public void closeInventory() {
