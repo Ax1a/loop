@@ -7,6 +7,7 @@ public class TextToSpeech : MonoBehaviour
     [SerializeField] private Image soundOffImg;
     [SerializeField] private AudioClip audioClip;
     private bool isMuted = true;
+    private bool isPlaying = false;
     private AudioSource audioSource;
 
     private void Awake()
@@ -29,6 +30,7 @@ public class TextToSpeech : MonoBehaviour
             soundOnImg.enabled = true;
             soundOffImg.enabled = false;
             audioSource.Play();
+            isPlaying = true;
         }
         else
         {
@@ -36,12 +38,13 @@ public class TextToSpeech : MonoBehaviour
             soundOnImg.enabled = false;
             soundOffImg.enabled = true;
             audioSource.Stop();
+            isPlaying = false;
         }
     }
 
     private void ChangeBtnImg()
     {
-        if (isMuted)
+        if (isMuted || !isPlaying)
         {
             soundOnImg.enabled = false;
             soundOffImg.enabled = true;
@@ -50,6 +53,16 @@ public class TextToSpeech : MonoBehaviour
         {
             soundOnImg.enabled = true;
             soundOffImg.enabled = false;
+        }
+    }
+
+    private void Update()
+    {
+        if (!audioSource.isPlaying && isPlaying)
+        {
+            isMuted = true;
+            isPlaying = false;
+            ChangeBtnImg();
         }
     }
 }
