@@ -23,8 +23,7 @@ namespace UnityEngine.UI.Extensions
 
         protected PaginationManager()
         { }
-
-
+        
         // Use this for initialization
         protected override void Start()
         {
