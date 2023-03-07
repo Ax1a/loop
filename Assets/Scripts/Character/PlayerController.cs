@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public CharacterController controller;
-    public GameObject _camera;
-    private bool _isPanelActive = false;
-    float turnSmoothVelocity;
-    private GameObject mainUI;
-    private Animator _animator;
     [SerializeField] private float speed = 6f;
     [SerializeField] private float turnSmoothTime = 0.1f;
+    public CharacterController controller;
+    private bool _isPanelActive = false;
+    private float turnSmoothVelocity, horizontal, vertical;
+    private GameObject mainUI;
+    private GameObject _currentCamera;
+    private Animator _animator;
+    private Vector3 direction;
      
     private void Start() {
         _animator = GetComponentInChildren<Animator>();
@@ -20,13 +21,13 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         if (_isPanelActive == false && BotGuide.Instance.guideIsActive() == false){
-            float horizontal = Input.GetAxisRaw("Horizontal");
-            float vertical = Input.GetAxisRaw("Vertical");
-            Vector3 forward = _camera.transform.forward;
+            horizontal = Input.GetAxisRaw("Horizontal");
+            vertical = Input.GetAxisRaw("Vertical");
+         
+            _currentCamera = CameraManager.Instance.GetCurrentCamera();
+            
+            direction = (_currentCamera.transform.forward * vertical + _currentCamera.transform.right * horizontal).normalized;
 
-            Vector3 direction = (forward * vertical + _camera.transform.right * horizontal).normalized;
-            
-            
             if(direction.magnitude >= 0.1f)
             {
                 float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;

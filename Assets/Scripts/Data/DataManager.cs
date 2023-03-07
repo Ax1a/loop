@@ -3,7 +3,7 @@ using System.Collections.Generic;
 [System.Serializable] public class PlayerData
 { 
     public int money = 0;
-    public Vector3 playerPos = new Vector3(-2.98900008f,6.1f,-4.40799999f);
+    public Vector3 playerPos = new Vector3(-2.98900008f,6.064f,-4.40799999f);
     public int hr = 7, min = 0, day = 1, month = 1, year = 2022;
     public string name;
     public int questProgress = 0;
