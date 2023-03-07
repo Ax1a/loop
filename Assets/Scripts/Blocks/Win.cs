@@ -58,7 +58,9 @@ public class Win : MonoBehaviour
             timer.stopTime();
             Debug.Log("Winner");
             Debug.Log("Points: " + currPts);
- 
+
+            RewardManager.Instance.AssessReward();
+
             if (simpleBlock != null)
             {
                 input = simpleBlock.GetComponentInChildren<TMP_InputField>();
