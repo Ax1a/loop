@@ -33,6 +33,11 @@ public class TutorialManager : MonoBehaviour
     private Tutorial currentTutorial;
 
     private void Start() {
+        StartCoroutine(DelayStart());
+    }
+
+    private IEnumerator DelayStart() {
+        yield return new WaitForSeconds(.5f);
         SetNextTutorial(DataManager.GetQuestProgress());
 
         if(DataManager.GetQuestProgress() == 0) {

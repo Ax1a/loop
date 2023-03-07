@@ -5,8 +5,11 @@ using UnityEngine;
 public class RoomChecker : MonoBehaviour
 {
     [SerializeField] string roomName;
-    [SerializeField] GameObject _camera;
     [SerializeField] Light[] lights;
+
+    private void Start() {
+        CameraManager.Instance.SetCurrentCamera("Camera");
+    }
 
     private void OnTriggerStay(Collider other) {
         if(other.gameObject.name != "Player"){
@@ -15,12 +18,12 @@ public class RoomChecker : MonoBehaviour
        
         // Kitchen Camera
         if (roomName == "kitchen") {
-            _camera.transform.position = new Vector3(4.63000011f, 9.67000008f, -8.51000023f);
+            CameraManager.Instance.SetCurrentCamera("KitchenCamera");
             lights[1].intensity = 8;
         }
         // Main Room Camera
         else if (roomName == "main") {
-            _camera.transform.position = new Vector3(-1.98000002f, 9.27999973f, -11.0799999f);
+            CameraManager.Instance.SetCurrentCamera("Camera");
             lights[1].intensity = 0;
         }
     }

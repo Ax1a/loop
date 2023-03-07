@@ -8,7 +8,6 @@ public class Computer : MonoBehaviour, Interactable
     [SerializeField] GameObject _computer;
     [SerializeField] GameObject _hud;
     [SerializeField] GameObject _interactOverlay;
-    [SerializeField] GameObject compCamera;
 
     [SerializeField] private string _prompt;
     public string InteractionPrompt => _prompt;
@@ -21,7 +20,7 @@ public class Computer : MonoBehaviour, Interactable
         _interactOverlay.SetActive(false);
 
         // Enable the Camera
-        compCamera.gameObject.SetActive(true);
+        CameraManager.Instance.ToggleTransitionCamera("CameraComputer");
         // // Disable the Camera
         // compCamera.gameObject.SetActive(false);
         if (isOpened == false) {

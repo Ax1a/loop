@@ -117,7 +117,7 @@ public class CharacterCreation : MonoBehaviour
 
     private void CreateNewGame() {
         Debug.Log("New Game");
-        SaveName(1);
+        SaveName(2);
     }
 
     private async void SaveName(int sceneID) {

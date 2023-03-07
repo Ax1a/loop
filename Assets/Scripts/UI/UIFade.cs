@@ -7,15 +7,17 @@ public class UIFade : MonoBehaviour
 {
     [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private float animationDuration;
+		[SerializeField] private bool isFadeOut = false;
 
     private Tween fadeTween;
 
     private void OnEnable() {
-				Fade(1f, animationDuration, () =>
-				{
-						canvasGroup.interactable = true;
-						canvasGroup.blocksRaycasts = true;
-				});
+				if (isFadeOut) {
+					FadeOut();
+				}
+				else {
+					FadeIn();
+				}
     }
 
     public float getAnimationDuration() {
@@ -31,9 +33,13 @@ public class UIFade : MonoBehaviour
 				});
 		}
 
-		// private void OnDisable() {
-		// 		FadeOut();
-		// }
+		private void FadeIn() {
+			Fade(1f, animationDuration, () =>
+				{
+						canvasGroup.interactable = true;
+						canvasGroup.blocksRaycasts = true;
+				});
+		}
 
     private void Fade(float endValue, float duration, TweenCallback onEnd)
 		{
