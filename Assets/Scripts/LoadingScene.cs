@@ -10,7 +10,6 @@ public class LoadingScene : MonoBehaviour
     [SerializeField] Image LoadingBarFill;
 
     public void LoadScene(int sceneID) {
-        AudioManager.Instance.PlayMusic("Theme_2");
         StartCoroutine(LoadSceneAsync(sceneID));
     }
 
@@ -30,10 +29,12 @@ public class LoadingScene : MonoBehaviour
             if (LoadingBarFill.fillAmount >= 0.9f) {
                 LoadingBarFill.fillAmount = 1;
                 operation.allowSceneActivation = true;
+                AudioManager.Instance.PlayMusic("CutScene");
             }
 
             yield return null;
         }
+
         // LoadingScreen.SetActive(true);
 
         // while (!operation.isDone) {
