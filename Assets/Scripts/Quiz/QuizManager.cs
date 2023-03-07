@@ -7,7 +7,6 @@ using UnityEngine.SceneManagement;
 
 public class QuizManager : MonoBehaviour
 {
-
     public List<QuestAndAns> QnA;
     private QuestAndAns currentQuestion;
     private int _questionIndex;
@@ -17,8 +16,9 @@ public class QuizManager : MonoBehaviour
     public TextMeshProUGUI text;
     public GameObject quizPanel;
     public GameObject gameOverPanel;
+    public GameObject winPanel;
 
-    public GameObject startPanel;
+    GameObject startPanel;
 
     public TextMeshProUGUI scoreTxt;
     public int scoreCount;
@@ -44,6 +44,7 @@ public class QuizManager : MonoBehaviour
         ShuffleQuestions();
         totalQuestions = QnA.Count;
         // gameOverPanel.SetActive(false);
+        winPanel.SetActive(false);
         quizPanel.SetActive(true);
         timer = GameObject.Find("StartPanel").GetComponent<quizTimer>();
         
@@ -59,7 +60,9 @@ public class QuizManager : MonoBehaviour
         _questionIndex = 0;
         scoreCount = 0;
         gameOverPanel.SetActive(false);
+        // winPanel.SetActive(false);
         timer.resetTime();
+        SetCurrentQuestion(_questionIndex);
     }
 
     private void ShuffleQuestions() {
@@ -73,13 +76,28 @@ public class QuizManager : MonoBehaviour
         // Add questions
         SetCurrentQuestion(_questionIndex);
     }
-
     public void GameOver(){
         timer.stopTime();
         //quizPanel.SetActive(false);
         gameOverPanel.SetActive(true);
         scoreTxt.text = scoreCount + "/" + totalQuestions;
       //  isComplete = true;
+    }
+    public void Win(){
+        timer.stopTime();
+        winPanel.SetActive(true);
+        RewardManager.Instance.AssessReward();
+    }
+    public void OpenPanel ()
+    {   
+        if (scoreCount >= totalQuestions)
+        {
+            Win();
+        }
+        else 
+        {
+            GameOver();
+        }
     }
 
     public void Correct(){
@@ -93,7 +111,7 @@ public class QuizManager : MonoBehaviour
     }
     void SetCurrentQuestion(int questionIndex){
         if (questionIndex >= QnA.Count) {
-            GameOver();
+            OpenPanel();
             return;
         };
 
@@ -113,25 +131,4 @@ public class QuizManager : MonoBehaviour
         _questionIndex += 1;
     }
 
-    //To be fix! 
-
-    // public void LevelCompleted()
-    // {
-    //     if(isComplete)
-    //     {
-    //         Debug.Log("Level is completed");
-    //         DataManager.addReachedLesson();
-    //         LessonsLevelManager.Instance.addReachedLesson();
-    //         LessonsLevelManager.Instance.updateButtonDisabled();
-    //     }
-    //     else
-    //     {
-    //         DataManager.addReachedLesson();
-
-    //     }
-        
-    // }
-
-
-    
 }
