@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
 public class AudioController : MonoBehaviour
 {
     public Slider _musicSlider, _sfxSlider;
@@ -9,7 +10,7 @@ public class AudioController : MonoBehaviour
     public Sprite mute;
     public Sprite unmute;
     public Button muteBtn;
-
+    
     // public void ToggleMusic ()
     // {
     //     AudioManager.Instance.ToggleMusic();
@@ -28,7 +29,6 @@ public class AudioController : MonoBehaviour
     {
         AudioManager.Instance.SfxVolume(_sfxSlider.value);
     }
-
     public void ToggleMute ()
     {
         if (!isMute)
@@ -49,4 +49,5 @@ public class AudioController : MonoBehaviour
             muteBtn.image.sprite = unmute;
         }
     }
+
 }
