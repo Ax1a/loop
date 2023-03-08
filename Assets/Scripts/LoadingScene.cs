@@ -29,7 +29,7 @@ public class LoadingScene : MonoBehaviour
             if (LoadingBarFill.fillAmount >= 0.9f) {
                 LoadingBarFill.fillAmount = 1;
                 operation.allowSceneActivation = true;
-                AudioManager.Instance.PlayMusic("CutScene");
+                // AudioManager.Instance.PlayMusic("CutScene");
             }
 
             yield return null;

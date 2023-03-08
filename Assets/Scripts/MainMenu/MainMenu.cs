@@ -16,7 +16,7 @@ public class MainMenu : MonoBehaviour
 
     private string FileName = "playerData.txt";
     private void Start() {
-        AudioManager.Instance.PlayMusic("MainMenu");
+        // AudioManager.Instance.PlayMusic("MainMenu");
         // Display the continue button if there is saved data
         if (BinarySerializer.HasSaved(FileName)) {
             continueBtn.gameObject.SetActive(true);

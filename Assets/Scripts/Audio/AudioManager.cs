@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
+
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance = null;
@@ -67,7 +69,6 @@ public class AudioManager : MonoBehaviour
     // {
     //     sfxSource.mute = !sfxSource.mute;
     // }
-
     public void MusicVolume(float volume)
     {
         musicSource.volume = volume;
@@ -76,5 +77,28 @@ public class AudioManager : MonoBehaviour
     public void SfxVolume(float volume)
     {
         sfxSource.volume = volume;
+    }
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        switch (scene.buildIndex)
+        {
+            case 0: // First scene
+                PlayMusic("MainMenu");
+                break;
+            case 1: // Second scene
+                PlayMusic("Day");
+                break;
+            case 2: // Third scene
+                PlayMusic("CutScene");
+                break;
+        }
     }
 }
