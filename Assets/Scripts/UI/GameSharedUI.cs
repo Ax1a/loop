@@ -33,11 +33,6 @@ public class GameSharedUI : MonoBehaviour
        
     }
 
-    void Update()
-    {
-
-    }
-
     public void UpdateMoneyUITxt()
     {
         for (int x = 0; x < moneyUITxt.Length; x++)

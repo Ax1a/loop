@@ -468,11 +468,23 @@ namespace UnityEngine.UI.Extensions
                 if (PrevButton)
                 {
                     PrevButton.GetComponent<Button>().interactable = targetScreen > 0;
+                    if (targetScreen > 0) {
+                        PrevButton.SetActive(true);
+                    }
+                    else {
+                        PrevButton.SetActive(false);
+                    }
                 }
 
                 if (NextButton)
                 {
                     NextButton.GetComponent<Button>().interactable = targetScreen < _screensContainer.transform.childCount - 1;
+                    if (targetScreen < _screensContainer.transform.childCount - 1) {
+                        NextButton.SetActive(true);
+                    }
+                    else {
+                        NextButton.SetActive(false);
+                    }
                 }
             }
         }
