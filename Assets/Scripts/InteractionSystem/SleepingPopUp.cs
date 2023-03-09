@@ -23,12 +23,10 @@ public class SleepingPopUp : MonoBehaviour
         }
     }
 
-    private void Start() {
+    public IEnumerator ShowPopUp() {
         _clock = Time.GetComponent<Clock>();
         uiFade = sleepingIndicator.GetComponent<UIFade>();
-    }
 
-    public IEnumerator ShowPopUp() {
         sleepingIndicator.gameObject.SetActive(true);
         _currentHr = _clock.Hour;
         _currentMin = _clock.Minute;
