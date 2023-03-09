@@ -17,7 +17,14 @@ public class OpenScreen : MonoBehaviour
         }
     }
 
-    // test next and back buttons
+    public void MinimizeScreen(GameObject panel) {
+        if (panel != null)
+        {
+            bool isActive = panel.activeSelf;
+            panel.SetActive(!isActive);
+        }
+    }
+
     public GameObject[] lessons;
     private int currentLesson = 0;
 

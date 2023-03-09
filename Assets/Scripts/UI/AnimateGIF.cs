@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SavingAnimation : MonoBehaviour
+public class AnimateGIF : MonoBehaviour
 {
     public Image m_Image;
     public Sprite[] m_SpriteArray;

@@ -8,7 +8,7 @@ using System.Collections.Generic;
     public int hr = 7, min = 0, day = 1, month = 1, year = 2022;
     public string name;
     public int questProgress = 0;
-    public int reachedLesson; 
+    public int reachedLesson = 1; 
     public List<DrinkInventoryList> inventoryList;
     public Dictionary<string, int> programmingLanguage = new Dictionary<string, int>() {
         {"c++", -1},
@@ -29,6 +29,11 @@ using System.Collections.Generic;
     public int energy;
     public int quantity;
 }
+// public enum CourseProgress {
+//     InProgress, // 0 - Index
+//     Completed, // 1 - Index
+//     Locked // 2 - Index
+// }
 
 public static class DataManager
 {

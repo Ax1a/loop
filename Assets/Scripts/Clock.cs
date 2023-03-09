@@ -119,6 +119,7 @@ public class Clock : MonoBehaviour
     }
     
     public void NextDay() {
+        isAm = true;
         min = 0;
         hr = 7;
         day += 1;
