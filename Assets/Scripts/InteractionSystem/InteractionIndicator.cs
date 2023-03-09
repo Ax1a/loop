@@ -11,7 +11,6 @@ public class InteractionIndicator : MonoBehaviour
     }
 
     private void LateUpdate() {
-        var rotation = _mainCam.transform.rotation;
-        transform.LookAt(transform.position + rotation * Vector3.forward, rotation * Vector3.up);
+        transform.LookAt( _mainCam.transform);
     }
 }
