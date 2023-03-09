@@ -10,7 +10,8 @@ public class DropBlock : MonoBehaviour, IDropHandler
     [HideInInspector] public Drag drag;
     public void OnDrop(PointerEventData eventData)
     { 
-        if (eventData.pointerDrag != null){
+        // Add Block tag to a block gameobject
+        if (eventData.pointerDrag.tag == "Block"){
             if(eventData.pointerDrag.GetComponent<Drag>().blockType == blockType)
             {
                 eventData.pointerDrag.GetComponent<RectTransform>().transform.position =
