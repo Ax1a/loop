@@ -3,6 +3,12 @@ using UnityEngine.UI;
 
 public class TextToSpeech : MonoBehaviour
 {
+    /*
+    for tts buttons to play specific audio for a lesson page
+
+    bug/s:
+    audio clips from different pages are overlapping when trying to turn on all tts buttons at the same time
+    */
     [SerializeField] private Image soundOnImg;
     [SerializeField] private Image soundOffImg;
     [SerializeField] private AudioClip audioClip;
