@@ -11,10 +11,10 @@ public class TutorialManager : MonoBehaviour
     [Header("Tutorial Objects")]
     public TextMeshProUGUI descriptionText;
     public TextMeshProUGUI titleText;
-    public TextMeshProUGUI requirementText;
+    [SerializeField] private GameObject contentPrefab;
     public GameObject tutorialPrefab;
     [SerializeField] private GameObject tabCanvas;
-    [SerializeField] private GameObject content;
+    [SerializeField] private GameObject parentContainer;
     private bool _activated = false;
 
     private static TutorialManager _instance;
@@ -33,12 +33,12 @@ public class TutorialManager : MonoBehaviour
     private Tutorial currentTutorial;
 
     private void Start() {
+        SetNextTutorial(DataManager.GetQuestProgress());
         StartCoroutine(DelayStart());
     }
 
     private IEnumerator DelayStart() {
         yield return new WaitForSeconds(.5f);
-        SetNextTutorial(DataManager.GetQuestProgress());
 
         if(DataManager.GetQuestProgress() == 0) {
             BotGuide.Instance.AddDialogue("Welcome to the game! Before you get started, let's go over the controls."); 
@@ -79,16 +79,17 @@ public class TutorialManager : MonoBehaviour
 
         descriptionText.text = currentTutorial.Explanation;        
         titleText.text = currentTutorial.Title;
-        Transform parent = content.transform;
 
         foreach (var req in currentTutorial.Requirement)
         {
-            TextMeshProUGUI requirement = Instantiate(requirementText, parent.transform);    
-            requirement.text = req;        
+            GameObject requirement = Instantiate(contentPrefab, parentContainer.transform);    
+            requirement.GetComponentInChildren<TextMeshProUGUI>().text = req;    
+            // TextMeshProUGUI requirement = Instantiate(requirementText, parent.transform);    
+            // requirement.text = req;        
             // requirement.transform.parent = parent.transform;
         }
 
-        if(parent.childCount != 0) GameObject.Destroy(parent.GetChild(0).gameObject);
+        if(parentContainer.transform.childCount != 0) GameObject.Destroy(parentContainer.transform.GetChild(0).gameObject);
     } 
 
     public void CompletedAllTutorials() {

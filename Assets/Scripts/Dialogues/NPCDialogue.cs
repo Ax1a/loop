@@ -5,6 +5,14 @@ using TMPro;
 
 public class NPCDialogue : MonoBehaviour
 {
+    /*
+    Use AddDialogue to AddDialogue() to the List and ShowDialogue() to display the list
+    Calling method: NPCDialogue.Instance.[function]
+    Ex.
+        Params: (Dialogue, NPC Name)
+        AddDialogue("Check out these concise and easily understandable tips and useful information about IT, that will help you navigate the internet.y", DataManager.GetPlayerName());
+        ShowDialogue();
+    */
     public List<string> _dialogues = new List<string>();
 
     [Header("Instances")]
@@ -42,15 +50,6 @@ public class NPCDialogue : MonoBehaviour
             return _instance;
         }
     }
-
-    /*
-    Use AddDialogue to AddDialogue() to the List and ShowDialogue() to display the list
-
-    Ex.
-    Params: (Dialogue, NPC Name)
-    AddDialogue("Check out these concise and easily understandable tips and useful information about IT, that will help you navigate the internet.y", DataManager.GetPlayerName());
-    ShowDialogue();
-    */
 
     private void OnEnable() {
         audioSource = this.gameObject.AddComponent<AudioSource>();

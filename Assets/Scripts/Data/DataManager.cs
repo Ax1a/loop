@@ -2,6 +2,9 @@ using UnityEngine;
 using System.Collections.Generic;
 [System.Serializable] public class PlayerData
 { 
+    /* 
+    * Add Variable here to save in the txt file
+    */
     public int money = 0;
     public int exp = 0;
     public Vector3 playerPos = new Vector3(-2.98900008f,6.064f,-4.40799999f);
@@ -24,6 +27,9 @@ using System.Collections.Generic;
     // public Dictionary<string, int> inventoryItems = new Dictionary<string, int>();
 }
 
+/* 
+* You can create a class like this to make a custom list
+*/
 [System.Serializable] public class DrinkInventoryList {
     public string name;
     public int energy;
@@ -44,6 +50,10 @@ public static class DataManager
         LoadPlayerData();
     }
 
+
+    /* 
+    * Add Getters and Setters here to be used on other scripts
+    */
     /*
         Money
         Getters & Setters

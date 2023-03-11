@@ -22,7 +22,7 @@ public class TutorialInteract : Tutorial
         }
 
         if (Keys.Count == 0){
-            Transform parent = GameObject.Find("Contents").transform;
+            Transform parent = GameObject.Find("GoalsContainer").transform;
             int objCount = parent.childCount;
 
             if(objCount == 0) return;

@@ -5,6 +5,11 @@ using DG.Tweening;
 
 public class UISlide : MonoBehaviour
 {
+    /* 
+    * Attach to a UI and customize the params
+    * tweenGO (The object that the script attached to)
+    */
+
     [SerializeField] float showTime = 0.3f, position = 500f;
     [SerializeField] Ease showEase = Ease.OutBack;
     [SerializeField] Transform tweenGO;

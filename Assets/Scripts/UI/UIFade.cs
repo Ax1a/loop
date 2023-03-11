@@ -5,6 +5,10 @@ using DG.Tweening;
 
 public class UIFade : MonoBehaviour
 {
+		/* 
+    * Attach to a UI and customize the params
+    *	Add CanvasGroup to the UI Gameobject and attach it to the script
+    */
     [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private float animationDuration;
 		[SerializeField] private bool isFadeOut = false;

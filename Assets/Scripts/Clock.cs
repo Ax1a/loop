@@ -124,6 +124,26 @@ public class Clock : MonoBehaviour
         hr = 7;
         day += 1;
     }
+    
+    public void AddHour(int hr) {
+        this.hr += hr;
+
+        if (this.hr < 12)
+        {
+            isAm = true;
+        }
+        else {
+            isAm = false;
+        }
+
+        if(hr >= maxHr) 
+        {
+            hr = 0;
+            day++;
+        }
+
+        SetTimeDataString();
+    }
 
     void SetTimeDataString()
     {
