@@ -5,8 +5,9 @@ using UnityEngine;
 public class TutorialInteract : Tutorial
 {
     private bool isCurrentTutorial = false;
-    [SerializeField] private GameObject Interactor;
     public List<string> Keys = new List<string>();
+    [SerializeField] private GameObject Interactor;
+    [SerializeField] private GameObject parent;
     InteractObject interactObject;
 
     private void Start() {
@@ -19,11 +20,14 @@ public class TutorialInteract : Tutorial
 
         if (Input.inputString.Contains(Keys[0]) && interactObject.NearInteractable()) {
             Keys.RemoveAt(0);
+            Transform _parent = parent.gameObject.transform.GetChild(0);
+            // Change the unchecked box to checked box
+            _parent.transform.GetChild(0).gameObject.SetActive(false);
+            _parent.transform.GetChild(1).gameObject.SetActive(true);
         }
 
         if (Keys.Count == 0){
-            Transform parent = GameObject.Find("GoalsContainer").transform;
-            int objCount = parent.childCount;
+            int objCount = parent.transform.childCount;
 
             if(objCount == 0) return;
 

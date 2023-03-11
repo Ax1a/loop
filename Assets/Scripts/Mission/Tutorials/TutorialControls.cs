@@ -5,13 +5,20 @@ using UnityEngine;
 public class TutorialControls : Tutorial
 {
     public List<string> Keys = new List<string>();
-    [SerializeField] private GameObject contents;
+    [SerializeField] private GameObject parent;
     
+    private void Start() {
+    }
+
     public override void CheckIfHappening()
     {
         for (int i = 0; i < Keys.Count; i++) {
             if (Input.inputString.Contains(Keys[i])) {
+                Transform _parent = parent.gameObject.transform.GetChild(i);
                 Keys.RemoveAt(i);
+                // Change the unchecked box to checked box
+                _parent.transform.GetChild(0).gameObject.SetActive(false);
+                _parent.transform.GetChild(1).gameObject.SetActive(true);
 
                 // Add change color text here when completed
                 if (Input.inputString == "b") {
@@ -30,13 +37,13 @@ public class TutorialControls : Tutorial
         }
 
         if (Keys.Count == 0){
-            if (contents.activeSelf == true) {
-                Transform parent = contents.transform;
-                int objCount = parent.childCount;
+            if (parent.activeSelf == true) {
+                Transform _parent = parent.transform;
+                int objCount = _parent.childCount;
 
                 if(objCount == 0) return;
 
-                foreach (Transform child in parent.transform)
+                foreach (Transform child in _parent.transform)
                 {
                     GameObject.Destroy(child.gameObject);
                 }
