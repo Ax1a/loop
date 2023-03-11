@@ -6,6 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class UIController : MonoBehaviour
 {
+    /* 
+    * Add the GameUI here
+    * Use ToggleUI function to open a UI
+
+    * Use SetPanelActive(true) to stop the character movement
+    */
+
     [SerializeField] private GameObject mainUI;
     [SerializeField] private GameObject[] gameUI;
     [SerializeField] private GameObject[] tabMenus;

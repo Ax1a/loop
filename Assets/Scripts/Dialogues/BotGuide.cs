@@ -5,6 +5,15 @@ using TMPro;
 
 public class BotGuide : MonoBehaviour
 {
+    /*
+    Use AddDialogue to AddDialogue() to the List and ShowDialogue() to display the list
+    Calling method: BotGuide.Instance.[function]
+    Ex.
+        Params: Dialogue
+        AddDialogue("Check out these concise and easily understandable tips and useful information about IT, that will help you navigate the internet");
+        ShowDialogue();
+    */
+
     public List<string> _dialogues = new List<string>();
 
     [Header("Instances")]

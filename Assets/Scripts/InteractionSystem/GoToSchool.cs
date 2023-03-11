@@ -17,8 +17,12 @@ public class GoToSchool : MonoBehaviour, Interactable
     public bool Interact(InteractObject interactor)
     {
         _clock = Time.GetComponent<Clock>();
-        _clock.Hour += hoursToSchool;
-        StartCoroutine(PlayAnimation());   
+
+        if (_clock.Hour < 12) {
+            _clock.AddHour(hoursToSchool);
+            StartCoroutine(PlayAnimation());   
+        }
+        // condition to show that user is already late to class
         return true;
     }
 
