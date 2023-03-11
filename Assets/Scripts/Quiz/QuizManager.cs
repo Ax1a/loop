@@ -7,29 +7,31 @@ using UnityEngine.SceneManagement;
 
 public class QuizManager : MonoBehaviour
 {
-    public List<QuestAndAns> QnA;
+    #region Private Variables
+    quizTimer timer;
     private QuestAndAns currentQuestion;
-    private int _questionIndex;
+    int _totalQuestions = 0;
+    int _questionIndex;
+    int _energy;
+    //bool isComplete = false;
+
+    #endregion
+
+    #region Public Variables
+    public List<QuestAndAns> QnA;
     public GameObject[] options;
-    // public int currentQuestion;
-    // public TextMesh Text;
     public TextMeshProUGUI text;
     public GameObject quizPanel;
     public GameObject gameOverPanel;
     public GameObject winPanel;
-
     GameObject startPanel;
-
     public TextMeshProUGUI scoreTxt;
     public int scoreCount;
-
-    private quizTimer timer;
-    int totalQuestions = 0;
-
-    //bool isComplete = false;
-
     public static QuizManager Instance;
 
+    #endregion
+
+#region Methods/Functions
     private void Awake()
     {
         if(Instance == null)
@@ -37,34 +39,54 @@ public class QuizManager : MonoBehaviour
             Instance = this;
         }
     }
-
     // Start is called before the first frame update
     void Start()
     {
+
         ShuffleQuestions();
-        totalQuestions = QnA.Count;
-        // gameOverPanel.SetActive(false);
+        _totalQuestions = QnA.Count; 
         winPanel.SetActive(false);
         quizPanel.SetActive(true);
         timer = GameObject.Find("StartPanel").GetComponent<quizTimer>();
-        
-    }
+        _energy = Energy.Instance.GetCurrentEnergy();    
 
+    }
     public int GetScore()
     {
         return scoreCount;
     }
 
-    public void Retry(){
-        ShuffleQuestions();
-        _questionIndex = 0;
-        scoreCount = 0;
-        gameOverPanel.SetActive(false);
-        // winPanel.SetActive(false);
-        timer.resetTime();
-        SetCurrentQuestion(_questionIndex);
+    public void StartGame () 
+    {
+        if (Energy.Instance.GetCurrentEnergy() > 0)
+        {
+            Energy.Instance.UseEnergy();
+            quizTimer.Instance.startGame();
+        }
+        else
+        {
+            Debug.Log("No energy Left");
+            return;
+        }
     }
-
+    public void Retry(){
+        //to-do: check energy here
+        if (Energy.Instance.GetCurrentEnergy() > 0)
+        {
+            ShuffleQuestions();
+            _questionIndex = 0;
+            scoreCount = 0;
+            gameOverPanel.SetActive(false);
+            timer.resetTime();
+            SetCurrentQuestion(_questionIndex);
+            Energy.Instance.UseEnergy();
+        }
+        else
+        {
+            Debug.Log("No energy Left");
+            return;
+        }
+    }
     private void ShuffleQuestions() {
         int Compare(QuestAndAns a, QuestAndAns b)
         {
@@ -78,33 +100,28 @@ public class QuizManager : MonoBehaviour
     }
     public void GameOver(){
         timer.stopTime();
-        //quizPanel.SetActive(false);
         gameOverPanel.SetActive(true);
-        scoreTxt.text = scoreCount + "/" + totalQuestions;
-      //  isComplete = true;
+        scoreTxt.text = scoreCount + "/" + _totalQuestions;
     }
     public void Win(){
         timer.stopTime();
         winPanel.SetActive(true);
-        RewardManager.Instance.AssessReward();
     }
     public void OpenPanel ()
     {   
-        if (scoreCount >= totalQuestions)
+        if (scoreCount >= _totalQuestions)
         {
             Win();
+            RewardManager.Instance.AssessReward();
         }
         else 
         {
             GameOver();
         }
     }
-
     public void Correct(){
         scoreCount +=1;
         SetCurrentQuestion(_questionIndex);
-        // QnA.RemoveAt(currentQuestion);
-        // generateQuestion();
     }
     public void Wrong(){
         SetCurrentQuestion(_questionIndex);
@@ -130,5 +147,7 @@ public class QuizManager : MonoBehaviour
 
         _questionIndex += 1;
     }
+
+#endregion
 
 }

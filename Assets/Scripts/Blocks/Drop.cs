@@ -16,14 +16,15 @@ public class Drop : MonoBehaviour, IDropHandler
     public void OnDrop(PointerEventData eventData)
     { 
         if (eventData.pointerDrag != null){
-            //Check the block type of the blocks
-            //if block type is same, it will snap to position of blank spaces.
-            //if not, it will reset the position.  
+            /*
+                Check the block type of the blocks
+                if block type is same, it will snap to position of blank spaces.
+                if not, it will reset the position. 
+            */
             if(eventData.pointerDrag.GetComponent<Drag>().blockType == blockType)
             {
                 eventData.pointerDrag.GetComponent<RectTransform>().transform.position =
                 GetComponent<RectTransform>().transform.position;
-                Debug.Log("Dropped Item");
                 //Check the correct answer through ID of the blocks
                 if(eventData.pointerDrag.GetComponent<Drag>().id == id)
                 { 
