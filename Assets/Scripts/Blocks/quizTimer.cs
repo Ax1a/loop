@@ -8,10 +8,12 @@ public class quizTimer : MonoBehaviour
     public enum Difficulty {
         easy, medium, hard
     }
+
+    int _energy;
+
     public Difficulty difficulty;
     public float currTime= 0f;
     public float startingTime = 0f;
- 
     public GameObject gameOverPanel;
     public GameObject startPanel;
     [HideInInspector] public bool isStart = false;
@@ -41,21 +43,17 @@ public class quizTimer : MonoBehaviour
 
         currTime = startingTime;
         gameOverPanel.SetActive(false);
-
     }
-
     // Update is called once per frame    
     public void startGame()
     {  
-        //Check if timer is not starting
         if(!isStart)
         {
             isStart = true;
-            startPanel.transform.localScale = new Vector3(0,0,0);
-            Debug.Log("Timer Start");
+            startPanel.transform.localScale = new Vector3(0,0,0); 
         }
-    }
 
+    }
     public void stopTime()
     {  
         //Check if timer is starting
@@ -68,12 +66,9 @@ public class quizTimer : MonoBehaviour
 
     public void resetTime()
     {  
-      
         currTime = startingTime;
         isStart = true;
         Debug.Log("Reset the timer");
-             
-       
     }
 
     public void res()

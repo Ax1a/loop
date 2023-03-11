@@ -28,14 +28,19 @@ public class RewardManager : MonoBehaviour
         if (quizTimer.Instance.difficulty == quizTimer.Difficulty.easy)
         {
             GiveRewards("Easy Level");
+            Debug.Log("Rewards Added");
         }   
         else if (quizTimer.Instance.difficulty == quizTimer.Difficulty.medium)
         {
             GiveRewards("Medium Level");
+            Debug.Log("Rewards Added");
+
         }
         else
         {
             GiveRewards("Difficult Level");
+            Debug.Log("Rewards Added");
+
         }
     }
 

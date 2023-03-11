@@ -4,13 +4,23 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-public class validate : MonoBehaviour
+public class Validate : MonoBehaviour
 {
     private TMP_InputField input;
     public GameObject errorMessage;
     public TextMeshProUGUI output;
     public Transform simpleBlock;
     public Button btn;
+    public bool isValid;
+    public static Validate Instance;
+    
+    void Awake () 
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+    }
 
     public void valid()
     {
@@ -35,6 +45,17 @@ public class validate : MonoBehaviour
         errorMessage.SetActive(false);
 
         }
+    }
 
+    public void ToggleBool ()
+    {
+        if (isValid)
+        {
+            isValid = false;
+        }
+        else 
+        {
+            isValid = true;
+        }
     }
 }

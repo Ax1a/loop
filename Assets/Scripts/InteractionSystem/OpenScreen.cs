@@ -7,6 +7,11 @@ using DG.Tweening;
 public class OpenScreen : MonoBehaviour
 {
     [SerializeField] private GameObject[] taskbarIcons;
+
+    void Update ()
+    {
+        OnClickedAudio();
+    }
     public void openScreen(GameObject panel)
     {
         if (panel != null)
@@ -25,6 +30,19 @@ public class OpenScreen : MonoBehaviour
         }
     }
 
+    public void OnClickedAudio()
+    {
+        GameObject _computerCanvas = GameObject.FindGameObjectWithTag("mainCanvas");
+        if (_computerCanvas.activeSelf)
+        {
+            if(Input.GetMouseButtonDown(0))
+            {
+                AudioManager.Instance.PlaySfx("Click");
+            }
+        }
+    }
+
+    // test next and back buttons
     public GameObject[] lessons;
     private int currentLesson = 0;
 

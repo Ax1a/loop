@@ -885,10 +885,10 @@ MonoBehaviour:
   - {fileID: 6293195713410386771}
   - {fileID: 6293195713322068918}
   - {fileID: 6293195714077749379}
-  currentQuestion: 0
   text: {fileID: 6293195713147545593}
   quizPanel: {fileID: 6293195714494778635}
-  mainPanel: {fileID: 6293195713183235739}
+  gameOverPanel: {fileID: 0}
+  winPanel: {fileID: 0}
   scoreTxt: {fileID: 6293195713884014693}
   scoreCount: 0
 --- !u!1 &6293195713870920037
@@ -1314,7 +1314,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6293195714076045769
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1333,7 +1333,7 @@ RectTransform:
   - {fileID: 6293195713183235736}
   - {fileID: 6293195713867946478}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1390,10 +1390,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac1c4549ed033224981de72f20b26bf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LessonScreen: {fileID: 6293195714076045770}
-  DesktopScreen: {fileID: 0}
-  QuizScreen: {fileID: 6293195714076045770}
-  PGScreen: {fileID: 0}
+  taskbarIcons: []
+  lessons: []
 --- !u!1 &6293195714077749379
 GameObject:
   m_ObjectHideFlags: 0
@@ -2419,10 +2417,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac1c4549ed033224981de72f20b26bf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LessonScreen: {fileID: 0}
-  DesktopScreen: {fileID: 0}
-  QuizScreen: {fileID: 6293195714076045770}
-  PGScreen: {fileID: 0}
+  taskbarIcons: []
+  lessons: []
 --- !u!1 &6293195715156063179
 GameObject:
   m_ObjectHideFlags: 0
