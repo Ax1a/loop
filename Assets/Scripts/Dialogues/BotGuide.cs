@@ -22,6 +22,7 @@ public class BotGuide : MonoBehaviour
     [SerializeField] private TextMeshProUGUI continueText;
     [SerializeField] private GameObject character;
     [SerializeField] private Animator animator;
+    [SerializeField] private GameObject tutorial;
     
     [Header("Params")]
     [SerializeField] private float typingSpeed = 0.04f;
@@ -62,6 +63,7 @@ public class BotGuide : MonoBehaviour
         playerController = character.GetComponent<PlayerController>();
         audioSource = this.gameObject.AddComponent<AudioSource>();
         audioSource.volume = dialogueVolume;
+        tutorial.SetActive(false);
     }
 
     private void Update() {
@@ -94,6 +96,7 @@ public class BotGuide : MonoBehaviour
         }   
         else {
             guideBot.SetActive(false);   
+            tutorial.SetActive(true);
             isActive = false;
         }
     }

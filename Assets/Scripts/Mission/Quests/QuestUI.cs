@@ -1,18 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
+
 
 public class QuestUI : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    // Side Panel Quest UI
+    [Header("Quest Objects")]
+    [SerializeField] private TextMeshProUGUI[] questTitle;
+    [SerializeField] private TextMeshProUGUI questDescription;
+    [SerializeField] private TextMeshProUGUI questReward;
+    [SerializeField] private GameObject questContentPrefab;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    // public void 
 }

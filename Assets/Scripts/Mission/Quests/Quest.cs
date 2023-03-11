@@ -6,7 +6,21 @@ using UnityEngine;
 public class Quest
 {
     public string title;
+    public int id;
     public string subTitle;
-    public string[] content;
-    public bool isActive;
+    public string[] objectives;
+    public string description;
+    public string congratsText;
+    public string summary;
+    public int nextQuest;
+
+    public string questObjective;
+    public int questObjectiveCount;
+    public int questObjectiveRequirement;
+
+    public int expReward;
+    public int moneyReward;
+
+    public enum QuestProgress { NOT_AVAILABLE, AVAILABLE, ACCEPTED, COMPLETE, DONE}
+    public QuestProgress progress;
 }
