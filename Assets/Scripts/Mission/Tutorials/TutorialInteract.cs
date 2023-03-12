@@ -24,6 +24,7 @@ public class TutorialInteract : Tutorial
             // Change the unchecked box to checked box
             _parent.transform.GetChild(0).gameObject.SetActive(false);
             _parent.transform.GetChild(1).gameObject.SetActive(true);
+            AudioManager.Instance.PlaySfx("Success");
         }
 
         if (Keys.Count == 0){
