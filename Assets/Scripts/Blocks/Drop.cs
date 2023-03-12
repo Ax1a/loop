@@ -6,13 +6,13 @@ using UnityEngine.EventSystems;
 public class Drop : MonoBehaviour, IDropHandler 
 {
     public int id;
+    public bool _pointsAdded = false;
     [SerializeField] public string blockType;
     [HideInInspector] public Drag drag;
     // public Transform simpleBlock;
 
     // private TMP_InputField varInput;
     // public TextMeshProUGUI log;
-    
     public void OnDrop(PointerEventData eventData)
     { 
         if (eventData.pointerDrag != null){
@@ -25,25 +25,37 @@ public class Drop : MonoBehaviour, IDropHandler
             {
                 eventData.pointerDrag.GetComponent<RectTransform>().transform.position =
                 GetComponent<RectTransform>().transform.position;
-                //Check the correct answer through ID of the blocks
-                if(eventData.pointerDrag.GetComponent<Drag>().id == id)
-                { 
-                    //to-do: if points was added, it will not generate anymore
-                    Debug.Log("Correct");
-                    GameObject.Find("Win").GetComponent<Win>().AddPoints();
-                    AudioManager.Instance.PlaySfx("Pop");
-                }
-                else
-                {
-                    AudioManager.Instance.PlaySfx("Pop");
-                    Debug.Log("Wrong");
-                }
+                AudioManager.Instance.PlaySfx("Pop");
+                Validate(eventData);
             }
             else
             {
                 eventData.pointerDrag.GetComponent<Drag>().ResetPos();
-                Debug.Log("ResetPosition");
+                Debug.Log("Block type do not match");
+                AudioManager.Instance.PlaySfx("Pop");
             }
         }  
+    }
+    public void Validate (PointerEventData eventData)
+    {               
+        //Check the correct answer through ID of the blocks
+        if(eventData.pointerDrag.GetComponent<Drag>().id == id)
+        { 
+            //to-do: if points was added, it will not generate anymore
+            if (!_pointsAdded)
+            {
+            Debug.Log("Correct");
+            GameObject.Find("Win").GetComponent<Win>().AddPoints();
+            _pointsAdded = true;
+            }
+            else
+            {
+                Debug.Log("Points Already Added!");
+            }
+        }
+        else
+        {
+            Debug.Log("Wrong");
+        }
     }
 }
