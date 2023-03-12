@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEngine.SceneManagement;
 
 public class QuizManager : MonoBehaviour
 {
@@ -25,9 +24,11 @@ public class QuizManager : MonoBehaviour
     public GameObject gameOverPanel;
     public GameObject winPanel;
     GameObject startPanel;
-    public TextMeshProUGUI scoreTxt;
+    public TextMeshProUGUI[] scoreTxt;
+    public TextMeshProUGUI[] rewardTxt;
     public int scoreCount;
     public static QuizManager Instance;
+    public GameObject[] rewardsPanel; 
 
     #endregion
 
@@ -42,7 +43,6 @@ public class QuizManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
         ShuffleQuestions();
         _totalQuestions = QnA.Count; 
         winPanel.SetActive(false);
@@ -101,11 +101,15 @@ public class QuizManager : MonoBehaviour
     public void GameOver(){
         timer.stopTime();
         gameOverPanel.SetActive(true);
-        scoreTxt.text = scoreCount + "/" + _totalQuestions;
+        //Lose score index : 0
+        scoreTxt[0].text = scoreCount + "/" + _totalQuestions;
     }
     public void Win(){
         timer.stopTime();
         winPanel.SetActive(true);
+        //Lose score index : 1
+        scoreTxt[1].text = scoreCount + "/" + _totalQuestions;
+        StartCoroutine(DisplayRewards());
     }
     public void OpenPanel ()
     {   
@@ -146,6 +150,30 @@ public class QuizManager : MonoBehaviour
         }
 
         _questionIndex += 1;
+    }
+
+    IEnumerator DisplayRewards ()
+    {
+        //Display Money Reward
+        //Money index: 0 
+        yield return new WaitForSeconds(1f);
+        rewardTxt[0].text = "+" + RewardManager.Instance._money.ToString();
+        rewardsPanel[0].SetActive(true);
+        AudioManager.Instance.PlaySfx("Success");
+        Debug.Log("Money: " + RewardManager.Instance._money);
+
+        //Display Exp Reward
+        //Exp index: 1
+        yield return new WaitForSeconds(1f);
+        rewardTxt[1].text = "+" + RewardManager.Instance._exp.ToString();
+        rewardsPanel[1].SetActive(true);
+        AudioManager.Instance.PlaySfx("Success");
+        Debug.Log("Exp: " + RewardManager.Instance._exp);
+        
+        //Display button
+        yield return new WaitForSeconds(1f);
+        rewardsPanel[2].SetActive(true);
+
     }
 
 #endregion

@@ -6,7 +6,9 @@ public class RewardManager : MonoBehaviour
 {
     public List<Reward> rewards = new List<Reward>();
     public static RewardManager Instance;
-
+    
+    [HideInInspector] public int _money;
+    [HideInInspector] public int _exp;
     private void Awake()
     {
         if (Instance == null)
@@ -21,6 +23,8 @@ public class RewardManager : MonoBehaviour
         {
             DataManager.AddMoney(reward.money);
             DataManager.AddExp(reward.exp);
+            _money = reward.money;
+            _exp = reward.exp;
         }
     }
     public void AssessReward ()
@@ -43,5 +47,4 @@ public class RewardManager : MonoBehaviour
 
         }
     }
-
 }
