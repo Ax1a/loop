@@ -26,7 +26,7 @@ public class QuizManager : MonoBehaviour
     GameObject startPanel;
     public TextMeshProUGUI[] scoreTxt;
     public TextMeshProUGUI[] rewardTxt;
-    public int scoreCount;
+    [HideInInspector]public int scoreCount;
     public static QuizManager Instance;
     public GameObject[] rewardsPanel; 
 
