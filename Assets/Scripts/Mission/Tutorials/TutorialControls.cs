@@ -21,16 +21,13 @@ public class TutorialControls : Tutorial
                 _parent.transform.GetChild(1).gameObject.SetActive(true);
                 AudioManager.Instance.PlaySfx("Success");
 
-                // Add change color text here when completed
                 if (Input.inputString == "b") {
-                    //AudioManager.Instance.PlaySfx("Success");
                     DataManager.AddMoney(15);
                     BotGuide.Instance.AddDialogue("Great! You have been given 15 currency units to spend."); 
                     BotGuide.Instance.AddDialogue("Perhaps you could treat yourself to a nice cup of coffee? Try clicking the buy button of an item.");
                     BotGuide.Instance.ShowDialogue();
                 }
                 if (Input.inputString == "i") {
-                   // AudioManager.Instance.PlaySfx("Success");
                     BotGuide.Instance.AddDialogue("Great job! In the inventory, you can browse your items, or use them if needed.");
                     BotGuide.Instance.AddDialogue("Now let's close the inventory to continue the tutorial.");
                     BotGuide.Instance.ShowDialogue();
