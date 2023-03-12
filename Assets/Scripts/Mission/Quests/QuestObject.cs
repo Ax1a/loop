@@ -8,13 +8,19 @@ public class QuestObject : MonoBehaviour
 
     public List<int> availableQuestIDs = new List<int>();
     public List<int> receivableQuestIDs = new List<int>();
-    void Start()
-    {
-        
+    [SerializeField] private GameObject Interactor;
+    InteractObject interactObject;
+
+    private void Start() {
+        interactObject = Interactor.GetComponent<InteractObject>();
+
+        // Debug.Log
     }
 
-    void Update()
-    {
-        
+    private void Update() {
+        if (Input.GetKeyDown(InputManager.Instance.interact) && interactObject.NearInteractable()) {
+            QuestManager.Instance.QuestRequest(this);
+        }
     }
+
 }
