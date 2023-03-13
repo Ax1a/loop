@@ -49,8 +49,16 @@ public class quizTimer : MonoBehaviour
     {  
         if(!isStart)
         {
-            isStart = true;
-            startPanel.transform.localScale = new Vector3(0,0,0); 
+            if (Energy.Instance.GetCurrentEnergy() > 0)
+            {
+                Energy.Instance.UseEnergy();
+                isStart = true;
+                startPanel.transform.localScale = new Vector3(0,0,0); 
+            }
+            else{
+                Debug.Log("No Energy Left");
+                return;
+            }
         }
 
     }
