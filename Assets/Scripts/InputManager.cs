@@ -9,6 +9,8 @@ public class InputManager : MonoBehaviour
     public KeyCode exit;
     public KeyCode interact;
     public KeyCode quest;
+    public KeyCode openPhone;
+    public KeyCode closePhone;
 
     public static InputManager Instance;
 
