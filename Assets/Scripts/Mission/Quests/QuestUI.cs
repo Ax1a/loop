@@ -22,7 +22,9 @@ public class QuestUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI l_questRewardMoney;
     [SerializeField] private GameObject l_questButtonPrefab;
     [SerializeField] private GameObject l_questContentPrefab;
-    [SerializeField] private Transform l_mainQuestParent;
+    [SerializeField] private GameObject l_giveUpBtn;
+    [SerializeField] private Transform l_mainQuestContentParent;
+    [SerializeField] private Transform l_mainQuestButtonParent;
     [SerializeField] private Transform l_sideQuestParent;
 
     [Header("Quest PopUp")]
@@ -30,11 +32,6 @@ public class QuestUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI p_missionTypeTxt;
 
     private QuestObject _currentQuestObject;
-    
-    [Header("Quest Buttons")]
-    [SerializeField] private GameObject questBtn;
-    [SerializeField] private GameObject acceptBtn;
-    [SerializeField] private GameObject giveUpBtn;
 
     [Header("Quest Lists")]
     public List<Quest> availableQuest = new List<Quest>();
@@ -61,23 +58,31 @@ public class QuestUI : MonoBehaviour
         foreach (var item in activeQuest)
         {
             if (item.questType == Quest.QuestType.MAIN) {
-                GameObject sidePanelQuest = Instantiate(s_questPanelPrefab, s_questPanelParent);
-                sidePanelQuest.SetActive(true);
-                p_missionTypeTxt.text = item.title;
-
+                // Setup the side panel UI
+                GameObject sidePanelQuest = Instantiate(s_questPanelPrefab, s_questPanelParent); // Create a new gameobject based on prefab
+                QuestUISidePanel qUISidePanel = sidePanelQuest.GetComponent<QuestUISidePanel>(); // Call the script from prefab
+                qUISidePanel.SetQuestTitle(item.title); // Set the quest title
+                qUISidePanel.SetQuestSubTitle(item.description); // Set the quest description
+                qUISidePanel.GenerateObjectives(item.objectives); // Generate the quest objectives
+                
                 foreach (var title in questTitles)
                 {
                     title.text = item.title;
                 }
 
-                foreach (var req in item.objectives)
-                {
-                    GameObject requirement = Instantiate(s_questContentPrefab, s_questContentParent.transform);    
-                    requirement.GetComponentInChildren<TextMeshProUGUI>().text = req;    
-                    // TextMeshProUGUI requirement = Instantiate(requirementText, parent.transform);    
-                    // requirement.text = req;        
-                    // requirement.transform.parent = parent.transform;
-                }
+                // Set popup text
+                p_missionTypeTxt.text = item.title;
+
+                sidePanelQuest.SetActive(true);
+
+                // Logs
+                if (l_mainQuestButtonParent.childCount > 0) Destroy(l_mainQuestButtonParent.GetChild(0).gameObject);
+
+                GameObject questBtn = Instantiate(l_questButtonPrefab, l_mainQuestButtonParent);
+                QuestButtonLog qBtnLog = questBtn.GetComponent<QuestButtonLog>();
+
+                qBtnLog.questID = item.id;
+                qBtnLog.questTitle.text = item.title;
             }
             
         }

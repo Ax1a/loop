@@ -11,10 +11,8 @@ public class TutorialManager : MonoBehaviour
     [Header("Tutorial Objects")]
     public TextMeshProUGUI descriptionText;
     public TextMeshProUGUI titleText;
-    [SerializeField] private GameObject contentPrefab;
-    public GameObject tutorialPrefab;
-    [SerializeField] private GameObject tabCanvas;
-    [SerializeField] private GameObject parentContainer;
+    [SerializeField] private GameObject questPanelPrefab;
+    [SerializeField] private Transform parentContainer;
     private bool _activated = false;
 
     private static TutorialManager _instance;
@@ -77,19 +75,25 @@ public class TutorialManager : MonoBehaviour
             return;
         }
 
-        descriptionText.text = currentTutorial.Explanation;        
-        titleText.text = currentTutorial.Title;
+        // descriptionText.text = currentTutorial.Explanation;        
+        // titleText.text = currentTutorial.Title;
+        // Setup the side panel UI
+        if(parentContainer.childCount != 0) GameObject.Destroy(parentContainer.GetChild(0).gameObject);
 
-        foreach (var req in currentTutorial.Requirement)
-        {
-            GameObject requirement = Instantiate(contentPrefab, parentContainer.transform);    
-            requirement.GetComponentInChildren<TextMeshProUGUI>().text = req;    
+        GameObject sidePanelQuest = Instantiate(questPanelPrefab, parentContainer); // Create a new gameobject based on prefab
+        QuestUISidePanel qUISidePanel = sidePanelQuest.GetComponent<QuestUISidePanel>(); // Call the script from prefab
+        qUISidePanel.SetQuestTitle(currentTutorial.Title); // Set the quest title
+        qUISidePanel.SetQuestSubTitle(currentTutorial.Explanation); // Set the quest description
+        qUISidePanel.GenerateObjectives(currentTutorial.Requirement); // Generate the quest objectives
+        // foreach (var req in currentTutorial.Requirement)
+        // {
+        //     GameObject requirement = Instantiate(contentPrefab, parentContainer.transform);    
+        //     requirement.GetComponentInChildren<TextMeshProUGUI>().text = req;    
             // TextMeshProUGUI requirement = Instantiate(requirementText, parent.transform);    
             // requirement.text = req;        
             // requirement.transform.parent = parent.transform;
-        }
+        // }
 
-        if(parentContainer.transform.childCount != 0) GameObject.Destroy(parentContainer.transform.GetChild(0).gameObject);
     } 
 
     public void CompletedAllTutorials() {

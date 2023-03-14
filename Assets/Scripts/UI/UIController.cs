@@ -57,10 +57,10 @@ public class UIController : MonoBehaviour
             ToggleUI("PauseMenu");
         }
         else if(Input.GetKeyDown(InputManager.Instance.shop)) {
-            ToggleTab("Tab1", "TabMenuCanvas");
+            ToggleTab("Tab1", "ShopInventoryCanvas");
         }
         else if(Input.GetKeyDown(InputManager.Instance.inventory)) {
-            ToggleTab("Tab2", "TabMenuCanvas");
+            ToggleTab("Tab2", "ShopInventoryCanvas");
         }
         else if (Input.GetKeyDown(InputManager.Instance.quest)) {
             ToggleTab("MainQTab", "QuestCanvas");

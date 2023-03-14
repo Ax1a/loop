@@ -21,10 +21,11 @@ public class TutorialInteract : Tutorial
 
         if (Input.inputString.Contains(Keys[0]) && interactObject.NearInteractable()) {
             Keys.RemoveAt(0);
-            Transform _parent = parent.gameObject.transform.GetChild(0);
-            // Change the unchecked box to checked box
-            _parent.transform.GetChild(0).gameObject.SetActive(false);
-            _parent.transform.GetChild(1).gameObject.SetActive(true);
+            // Change the toggle box to check
+            Transform _panel = parent.gameObject.transform.GetChild(0);
+            QuestUISidePanel _questUI = _panel.GetComponent<QuestUISidePanel>();
+            _questUI.ToggleCheck(true, 0);
+            //
             AudioManager.Instance.PlaySfx("Success");
         }
 
