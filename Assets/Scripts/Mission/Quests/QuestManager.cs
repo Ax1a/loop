@@ -16,7 +16,6 @@ public class QuestManager : MonoBehaviour
         else if (Instance != this) {
             Destroy(gameObject);
         }
-        DontDestroyOnLoad(gameObject);
     }
 
     public void QuestRequest(QuestObject QO) {

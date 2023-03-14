@@ -12,12 +12,14 @@ public class TutorialControls : Tutorial
     {
         for (int i = 0; i < Keys.Count; i++) {
             if (Input.inputString.Contains(Keys[i])) {
-                Transform _parent = parent.gameObject.transform.GetChild(i);
-                Keys.RemoveAt(i);
-                // Change the unchecked box to checked box
-                _parent.transform.GetChild(0).gameObject.SetActive(false);
-                _parent.transform.GetChild(1).gameObject.SetActive(true);
+                // Change the toggle box to check
+                Transform _panel = parent.gameObject.transform.GetChild(0);
+                QuestUISidePanel _questUI = _panel.GetComponent<QuestUISidePanel>();
+                _questUI.ToggleCheck(true, i);
+                //
+                
                 AudioManager.Instance.PlaySfx("Success");
+                Keys.RemoveAt(i);
 
                 if (Input.inputString == "b") {
                     DataManager.AddMoney(15);
