@@ -17,6 +17,8 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject[] gameUI;
     [SerializeField] private GameObject[] tabMenus;
     [SerializeField] private GameObject Character;
+    [SerializeField] private GameObject highlightGuide;
+    public Queue<GameObject> popUpUIs = new Queue<GameObject>();
     PlayerController _playerController;
 
     [Header ("Menu Buttons")]
@@ -43,16 +45,25 @@ public class UIController : MonoBehaviour
 
     void Update()
     {
+        if (popUpUIs.Count > 0) {
+            if (highlightGuide.name == popUpUIs.Peek().name) {
+                highlightGuide.SetActive(true);
+                popUpUIs.Dequeue();
+            }
+        }
         if (BotGuide.Instance.guideIsActive()) return;
 
         if(Input.GetKeyDown(InputManager.Instance.exit) && _anyActive == false){
             ToggleUI("PauseMenu");
         }
         else if(Input.GetKeyDown(InputManager.Instance.shop)) {
-            ToggleTab("Tab1");
+            ToggleTab("Tab1", "TabMenuCanvas");
         }
         else if(Input.GetKeyDown(InputManager.Instance.inventory)) {
-            ToggleTab("Tab2");
+            ToggleTab("Tab2", "TabMenuCanvas");
+        }
+        else if (Input.GetKeyDown(InputManager.Instance.quest)) {
+            ToggleTab("MainQTab", "QuestCanvas");
         }
 
         if (_anyActive == true) {
@@ -75,8 +86,8 @@ public class UIController : MonoBehaviour
         saveBtn.onClick.AddListener(SaveGameData);
     }
 
-    public void ToggleTab(string tabToOpen) {
-        ToggleUI("TabMenuCanvas");
+    public void ToggleTab(string tabToOpen, string tabCanvas) {
+        ToggleUI(tabCanvas);
 
         // Open the tab based on parameter
         foreach (var tab in tabMenus)
@@ -131,6 +142,10 @@ public class UIController : MonoBehaviour
 
     public bool otherPanelActive() {
         return _anyActive;
+    }
+
+    public void SetHighlightActive(bool active) {
+        highlightGuide.SetActive(active);
     }
 
     void GoToMainMenu() {

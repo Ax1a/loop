@@ -8,6 +8,7 @@ public class TutorialInteract : Tutorial
     public List<string> Keys = new List<string>();
     [SerializeField] private GameObject Interactor;
     [SerializeField] private GameObject parent;
+    [SerializeField] private GameObject questGiver;
     InteractObject interactObject;
 
     private void Start() {
@@ -28,6 +29,8 @@ public class TutorialInteract : Tutorial
         }
 
         if (Keys.Count == 0){
+            // QuestManager.Instance.QuestRequest(questGiver.GetComponent<QuestObject>());
+            // Debug.Log(QuestManager.Instance.CheckAcceptedQuest(questGiver.GetComponent<QuestObject>()));
             int objCount = parent.transform.childCount;
 
             if(objCount == 0) return;

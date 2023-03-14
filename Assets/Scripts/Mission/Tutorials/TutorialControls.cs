@@ -6,9 +6,7 @@ public class TutorialControls : Tutorial
 {
     public List<string> Keys = new List<string>();
     [SerializeField] private GameObject parent;
-    
-    private void Start() {
-    }
+    [SerializeField] private GameObject highlightGuide;
 
     public override void CheckIfHappening()
     {
@@ -26,6 +24,7 @@ public class TutorialControls : Tutorial
                     BotGuide.Instance.AddDialogue("Great! You have been given 15 currency units to spend."); 
                     BotGuide.Instance.AddDialogue("Perhaps you could treat yourself to a nice cup of coffee? Try clicking the buy button of an item.");
                     BotGuide.Instance.ShowDialogue();
+                    UIController.Instance.popUpUIs.Enqueue(highlightGuide);
                 }
                 if (Input.inputString == "i") {
                     BotGuide.Instance.AddDialogue("Great job! In the inventory, you can browse your items, or use them if needed.");

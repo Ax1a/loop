@@ -13,13 +13,14 @@ public class QuestObject : MonoBehaviour
 
     private void Start() {
         interactObject = Interactor.GetComponent<InteractObject>();
-
+        QuestManager.Instance.QuestRequest(this);
         // Debug.Log
     }
 
     private void Update() {
         if (Input.GetKeyDown(InputManager.Instance.interact) && interactObject.NearInteractable()) {
-            QuestManager.Instance.QuestRequest(this);
+            // QuestManager.Instance.QuestRequest(this);
+            // Debug.Log("test");
         }
     }
 

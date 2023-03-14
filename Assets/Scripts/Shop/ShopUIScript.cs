@@ -77,6 +77,7 @@ public class ShopUIScript : MonoBehaviour
                 BotGuide.Instance.AddDialogue("Great! You can grab a food or beverage when you need an energy."); 
                 BotGuide.Instance.AddDialogue("Now let's close the shop to continue the tutorial.");
                 BotGuide.Instance.ShowDialogue();
+                UIController.Instance.SetHighlightActive(false);
             }
         }
         else {
