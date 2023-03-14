@@ -8,6 +8,7 @@ public class InputManager : MonoBehaviour
     public KeyCode inventory;
     public KeyCode exit;
     public KeyCode interact;
+    public KeyCode quest;
 
     public static InputManager Instance;
 

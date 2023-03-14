@@ -22,5 +22,7 @@ public class Quest
     public int moneyReward;
 
     public enum QuestProgress { NOT_AVAILABLE, AVAILABLE, ACCEPTED, COMPLETE, DONE}
+    public enum QuestType { MAIN, SIDE }
     public QuestProgress progress;
+    public QuestType questType;
 }

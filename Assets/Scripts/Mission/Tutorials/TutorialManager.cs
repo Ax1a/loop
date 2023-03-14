@@ -94,7 +94,9 @@ public class TutorialManager : MonoBehaviour
 
     public void CompletedAllTutorials() {
         descriptionText.text = "You have completed all the tutorials";
-        tutorialPrefab.SetActive(false);
+        titleText.text = "Tutorial Complete";
+        if(parentContainer.transform.childCount != 0) GameObject.Destroy(parentContainer.transform.GetChild(0).gameObject);
+        // tutorialPrefab.SetActive(false);
         SaveGame.Instance.SaveGameState();
     }
 

@@ -86,7 +86,10 @@ public class BotGuide : MonoBehaviour
     public void ShowDialogue() {
         // Display the first dialogue
         if (_dialogues?.Count > 0) {
-            // dialogueText.text = _dialogues[0];
+            if (!UIController.Instance.popUpUIs.Contains(guideBot)) {
+                UIController.Instance.popUpUIs.Enqueue(guideBot);
+            }
+
             if (displayLineCoroutine != null) StopCoroutine(displayLineCoroutine);
             
             displayLineCoroutine = StartCoroutine(DisplayLine(_dialogues[0]));
@@ -95,6 +98,7 @@ public class BotGuide : MonoBehaviour
             if (animator.runtimeAnimatorController != null) animator.SetBool("isTalking", true);
         }   
         else {
+            UIController.Instance.popUpUIs.Dequeue();
             guideBot.SetActive(false);   
             tutorial.SetActive(true);
             isActive = false;

@@ -29,9 +29,11 @@ public class QuestManager : MonoBehaviour
 
                         // Testing
                         AcceptQuest(QO.availableQuestIDs[j]);
+                        QuestUI.Instance.activeQuest.Add(questList[i]);
                     }
                 }
             }
+            QuestUI.Instance.SetSPQuestUI();
         }
 
         // Active Quests
