@@ -18,9 +18,9 @@ public class LogInAnimation : MonoBehaviour
     [Header("Params")]
     [SerializeField] private float typingSpeed = 0.5f;
     [SerializeField] private float animationDuration = 0.5f;
+    public static LogInAnimation Instance;
 
     private Tween fadeTween;
-
     private void OnEnable() {
         StartCoroutine(PlayLoginAnimation());
     }
