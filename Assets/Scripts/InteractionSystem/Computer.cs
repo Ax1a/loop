@@ -12,7 +12,13 @@ public class Computer : MonoBehaviour, Interactable
     [SerializeField] private string _prompt;
     public string InteractionPrompt => _prompt;
     public bool isOpened = false;
+    bool _computerOpenedBefore; 
 
+    void Start ()
+    {
+        //For testing. Must remove
+        PlayerPrefs.DeleteKey("ComputerOpenedBefore");
+    }
     public bool Interact(InteractObject interactor)
     {
         // Disable HUD (Fix error when disabled)
@@ -25,7 +31,9 @@ public class Computer : MonoBehaviour, Interactable
         // compCamera.gameObject.SetActive(false);
         if (isOpened == false) {
             UIController.Instance.SetPanelActive(true);
-            StartCoroutine(OpenPanelDelay());   
+            StartCoroutine(OpenPanelDelay());
+            StartCoroutine(Bot());
+      
         }
         return true;
     }
@@ -36,5 +44,23 @@ public class Computer : MonoBehaviour, Interactable
         isOpened = true;
         Open = _computer.GetComponent<OpenPanel>();
         Open._OpenPanel();
+        
+
+    }
+
+    IEnumerator Bot () 
+    {
+        yield return new WaitForSeconds(4f);
+        
+        _computerOpenedBefore = PlayerPrefs.GetInt("ComputerOpenedBefore", 0) == 1;
+        //checks if computer canvas is opened for the first time
+        if(!_computerOpenedBefore)
+        {
+            PlayerPrefs.SetInt("ComputerOpenedBefore", 1); 
+            BotGuide.Instance.AddDialogue("Hello there! Welcome to your first time opening your computer in the game."); 
+            BotGuide.Instance.AddDialogue("All programming lessons from your chosen language will be access in this computer!"); 
+            BotGuide.Instance.AddDialogue("So try your best to finish all lessons!"); 
+            BotGuide.Instance.ShowDialogue();
+        }
     }
 }

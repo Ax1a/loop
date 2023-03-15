@@ -119,7 +119,7 @@ public class UIController : MonoBehaviour
                     mainUI.SetActive(false);
 
                     SetPanelActive(true);
-                };  
+                };
             }
         }
     }

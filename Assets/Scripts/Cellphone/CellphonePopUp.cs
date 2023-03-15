@@ -36,9 +36,11 @@ public class CellphonePopUp : MonoBehaviour
         {
             _isActive = true;
             applicationPanel.SetActive(true);
+            UIController.Instance.SetPanelActive(true);
         }
         else 
         {
+            UIController.Instance.SetPanelActive(false);
             _isActive = false;
             applicationPanel.SetActive(false);
         }
