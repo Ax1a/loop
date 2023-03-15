@@ -73,9 +73,12 @@ public class QuestManager : MonoBehaviour
         for (int i = 0; i < GetCurrentQuestCount(); i++) {
             if (currentQuestList[i].id == questID && currentQuestList[i].progress == Quest.QuestProgress.COMPLETE) {
                 currentQuestList[i].progress = Quest.QuestProgress.DONE;
-                currentQuestList.Remove(currentQuestList[i]);
-
                 // Give rewards
+                DataManager.AddExp(currentQuestList[i].expReward);
+                DataManager.AddMoney(currentQuestList[i].moneyReward);
+
+                currentQuestList.Remove(currentQuestList[i]);
+                QuestUI.Instance.ClearQuestData();
             }
         }
         CheckChainQuest(questID);
@@ -99,16 +102,23 @@ public class QuestManager : MonoBehaviour
         }
     }
 
-    // Add item to the list
+    // Add progress to the quest
     public void AddQuestItem(string questObjective, int itemAmount) {
         for (int i = 0; i < GetCurrentQuestCount(); i++) {
-            if (currentQuestList[i].questObjective == questObjective && currentQuestList[i].progress == Quest.QuestProgress.ACCEPTED) {
-                currentQuestList[i].questObjectiveCount += itemAmount;
-            }
+            foreach (var objective in currentQuestList[i].questObjectives)
+            {
+                if (objective == questObjective && currentQuestList[i].progress == Quest.QuestProgress.ACCEPTED) {
+                    currentQuestList[i].questObjectiveCount += itemAmount;
+                    Debug.Log(objective + questObjective);
+                }
 
-            if (currentQuestList[i].questObjectiveCount >= currentQuestList[i].questObjectiveRequirement && currentQuestList[i].progress == Quest.QuestProgress.ACCEPTED) {
-                currentQuestList[i].progress = Quest.QuestProgress.COMPLETE;
-           }
+                if (currentQuestList[i].questObjectiveCount >= currentQuestList[i].questObjectiveRequirement && currentQuestList[i].progress == Quest.QuestProgress.ACCEPTED) {
+                    currentQuestList[i].progress = Quest.QuestProgress.COMPLETE;
+
+                    // Automatic claim the rewards
+                    CompleteQuest(currentQuestList[i].id);
+                }
+            }
         }
     }
 

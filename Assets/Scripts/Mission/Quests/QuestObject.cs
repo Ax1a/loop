@@ -14,14 +14,15 @@ public class QuestObject : MonoBehaviour
     private void Start() {
         interactObject = Interactor.GetComponent<InteractObject>();
         QuestManager.Instance.QuestRequest(this);
+       
         QuestUI.Instance.DisplayFirstQuest();
         // Debug.Log
     }
 
     private void Update() {
         if (Input.GetKeyDown(InputManager.Instance.interact) && interactObject.NearInteractable()) {
-            // QuestManager.Instance.QuestRequest(this);
-            // Debug.Log("test");
+            QuestManager.Instance.AddQuestItem("shish", 1);
+            QuestManager.Instance.AddQuestItem("balls", 1);
         }
     }
 

@@ -8,13 +8,12 @@ public class Quest
     public string title;
     public int id;
     public string subTitle;
-    public string[] objectives;
     public string description;
     public string congratsText;
     public string summary;
     public int nextQuest;
 
-    public string questObjective;
+    public string[] questObjectives;
     public int questObjectiveCount;
     public int questObjectiveRequirement;
 
