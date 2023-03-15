@@ -32,7 +32,7 @@ public class QuestManager : MonoBehaviour
                     }
                 }
             }
-            QuestUI.Instance.SetSPQuestUI();
+            QuestUI.Instance.SetMainQuestUI();
         }
 
         // Active Quests
@@ -111,10 +111,6 @@ public class QuestManager : MonoBehaviour
            }
         }
     }
-
-
-    // Remove item to the list
-    
 
     /*
     * Bools for checking quest progress

@@ -261,10 +261,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: ContinueGame
-        m_Mode: 3
+      - m_Target: {fileID: 1141798860411020368}
+        m_TargetAssemblyTypeName: QuestButtonLog, Assembly-CSharp
+        m_MethodName: ShowAllInfos
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -285,8 +285,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d6f0e3198384744d944e323ebb72a25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  accentColor: {r: 0.0754717, g: 0.0754717, b: 0.0754717, a: 1}
-  forNavigation: 1
+  accentColor: {r: 0.122641504, g: 0.122641504, b: 0.122641504, a: 1}
+  forNavigation: 0
 --- !u!114 &1141798860411020368
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -301,3 +301,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   questID: 0
   questTitle: {fileID: 4863495301702371290}
+  isActive: 0
+  activeSprite: {fileID: 21300000, guid: 1c2cda1dde4735e4e9ace8aaa0e4139d, type: 3}
+  inactiveSprite: {fileID: 21300000, guid: d2e094efbaee612489a8476728fd1e2f, type: 3}
