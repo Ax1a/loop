@@ -37,10 +37,6 @@ public class QuestUI : MonoBehaviour
     public List<Quest> activeQuest = new List<Quest>();
     private List<GameObject> _questButtons = new List<GameObject>();
 
-    [Header("Params")]
-    [SerializeField] private Transform qButtonSpacer;
-
-
     public static QuestUI Instance;
 
     private void Awake() {
@@ -58,14 +54,7 @@ public class QuestUI : MonoBehaviour
         foreach (var item in activeQuest)
         {
             if (item.questType == Quest.QuestType.MAIN) {
-                // Setup the side panel UI
-                GameObject sidePanelQuest = Instantiate(s_questPanelPrefab, s_questPanelParent); // Create a new gameobject based on prefab
-                QuestUISidePanel qUISidePanel = sidePanelQuest.GetComponent<QuestUISidePanel>(); // Call the script from prefab
-                qUISidePanel.SetQuestTitle(item.title); // Set the quest title
-                qUISidePanel.SetQuestSubTitle(item.subTitle); // Set the quest description
-                qUISidePanel.GenerateObjectives(item.objectives); // Generate the quest objectives
-                
-                sidePanelQuest.SetActive(true);
+                ShowQuestSidePanel(item);
 
                 // Set popup text
                 p_missionTypeTxt.text = item.title;
@@ -92,6 +81,17 @@ public class QuestUI : MonoBehaviour
         _questButtons.Add(questBtn);
     }
 
+    public void ShowQuestSidePanel(Quest item) {
+        // Setup the side panel UI
+        GameObject sidePanelQuest = Instantiate(s_questPanelPrefab, s_questPanelParent); // Create a new gameobject based on prefab
+        QuestUISidePanel qUISidePanel = sidePanelQuest.GetComponent<QuestUISidePanel>(); // Call the script from prefab
+        qUISidePanel.SetQuestTitle(item.title); // Set the quest title
+        qUISidePanel.SetQuestSubTitle(item.subTitle); // Set the quest description
+        qUISidePanel.GenerateObjectives(item.questObjectives); // Generate the quest objectives
+        
+        sidePanelQuest.SetActive(true);
+    }
+
     // Show selected log quest
     public void ShowSelectedQuest(int questID) {
         l_questExpContentPrefab.SetActive(false);
@@ -109,7 +109,7 @@ public class QuestUI : MonoBehaviour
                         Destroy(child.gameObject);
                     }
                 }
-                foreach (var objective in quest.objectives)
+                foreach (var objective in quest.questObjectives)
                 {
                     GameObject _objective = Instantiate(l_questObjectivePrefab ,l_mainQuestObjectiveParent);
                     _objective.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = objective;
@@ -143,8 +143,8 @@ public class QuestUI : MonoBehaviour
 
     // Clear Quest Data to avoid duplication
     public void ClearQuestData() {
-        availableQuest.Clear();
-        activeQuest.Clear();
+        // availableQuest.Clear();
+        // activeQuest.Clear();
 
         foreach (var item in _questButtons)
         {
