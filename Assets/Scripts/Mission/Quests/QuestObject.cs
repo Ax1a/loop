@@ -14,6 +14,7 @@ public class QuestObject : MonoBehaviour
     private void Start() {
         interactObject = Interactor.GetComponent<InteractObject>();
         QuestManager.Instance.QuestRequest(this);
+        QuestUI.Instance.DisplayFirstQuest();
         // Debug.Log
     }
 
