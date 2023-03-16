@@ -27,8 +27,16 @@ public class QuestUI : MonoBehaviour
     [SerializeField] private Transform l_mainQuestObjectiveParent;
 
     [Header("Quest PopUp")]
+    // New Mission Popup
     [SerializeField] private GameObject p_questPrefab;
     [SerializeField] private TextMeshProUGUI p_missionTypeTxt;
+
+    // For complete Popup
+    [SerializeField] private GameObject p_questCompletePrefab;
+    [SerializeField] private TextMeshProUGUI p_questCompleteTitle;
+    [SerializeField] private TextMeshProUGUI p_questType;
+    [SerializeField] private TextMeshProUGUI p_questRewardExp;
+    [SerializeField] private TextMeshProUGUI p_questRewardMoney;
 
     private QuestObject _currentQuestObject;
 
@@ -47,6 +55,8 @@ public class QuestUI : MonoBehaviour
 
     // Set Up Main Quests
     public void SetMainQuestUI() {
+        int sidePanelQCount = 0;
+
         if (s_questPanelParent.childCount > 0) {
             Destroy(s_questPanelParent.GetChild(0).gameObject);
         }
@@ -54,7 +64,10 @@ public class QuestUI : MonoBehaviour
         foreach (var item in activeQuest)
         {
             if (item.questType == Quest.QuestType.MAIN) {
-                ShowQuestSidePanel(item);
+                if (sidePanelQCount == 0) {
+                    ShowQuestSidePanel(item);
+                    sidePanelQCount++;
+                }
 
                 // Set popup text
                 p_missionTypeTxt.text = item.title;
@@ -126,6 +139,36 @@ public class QuestUI : MonoBehaviour
                 }
             }
         }
+    }
+
+    // Display when finished a mission
+    public void ShowCompleteQuestBanner(Quest quest) {
+        p_questCompleteTitle.text = quest.title;
+
+        if (quest.expReward > 0) {
+            p_questRewardExp.transform.parent.gameObject.SetActive(true);
+            p_questRewardExp.text = "+ " + quest.expReward;
+        }
+        else {
+            p_questRewardExp.transform.parent.gameObject.SetActive(false);
+        }
+
+        if (quest.moneyReward > 0) {
+            p_questRewardMoney.transform.parent.gameObject.SetActive(true);
+            p_questRewardMoney.text = "+ " + quest.moneyReward;
+        }
+        else {
+            p_questRewardMoney.transform.parent.gameObject.SetActive(false);
+        }
+
+        if (quest.questType == Quest.QuestType.MAIN) {
+            p_questType.text = "Main Quest";
+        }
+        else {
+            p_questType.text = "Side Quest";
+        }
+
+        p_questCompletePrefab.SetActive(true);
     }
 
     // Display the first quest on load
