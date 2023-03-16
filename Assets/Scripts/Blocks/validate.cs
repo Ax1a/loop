@@ -10,7 +10,7 @@ public class Validate : MonoBehaviour
     public GameObject errorMessage;
     public TextMeshProUGUI output;
     public Transform simpleBlock;
-    public Button btn;
+    //public Button btn;
     public bool isValid;
     public static Validate Instance;
     
@@ -21,23 +21,24 @@ public class Validate : MonoBehaviour
             Instance = this;
         }
     }
-
     public void valid()
     {
         input = simpleBlock.GetComponentInChildren<TMP_InputField>();
+
         if(input.text.Length != 0)
         {
-        output.text = input.text;
-        btn.transform.gameObject.SetActive(true);     
+            errorMessage.SetActive(false);
+            output.text = input.text;
+            NPCDialogue.Instance.AddDialogue("Great! Seems I understand the lesson", DataManager.GetPlayerName()); 
+            NPCDialogue.Instance.ShowDialogue();
         }
         else
         {
-        errorMessage.SetActive(true);
-        Debug.Log("Error Message");
-        
+            errorMessage.SetActive(true);
+            NPCDialogue.Instance.AddDialogue("I think I should input some values", DataManager.GetPlayerName()); 
+            NPCDialogue.Instance.ShowDialogue();    
         }
     }
-
     public void removeError()
     {
         if(errorMessage.activeSelf)
