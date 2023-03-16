@@ -44,9 +44,27 @@ public class TutorialInteract : Tutorial
             BotGuide.Instance.AddDialogue("Great job! You've got the hang of it. Remember, you can interact with lots of different objects throughout the game,"); 
             BotGuide.Instance.AddDialogue("so keep your eyes peeled for that 'Interact' prompt. Happy exploring!"); 
             BotGuide.Instance.ShowDialogue();
+            ShowCompletedTutorial();
             TutorialManager.Instance.CompletedTutorial();
+            StartCoroutine(DelayAddQuest());
         }
     }
 
-    
+    private void ShowCompletedTutorial() {
+        // Create new instance of the object class
+        Quest _quest = new Quest();
+
+        // Add values to the object
+        _quest.title = "Basic Tutorial";
+        _quest.questType = Quest.QuestType.MAIN;
+
+        // Call the banner popup class
+        QuestUI.Instance.ShowCompleteQuestBanner(_quest);
+    }
+
+    // For testing only // Fix add queue on popup
+    private IEnumerator DelayAddQuest() {
+        yield return new WaitForSeconds(3.5f);
+        questGiver.SetActive(true);
+    }    
 }

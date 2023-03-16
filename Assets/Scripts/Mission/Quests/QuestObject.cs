@@ -11,7 +11,7 @@ public class QuestObject : MonoBehaviour
     [SerializeField] private GameObject Interactor;
     InteractObject interactObject;
 
-    private void Start() {
+    private void OnEnable() {
         interactObject = Interactor.GetComponent<InteractObject>();
         QuestManager.Instance.QuestRequest(this);
        
@@ -21,8 +21,7 @@ public class QuestObject : MonoBehaviour
 
     private void Update() {
         if (Input.GetKeyDown(InputManager.Instance.interact) && interactObject.NearInteractable()) {
-            QuestManager.Instance.AddQuestItem("shish", 1);
-            QuestManager.Instance.AddQuestItem("balls", 1);
+            QuestManager.Instance.AddQuestItem("Interact", 1);
         }
     }
 

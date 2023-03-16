@@ -77,6 +77,9 @@ public class QuestManager : MonoBehaviour
                 DataManager.AddExp(currentQuestList[i].expReward);
                 DataManager.AddMoney(currentQuestList[i].moneyReward);
 
+                // Display the complete popup
+                QuestUI.Instance.ShowCompleteQuestBanner(currentQuestList[i]);
+
                 currentQuestList.Remove(currentQuestList[i]);
                 QuestUI.Instance.ClearQuestData();
             }
