@@ -4,28 +4,26 @@ using UnityEngine;
 
 public class QuestObject : MonoBehaviour
 {
-    private bool inTrigger = false;
-
     public List<int> availableQuestIDs = new List<int>();
     public List<int> receivableQuestIDs = new List<int>();
+    public bool isAutoAccept = false;
     [SerializeField] private GameObject Interactor;
     InteractObject interactObject;
-
+    // Testing quests
     private void OnEnable() {
         interactObject = Interactor.GetComponent<InteractObject>();
-        QuestManager.Instance.QuestRequest(this);
-       
-        QuestUI.Instance.DisplayFirstQuest();
-        // Debug.Log
+        QuestRequestObject();
     }
 
-    private void Update() {
-        if (Input.GetKeyDown(InputManager.Instance.interact) && interactObject.NearInteractable()) {
-            QuestManager.Instance.AddQuestItem("Interact", 1);
-            QuestManager.Instance.AddQuestItem("Interact", 1);
-            // QuestManager.Instance.AddQuestItem("Test", 1);
-            Debug.Log("test");
-        }
+    public void QuestRequestObject() {
+        QuestManager.Instance.QuestRequest(this);
+        QuestUI.Instance.DisplayFirstQuest();
     }
+
+    // private void Update() {
+        // if (Input.GetKeyDown(InputManager.Instance.interact) && interactObject.NearInteractable()) {
+            // QuestManager.Instance.AddQuestItem("Finish lesson 1", 1);
+        // }
+    // }
 
 }

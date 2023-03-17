@@ -43,12 +43,27 @@ public class UIController : MonoBehaviour
         _playerController = Character.GetComponent<PlayerController>();
     }
 
+    // Band aid fix for popup ui delay
+    // To be updated
+    private IEnumerator DelayDequeue(){
+        yield return new WaitForSeconds(2.5f);
+        if (popUpUIs.Count > 0) {
+            Debug.Log(popUpUIs.Peek());
+            popUpUIs.Dequeue();
+            Debug.Log("Dequeued");
+        }
+    }
+
     void Update()
     {
         if (popUpUIs.Count > 0) {
             if (highlightGuide.name == popUpUIs.Peek().name) {
                 highlightGuide.SetActive(true);
                 popUpUIs.Dequeue();
+            }
+            else if (popUpUIs.Peek().name != "Guide"){
+                StartCoroutine(DelayDequeue());
+                popUpUIs.Peek().gameObject.SetActive(true);
             }
         }
         if (BotGuide.Instance.guideIsActive()) return;

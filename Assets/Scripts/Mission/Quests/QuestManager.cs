@@ -25,31 +25,44 @@ public class QuestManager : MonoBehaviour
         if (QO.availableQuestIDs.Count > 0) {
             for (int i = 0; i < GetQuestCount(); i++) {
                 for (int j = 0; j < QO.availableQuestIDs.Count; j++) {
+                    // Check if the quest in the questList is available and matches the quest ID in QO.availableQuestIDs
                     if (questList[i].id == QO.availableQuestIDs[j] && questList[i].progress == Quest.QuestProgress.AVAILABLE) {
                         Debug.Log("Quest ID: " + QO.availableQuestIDs[j] + " " + questList[i].progress);
 
-                        // Testing
-                        AcceptQuest(QO.availableQuestIDs[j]);
-                        QuestUI.Instance.activeQuest.Add(questList[i]);
+                        // Accept the quest and add it to the activeQuest list in the QuestUI
+                        if (QO.isAutoAccept) {
+                            AcceptQuest(QO.availableQuestIDs[j]);
+                        }
+                        else {
+                            QuestUI.Instance.questAvailable = true;
+                            QuestUI.Instance.availableQuest.Add(questList[i]);
+                        }
                     }
                 }
             }
-            QuestUI.Instance.SetMainQuestUI();
         }
 
         // Active Quests
-        for (int i = 0; i > GetCurrentQuestCount(); i++) {
-            for (int j = 0; j < QO.availableQuestIDs.Count; j++) {
+        for (int i = 0; i < GetCurrentQuestCount(); i++) {
+            for (int j = 0; j < QO.receivableQuestIDs.Count; j++) {
+                // Check if the quest in the currentQuestList is receivable and matches the quest ID in QO.receivableQuestIDs
                 if (currentQuestList[i].id == QO.receivableQuestIDs[j] && currentQuestList[i].progress == Quest.QuestProgress.ACCEPTED || currentQuestList[i].progress == Quest.QuestProgress.COMPLETE) {
                     Debug.Log("Quest ID: " + QO.receivableQuestIDs[j] + " is " + currentQuestList[i].progress);
 
-                    CompleteQuest(QO.receivableQuestIDs[j]);
+                    QuestUI.Instance.questRunning = true;
+                    if (!QuestUI.Instance.activeQuest.Contains(questList[j])) {
+                        QuestUI.Instance.activeQuest.Add(questList[j]);
+                    }
+                    // CompleteQuest(QO.receivableQuestIDs[j]);
                 }
             }
         }
+
+        // Update the UI to show the available quests
+        QuestUI.Instance.SetMainQuestUI();
     }
 
-    // Accept quest
+    // Accept quest based on the id 
     public void AcceptQuest(int questID) {
         for (int i = 0; i < GetQuestCount(); i++) {
             if (questList[i].id == questID && questList[i].progress == Quest.QuestProgress.AVAILABLE) {
@@ -59,7 +72,7 @@ public class QuestManager : MonoBehaviour
         }
     }
 
-    // Give up quest
+    // Give up quest based on the id 
     public void GiveUpQuest(int questID) {
         for (int i = 0; i < GetCurrentQuestCount(); i++) {
             if (currentQuestList[i].id == questID && currentQuestList[i].progress == Quest.QuestProgress.ACCEPTED) {
@@ -73,7 +86,7 @@ public class QuestManager : MonoBehaviour
         }
     }
 
-    // Complete quest
+    // Complete quest based on the id 
     public void CompleteQuest(int questID) {
         for (int i = 0; i < GetCurrentQuestCount(); i++) {
             if (currentQuestList[i].id == questID && currentQuestList[i].progress == Quest.QuestProgress.COMPLETE) {
@@ -85,13 +98,23 @@ public class QuestManager : MonoBehaviour
                 // Display the complete popup
                 QuestUI.Instance.ShowCompleteQuestBanner(currentQuestList[i]);
 
+                // Delete the completed mission from the list on UI
+                for (int j = 0; j < QuestUI.Instance.activeQuest.Count; j++)
+                {
+                    if (QuestUI.Instance.activeQuest[j].id == currentQuestList[i].id) {
+                        QuestUI.Instance.activeQuest.Remove(QuestUI.Instance.activeQuest[j]);
+                    }
+                }
                 currentQuestList.Remove(currentQuestList[i]);
                 QuestUI.Instance.ClearQuestData();
+                // QuestUI.Instance.SetMainQuestUI();
             }
         }
         CheckChainQuest(questID);
     }
 
+    // This will check if the current mission has next mission
+    // Can be used for the main quest
     void CheckChainQuest(int questID) {
         int tempID = 0;
 
@@ -105,6 +128,10 @@ public class QuestManager : MonoBehaviour
             for (int i = 0; i < questList.Count; i++) {
                 if (questList[i].id == tempID && questList[i].progress == Quest.QuestProgress.NOT_AVAILABLE) {
                     questList[i].progress = Quest.QuestProgress.AVAILABLE;
+                    foreach (var obj in GameObject.FindObjectsOfType<QuestObject>()) {
+                        obj.gameObject.SetActive(false);
+                        obj.gameObject.SetActive(true);
+                    }
                 }
             }
         }
@@ -114,16 +141,23 @@ public class QuestManager : MonoBehaviour
     public void AddQuestItem(string questObjective, int itemAmount) {
         for (int i = 0; i < GetCurrentQuestCount(); i++) {
             Quest currentQuest = currentQuestList[i];
+
+            // If the quest is not in the accepted state, skip it
             if (currentQuest.progress != Quest.QuestProgress.ACCEPTED) {
                 continue;
             }
             
+            // Get the index of the quest objective that matches the one given as a parameter
             int objectiveIndex = Array.IndexOf(currentQuest.questObjectives, questObjective);
+            // If the given quest objective is not part of the current quest, skip it
             if (objectiveIndex == -1) {
                 continue;
             }
             
             currentQuest.questObjectiveCount[objectiveIndex] += itemAmount;
+
+            // If the count of the given quest objective is equal to or greater than the required amount,
+            // set the count to the required amount and check if all quest objectives have been completed
             if (currentQuest.questObjectiveCount[objectiveIndex] >= currentQuest.questObjectiveRequirement[objectiveIndex]) {
                 currentQuest.questObjectiveCount[objectiveIndex] = currentQuest.questObjectiveRequirement[objectiveIndex];
                 if (currentQuest.questObjectiveCount.SequenceEqual(currentQuest.questObjectiveRequirement)) {
