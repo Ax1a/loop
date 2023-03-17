@@ -56,7 +56,7 @@ public class Drop : MonoBehaviour, IDropHandler
         }
         else
         {
-            GameObject.Find("Win").GetComponent<Win>().MinusPoints();
+            //GameObject.Find("Win").GetComponent<Win>().MinusPoints();
             Debug.Log("Wrong");
         }
     }
