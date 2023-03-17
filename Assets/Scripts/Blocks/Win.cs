@@ -72,4 +72,10 @@ public class Win : MonoBehaviour
         Debug.Log(_currPts);
     }
 
+    public void MinusPoints()
+    {
+        _currPts -= 1;
+        Debug.Log(_currPts);
+    }
+
 }

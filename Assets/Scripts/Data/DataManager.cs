@@ -1,17 +1,18 @@
 using UnityEngine;
 using System.Collections.Generic;
-[System.Serializable] public class PlayerData
-{ 
+[System.Serializable]
+public class PlayerData
+{
     /* 
     * Add Variable here to save in the txt file
     */
     public int money = 0;
     public int exp = 0;
-    public Vector3 playerPos = new Vector3(-2.98900008f,6.064f,-4.40799999f);
+    public Vector3 playerPos = new Vector3(-2.98900008f, 6.064f, -4.40799999f);
     public int hr = 7, min = 0, day = 1, month = 1, year = 2022;
     public string name;
     public int questProgress = 0;
-    public int reachedLesson = 1; 
+    public int reachedLesson = 1;
     public List<DrinkInventoryList> inventoryList;
     public Dictionary<string, int> programmingLanguage = new Dictionary<string, int>() {
         {"c++", -1},
@@ -30,7 +31,9 @@ using System.Collections.Generic;
 /* 
 * You can create a class like this to make a custom list
 */
-[System.Serializable] public class DrinkInventoryList {
+[System.Serializable]
+public class DrinkInventoryList
+{
     public string name;
     public int energy;
     public int quantity;
@@ -57,8 +60,8 @@ public static class DataManager
     /*
         Money
         Getters & Setters
-    */ 
-    public static int GetMoney() 
+    */
+    public static int GetMoney()
     {
         return playerData.money;
     }
@@ -68,21 +71,22 @@ public static class DataManager
         playerData.money += amount;
     }
 
-    public static bool CanSpendMoney (int amount)
+    public static bool CanSpendMoney(int amount)
     {
         return (playerData.money >= amount);
     }
 
-    public static void SpendMoney (int amount)
+    public static void SpendMoney(int amount)
     {
         playerData.money -= amount;
+        AudioManager.Instance.PlaySfx("Purchase");
     }
 
     /*
         Experience
         Getters & Setters
-    */ 
-    public static int GetExp() 
+    */
+    public static int GetExp()
     {
         return playerData.exp;
     }
@@ -95,56 +99,68 @@ public static class DataManager
     /*
         Clock
         Getters & Setters
-    */ 
-    public static int GetHour() {
+    */
+    public static int GetHour()
+    {
         return playerData.hr;
     }
 
-    public static int GetMinute() {
+    public static int GetMinute()
+    {
         return playerData.min;
     }
 
-    public static int GetDay() {
+    public static int GetDay()
+    {
         return playerData.day;
     }
 
-    public static int GetMonth() {
+    public static int GetMonth()
+    {
         return playerData.month;
     }
 
-    public static int GetYear() {
+    public static int GetYear()
+    {
         return playerData.year;
     }
 
-    public static void SetYear(int year) {
+    public static void SetYear(int year)
+    {
         playerData.year = year;
     }
 
-    public static void SetMonth(int month) {
+    public static void SetMonth(int month)
+    {
         playerData.month = month;
     }
 
-    public static void SetDay(int day) {
+    public static void SetDay(int day)
+    {
         playerData.day = day;
     }
 
-    public static void SetMinute(int minute) {
+    public static void SetMinute(int minute)
+    {
         playerData.min = minute;
     }
 
-    public static void SetHour(int hour) {
+    public static void SetHour(int hour)
+    {
         playerData.hr = hour;
     }
 
     /*
         Player Name
         Getters & Setters
-    */ 
-    public static string GetPlayerName() {
+    */
+    public static string GetPlayerName()
+    {
         return playerData.name;
     }
 
-    public static void SetPlayerName(string name) {
+    public static void SetPlayerName(string name)
+    {
         playerData.name = name;
         SavePlayerData();
     }
@@ -152,68 +168,82 @@ public static class DataManager
     /*
         Player Coord
         Getters & Setters
-    */ 
-    public static Vector3 GetPlayerCoord() {
+    */
+    public static Vector3 GetPlayerCoord()
+    {
         return playerData.playerPos;
     }
 
-    public static void SetPlayerCoord(Vector3 pos) {
+    public static void SetPlayerCoord(Vector3 pos)
+    {
         playerData.playerPos = pos;
     }
 
     /*
         Quest Progress
         Getters & Setters
-    */ 
-    public static int GetQuestProgress() {
+    */
+    public static int GetQuestProgress()
+    {
         return playerData.questProgress;
     }
 
-    public static void SetQuestProgress(int progress) {
+    public static void SetQuestProgress(int progress)
+    {
         playerData.questProgress += progress;
     }
 
     /*
         Inventory List
         Getters & Setters
-    */ 
-    public static string GetInventoryItemName(int index) {
+    */
+    public static string GetInventoryItemName(int index)
+    {
         string value = playerData.inventoryList[index].name;
 
         return value;
     }
 
-    public static int GetInventoryItemQuantity(int index) {
+    public static int GetInventoryItemQuantity(int index)
+    {
         int value = playerData.inventoryList[index].quantity;
 
         return value;
     }
 
-    public static int GetInventoryListCount() {
-        if (playerData.inventoryList == null) {
+    public static int GetInventoryListCount()
+    {
+        if (playerData.inventoryList == null)
+        {
             playerData.inventoryList = new List<DrinkInventoryList>();
         }
-        
+
         int count = playerData.inventoryList.Count;
 
         return count;
     }
 
-    public static List<DrinkInventoryList> GetInventoryList() {
+    public static List<DrinkInventoryList> GetInventoryList()
+    {
         return playerData.inventoryList;
     }
 
-    public static void AddInventoryItem(ShopItemData item) {
+    public static void AddInventoryItem(ShopItemData item)
+    {
         // Check if the inventory list is null
-        if (playerData.inventoryList == null) {
+        if (playerData.inventoryList == null)
+        {
             playerData.inventoryList = new List<DrinkInventoryList>();
         }
 
         // Check if the item name already exists in the inventory list
         DrinkInventoryList existingItem = playerData.inventoryList.Find(i => i.name == item.itemName);
-        if (existingItem != null) {
+        if (existingItem != null)
+        {
             existingItem.quantity++;
-        } else {
+        }
+        else
+        {
             // Add the item to the inventory list
             DrinkInventoryList drinkItem = new DrinkInventoryList();
             drinkItem.name = item.itemName;
@@ -224,22 +254,27 @@ public static class DataManager
         SavePlayerData();
     }
 
-    public static void ReduceItemQuantity(string name) {
+    public static void ReduceItemQuantity(string name)
+    {
         // Check if the inventory list is null
-        if (playerData.inventoryList == null) {
+        if (playerData.inventoryList == null)
+        {
             playerData.inventoryList = new List<DrinkInventoryList>();
         }
 
-         // Verify if the item name already exists in the inventory list
+        // Verify if the item name already exists in the inventory list
         DrinkInventoryList existingItem = playerData.inventoryList.Find(i => i.name == name);
-        if (existingItem != null) {
+        if (existingItem != null)
+        {
             existingItem.quantity--;
         }
     }
 
-    public static void RemoveInventoryItem(string name) {
+    public static void RemoveInventoryItem(string name)
+    {
         // Check if the inventory list is null
-        if (playerData.inventoryList == null) {
+        if (playerData.inventoryList == null)
+        {
             playerData.inventoryList = new List<DrinkInventoryList>();
         }
 
@@ -249,7 +284,7 @@ public static class DataManager
     /*
         Programming Language Progress
         Getters & Setters
-    */ 
+    */
     public static void AddProgrammingLanguageProgress(string key)
     {
         if (playerData.programmingLanguage.ContainsKey(key))
@@ -278,7 +313,7 @@ public static class DataManager
     //         playerData.playerReachedLevels[key] += 1;
     //         SavePlayerData();
     //     }
-        
+
     // }
     // public static int GetLevelProgress(string key)
     // {
@@ -295,10 +330,10 @@ public static class DataManager
 
     public static int getReachedLesson()
     {
-        return playerData.reachedLesson; 
+        return playerData.reachedLesson;
     }
 
-    public static void addReachedLesson ()
+    public static void addReachedLesson()
     {
         int lesson = 1;
         playerData.reachedLesson += lesson;
@@ -306,7 +341,7 @@ public static class DataManager
     }
 
     // resetLevel() is for testing purpose only must remove after.
-    public static void resetLevel ()
+    public static void resetLevel()
     {
         playerData.reachedLesson = 1;
         SavePlayerData();
