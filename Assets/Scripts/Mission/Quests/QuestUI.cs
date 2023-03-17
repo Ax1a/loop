@@ -43,13 +43,27 @@ public class QuestUI : MonoBehaviour
     [Header("Quest Lists")]
     public List<Quest> availableQuest = new List<Quest>();
     public List<Quest> activeQuest = new List<Quest>();
-    private List<GameObject> _questButtons = new List<GameObject>();
+    public List<GameObject> questButtons = new List<GameObject>();
+
+    [Header ("Quest UI Bools")]
+    public bool questAvailable = false;
+    public bool questRunning = false;
+    private bool questPanelActive = false;
+    private bool questLogPanelActive = false;
 
     public static QuestUI Instance;
 
     private void Awake() {
         if (Instance == null) {
             Instance = this;
+        }
+    }
+
+    private void Update() {
+        if (Input.GetKeyDown(InputManager.Instance.quest)) {
+            questPanelActive = !questPanelActive;
+            UpdateQuestUI();
+            QuestUI.Instance.DisplayFirstQuest();
         }
     }
 
@@ -72,26 +86,36 @@ public class QuestUI : MonoBehaviour
                 // Set popup text
                 p_missionTypeTxt.text = item.title;
                 
-                // Display the button list on quest log
-                FillQuestLogButtons(item);
             }
             
         }
 
+        // Display the button list on quest log
+        FillQuestLogButtons();
         // Show the popup when new mission appears
-        p_questPrefab.SetActive(true);
+        // p_questPrefab.SetActive(true);
+        if (questPanelActive == false) UIController.Instance.popUpUIs.Enqueue(p_questPrefab);
     }
 
     // Fill up quest log buttons
-    public void FillQuestLogButtons(Quest item) {
-        if (l_mainQuestButtonParent.childCount > 0) Destroy(l_mainQuestButtonParent.GetChild(0).gameObject);
+    public void FillQuestLogButtons() {
+        if (l_mainQuestButtonParent.childCount > 0) {
+            foreach (Transform button in l_mainQuestButtonParent)
+            {
+                Destroy(button.gameObject);
+                questButtons.Clear();
+            }
+        }
 
-        GameObject questBtn = Instantiate(l_questButtonPrefab, l_mainQuestButtonParent);
-        QuestButtonLog qBtnLog = questBtn.GetComponent<QuestButtonLog>();
+        foreach (var item in activeQuest)
+        {
+            GameObject questBtn = Instantiate(l_questButtonPrefab, l_mainQuestButtonParent);
+            QuestButtonLog qBtnLog = questBtn.GetComponent<QuestButtonLog>();
 
-        qBtnLog.questID = item.id;
-        qBtnLog.questTitle.text = item.title;
-        _questButtons.Add(questBtn);
+            qBtnLog.questID = item.id;
+            qBtnLog.questTitle.text = item.title;
+            questButtons.Add(questBtn);
+        }
     }
 
     public void ShowQuestSidePanel(Quest item) {
@@ -168,32 +192,64 @@ public class QuestUI : MonoBehaviour
             p_questType.text = "Side Quest";
         }
 
-        p_questCompletePrefab.SetActive(true);
+        // p_questCompletePrefab.SetActive(true);
+        UIController.Instance.popUpUIs.Enqueue(p_questCompletePrefab);
     }
 
     // Display the first quest on load
     public void DisplayFirstQuest() {
-        int _questID = l_mainQuestButtonParent.GetChild(0).gameObject.GetComponent<QuestButtonLog>().questID;
-
-        ShowSelectedQuest(_questID);
+        if (l_mainQuestButtonParent.childCount > 0) {
+            QuestButtonLog _qButtonLog = l_mainQuestButtonParent.GetChild(0).gameObject.GetComponent<QuestButtonLog>();
+            _qButtonLog.ShowAllInfos();
+        }
     }
 
     // Check the quest list based on the parameter
     public void CheckQuest(QuestObject QO) {
         _currentQuestObject = QO;
         QuestManager.Instance.QuestRequest(QO);
+
+        if ((questRunning || questAvailable) && !questPanelActive) {
+            // UpdateQuestUI();
+        }
+        else {
+            Debug.Log("No quest available");
+        }
+    }
+
+    public void UpdateQuestUI() {
+        questPanelActive = true;
+        ClearQuestData();
+        SetMainQuestUI();
     }
 
     // Clear Quest Data to avoid duplication
     public void ClearQuestData() {
-        // availableQuest.Clear();
-        // activeQuest.Clear();
+        l_questTitle.text = "No quest available.";
+        l_questDescription.text = "";
+        l_questRewardExp.text = "";
+        l_questRewardMoney.text = "";
+        l_questExpContentPrefab.SetActive(false);
+        l_questMoneyContentPrefab.SetActive(false);
 
-        foreach (var item in _questButtons)
+        if (s_questPanelParent.childCount > 0) {
+            Destroy(s_questPanelParent.GetChild(0).gameObject);
+        }
+        
+        // Remove the old objectives
+        if (l_mainQuestObjectiveParent.childCount > 0) {
+            foreach (Transform child in l_mainQuestObjectiveParent)
+            {
+                Destroy(child.gameObject);
+            }
+        }
+
+        // Remove the quest of the buttons that does not exist
+        foreach (var item in questButtons)
         {
             Destroy(item);
         }
-        _questButtons.Clear();
+
+        questButtons.Clear();
     }
-    
 }
