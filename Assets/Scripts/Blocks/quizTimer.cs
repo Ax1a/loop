@@ -5,21 +5,23 @@ using UnityEngine;
 
 public class quizTimer : MonoBehaviour
 {
-    public enum Difficulty {
+    public enum Difficulty
+    {
         easy, medium, hard
     }
 
     int _energy;
 
     public Difficulty difficulty;
-    public float currTime= 0f;
+    public float currTime = 0f;
     public float startingTime = 0f;
     public GameObject gameOverPanel;
     public GameObject startPanel;
     [HideInInspector] public bool isStart = false;
-    [SerializeField]public TextMeshProUGUI countDownText;
+    [SerializeField] public TextMeshProUGUI countDownText;
     public static quizTimer Instance;
-    private void Awake() {
+    private void Awake()
+    {
         if (Instance == null)
         {
             Instance = this;
@@ -28,7 +30,7 @@ public class quizTimer : MonoBehaviour
     void Start()
     {
         //Define starting time based on difficulty levels.. 
-        if(difficulty == Difficulty.easy)
+        if (difficulty == Difficulty.easy)
         {
             startingTime = 20f;
         }
@@ -46,16 +48,17 @@ public class quizTimer : MonoBehaviour
     }
     // Update is called once per frame    
     public void startGame()
-    {  
-        if(!isStart)
+    {
+        if (!isStart)
         {
             if (Energy.Instance.GetCurrentEnergy() > 0)
             {
                 Energy.Instance.UseEnergy();
                 isStart = true;
-                startPanel.transform.localScale = new Vector3(0,0,0); 
+                startPanel.transform.localScale = new Vector3(0, 0, 0);
             }
-            else{
+            else
+            {
                 Debug.Log("No Energy Left");
                 return;
             }
@@ -63,17 +66,16 @@ public class quizTimer : MonoBehaviour
 
     }
     public void stopTime()
-    {  
+    {
         //Check if timer is starting
-        if(isStart)
+        if (isStart)
         {
             Debug.Log("Timer Stop");
-            isStart = false;   
-        } 
+            isStart = false;
+        }
     }
-
     public void resetTime()
-    {  
+    {
         currTime = startingTime;
         isStart = true;
         Debug.Log("Reset the timer");
@@ -83,27 +85,26 @@ public class quizTimer : MonoBehaviour
     {
         isStart = false;
     }
-
     void Update()
-    {  
+    {
         //Decrease the time when the timer is starting. 
         //The float type is converted to string
         //When current time is equal to zero, it activate game over panel.
-        if(isStart)
-        {  
+        if (isStart)
+        {
             currTime -= 1 * Time.deltaTime;
             float time = currTime;
-            countDownText.text = time.ToString("0");   
+            countDownText.text = time.ToString("0");
 
-            if(currTime <= 0 )
+            if (currTime <= 0)
             {
                 currTime = 0;
                 gameOverPanel.SetActive(true);
                 gameOverPanel.transform.SetAsLastSibling();
                 isStart = false;
-            }               
-        } 
- 
+            }
+        }
+
     }
-    
+
 }

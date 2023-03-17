@@ -6,125 +6,155 @@ using TMPro;
 
 public class OperationInteraction : MonoBehaviour
 {
-    public TextMeshProUGUI questionText;
-    public TMP_InputField inputField1;
-    public TMP_InputField inputField2;
-    public TextMeshProUGUI operationDropdown;
-
-    private int num1;
-    private int num2;
-    private char operation;
-    private int correctAnswer = 10;
-
-    //     public Text questionText;
-    // public InputField inputField1;
-    // public InputField inputField2;
-    // public Dropdown operationDropdown;
-    // public Text feedbackText;
-
+    public TextMeshProUGUI output;
+    public TMP_InputField numInput_1;
+    public TMP_InputField numInput_2;
+    public TMP_InputField str1;
+    public TMP_InputField str2;
+    public TextMeshProUGUI concatOutput;
+    public TMP_Dropdown operationDropdown;
+    string _playerName;
     // private int num1;
     // private int num2;
-    // private int correctAnswer;
+    // private char operation;
+    // private int correctAnswer = 59;
 
     void Start()
     {
-        // GenerateQuestion();
-    }
+        _playerName = DataManager.GetPlayerName();
+        int correctAnswer;
+        if (output != null)
+        {
+            if (Int32.TryParse(output.text, out correctAnswer))
+            {
+                GenerateRandomNum(correctAnswer);
 
+            }
+        }
+
+    }
     public void CheckAnswer()
     {
         int userNum1;
         int userNum2;
-        int opr;
+        int correctAnswer;
 
-        if (Int32.TryParse(inputField1.text, out userNum1) && Int32.TryParse(inputField2.text, out userNum2) && Int32.TryParse(operationDropdown.text, out opr))
+        if (Int32.TryParse(numInput_1.text, out userNum1) && Int32.TryParse(numInput_2.text, out userNum2) && Int32.TryParse(output.text, out correctAnswer))
         {
-            switch (opr)
+            switch (operationDropdown.value)
             {
                 case 0: // addition
                     if (userNum1 + userNum2 == correctAnswer)
                     {
-                        Debug.Log("Correct");
+                        NPCCall("Great!!");
+                        //generate new correct answer
+                        GenerateRandomNum(correctAnswer);
 
+                        Debug.Log("Correct");
                     }
                     else
                     {
                         Debug.Log("Inorrect");
+                        NPCCall("I got a wrong answer...");
+
                     }
                     break;
                 case 1: // subtraction
                     if (userNum1 - userNum2 == correctAnswer)
                     {
-                        Debug.Log("Correct");
+                        NPCCall("Great!!");
+                        //generate new correct answer
+                        GenerateRandomNum(correctAnswer);
 
                     }
                     else
                     {
-                        Debug.Log("Inorrect");
+                        NPCCall("I got a wrong answer...");
                     }
                     break;
                 case 2: // multiplication
                     if (userNum1 * userNum2 == correctAnswer)
                     {
-                        Debug.Log("Correct");
 
-
+                        NPCCall("Great!!");
                     }
                     else
                     {
-                        Debug.Log("Inorrect");
+                        NPCCall("I got a wrong answer...");
                     }
                     break;
                 case 3: // division
+
                     if (userNum1 / userNum2 == correctAnswer)
                     {
-                        Debug.Log("Correct");
-
-
+                        NPCCall("Great!!");
                     }
                     else
                     {
-                        Debug.Log("Inorrect");
-
+                        NPCCall("I got a wrong answer...");
+                    }
+                    break;
+                case 4: // modulus
+                    if (userNum2 != 0 && userNum1 % userNum2 == correctAnswer)
+                    {
+                        NPCCall("Great!!");
+                    }
+                    else
+                    {
+                        NPCCall("I got a wrong answer...");
                     }
                     break;
             }
+
         }
         else
         {
-            Debug.Log("Invalid input. Please enter integers only.");
+            NPCCall("Oh! It only accepts numeric values! Try again...");
         }
     }
 
-    // void GenerateQuestion()
-    // {
-    //     int num1 = 0; 
-    //     int num2 = 0;
-    //     int operationIndex= 0;
+    public void Concatenation()
+    {
+        string input1 = str1.text;
+        string input2 = str2.text;
+        bool isEmpty = false;
 
-    //     switch (operationIndex)
-    //     {
-    //         case 0:
-    //             operation = '+';
-    //             correctAnswer = num1 + num2;
-    //             break;
-    //         case 1:
-    //             operation = '-';
-    //             correctAnswer = num1 - num2;
-    //             break;
-    //         case 2:
-    //             operation = '*';
-    //             correctAnswer = num1 * num2;
-    //             break;
-    //         case 3:
-    //             operation = '/';
-    //             correctAnswer = num1 / num2;
-    //             break;
-    //     }
+        if (input1 == "")
+        {
+            Debug.Log("Input is empty");
+            isEmpty = true;
 
-    //     questionText.text = num1 + " " + operation + " " + num2 + " = ?";
-    //     inputField.text = "";
+        }
+        if (input2 == "")
+        {
+            Debug.Log("Input is empty");
+            isEmpty = true;
+        }
 
-    // }
+        if (!isEmpty)
+        {
+            Debug.Log(input1 + input2);
+            concatOutput.text = input1 + input2;
+        }
+        else
+        {
+            Debug.Log("Input is empty");
 
+        }
+
+
+    }
+    void GenerateRandomNum(int correctAnswer)
+    {
+        correctAnswer = UnityEngine.Random.Range(1, 100);
+        if (output != null)
+        {
+            output.text = correctAnswer.ToString();
+        }
+    }
+    void NPCCall(string message)
+    {
+        NPCDialogue.Instance.AddDialogue(message, _playerName);
+        NPCDialogue.Instance.ShowDialogue();
+    }
 }
