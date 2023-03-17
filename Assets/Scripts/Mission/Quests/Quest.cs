@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 [System.Serializable]
 public class Quest
 {
@@ -14,8 +10,8 @@ public class Quest
     public int nextQuest;
 
     public string[] questObjectives;
-    public int questObjectiveCount;
-    public int questObjectiveRequirement;
+    public int[] questObjectiveCount;
+    public int[] questObjectiveRequirement;
 
     public int expReward;
     public int moneyReward;

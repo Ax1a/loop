@@ -22,6 +22,9 @@ public class QuestObject : MonoBehaviour
     private void Update() {
         if (Input.GetKeyDown(InputManager.Instance.interact) && interactObject.NearInteractable()) {
             QuestManager.Instance.AddQuestItem("Interact", 1);
+            QuestManager.Instance.AddQuestItem("Interact", 1);
+            // QuestManager.Instance.AddQuestItem("Test", 1);
+            Debug.Log("test");
         }
     }
 
