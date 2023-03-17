@@ -98,7 +98,9 @@ public class BotGuide : MonoBehaviour
             if (animator.runtimeAnimatorController != null) animator.SetBool("isTalking", true);
         }   
         else {
-            UIController.Instance.popUpUIs.Dequeue();
+            if (UIController.Instance.popUpUIs.Contains(guideBot)) {
+                UIController.Instance.popUpUIs.Dequeue();
+            }
             guideBot.SetActive(false);   
             tutorial.SetActive(true);
             isActive = false;
