@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -62,7 +64,10 @@ public class QuestManager : MonoBehaviour
         for (int i = 0; i < GetCurrentQuestCount(); i++) {
             if (currentQuestList[i].id == questID && currentQuestList[i].progress == Quest.QuestProgress.ACCEPTED) {
                 currentQuestList[i].progress = Quest.QuestProgress.AVAILABLE;
-                currentQuestList[i].questObjectiveCount = 0;
+                for (int j = 0; j < currentQuestList[i].questObjectiveCount.Length; j++)
+                {
+                    currentQuestList[i].questObjectiveCount[j] = 0;
+                }
                 currentQuestList.Remove(currentQuestList[i]);
             }
         }
@@ -108,18 +113,24 @@ public class QuestManager : MonoBehaviour
     // Add progress to the quest
     public void AddQuestItem(string questObjective, int itemAmount) {
         for (int i = 0; i < GetCurrentQuestCount(); i++) {
-            foreach (var objective in currentQuestList[i].questObjectives)
-            {
-                if (objective == questObjective && currentQuestList[i].progress == Quest.QuestProgress.ACCEPTED) {
-                    currentQuestList[i].questObjectiveCount += itemAmount;
-                    Debug.Log(objective + questObjective);
-                }
-
-                if (currentQuestList[i].questObjectiveCount >= currentQuestList[i].questObjectiveRequirement && currentQuestList[i].progress == Quest.QuestProgress.ACCEPTED) {
-                    currentQuestList[i].progress = Quest.QuestProgress.COMPLETE;
+            Quest currentQuest = currentQuestList[i];
+            if (currentQuest.progress != Quest.QuestProgress.ACCEPTED) {
+                continue;
+            }
+            
+            int objectiveIndex = Array.IndexOf(currentQuest.questObjectives, questObjective);
+            if (objectiveIndex == -1) {
+                continue;
+            }
+            
+            currentQuest.questObjectiveCount[objectiveIndex] += itemAmount;
+            if (currentQuest.questObjectiveCount[objectiveIndex] >= currentQuest.questObjectiveRequirement[objectiveIndex]) {
+                currentQuest.questObjectiveCount[objectiveIndex] = currentQuest.questObjectiveRequirement[objectiveIndex];
+                if (currentQuest.questObjectiveCount.SequenceEqual(currentQuest.questObjectiveRequirement)) {
+                    currentQuest.progress = Quest.QuestProgress.COMPLETE;
 
                     // Automatic claim the rewards
-                    CompleteQuest(currentQuestList[i].id);
+                    CompleteQuest(currentQuest.id);
                 }
             }
         }
