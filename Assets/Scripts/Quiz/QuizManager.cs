@@ -26,16 +26,16 @@ public class QuizManager : MonoBehaviour
     GameObject startPanel;
     public TextMeshProUGUI[] scoreTxt;
     public TextMeshProUGUI[] rewardTxt;
-    [HideInInspector]public int scoreCount;
+    [HideInInspector] public int scoreCount;
     public static QuizManager Instance;
-    public GameObject[] rewardsPanel; 
+    public GameObject[] rewardsPanel;
 
     #endregion
 
-#region Methods/Functions
+    #region Methods/Functions
     private void Awake()
     {
-        if(Instance == null)
+        if (Instance == null)
         {
             Instance = this;
         }
@@ -44,11 +44,11 @@ public class QuizManager : MonoBehaviour
     void Start()
     {
         ShuffleQuestions();
-        _totalQuestions = QnA.Count; 
+        _totalQuestions = QnA.Count;
         winPanel.SetActive(false);
         quizPanel.SetActive(true);
         timer = GameObject.Find("StartPanel").GetComponent<quizTimer>();
-        _energy = Energy.Instance.GetCurrentEnergy();    
+        _energy = Energy.Instance.GetCurrentEnergy();
 
     }
     public int GetScore()
@@ -56,7 +56,7 @@ public class QuizManager : MonoBehaviour
         return scoreCount;
     }
 
-    public void StartGame () 
+    public void StartGame()
     {
         if (Energy.Instance.GetCurrentEnergy() > 0)
         {
@@ -69,7 +69,8 @@ public class QuizManager : MonoBehaviour
             return;
         }
     }
-    public void Retry(){
+    public void Retry()
+    {
         //to-do: check energy here
         if (Energy.Instance.GetCurrentEnergy() > 0)
         {
@@ -87,7 +88,8 @@ public class QuizManager : MonoBehaviour
             return;
         }
     }
-    private void ShuffleQuestions() {
+    private void ShuffleQuestions()
+    {
         int Compare(QuestAndAns a, QuestAndAns b)
         {
             return Random.Range(-1, 2);
@@ -98,46 +100,54 @@ public class QuizManager : MonoBehaviour
         // Add questions
         SetCurrentQuestion(_questionIndex);
     }
-    public void GameOver(){
+    public void GameOver()
+    {
         timer.stopTime();
         gameOverPanel.SetActive(true);
         //Lose score index : 0
         scoreTxt[0].text = scoreCount + "/" + _totalQuestions;
     }
-    public void Win(){
+    public void Win()
+    {
         timer.stopTime();
         winPanel.SetActive(true);
         //Lose score index : 1
         scoreTxt[1].text = scoreCount + "/" + _totalQuestions;
         StartCoroutine(DisplayRewards());
     }
-    public void OpenPanel ()
-    {   
+    public void OpenPanel()
+    {
         if (scoreCount >= _totalQuestions)
         {
             Win();
             RewardManager.Instance.AssessReward();
             StartCoroutine(DelayAddProgress());
+            LessonsLevelManager.Instance.addReachedLesson();
         }
-        else 
+        else
         {
             GameOver();
         }
     }
 
-    private IEnumerator DelayAddProgress() {
+    private IEnumerator DelayAddProgress()
+    {
         yield return new WaitForSeconds(3.5f);
         QuestManager.Instance.AddQuestItem("Finish lesson 1", 1);
     }
-    public void Correct(){
-        scoreCount +=1;
+    public void Correct()
+    {
+        scoreCount += 1;
         SetCurrentQuestion(_questionIndex);
     }
-    public void Wrong(){
+    public void Wrong()
+    {
         SetCurrentQuestion(_questionIndex);
     }
-    void SetCurrentQuestion(int questionIndex){
-        if (questionIndex >= QnA.Count) {
+    void SetCurrentQuestion(int questionIndex)
+    {
+        if (questionIndex >= QnA.Count)
+        {
             OpenPanel();
             return;
         };
@@ -146,11 +156,13 @@ public class QuizManager : MonoBehaviour
 
         text.text = currentQuestion.Questions;
 
-        for (int i =0; i<options.Length; i++){
-            options[i].GetComponent<AnswerScript>().isCorrect= false;
+        for (int i = 0; i < options.Length; i++)
+        {
+            options[i].GetComponent<AnswerScript>().isCorrect = false;
             options[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = currentQuestion.Answer[i];
-       
-            if(currentQuestion.CorrectAns == i+1){
+
+            if (currentQuestion.CorrectAns == i + 1)
+            {
                 options[i].GetComponent<AnswerScript>().isCorrect = true;
             }
         }
@@ -158,7 +170,7 @@ public class QuizManager : MonoBehaviour
         _questionIndex += 1;
     }
 
-    IEnumerator DisplayRewards ()
+    IEnumerator DisplayRewards()
     {
         //Display Money Reward
         //Money index: 0 
@@ -175,13 +187,13 @@ public class QuizManager : MonoBehaviour
         rewardsPanel[1].SetActive(true);
         AudioManager.Instance.PlaySfx("Success");
         Debug.Log("Exp: " + RewardManager.Instance._exp);
-        
+
         //Display button
         yield return new WaitForSeconds(1f);
         rewardsPanel[2].SetActive(true);
 
     }
 
-#endregion
+    #endregion
 
 }
