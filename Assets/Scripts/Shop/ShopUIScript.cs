@@ -73,7 +73,7 @@ public class ShopUIScript : MonoBehaviour
             if (showCoroutineReduce != null) StopCoroutine(showCoroutineReduce);
             showCoroutineReduce = StartCoroutine(ShowReduceFunds(item.price));
             
-            if (DataManager.GetQuestProgress() == 1) {
+            if (DataManager.GetTutorialProgress() == 1) {
                 BotGuide.Instance.AddDialogue("Great! You can grab a food or beverage when you need an energy."); 
                 BotGuide.Instance.AddDialogue("Now let's close the shop to continue the tutorial.");
                 BotGuide.Instance.ShowDialogue();

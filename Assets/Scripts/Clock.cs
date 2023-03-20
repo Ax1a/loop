@@ -235,9 +235,9 @@ public class Clock : MonoBehaviour
                 }
         }
 
-        for (int i = 0; i < UI_TIME_TEXT.Length; i++)
+        foreach (var time in UI_TIME_TEXT)
         {
-            UI_TIME_TEXT[i].text = _time;
+            time.text = _time;
         }
 
         for (int i = 0; i < UI_DATE_TEXT.Length; i++)

@@ -11,7 +11,7 @@ public class PlayerData
     public Vector3 playerPos = new Vector3(-2.98900008f, 6.064f, -4.40799999f);
     public int hr = 7, min = 0, day = 1, month = 1, year = 2022;
     public string name;
-    public int questProgress = 0;
+    public int tutorialProgress = 0;
     public int reachedLesson = 1;
     public List<DrinkInventoryList> inventoryList;
     public Dictionary<string, int> programmingLanguage = new Dictionary<string, int>() {
@@ -19,13 +19,14 @@ public class PlayerData
         {"java", -1},
         {"python", -1}
     };
+
+    public List<Quest> questList = new List<Quest>();
+    public List<Quest> currentQuests = new List<Quest>();
     // public Dictionary<string, int> playerReachedLevels = new Dictionary<string, int>() {
     //     {"c++", 1},
     //     {"java", 1},
     //     {"python", 1}
     // };
-
-    // public Dictionary<string, int> inventoryItems = new Dictionary<string, int>();
 }
 
 /* 
@@ -180,17 +181,17 @@ public static class DataManager
     }
 
     /*
-        Quest Progress
+        Tutorial Progress
         Getters & Setters
     */
-    public static int GetQuestProgress()
+    public static int GetTutorialProgress()
     {
-        return playerData.questProgress;
+        return playerData.tutorialProgress;
     }
 
-    public static void SetQuestProgress(int progress)
+    public static void SetTutorialProgress(int progress)
     {
-        playerData.questProgress += progress;
+        playerData.tutorialProgress += progress;
     }
 
     /*
@@ -346,6 +347,21 @@ public static class DataManager
         playerData.reachedLesson = 1;
         SavePlayerData();
 
+    }
+
+    /*
+        Quest Progress
+        Getters & Setters
+    */
+
+    public static List<Quest> QuestList {
+        get { return playerData.questList; }
+        set { playerData.questList = value; }
+    }
+
+    public static List<Quest> CurrentQuests {
+        get { return playerData.currentQuests; }
+        set { playerData.currentQuests = value; }
     }
 
     // Save and Load Functions

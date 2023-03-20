@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class QuestManager : MonoBehaviour
 {
+    [SerializeField] private GameObject mainQuestGiver;
     public List<Quest> questList = new List<Quest>();
     public List<Quest> currentQuestList = new List<Quest>();
 
@@ -17,6 +18,22 @@ public class QuestManager : MonoBehaviour
         }
         else if (Instance != this) {
             Destroy(gameObject);
+        }
+    }
+    
+    private void Start() {
+        if (DataManager.QuestList == null) {
+            DataManager.QuestList = questList;
+        }
+        else {
+            questList = DataManager.QuestList;
+            currentQuestList = DataManager.CurrentQuests;
+        }
+        if (DataManager.GetTutorialProgress() >= 3) mainQuestGiver.SetActive(true);
+
+        foreach (var item in questList)
+        {
+            Debug.Log(item.title + item.progress);
         }
     }
 
@@ -36,6 +53,7 @@ public class QuestManager : MonoBehaviour
                         else {
                             QuestUI.Instance.questAvailable = true;
                             QuestUI.Instance.availableQuest.Add(questList[i]);
+                            Debug.Log("Added available quest" + questList[i].title);
                         }
                     }
                 }
@@ -52,6 +70,7 @@ public class QuestManager : MonoBehaviour
                     QuestUI.Instance.questRunning = true;
                     if (!QuestUI.Instance.activeQuest.Contains(questList[j])) {
                         QuestUI.Instance.activeQuest.Add(questList[j]);
+                        Debug.Log("Added active quest" + questList[j].title);
                     }
                     // CompleteQuest(QO.receivableQuestIDs[j]);
                 }
@@ -60,6 +79,7 @@ public class QuestManager : MonoBehaviour
 
         // Update the UI to show the available quests
         QuestUI.Instance.SetMainQuestUI();
+        SaveGame.Instance.SaveGameState();
     }
 
     // Accept quest based on the id 
@@ -70,6 +90,8 @@ public class QuestManager : MonoBehaviour
                 questList[i].progress = Quest.QuestProgress.ACCEPTED;
             }
         }
+        
+        DataManager.CurrentQuests = currentQuestList;
     }
 
     // Give up quest based on the id 
@@ -84,6 +106,8 @@ public class QuestManager : MonoBehaviour
                 currentQuestList.Remove(currentQuestList[i]);
             }
         }
+
+        DataManager.CurrentQuests = currentQuestList;
     }
 
     // Complete quest based on the id 
@@ -106,11 +130,14 @@ public class QuestManager : MonoBehaviour
                     }
                 }
                 currentQuestList.Remove(currentQuestList[i]);
+                DataManager.CurrentQuests = currentQuestList;
+                DataManager.QuestList = questList;
                 QuestUI.Instance.ClearQuestData();
                 // QuestUI.Instance.SetMainQuestUI();
             }
         }
         CheckChainQuest(questID);
+        SaveGame.Instance.SaveGameState();
     }
 
     // This will check if the current mission has next mission

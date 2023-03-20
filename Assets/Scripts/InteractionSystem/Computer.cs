@@ -32,8 +32,6 @@ public class Computer : MonoBehaviour, Interactable
         if (isOpened == false) {
             UIController.Instance.SetPanelActive(true);
             StartCoroutine(OpenPanelDelay());
-            StartCoroutine(Bot());
-      
         }
         return true;
     }
@@ -44,12 +42,7 @@ public class Computer : MonoBehaviour, Interactable
         isOpened = true;
         Open = _computer.GetComponent<OpenPanel>();
         Open._OpenPanel();
-        
-
-    }
-
-    IEnumerator Bot () 
-    {
+        // StartCoroutine(Bot());
         yield return new WaitForSeconds(4f);
         
         _computerOpenedBefore = PlayerPrefs.GetInt("ComputerOpenedBefore", 0) == 1;
@@ -63,4 +56,9 @@ public class Computer : MonoBehaviour, Interactable
             BotGuide.Instance.ShowDialogue();
         }
     }
+
+    // IEnumerator Bot () 
+    // {
+        
+    // }
 }
