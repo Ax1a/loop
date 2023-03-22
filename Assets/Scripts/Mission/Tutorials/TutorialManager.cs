@@ -9,10 +9,12 @@ public class TutorialManager : MonoBehaviour
     public List<Tutorial> Tutorials = new List<Tutorial>();
 
     [Header("Tutorial Objects")]
-    public TextMeshProUGUI descriptionText;
-    public TextMeshProUGUI titleText;
+    // public TextMeshProUGUI descriptionText;
+    // public TextMeshProUGUI titleText;
     [SerializeField] private GameObject questPanelPrefab;
     [SerializeField] private Transform parentContainer;
+    [SerializeField] private GameObject pcBoxes;
+    [SerializeField] private GameObject computer;
     private bool _activated = false;
 
     private static TutorialManager _instance;
@@ -33,6 +35,14 @@ public class TutorialManager : MonoBehaviour
     private void Start() {
         SetNextTutorial(DataManager.GetTutorialProgress());
         StartCoroutine(DelayStart());
+
+        if (DataManager.GetTutorialProgress() >= 4) {
+            pcBoxes.SetActive(false);
+            computer.SetActive(true);
+        }
+        // else {
+        //     tutorial
+        // }
     }
 
     private IEnumerator DelayStart() {
@@ -69,11 +79,13 @@ public class TutorialManager : MonoBehaviour
 
     public void SetNextTutorial(int currentOrder) {
         currentTutorial = GetTutorialByOrder(currentOrder);
-
+        
         if(!currentTutorial) {
             CompletedAllTutorials();
             return;
         }
+
+        Debug.Log(currentTutorial);
 
         // descriptionText.text = currentTutorial.Explanation;        
         // titleText.text = currentTutorial.Title;
@@ -97,11 +109,14 @@ public class TutorialManager : MonoBehaviour
     } 
 
     public void CompletedAllTutorials() {
-        descriptionText.text = "You have completed all the tutorials";
-        titleText.text = "Tutorial Complete";
-        if(parentContainer.transform.childCount != 0) GameObject.Destroy(parentContainer.transform.GetChild(0).gameObject);
-        // tutorialPrefab.SetActive(false);
-        SaveGame.Instance.SaveGameState();
+        // descriptionText.text = "You have completed all the tutorials";
+        // titleText.text = "Tutorial Complete";
+        // if(parentContainer.transform.childCount != 0) GameObject.Destroy(parentContainer.transform.GetChild(0).gameObject);
+        
+        pcBoxes.SetActive(false);
+        computer.SetActive(true);
+
+        // SaveGame.Instance.SaveGameState();
     }
 
     public Tutorial GetTutorialByOrder(int Order) {

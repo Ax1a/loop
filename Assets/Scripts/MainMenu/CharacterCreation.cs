@@ -147,6 +147,8 @@ public class CharacterCreation : MonoBehaviour
         else if (selectedIndex == 2) {
            DataManager.AddProgrammingLanguageProgress("java");
         }
+        DataManager.CurrentQuests.Clear();
+        DataManager.QuestList.Clear();
 
         _loadScene.LoadScene(sceneID);
     }

@@ -15,18 +15,22 @@ public class Bed : MonoBehaviour, Interactable
     
     public bool Interact(InteractObject interactor)
     {
-        _clock = Time.GetComponent<Clock>();
-        Energy.Instance.ResetEnergy();
+        if (DataManager.GetTutorialProgress() >= 4) {
+            _clock = Time.GetComponent<Clock>();
+            Energy.Instance.ResetEnergy();
 
-        if (_clock.Hour < 17) {
-            sleepConfirmation.SetActive(true);
-            UIController.Instance.SetPanelActive(true);
-        }
-        else {
-            StartCoroutine(SleepingPopUp.Instance.ShowPopUp());
-        }
+            if (_clock.Hour < 17) {
+                sleepConfirmation.SetActive(true);
+                UIController.Instance.SetPanelActive(true);
+            }
+            else {
+                StartCoroutine(SleepingPopUp.Instance.ShowPopUp());
+            }
 
-        return true;
+            return true;
+        }
+        
+        return false;
     }
 
     public void CancelSleep() {

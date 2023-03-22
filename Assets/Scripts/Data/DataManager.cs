@@ -252,7 +252,6 @@ public static class DataManager
             drinkItem.energy = item.itemEnergy;
             playerData.inventoryList.Add(drinkItem);
         }
-        SavePlayerData();
     }
 
     public static void ReduceItemQuantity(string name)

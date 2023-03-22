@@ -8,7 +8,6 @@ public class TutorialInteract : Tutorial
     public List<string> Keys = new List<string>();
     [SerializeField] private GameObject Interactor;
     [SerializeField] private GameObject parent;
-    [SerializeField] private GameObject questGiver;
     InteractObject interactObject;
 
     private void Start() {
@@ -25,13 +24,11 @@ public class TutorialInteract : Tutorial
             Transform _panel = parent.gameObject.transform.GetChild(0);
             QuestUISidePanel _questUI = _panel.GetComponent<QuestUISidePanel>();
             _questUI.ToggleCheck(true, 0);
-            //
+
             AudioManager.Instance.PlaySfx("Success");
         }
 
         if (Keys.Count == 0){
-            // QuestManager.Instance.QuestRequest(questGiver.GetComponent<QuestObject>());
-            // Debug.Log(QuestManager.Instance.CheckAcceptedQuest(questGiver.GetComponent<QuestObject>()));
             int objCount = parent.transform.childCount;
 
             if(objCount == 0) return;
@@ -42,11 +39,12 @@ public class TutorialInteract : Tutorial
             }
 
             BotGuide.Instance.AddDialogue("Great job! You've got the hang of it. Remember, you can interact with lots of different objects throughout the game,"); 
-            BotGuide.Instance.AddDialogue("so keep your eyes peeled for that 'Interact' prompt. Happy exploring!"); 
+            BotGuide.Instance.AddDialogue("so keep your eyes peeled for that 'Interact' prompt."); 
             BotGuide.Instance.ShowDialogue();
+
             ShowCompletedTutorial();
             TutorialManager.Instance.CompletedTutorial();
-            StartCoroutine(DelayAddQuest());
+            SaveGame.Instance.SaveGameState();
         }
     }
 
@@ -60,11 +58,7 @@ public class TutorialInteract : Tutorial
 
         // Call the banner popup class
         QuestUI.Instance.ShowCompleteQuestBanner(_quest);
+        
+        QuestUI.Instance.ShowNewQuestBanner("Computer Assembly");
     }
-
-    // For testing only // Fix add queue on popup
-    private IEnumerator DelayAddQuest() {
-        yield return new WaitForSeconds(3.5f);
-        questGiver.SetActive(true);
-    }    
 }

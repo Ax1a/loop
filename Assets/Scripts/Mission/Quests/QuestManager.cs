@@ -22,14 +22,14 @@ public class QuestManager : MonoBehaviour
     }
     
     private void Start() {
-        if (DataManager.QuestList == null) {
+        if (DataManager.QuestList.Count == 0) {
             DataManager.QuestList = questList;
         }
         else {
             questList = DataManager.QuestList;
             currentQuestList = DataManager.CurrentQuests;
         }
-        if (DataManager.GetTutorialProgress() >= 3) mainQuestGiver.SetActive(true);
+        if (DataManager.GetTutorialProgress() >= 4) mainQuestGiver.SetActive(true);
 
         foreach (var item in questList)
         {

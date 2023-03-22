@@ -7,11 +7,8 @@ public class QuestObject : MonoBehaviour
     public List<int> availableQuestIDs = new List<int>();
     public List<int> receivableQuestIDs = new List<int>();
     public bool isAutoAccept = false;
-    [SerializeField] private GameObject Interactor;
-    InteractObject interactObject;
-    // Testing quests
+    
     private void OnEnable() {
-        interactObject = Interactor.GetComponent<InteractObject>();
         QuestRequestObject();
     }
 
