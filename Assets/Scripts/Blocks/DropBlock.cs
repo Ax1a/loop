@@ -3,23 +3,24 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-public class DropBlock : MonoBehaviour, IDropHandler 
+public class DropBlock : MonoBehaviour, IDropHandler
 {
     public int id;
     [SerializeField] public string blockType;
     [HideInInspector] public Drag drag;
     public void OnDrop(PointerEventData eventData)
-    { 
+    {
         // Add Block tag to a block gameobject
-        if (eventData.pointerDrag.tag == "Block"){
-            if(eventData.pointerDrag.GetComponent<Drag>().blockType == blockType)
+        if (eventData.pointerDrag.tag == "Block")
+        {
+            if (eventData.pointerDrag.GetComponent<Drag>().blockType == blockType)
             {
                 eventData.pointerDrag.GetComponent<RectTransform>().transform.position =
                 GetComponent<RectTransform>().transform.position;
                 Debug.Log("Dropped Item");
                 //Check the correct answer through ID of the blocks
-                if(eventData.pointerDrag.GetComponent<Drag>().id == id)
-                { 
+                if (eventData.pointerDrag.GetComponent<Drag>().id == id)
+                {
                     Debug.Log("Correct");
                 }
                 else
@@ -32,6 +33,6 @@ public class DropBlock : MonoBehaviour, IDropHandler
                 eventData.pointerDrag.GetComponent<Drag>().ResetPos();
                 Debug.Log("ResetPosition");
             }
-        }  
+        }
     }
 }

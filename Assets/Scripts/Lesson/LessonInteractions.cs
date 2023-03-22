@@ -9,10 +9,9 @@ public class LessonInteractions : MonoBehaviour
 {
     [SerializeField] private string[] correctAnswers;
     public TMP_InputField[] userAnswer;
-
     string _playerName;
 
-    void Start ()
+    void Start()
     {
         _playerName = DataManager.GetPlayerName();
     }
@@ -24,7 +23,7 @@ public class LessonInteractions : MonoBehaviour
         for (int i = 0; i < userAnswer.Length; i++)
         {
             //To - fix : NPC when all input box are empty.
-            if(userAnswer[i].text == "")
+            if (userAnswer[i].text == "")
             {
                 allEmpty = true;
             }
@@ -37,7 +36,7 @@ public class LessonInteractions : MonoBehaviour
             }
         }
 
-        if(allEmpty)
+        if (allEmpty)
         {
             NPCCall("I think I should input some values...");
             allEmpty = false;
@@ -56,9 +55,9 @@ public class LessonInteractions : MonoBehaviour
 
     }
 
-    void NPCCall (string message)
+    void NPCCall(string message)
     {
-        NPCDialogue.Instance.AddDialogue(message, _playerName); 
+        NPCDialogue.Instance.AddDialogue(message, _playerName);
         NPCDialogue.Instance.ShowDialogue();
     }
 }
