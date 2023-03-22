@@ -13,12 +13,15 @@ public class UIController : MonoBehaviour
     * Use SetPanelActive(true) to stop the character movement
     */
 
+    [Header ("Game Objects")]
     [SerializeField] private GameObject mainUI;
+    [SerializeField] private GameObject indicatorCanvas;
     [SerializeField] private GameObject[] gameUI;
     [SerializeField] private GameObject[] tabMenus;
     [SerializeField] private GameObject Character;
-    [SerializeField] private GameObject highlightGuide;
+    [SerializeField] private GameObject[] highlightGuides;
     public Queue<GameObject> popUpUIs = new Queue<GameObject>();
+    
     PlayerController _playerController;
 
     [Header ("Menu Buttons")]
@@ -26,6 +29,9 @@ public class UIController : MonoBehaviour
     [SerializeField] private Button saveBtn;
     [SerializeField] private Button optionBtn;
     [SerializeField] private Button quitBtn;
+
+    [Header ("Params")]
+    [SerializeField] private float animationDuration = 0f;
 
     private bool _anyActive;
     public static UIController Instance;
@@ -43,28 +49,22 @@ public class UIController : MonoBehaviour
         _playerController = Character.GetComponent<PlayerController>();
     }
 
-    // Band aid fix for popup ui delay
-    // To be updated
-    private IEnumerator DelayDequeue(){
-        yield return new WaitForSeconds(2.5f);
-        if (popUpUIs.Count > 0) {
-            Debug.Log(popUpUIs.Peek());
-            popUpUIs.Dequeue();
-            Debug.Log("Dequeued");
-        }
-    }
-
     void Update()
     {
         if (popUpUIs.Count > 0) {
-            if (highlightGuide.name == popUpUIs.Peek().name) {
-                highlightGuide.SetActive(true);
-                popUpUIs.Dequeue();
+            Debug.Log(popUpUIs.Peek().name);
+
+            foreach (var highlightGuide in highlightGuides)
+            {
+                if (highlightGuide.name == popUpUIs.Peek().name) {
+                    highlightGuide.SetActive(true);
+                }   
             }
-            else if (popUpUIs.Peek().name != "Guide"){
-                StartCoroutine(DelayDequeue());
+
+            if (popUpUIs.Peek().name == "NewMissionPopUp" || popUpUIs.Peek().name == "MissionCompletePopUp"){
                 popUpUIs.Peek().gameObject.SetActive(true);
             }
+
         }
         if (BotGuide.Instance.guideIsActive()) return;
 
@@ -96,7 +96,7 @@ public class UIController : MonoBehaviour
         optionBtn.onClick.RemoveAllListeners();
         optionBtn.onClick.RemoveAllListeners();
 
-        continueBtn.onClick.AddListener(() => { CloseUI(2); });
+        continueBtn.onClick.AddListener(() => { CloseUI(1); });
         quitBtn.onClick.AddListener(GoToMainMenu);
         saveBtn.onClick.AddListener(SaveGameData);
     }
@@ -112,13 +112,13 @@ public class UIController : MonoBehaviour
         }
     }
 
-    void ToggleUI(string uiToOpen) {
+    public void ToggleUI(string uiToOpen) {
         bool otherUIIsOpen = false;
 
         // Checking if other UI is open
         foreach (var ui in gameUI)
         {
-            if (ui.activeSelf == true && (ui.name != uiToOpen && ui.name != "InteractImage" && ui.name != "Guide")) {
+            if (ui.activeSelf == true && (ui.name != uiToOpen && ui.name != "Guide")) {
                 otherUIIsOpen = true;
                 break;
             }
@@ -130,25 +130,26 @@ public class UIController : MonoBehaviour
             {
                 if (ui.name == uiToOpen) {
                     ui.SetActive(true);
-                    gameUI[1].SetActive(false);
-                    mainUI.SetActive(false);
+                    indicatorCanvas.SetActive(false);
+                    mainUI.GetComponent<CanvasGroup>().alpha = 0;
 
                     SetPanelActive(true);
                 };
             }
-        }
+        } 
     }
 
     void SaveGameData() {
         SaveGame.Instance.SaveGameState();
-        CloseUI(2);
+        CloseUI(1);
     }
 
     public void CloseUI(int index) {
         gameUI[index].SetActive(false);
-        mainUI.SetActive(true);
+        mainUI.GetComponent<CanvasGroup>().alpha = 1;
 
         SetPanelActive(false);
+        indicatorCanvas.SetActive(true);
     }
 
     public void SetPanelActive(bool active) {
@@ -159,8 +160,28 @@ public class UIController : MonoBehaviour
         return _anyActive;
     }
 
-    public void SetHighlightActive(bool active) {
-        highlightGuide.SetActive(active);
+    public void DequeuePopupHighlight(int index) {
+        for (int i = 0; i < highlightGuides.Length; i++)
+        {
+            if (highlightGuides[i].name == popUpUIs.Peek().name) {
+                popUpUIs.Peek().SetActive(false);
+                Debug.Log(popUpUIs.Peek().name + ": Dequeued");
+                popUpUIs.Dequeue();
+            }
+        }
+    }
+
+    public void EnqueuePopup(GameObject popup) {
+        popUpUIs.Enqueue(popup);
+        Debug.Log(popup.name + ": Enqueued");
+    }
+
+    public void DequeuePopUp(GameObject popup) {
+        if (popUpUIs.Peek().name == popup.name) {
+            Debug.Log(popUpUIs.Peek().name + ": Dequeued");
+            popUpUIs.Peek().SetActive(false);
+            popUpUIs.Dequeue();
+        }
     }
 
     void GoToMainMenu() {

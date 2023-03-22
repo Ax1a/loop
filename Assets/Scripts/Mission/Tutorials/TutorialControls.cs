@@ -35,7 +35,7 @@ public class TutorialControls : Tutorial
                     BotGuide.Instance.AddDialogue("Great! You have been given 15 currency units to spend."); 
                     BotGuide.Instance.AddDialogue("Perhaps you could treat yourself to a nice cup of coffee? Try clicking the buy button of an item.");
                     BotGuide.Instance.ShowDialogue();
-                    UIController.Instance.popUpUIs.Enqueue(highlightGuide);
+                    UIController.Instance.EnqueuePopup(highlightGuide);
                 }
                 if (Input.inputString == "i") {
                     BotGuide.Instance.AddDialogue("Great job! In the inventory, you can browse your items, or use them if needed.");

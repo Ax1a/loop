@@ -19,7 +19,6 @@ public class QuestUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI l_questDescription;
     [SerializeField] private GameObject l_questButtonPrefab;
     [SerializeField] private GameObject l_questObjectivePrefab;
-    [SerializeField] private GameObject l_questContentPrefab;
     [SerializeField] private GameObject l_questExpContentPrefab;
     [SerializeField] private GameObject l_questMoneyContentPrefab;
     [SerializeField] private GameObject l_giveUpBtn;
@@ -60,7 +59,7 @@ public class QuestUI : MonoBehaviour
     }
 
     private void Update() {
-        if (Input.GetKeyDown(InputManager.Instance.quest)) {
+        if (Input.GetKeyDown(InputManager.Instance.quest) && !UIController.Instance.otherPanelActive()) {
             questPanelActive = !questPanelActive;
             UpdateQuestUI();
             QuestUI.Instance.DisplayFirstQuest();
@@ -69,6 +68,7 @@ public class QuestUI : MonoBehaviour
 
     // Set Up Main Quests
     public void SetMainQuestUI() {
+        string tempTitle = "";
         int sidePanelQCount = 0;
 
         if (s_questPanelParent.childCount > 0) {
@@ -84,7 +84,7 @@ public class QuestUI : MonoBehaviour
                 }
 
                 // Set popup text
-                p_missionTypeTxt.text = item.title;
+                tempTitle = item.title;
                 
             }
             
@@ -94,7 +94,12 @@ public class QuestUI : MonoBehaviour
         FillQuestLogButtons();
         // Show the popup when new mission appears
         // p_questPrefab.SetActive(true);
-        if (questPanelActive == false) UIController.Instance.popUpUIs.Enqueue(p_questPrefab);
+        if (questPanelActive == false) ShowNewQuestBanner(tempTitle);
+    }
+
+    public void ShowNewQuestBanner(string title) {
+        p_missionTypeTxt.text = title;
+        UIController.Instance.EnqueuePopup(p_questPrefab);
     }
 
     // Fill up quest log buttons
@@ -193,7 +198,7 @@ public class QuestUI : MonoBehaviour
         }
 
         // p_questCompletePrefab.SetActive(true);
-        UIController.Instance.popUpUIs.Enqueue(p_questCompletePrefab);
+        UIController.Instance.EnqueuePopup(p_questCompletePrefab);
     }
 
     // Display the first quest on load

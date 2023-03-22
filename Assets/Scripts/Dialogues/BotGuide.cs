@@ -63,7 +63,6 @@ public class BotGuide : MonoBehaviour
         playerController = character.GetComponent<PlayerController>();
         audioSource = this.gameObject.AddComponent<AudioSource>();
         audioSource.volume = dialogueVolume;
-        tutorial.SetActive(false);
     }
 
     private void Update() {
@@ -84,10 +83,11 @@ public class BotGuide : MonoBehaviour
     }
 
     public void ShowDialogue() {
+        tutorial.SetActive(false);
         // Display the first dialogue
         if (_dialogues?.Count > 0) {
             if (!UIController.Instance.popUpUIs.Contains(guideBot)) {
-                UIController.Instance.popUpUIs.Enqueue(guideBot);
+                UIController.Instance.EnqueuePopup(guideBot);
             }
 
             if (displayLineCoroutine != null) StopCoroutine(displayLineCoroutine);
@@ -99,7 +99,7 @@ public class BotGuide : MonoBehaviour
         }   
         else {
             if (UIController.Instance.popUpUIs.Contains(guideBot)) {
-                UIController.Instance.popUpUIs.Dequeue();
+                UIController.Instance.DequeuePopUp(guideBot);
             }
             guideBot.SetActive(false);   
             tutorial.SetActive(true);

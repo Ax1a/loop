@@ -21,19 +21,22 @@ public class Computer : MonoBehaviour, Interactable
     }
     public bool Interact(InteractObject interactor)
     {
-        // Disable HUD (Fix error when disabled)
-        // _hud.gameObject.SetActive(false);
-        _interactOverlay.SetActive(false);
+        if (DataManager.GetTutorialProgress() >= 4) {
+            // Disable HUD (Fix error when disabled)
+            _interactOverlay.SetActive(false);
 
-        // Enable the Camera
-        CameraManager.Instance.ToggleTransitionCamera("CameraComputer");
-        // // Disable the Camera
-        // compCamera.gameObject.SetActive(false);
-        if (isOpened == false) {
-            UIController.Instance.SetPanelActive(true);
-            StartCoroutine(OpenPanelDelay());
+            // Enable the Camera
+            CameraManager.Instance.ToggleTransitionCamera("CameraComputer");
+
+            // // Disable the Camera
+            if (isOpened == false) {
+                UIController.Instance.SetPanelActive(true);
+                StartCoroutine(OpenPanelDelay());
+            }
+            return true;
         }
-        return true;
+
+        return false;
     }
 
     IEnumerator OpenPanelDelay() {

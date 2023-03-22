@@ -13,7 +13,10 @@ public class UIPopup : MonoBehaviour
     [SerializeField] float showTime = 0.3f;
     [SerializeField] Ease showEase = Ease.OutBack;
     [SerializeField] Transform tweenGO;
+
+    [Header ("Auto Close Popup")]
     [SerializeField] bool autoClose = false;
+    [SerializeField] float delayClose = 2.5f;
 
     private void OnEnable() {
         if (tweenGO == null) { tweenGO = transform; }
@@ -21,8 +24,8 @@ public class UIPopup : MonoBehaviour
         tweenGO.DOScale(1, showTime).SetEase(showEase);
 
         if (autoClose == true) {
-            tweenGO.DOScale(0, showTime).SetEase(showEase).SetDelay(2.5f).OnComplete(() => {
-                tweenGO.gameObject.SetActive(false);
+            tweenGO.DOScale(0, showTime).SetEase(showEase).SetDelay(delayClose).OnComplete(() => {
+                UIController.Instance.DequeuePopUp(tweenGO.gameObject);
             });
         }
     }

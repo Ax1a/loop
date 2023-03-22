@@ -5,6 +5,7 @@ using UnityEngine;
 public class UIClose : UIFade
 {
     [SerializeField] GameObject mainUI;
+    [SerializeField] GameObject indicatorCanvas;
 
     void Update()
     {
@@ -15,9 +16,10 @@ public class UIClose : UIFade
 
     private IEnumerator _animationClose() {
         base.FadeOut();
-        mainUI.SetActive(true);
+        mainUI.GetComponent<CanvasGroup>().alpha = 1;
         yield return new WaitForSeconds(base.getAnimationDuration());
         gameObject.SetActive(false);
+        indicatorCanvas.SetActive(true);
         UIController.Instance.SetPanelActive(false);
     }
 
