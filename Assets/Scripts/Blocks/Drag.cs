@@ -35,6 +35,7 @@ public class Drag : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndD
         transform.SetAsLastSibling();
 
         canvasGroup.blocksRaycasts = false;
+
     }
 
     public void OnDrag(PointerEventData eventData)

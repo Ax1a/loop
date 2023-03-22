@@ -71,10 +71,10 @@ public class QuizManager : MonoBehaviour
     }
     public void Retry()
     {
+        ShuffleQuestions();
         //to-do: check energy here
         if (Energy.Instance.GetCurrentEnergy() > 0)
         {
-            ShuffleQuestions();
             _questionIndex = 0;
             scoreCount = 0;
             gameOverPanel.SetActive(false);

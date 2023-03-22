@@ -13,50 +13,55 @@ public class Validate : MonoBehaviour
     //public Button btn;
     public bool isValid;
     public static Validate Instance;
-    
-    void Awake () 
+
+    void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
         }
     }
-    public void valid()
+
+    void Start()
     {
         input = simpleBlock.GetComponentInChildren<TMP_InputField>();
+    }
+    public void valid()
+    {
+        int _currPts = LessonDragDropValidation.Instance._currPts;
+        int ptsToWin = LessonDragDropValidation.Instance.ptsToWin;
 
-        if(input.text.Length != 0)
+        if (input.text.Length != 0 && _currPts >= ptsToWin)
         {
             errorMessage.SetActive(false);
             output.text = input.text;
-            NPCDialogue.Instance.AddDialogue("Great! Seems I understand the lesson", DataManager.GetPlayerName()); 
+            isValid = true;
+            NPCDialogue.Instance.AddDialogue("Great! Seems I understand the lesson", DataManager.GetPlayerName());
             NPCDialogue.Instance.ShowDialogue();
         }
         else
         {
             errorMessage.SetActive(true);
-            NPCDialogue.Instance.AddDialogue("I think I should input some values", DataManager.GetPlayerName()); 
-            NPCDialogue.Instance.ShowDialogue();    
+            isValid = false;
+            NPCDialogue.Instance.AddDialogue("I think I missed something", DataManager.GetPlayerName());
+            NPCDialogue.Instance.ShowDialogue();
         }
     }
     public void removeError()
     {
-        if(errorMessage.activeSelf)
+        if (errorMessage.activeSelf)
         {
-        errorMessage.SetActive(false);
-
+            errorMessage.SetActive(false);
         }
     }
 
-    public void ToggleBool ()
+    public void ClearOutput()
     {
-        if (isValid)
+        output.text = "";
+        input.text = "";
+        if (errorMessage.activeSelf)
         {
-            isValid = false;
-        }
-        else 
-        {
-            isValid = true;
+            errorMessage.SetActive(false);
         }
     }
 }
