@@ -85,10 +85,6 @@ public class TutorialManager : MonoBehaviour
             return;
         }
 
-        Debug.Log(currentTutorial);
-
-        // descriptionText.text = currentTutorial.Explanation;        
-        // titleText.text = currentTutorial.Title;
         // Setup the side panel UI
         if(parentContainer.childCount != 0) GameObject.Destroy(parentContainer.GetChild(0).gameObject);
 
@@ -97,22 +93,9 @@ public class TutorialManager : MonoBehaviour
         qUISidePanel.SetQuestTitle(currentTutorial.Title); // Set the quest title
         qUISidePanel.SetQuestSubTitle(currentTutorial.Explanation); // Set the quest description
         qUISidePanel.GenerateObjectives(currentTutorial.Requirement); // Generate the quest objectives
-        // foreach (var req in currentTutorial.Requirement)
-        // {
-        //     GameObject requirement = Instantiate(contentPrefab, parentContainer.transform);    
-        //     requirement.GetComponentInChildren<TextMeshProUGUI>().text = req;    
-            // TextMeshProUGUI requirement = Instantiate(requirementText, parent.transform);    
-            // requirement.text = req;        
-            // requirement.transform.parent = parent.transform;
-        // }
-
     } 
 
     public void CompletedAllTutorials() {
-        // descriptionText.text = "You have completed all the tutorials";
-        // titleText.text = "Tutorial Complete";
-        // if(parentContainer.transform.childCount != 0) GameObject.Destroy(parentContainer.transform.GetChild(0).gameObject);
-        
         pcBoxes.SetActive(false);
         computer.SetActive(true);
 

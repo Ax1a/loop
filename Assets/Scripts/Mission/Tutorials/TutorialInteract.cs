@@ -17,7 +17,7 @@ public class TutorialInteract : Tutorial
     public override void CheckIfHappening()
     {
         isCurrentTutorial = true;
-
+        Debug.Log(interactObject.name);
         if (Input.inputString.Contains(Keys[0]) && interactObject.NearInteractable()) {
             Keys.RemoveAt(0);
             // Change the toggle box to check

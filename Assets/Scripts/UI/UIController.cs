@@ -52,8 +52,6 @@ public class UIController : MonoBehaviour
     void Update()
     {
         if (popUpUIs.Count > 0) {
-            Debug.Log(popUpUIs.Peek().name);
-
             foreach (var highlightGuide in highlightGuides)
             {
                 if (highlightGuide.name == popUpUIs.Peek().name) {
