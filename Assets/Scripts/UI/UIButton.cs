@@ -42,6 +42,8 @@ public class UIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         } else {
             txt.color = baseColor * btn.colors.disabledColor * btn.colors.colorMultiplier;
         }
+
+        AudioManager.Instance.PlaySfx("Hover");
     }
 
     public void OnPointerDown (PointerEventData eventData)
@@ -51,6 +53,7 @@ public class UIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         } else {
             txt.color = baseColor * btn.colors.disabledColor * btn.colors.colorMultiplier;
         }
+       AudioManager.Instance.PlaySfx("Button");
     }
 
     public void OnPointerUp (PointerEventData eventData)

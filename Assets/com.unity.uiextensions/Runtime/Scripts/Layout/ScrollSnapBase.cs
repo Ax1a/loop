@@ -36,7 +36,7 @@ namespace UnityEngine.UI.Extensions
         private int _bottomItem, _topItem;
         internal bool _startEventCalled = false;
         internal bool _endEventCalled = false;
-        internal bool _suspendEvents = false; 
+        internal bool _suspendEvents = false;
 
         [Serializable]
         public class SelectionChangeStartEvent : UnityEvent { }
@@ -71,7 +71,7 @@ namespace UnityEngine.UI.Extensions
 
         [Tooltip("Fast Swipe makes swiping page next / previous (optional)")]
         public Boolean UseFastSwipe = false;
-        
+
         [Tooltip("Swipe Delta Threshold looks at the speed of input to decide if a swipe will be initiated (optional)")]
         public Boolean UseSwipeDeltaThreshold = false;
 
@@ -80,12 +80,12 @@ namespace UnityEngine.UI.Extensions
 
         [Tooltip("Speed at which the ScrollRect will keep scrolling before slowing down and stopping (optional)")]
         public int SwipeVelocityThreshold = 100;
-        
+
         [Tooltip("Threshold for swipe speed to initiate a swipe, below threshold will return to closest page (optional)")]
         public float SwipeDeltaThreshold = 5.0f;
 
-	    [Tooltip("Use time scale instead of unscaled time (optional)")]
-	    public Boolean UseTimeScale = true;
+        [Tooltip("Use time scale instead of unscaled time (optional)")]
+        public Boolean UseTimeScale = true;
 
         [Tooltip("The visible bounds area, controls which items are visible/enabled. *Note Should use a RectMask. (optional)")]
         public RectTransform MaskArea;
@@ -185,7 +185,7 @@ namespace UnityEngine.UI.Extensions
                 vscroll.ss = this;
             }
             panelDimensions = gameObject.GetComponent<RectTransform>().rect;
-            
+
             if (StartingScreen < 0)
             {
                 StartingScreen = 0;
@@ -196,10 +196,23 @@ namespace UnityEngine.UI.Extensions
             InitialiseChildObjects();
 
             if (NextButton)
-                NextButton.GetComponent<Button>().onClick.AddListener(() => { NextScreen(); });
+            {
+                NextButton.GetComponent<Button>().onClick.AddListener(() =>
+                {
+                    NextScreen();
+                    AudioManager.Instance.PlaySfx("Page");
+                });
+
+            }
 
             if (PrevButton)
-                PrevButton.GetComponent<Button>().onClick.AddListener(() => { PreviousScreen(); });
+            {
+                PrevButton.GetComponent<Button>().onClick.AddListener(() =>
+                {
+                    PreviousScreen();
+                    AudioManager.Instance.PlaySfx("Page");
+                });
+            }
 
             _isInfinite = GetComponent<UI_InfiniteScroll>() != null;
         }
@@ -414,7 +427,7 @@ namespace UnityEngine.UI.Extensions
             else
             {
                 _infiniteOffset = _screensContainer.anchoredPosition.x < 0 ? -_screensContainer.sizeDelta.x * _infiniteWindow : _screensContainer.sizeDelta.x * _infiniteWindow;
-                _infiniteOffset = _infiniteOffset == 0 ? 0 : _infiniteOffset < 0 ? _infiniteOffset - _childSize * _infiniteWindow : _infiniteOffset + _childSize * _infiniteWindow; 
+                _infiniteOffset = _infiniteOffset == 0 ? 0 : _infiniteOffset < 0 ? _infiniteOffset - _childSize * _infiniteWindow : _infiniteOffset + _childSize * _infiniteWindow;
                 target.x = _childPos + _scrollStartPosition + _infiniteOffset;
             }
         }
@@ -468,10 +481,12 @@ namespace UnityEngine.UI.Extensions
                 if (PrevButton)
                 {
                     PrevButton.GetComponent<Button>().interactable = targetScreen > 0;
-                    if (targetScreen > 0) {
+                    if (targetScreen > 0)
+                    {
                         PrevButton.SetActive(true);
                     }
-                    else {
+                    else
+                    {
                         PrevButton.SetActive(false);
                     }
                 }
@@ -479,10 +494,12 @@ namespace UnityEngine.UI.Extensions
                 if (NextButton)
                 {
                     NextButton.GetComponent<Button>().interactable = targetScreen < _screensContainer.transform.childCount - 1;
-                    if (targetScreen < _screensContainer.transform.childCount - 1) {
+                    if (targetScreen < _screensContainer.transform.childCount - 1)
+                    {
                         NextButton.SetActive(true);
                     }
-                    else {
+                    else
+                    {
                         NextButton.SetActive(false);
                     }
                 }

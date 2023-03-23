@@ -44,7 +44,7 @@ public class QuestUI : MonoBehaviour
     public List<Quest> activeQuest = new List<Quest>();
     public List<GameObject> questButtons = new List<GameObject>();
 
-    [Header ("Quest UI Bools")]
+    [Header("Quest UI Bools")]
     public bool questAvailable = false;
     public bool questRunning = false;
     private bool questPanelActive = false;
@@ -52,14 +52,18 @@ public class QuestUI : MonoBehaviour
 
     public static QuestUI Instance;
 
-    private void Awake() {
-        if (Instance == null) {
+    private void Awake()
+    {
+        if (Instance == null)
+        {
             Instance = this;
         }
     }
 
-    private void Update() {
-        if (Input.GetKeyDown(InputManager.Instance.quest) && !UIController.Instance.otherPanelActive()) {
+    private void Update()
+    {
+        if (Input.GetKeyDown(InputManager.Instance.quest) && !UIController.Instance.otherPanelActive())
+        {
             questPanelActive = !questPanelActive;
             UpdateQuestUI();
             QuestUI.Instance.DisplayFirstQuest();
@@ -67,27 +71,31 @@ public class QuestUI : MonoBehaviour
     }
 
     // Set Up Main Quests
-    public void SetMainQuestUI() {
+    public void SetMainQuestUI()
+    {
         string tempTitle = "";
         int sidePanelQCount = 0;
 
-        if (s_questPanelParent.childCount > 0) {
+        if (s_questPanelParent.childCount > 0)
+        {
             Destroy(s_questPanelParent.GetChild(0).gameObject);
         }
-        
+
         foreach (var item in activeQuest)
         {
-            if (item.questType == Quest.QuestType.MAIN) {
-                if (sidePanelQCount == 0) {
+            if (item.questType == Quest.QuestType.MAIN)
+            {
+                if (sidePanelQCount == 0)
+                {
                     ShowQuestSidePanel(item);
                     sidePanelQCount++;
                 }
 
                 // Set popup text
                 tempTitle = item.title;
-                
+
             }
-            
+
         }
 
         // Display the button list on quest log
@@ -97,14 +105,19 @@ public class QuestUI : MonoBehaviour
         if (questPanelActive == false) ShowNewQuestBanner(tempTitle);
     }
 
-    public void ShowNewQuestBanner(string title) {
+    public void ShowNewQuestBanner(string title)
+    {
         p_missionTypeTxt.text = title;
         UIController.Instance.EnqueuePopup(p_questPrefab);
+        //Play SoundFx
+        AudioManager.Instance.PlaySfx("New Mission");
     }
 
     // Fill up quest log buttons
-    public void FillQuestLogButtons() {
-        if (l_mainQuestButtonParent.childCount > 0) {
+    public void FillQuestLogButtons()
+    {
+        if (l_mainQuestButtonParent.childCount > 0)
+        {
             foreach (Transform button in l_mainQuestButtonParent)
             {
                 Destroy(button.gameObject);
@@ -123,29 +136,33 @@ public class QuestUI : MonoBehaviour
         }
     }
 
-    public void ShowQuestSidePanel(Quest item) {
+    public void ShowQuestSidePanel(Quest item)
+    {
         // Setup the side panel UI
         GameObject sidePanelQuest = Instantiate(s_questPanelPrefab, s_questPanelParent); // Create a new gameobject based on prefab
         QuestUISidePanel qUISidePanel = sidePanelQuest.GetComponent<QuestUISidePanel>(); // Call the script from prefab
         qUISidePanel.SetQuestTitle(item.title); // Set the quest title
         qUISidePanel.SetQuestSubTitle(item.subTitle); // Set the quest description
         qUISidePanel.GenerateObjectives(item.questObjectives); // Generate the quest objectives
-        
+
         sidePanelQuest.SetActive(true);
     }
 
     // Show selected log quest
-    public void ShowSelectedQuest(int questID) {
+    public void ShowSelectedQuest(int questID)
+    {
         l_questExpContentPrefab.SetActive(false);
         l_questMoneyContentPrefab.SetActive(false);
 
         foreach (var quest in activeQuest)
         {
-            if (quest.id == questID) {
+            if (quest.id == questID)
+            {
                 l_questTitle.text = quest.title;
                 l_questDescription.text = quest.description;
 
-                if (l_mainQuestObjectiveParent.childCount > 0) {
+                if (l_mainQuestObjectiveParent.childCount > 0)
+                {
                     foreach (Transform child in l_mainQuestObjectiveParent)
                     {
                         Destroy(child.gameObject);
@@ -153,16 +170,18 @@ public class QuestUI : MonoBehaviour
                 }
                 foreach (var objective in quest.questObjectives)
                 {
-                    GameObject _objective = Instantiate(l_questObjectivePrefab ,l_mainQuestObjectiveParent);
+                    GameObject _objective = Instantiate(l_questObjectivePrefab, l_mainQuestObjectiveParent);
                     _objective.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = objective;
                 }
 
-                if (quest.expReward > 0) {
+                if (quest.expReward > 0)
+                {
                     l_questRewardExp.text = "+" + quest.expReward.ToString();
                     l_questExpContentPrefab.SetActive(true);
                 }
 
-                if (quest.moneyReward > 0) {
+                if (quest.moneyReward > 0)
+                {
                     l_questRewardMoney.text = "+" + quest.moneyReward.ToString();
                     l_questMoneyContentPrefab.SetActive(true);
                 }
@@ -171,65 +190,82 @@ public class QuestUI : MonoBehaviour
     }
 
     // Display when finished a mission
-    public void ShowCompleteQuestBanner(Quest quest) {
+    public void ShowCompleteQuestBanner(Quest quest)
+    {
         p_questCompleteTitle.text = quest.title;
 
-        if (quest.expReward > 0) {
+        if (quest.expReward > 0)
+        {
             p_questRewardExp.transform.parent.gameObject.SetActive(true);
             p_questRewardExp.text = "+ " + quest.expReward;
         }
-        else {
+        else
+        {
             p_questRewardExp.transform.parent.gameObject.SetActive(false);
         }
 
-        if (quest.moneyReward > 0) {
+        if (quest.moneyReward > 0)
+        {
             p_questRewardMoney.transform.parent.gameObject.SetActive(true);
             p_questRewardMoney.text = "+ " + quest.moneyReward;
         }
-        else {
+        else
+        {
             p_questRewardMoney.transform.parent.gameObject.SetActive(false);
         }
 
-        if (quest.questType == Quest.QuestType.MAIN) {
+        if (quest.questType == Quest.QuestType.MAIN)
+        {
             p_questType.text = "Main Quest";
         }
-        else {
+        else
+        {
             p_questType.text = "Side Quest";
         }
 
         // p_questCompletePrefab.SetActive(true);
         UIController.Instance.EnqueuePopup(p_questCompletePrefab);
+
+        //Play SoundFx
+        AudioManager.Instance.PlaySfx("Mission Complete");
     }
 
     // Display the first quest on load
-    public void DisplayFirstQuest() {
-        if (l_mainQuestButtonParent.childCount > 0) {
+    public void DisplayFirstQuest()
+    {
+        if (l_mainQuestButtonParent.childCount > 0)
+        {
             QuestButtonLog _qButtonLog = l_mainQuestButtonParent.GetChild(0).gameObject.GetComponent<QuestButtonLog>();
             _qButtonLog.ShowAllInfos();
         }
     }
 
     // Check the quest list based on the parameter
-    public void CheckQuest(QuestObject QO) {
+    public void CheckQuest(QuestObject QO)
+    {
         _currentQuestObject = QO;
         QuestManager.Instance.QuestRequest(QO);
 
-        if ((questRunning || questAvailable) && !questPanelActive) {
+        if ((questRunning || questAvailable) && !questPanelActive)
+        {
             // UpdateQuestUI();
         }
-        else {
+        else
+        {
             Debug.Log("No quest available");
         }
     }
 
-    public void UpdateQuestUI() {
+    public void UpdateQuestUI()
+    {
         questPanelActive = true;
         ClearQuestData();
         SetMainQuestUI();
     }
 
     // Clear Quest Data to avoid duplication
-    public void ClearQuestData() {
+    public void ClearQuestData()
+    {
         l_questTitle.text = "No quest available.";
         l_questDescription.text = "";
         l_questRewardExp.text = "";
@@ -237,12 +273,14 @@ public class QuestUI : MonoBehaviour
         l_questExpContentPrefab.SetActive(false);
         l_questMoneyContentPrefab.SetActive(false);
 
-        if (s_questPanelParent.childCount > 0) {
+        if (s_questPanelParent.childCount > 0)
+        {
             Destroy(s_questPanelParent.GetChild(0).gameObject);
         }
-        
+
         // Remove the old objectives
-        if (l_mainQuestObjectiveParent.childCount > 0) {
+        if (l_mainQuestObjectiveParent.childCount > 0)
+        {
             foreach (Transform child in l_mainQuestObjectiveParent)
             {
                 Destroy(child.gameObject);

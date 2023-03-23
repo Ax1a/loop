@@ -13,7 +13,10 @@ public class ShutdownPC : MonoBehaviour
     Computer _computer;
 
     public void _ShutDownPC()
-    {   
+    {
+        //Play SoundFx
+        AudioManager.Instance.PlaySfx("Shutdown");
+
         if (Panel != null)
         {
             // Instance
