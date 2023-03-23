@@ -356,6 +356,7 @@ GameObject:
   - component: {fileID: 8344547624654079657}
   - component: {fileID: 8344547624654079656}
   - component: {fileID: 8344547624654079659}
+  - component: {fileID: 6999287334224094885}
   m_Layer: 0
   m_Name: InteractableIndicator
   m_TagString: Untagged
@@ -429,3 +430,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &6999287334224094885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8344547624654079662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7916fd30fd4b7b4998ea3572364d798, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showTime: 0.3
+  showEase: 27
+  tweenGO: {fileID: 8344547624654079657}
+  autoClose: 0
+  delayClose: 2.5
