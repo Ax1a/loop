@@ -10,6 +10,8 @@ public class GoToSchool : MonoBehaviour, Interactable
     [SerializeField] private GameObject clockAnimation;
     [SerializeField] private GameObject mainUI;
     [SerializeField] private GameObject Time;
+    [SerializeField] private CanvasGroup IndicatorCanvas;
+    [SerializeField] private GameObject questGiver;
     public bool isOpened = false;
     Clock _clock;
     public string InteractionPrompt => _prompt;
@@ -23,8 +25,16 @@ public class GoToSchool : MonoBehaviour, Interactable
                 _clock.AddHour(hoursToSchool);
                 StartCoroutine(PlayAnimation());   
             }
+            else {
+                NPCDialogue.Instance.AddDialogue("I think my class has already ended.", DataManager.GetPlayerName());
+                NPCDialogue.Instance.ShowDialogue();
+            }
             // condition to show that user is already late to class
             return true;
+        }
+        else if (DataManager.GetTutorialProgress() >= 2) {
+            NPCDialogue.Instance.AddDialogue("I'd better build my computer before I do anything else.", DataManager.GetPlayerName());
+            NPCDialogue.Instance.ShowDialogue();
         }
 
         return false;
@@ -34,12 +44,15 @@ public class GoToSchool : MonoBehaviour, Interactable
         clockAnimation.SetActive(true);
         mainUI.SetActive(false);
         UIController.Instance.SetPanelActive(true);
+        IndicatorCanvas.alpha = 0;
 
         yield return new WaitForSeconds(3f);
 
         clockAnimation.SetActive(false);
         mainUI.SetActive(true);
         UIController.Instance.SetPanelActive(false);
+        IndicatorCanvas.alpha = 1;
+        questGiver.SetActive(true);
         SaveGame.Instance.SaveGameState();
     }
 }

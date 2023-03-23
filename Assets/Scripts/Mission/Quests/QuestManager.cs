@@ -33,7 +33,7 @@ public class QuestManager : MonoBehaviour
 
         foreach (var item in questList)
         {
-            Debug.Log(item.title + item.progress);
+            Debug.Log(item.title + ": " + item.progress);
         }
     }
 
@@ -155,9 +155,13 @@ public class QuestManager : MonoBehaviour
             for (int i = 0; i < questList.Count; i++) {
                 if (questList[i].id == tempID && questList[i].progress == Quest.QuestProgress.NOT_AVAILABLE) {
                     questList[i].progress = Quest.QuestProgress.AVAILABLE;
+
+                    // For testing
                     foreach (var obj in GameObject.FindObjectsOfType<QuestObject>()) {
-                        obj.gameObject.SetActive(false);
-                        obj.gameObject.SetActive(true);
+                        if (obj.gameObject.name == "[0] Main Quests") {
+                            obj.gameObject.SetActive(false);
+                            obj.gameObject.SetActive(true);
+                        }
                     }
                 }
             }
