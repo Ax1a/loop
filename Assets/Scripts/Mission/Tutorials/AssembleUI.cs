@@ -15,9 +15,11 @@ public class AssembleUI : MonoBehaviour
     private bool _firstSelect = true;
     TutorialAssemble _tutorialAssemble;
 
-    private void Update() {
+    private void Update()
+    {
         // Check if all of the parts have been picked
-        if (_selectedParts.Count >= 7) {
+        if (_selectedParts.Count >= 7)
+        {
             if (buildBtn.interactable) return;
 
             buildBtn.interactable = true;
@@ -39,39 +41,49 @@ public class AssembleUI : MonoBehaviour
     }
 
     // PC Part Type Onclick button
-    void OpenPanel(int index) {
+    void OpenPanel(int index)
+    {
         if (partBtns.Length != partContainers.Length) return;
 
         for (int i = 0; i < partContainers.Length; i++)
         {
             partContainers[i].SetActive(false);
-            
-            if (i == index) {
+
+            if (i == index)
+            {
                 partContainers[i].SetActive(true);
             }
         }
     }
 
     // PC Part Item Onclick button
-    public void SelectPCPart(int index) {
-        if (UIController.Instance.popUpUIs.Count > 0) {
+    public void SelectPCPart(int index)
+    {
+        if (UIController.Instance.popUpUIs.Count > 0)
+        {
             if (_firstSelect || UIController.Instance.popUpUIs.Peek().name == "AssembleGuide") UIController.Instance.DequeuePopupHighlight(1);
         }
         _firstSelect = false;
 
         for (int i = 0; i < partContainers.Length; i++)
         {
-            if (i == index) {
+            if (i == index)
+            {
                 partBtns[i].gameObject.GetComponent<Image>().color = Color.green;
                 itemBtns[i].gameObject.GetComponent<Image>().color = new Color32(119, 238, 128, 255);
-                if (!_selectedParts.Contains(itemBtns[i])) {
+                if (!_selectedParts.Contains(itemBtns[i]))
+                {
                     _selectedParts.Add(itemBtns[i]);
                 }
             }
         }
+
+        //Play SoundFx
+        AudioManager.Instance.PlaySfx("Pc Parts Select");
     }
 
-    public void CompletePCBuild() {
+    public void CompletePCBuild()
+    {
         _tutorialAssemble = TutorialObject.GetComponent<TutorialAssemble>();
         _tutorialAssemble.isComplete = true;
     }
