@@ -46,7 +46,7 @@ public class Computer : MonoBehaviour, Interactable
         Open = _computer.GetComponent<OpenPanel>();
         Open._OpenPanel();
         // StartCoroutine(Bot());
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(3.3f);
         
         _computerOpenedBefore = PlayerPrefs.GetInt("ComputerOpenedBefore", 0) == 1;
         //checks if computer canvas is opened for the first time

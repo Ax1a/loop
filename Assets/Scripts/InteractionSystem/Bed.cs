@@ -29,7 +29,11 @@ public class Bed : MonoBehaviour, Interactable
 
             return true;
         }
-        
+        else if (DataManager.GetTutorialProgress() == 2) {
+            NPCDialogue.Instance.AddDialogue("I'd better build my computer before I do anything else.", DataManager.GetPlayerName());
+            NPCDialogue.Instance.ShowDialogue();
+        }
+
         return false;
     }
 

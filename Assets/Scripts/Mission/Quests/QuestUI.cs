@@ -92,8 +92,7 @@ public class QuestUI : MonoBehaviour
                 }
 
                 // Set popup text
-                tempTitle = item.title;
-
+                tempTitle = item.title; 
             }
 
         }

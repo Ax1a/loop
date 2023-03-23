@@ -5,18 +5,35 @@ using UnityEngine;
 public class IIndicatorController : MonoBehaviour
 {
     public string interactableLayer;
-    public GameObject indicator;
-
+    public GameObject[] indicators;
+    private bool _addedIndicators = false;
+    
     void Start()
     {
-        // int interactableLayerMask = 1 << LayerMask.NameToLayer(interactableLayer);
-        // GameObject[] interactableObjects = GameObject.FindGameObjectsWithTag(interactableLayerMask);
+        if (DataManager.GetTutorialProgress() >= 2) {
+            foreach (GameObject indicator in indicators)
+            {
+                indicator.SetActive(true);
+            }
+            _addedIndicators = true;
+        }
+        else {
+            foreach (GameObject indicator in indicators)
+            {
+                indicator.SetActive(false);
+            }
+        }
+    }
 
-        // foreach (GameObject gameObject in interactableObjects)
-        // {
-        //     GameObject go = Instantiate(indicator);
-        //     go.transform.parent = gameObject.transform;
-        //     go.transform.localPosition = new Vector3(0f, .25f, 0f);
-        // }
+    private void LateUpdate() {
+        // Check if the indicator is already added, no other panel is active, and the tutorial progress is > 2
+        if (!_addedIndicators && DataManager.GetTutorialProgress() >= 2 && !UIController.Instance.otherPanelActive() && UIController.Instance.QueueIsEmpty()) {
+
+            foreach (GameObject indicator in indicators)
+            {
+                indicator.SetActive(true);
+            }
+            _addedIndicators = true;
+        }
     }
 }

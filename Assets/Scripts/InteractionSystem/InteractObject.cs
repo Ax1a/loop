@@ -22,11 +22,17 @@ public class InteractObject : MonoBehaviour
         return false;
     }
 
+    public string GetObjectInteracter() {
+        if (_colliders[0] != null) return _colliders[0].gameObject.name;
+
+        return null;
+    }
+
     void Update()
     {
         _numFound = Physics.OverlapSphereNonAlloc(_interactionPoint.position, _interactionPointRadius, _colliders, _interactableMask);
 
-        if (_numFound > 0)
+        if (_numFound > 0 && DataManager.GetTutorialProgress() >= 2)
         {
             _interactable = _colliders[0].GetComponent<Interactable>();
             outline = _colliders[0].GetComponent<Outline>();

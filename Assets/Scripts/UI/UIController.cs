@@ -51,7 +51,7 @@ public class UIController : MonoBehaviour
 
     void Update()
     {
-        if (popUpUIs.Count > 0) {
+        if (!QueueIsEmpty()) {
             foreach (var highlightGuide in highlightGuides)
             {
                 if (highlightGuide.name == popUpUIs.Peek().name) {
@@ -167,6 +167,10 @@ public class UIController : MonoBehaviour
                 popUpUIs.Dequeue();
             }
         }
+    }
+
+    public bool QueueIsEmpty() {
+        return popUpUIs.Count == 0;
     }
 
     public void EnqueuePopup(GameObject popup) {

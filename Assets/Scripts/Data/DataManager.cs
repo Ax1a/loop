@@ -297,13 +297,43 @@ public static class DataManager
     public static int GetProgrammingLanguageProgress(string key)
     {
         int result = -1;
-        PlayerData playerData = new PlayerData();
+
+        // Prevents error of null
+        if (playerData.programmingLanguage == null) {
+            // PlayerData playerData = new PlayerData();
+            playerData.programmingLanguage = new Dictionary<string, int>();
+        }
+
         if (playerData.programmingLanguage.ContainsKey(key))
         {
             result = playerData.programmingLanguage[key];
         }
 
         return result;
+    }
+
+    public static bool FirstProgrammingLanguage() {
+        int count = 0;
+
+         // Prevents error of null
+        if (playerData.programmingLanguage == null) {
+            // PlayerData playerData = new PlayerData();
+            playerData.programmingLanguage = new Dictionary<string, int>();
+        }
+
+        foreach (var kvp in playerData.programmingLanguage)
+        {
+            if (kvp.Value == -1)
+            {
+                count++;
+                if (count == 2)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     // public static void AddLevelProgress(string key)
