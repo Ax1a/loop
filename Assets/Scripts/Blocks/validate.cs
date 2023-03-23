@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-public class Validate : MonoBehaviour
+public class validate : MonoBehaviour
 {
     private TMP_InputField input;
     public GameObject errorMessage;
@@ -12,7 +12,7 @@ public class Validate : MonoBehaviour
     public Transform simpleBlock;
     //public Button btn;
     public bool isValid;
-    public static Validate Instance;
+    public static validate Instance;
 
     void Awake()
     {
