@@ -60,7 +60,7 @@ public class QuizManager : MonoBehaviour
     {
         if (Energy.Instance.GetCurrentEnergy() > 0)
         {
-            Energy.Instance.UseEnergy();
+            Energy.Instance.UseEnergy(1);
             quizTimer.Instance.startGame();
         }
         else
@@ -80,7 +80,7 @@ public class QuizManager : MonoBehaviour
             gameOverPanel.SetActive(false);
             timer.resetTime();
             SetCurrentQuestion(_questionIndex);
-            Energy.Instance.UseEnergy();
+            Energy.Instance.UseEnergy(1);
         }
         else
         {

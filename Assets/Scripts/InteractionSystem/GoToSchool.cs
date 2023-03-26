@@ -7,6 +7,7 @@ public class GoToSchool : MonoBehaviour, Interactable
 
     [SerializeField] private string _prompt;
     [SerializeField] private int hoursToSchool;
+    [SerializeField] private int energyCost;
     [SerializeField] private GameObject clockAnimation;
     [SerializeField] private GameObject mainUI;
     [SerializeField] private GameObject Time;
@@ -22,6 +23,7 @@ public class GoToSchool : MonoBehaviour, Interactable
             _clock = Time.GetComponent<Clock>();
 
             if (_clock.Hour < 12) {
+                Energy.Instance.UseEnergy(5);
                 _clock.AddHour(hoursToSchool);
                 StartCoroutine(PlayAnimation());   
             }

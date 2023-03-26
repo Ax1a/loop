@@ -14,7 +14,7 @@ public class QuestObject : MonoBehaviour
 
     public void QuestRequestObject() {
         QuestManager.Instance.QuestRequest(this);
-        QuestUI.Instance.DisplayFirstQuest();
+        // QuestUI.Instance.DisplayFirstQuest();
     }
 
     // private void Update() {
