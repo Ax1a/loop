@@ -28,13 +28,9 @@ public class QuestManager : MonoBehaviour
         else {
             questList = DataManager.QuestList;
             currentQuestList = DataManager.CurrentQuests;
+            QuestUI.Instance.activeQuest.AddRange(currentQuestList);
         }
         if (DataManager.GetTutorialProgress() >= 4) mainQuestGiver.SetActive(true);
-
-        foreach (var item in questList)
-        {
-            Debug.Log(item.title + ": " + item.progress);
-        }
     }
 
     public void QuestRequest(QuestObject QO) {
@@ -68,17 +64,20 @@ public class QuestManager : MonoBehaviour
                     Debug.Log("Quest ID: " + QO.receivableQuestIDs[j] + " is " + currentQuestList[i].progress);
 
                     QuestUI.Instance.questRunning = true;
-                    if (!QuestUI.Instance.activeQuest.Contains(questList[j])) {
-                        QuestUI.Instance.activeQuest.Add(questList[j]);
-                        Debug.Log("Added active quest" + questList[j].title);
+                    if (!QuestUI.Instance.activeQuest.Contains(questList[i])) {
+                        Debug.Log("Current List: " + currentQuestList[i].title);
+                        // QuestUI.Instance.activeQuest.Add(questList[i]);
+                        // Debug.Log("Added active quest" + questList[j].title);
                     }
                     // CompleteQuest(QO.receivableQuestIDs[j]);
                 }
             }
         }
 
+        QuestUI.Instance.activeQuest.Clear();
+        QuestUI.Instance.activeQuest.AddRange(currentQuestList);
         // Update the UI to show the available quests
-        QuestUI.Instance.SetMainQuestUI();
+        QuestUI.Instance.SetQuestUI();
         SaveGame.Instance.SaveGameState();
     }
 
@@ -87,11 +86,15 @@ public class QuestManager : MonoBehaviour
         for (int i = 0; i < GetQuestCount(); i++) {
             if (questList[i].id == questID && questList[i].progress == Quest.QuestProgress.AVAILABLE) {
                 currentQuestList.Add(questList[i]);
+                Debug.Log("Accepted quest");
+                // QuestUI.Instance.activeQuest.Add(questList[i]);
                 questList[i].progress = Quest.QuestProgress.ACCEPTED;
             }
         }
         
         DataManager.CurrentQuests = currentQuestList;
+        QuestUI.Instance.activeQuest.Clear();
+        QuestUI.Instance.activeQuest.AddRange(currentQuestList);
     }
 
     // Give up quest based on the id 
@@ -126,16 +129,21 @@ public class QuestManager : MonoBehaviour
                 for (int j = 0; j < QuestUI.Instance.activeQuest.Count; j++)
                 {
                     if (QuestUI.Instance.activeQuest[j].id == currentQuestList[i].id) {
+                        Debug.Log("Removed to UI:" + QuestUI.Instance.activeQuest[j].title);
                         QuestUI.Instance.activeQuest.Remove(QuestUI.Instance.activeQuest[j]);
                     }
                 }
                 currentQuestList.Remove(currentQuestList[i]);
                 DataManager.CurrentQuests = currentQuestList;
                 DataManager.QuestList = questList;
+                // QuestUI.Instance.activeQuest = currentQuestList;
                 QuestUI.Instance.ClearQuestData();
                 // QuestUI.Instance.SetMainQuestUI();
             }
         }
+
+        QuestUI.Instance.activeQuest.Clear();
+        QuestUI.Instance.activeQuest.AddRange(currentQuestList);
         CheckChainQuest(questID);
         SaveGame.Instance.SaveGameState();
     }

@@ -76,7 +76,7 @@ public class UIController : MonoBehaviour
             ToggleTab("Tab2", "ShopInventoryCanvas");
         }
         else if (Input.GetKeyDown(InputManager.Instance.quest)) {
-            ToggleTab("MainQTab", "QuestCanvas");
+            ToggleTab("Container", "QuestCanvas");
         }
 
         if (_anyActive == true) {

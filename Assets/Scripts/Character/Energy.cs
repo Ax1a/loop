@@ -10,7 +10,7 @@ public class Energy : MonoBehaviour
     [SerializeField] TextMeshProUGUI[] energyTxts;
     [SerializeField] TextMeshProUGUI timeTxt;
     [SerializeField] Slider energyBar;
-    private int maxEnergy = 15;
+    private int maxEnergy = 10;
     private int currEnergy;
     [SerializeField] private int restoreTime = 5;
     private DateTime nextEnergyRestore;
@@ -29,7 +29,7 @@ public class Energy : MonoBehaviour
     {
         if(!PlayerPrefs.HasKey("currEnergy"))
         {
-            PlayerPrefs.SetInt("currEnergy", 15);
+            PlayerPrefs.SetInt("currEnergy", 10);
             Load();
             UpdateEnergy();
             StartCoroutine(RestoreEnergy());
@@ -63,11 +63,11 @@ public class Energy : MonoBehaviour
     }
 
     //on click, use energy.
-    public void UseEnergy()
+    public void UseEnergy(int energyCost)
     {
         if(currEnergy >= 1)
         {
-            currEnergy--;
+            currEnergy -= energyCost;
             UpdateEnergy();
 
             if(isRestoring == false)

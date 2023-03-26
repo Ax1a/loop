@@ -13,7 +13,6 @@ public class QuestButtonLog : MonoBehaviour
 
     public void ShowAllInfos() {
         QuestUI.Instance.ShowSelectedQuest(questID);
-
         foreach (var button in QuestUI.Instance.questButtons)
         {
             SetInactiveSprite(button);

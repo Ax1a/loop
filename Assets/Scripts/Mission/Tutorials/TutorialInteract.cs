@@ -58,6 +58,6 @@ public class TutorialInteract : Tutorial
         // Call the banner popup class
         QuestUI.Instance.ShowCompleteQuestBanner(_quest);
         
-        QuestUI.Instance.ShowNewQuestBanner("Computer Assembly");
+        QuestUI.Instance.ShowNewQuestBanner("Computer Assembly", Quest.QuestType.MAIN);
     }
 }

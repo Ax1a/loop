@@ -11,6 +11,7 @@ public class InputManager : MonoBehaviour
     public KeyCode quest;
     public KeyCode openPhone;
     public KeyCode closePhone;
+    public KeyCode skip;
 
     public static InputManager Instance;
 

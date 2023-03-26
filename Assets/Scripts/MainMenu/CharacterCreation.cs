@@ -149,6 +149,7 @@ public class CharacterCreation : MonoBehaviour
         }
         DataManager.CurrentQuests.Clear();
         DataManager.QuestList.Clear();
+        PlayerPrefs.DeleteAll();
 
         _loadScene.LoadScene(sceneID);
     }
