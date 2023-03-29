@@ -62,7 +62,7 @@ public class Inventory : MonoBehaviour
     }
 
     public void UseItem(string name, Transform parent) {
-        if (Energy.Instance.GetCurrentEnergy() >= 15) {
+        if (Energy.Instance.GetCurrentEnergy() >= Energy.Instance.maxEnergy) {
             if (showFullEnergyCoroutine != null) StopCoroutine(showFullEnergyCoroutine);
 
             showFullEnergyCoroutine = StartCoroutine(ShowFullEnergyTxt());

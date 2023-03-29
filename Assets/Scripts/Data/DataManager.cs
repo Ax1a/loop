@@ -284,6 +284,15 @@ public static class DataManager
     /*
         Programming Language Progress
         Getters & Setters
+
+        Usage:
+        DataManager.Instance.GetProgrammingLanguageProgress("c++"); This will get the progress of the C++ Language
+        DataManager.Instance.AddProgrammingLanguageProgress("c++"); This will add 1 progress to the C++ Language
+
+        Keys:
+        c++, java, python
+        Note: All small caps
+
     */
     public static void AddProgrammingLanguageProgress(string key)
     {
@@ -312,6 +321,7 @@ public static class DataManager
         return result;
     }
 
+    // Used to determine the first language and give user a free course
     public static bool FirstProgrammingLanguage() {
         int count = 0;
 
