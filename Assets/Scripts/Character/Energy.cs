@@ -10,7 +10,7 @@ public class Energy : MonoBehaviour
     [SerializeField] TextMeshProUGUI[] energyTxts;
     [SerializeField] TextMeshProUGUI timeTxt;
     [SerializeField] Slider energyBar;
-    private int maxEnergy = 10;
+    public int maxEnergy = 10;
     private int currEnergy;
     [SerializeField] private int restoreTime = 5;
     private DateTime nextEnergyRestore;
