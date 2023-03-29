@@ -11,32 +11,23 @@ public class ShopCourse : MonoBehaviour
         1 - Java
         2 - Python
     */
-    [SerializeField] private GameObject languageIcon;
-    [SerializeField] private TextMeshProUGUI[] progLanguagesTxt;
+    [SerializeField] private TextMeshProUGUI[] progLanguagePriceTxts;
     [SerializeField] private Button[] buyBtns;
-    [SerializeField] private GameObject[] lockedIndicator;
-    [SerializeField] private GameObject[] purchasedIndicator;
-    private string[] progLanguages = { "c++", "java", "python" }; // To be used
-    private bool iconIsAdded = false;
+    [SerializeField] private GameObject[] lockedIndicators;
+    [SerializeField] private GameObject[] purchasedIndicators;
+    [SerializeField] private GameObject[] courseSelectionLocks;
+    [SerializeField] private GameObject[] courseSelectionProgress;
+    [SerializeField] private GameObject insufficientMoneyTxt;
+    [SerializeField] private TextMeshProUGUI reducedMoneyTxt;
+    private string[] _progLanguages = { "c++", "java", "python" };
+    private int[] _coursePrices = new int[3];
+    private bool _iconIsAdded = false;
+    private Coroutine _showCoroutineReduce, _showCoroutineInsufficient;
 
-    // To be updated // Only c++ supported for now
-    // Start is called before the first frame update
     void Start()
     {
-        DisplayLockIndicator();
-
-        if (DataManager.GetProgrammingLanguageProgress("c++") >= 1) {
-            iconIsAdded = true;
-            languageIcon.SetActive(true);
-        }
-        else {
-            languageIcon.SetActive(false);
-        }
-
-        // Add sale on the first language
-        if (DataManager.FirstProgrammingLanguage() && DataManager.GetProgrammingLanguageProgress("c++") == 0) {
-            progLanguagesTxt[0].text = "0";
-        }
+        DisplayCourseStateIndicator();
+        DisplayCoursePrices();
 
         // Add button listener to add buttons
         for (int i = 0; i < buyBtns.Length; i++)
@@ -47,50 +38,84 @@ public class ShopCourse : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (!iconIsAdded && DataManager.GetProgrammingLanguageProgress("c++") >= 1) {
-            iconIsAdded = true;
-            languageIcon.SetActive(true);
-        }
-    }
-
     private void BuyProgrammingCourse(int languageIndex) {
-        if (languageIndex == 0) {
-            DataManager.AddProgrammingLanguageProgress("c++");
-            purchasedIndicator[0].SetActive(true);
-            buyBtns[0].interactable = false;
+        if (_coursePrices[languageIndex] <= DataManager.GetMoney()) {
+            if (_coursePrices[languageIndex] > 0) {
+                if (_showCoroutineReduce != null) StopCoroutine(_showCoroutineReduce);
+                _showCoroutineReduce = StartCoroutine(ShowReduceFunds(_coursePrices[languageIndex]));
+            }
+
+            DataManager.AddProgrammingLanguageProgress(_progLanguages[languageIndex]);
+            purchasedIndicators[languageIndex].SetActive(true);
+            buyBtns[languageIndex].interactable = false;
+
+            DisplayCoursePrices();
+            DisplayCourseStateIndicator();
+
             QuestManager.Instance.AddQuestItem("Buy any course from the shop", 1);
             AudioManager.Instance.PlaySfx("Purchase");
         }
-        // To be updated // Make it loop through arrays
+        else {
+            if (_showCoroutineInsufficient != null) StopCoroutine(_showCoroutineInsufficient);
+            _showCoroutineInsufficient = StartCoroutine(ShowInsufficientText());
+        }
     }
 
-    private void DisplayLockIndicator() {
-        if (DataManager.GetProgrammingLanguageProgress("c++") == -1) {
-            lockedIndicator[0].SetActive(true);
-        }
-        else if (DataManager.GetProgrammingLanguageProgress("c++") >= 1) {
-            lockedIndicator[0].SetActive(false);
-            purchasedIndicator[0].SetActive(true);
-        }
-        else {
-            lockedIndicator[0].SetActive(false);
-        }
+    private void DisplayCourseStateIndicator() {
+        for (int i = 0; i < _progLanguages.Length; i++)
+        {
+            if (DataManager.GetProgrammingLanguageProgress(_progLanguages[i]) == -1) {
+                lockedIndicators[i].SetActive(true);
+                courseSelectionLocks[i].transform.parent.GetComponent<Button>().interactable = false;
+                courseSelectionLocks[i].SetActive(true);
+                courseSelectionProgress[i].SetActive(false);
+            }
+            else if (DataManager.GetProgrammingLanguageProgress(_progLanguages[i]) >= 1) {
+                lockedIndicators[i].SetActive(false);
+                purchasedIndicators[i].SetActive(true);
+                progLanguagePriceTxts[i].transform.parent.gameObject.SetActive(false);
+                courseSelectionLocks[i].transform.parent.GetComponent<Button>().interactable = true;
+                buyBtns[i].gameObject.SetActive(false);
 
-        if (DataManager.GetProgrammingLanguageProgress("java") == -1) {
-            lockedIndicator[1].SetActive(true);
+                courseSelectionProgress[i].SetActive(true);
+                courseSelectionLocks[i].SetActive(false);
+            }
+            else {
+                lockedIndicators[i].SetActive(false);
+                courseSelectionLocks[i].transform.parent.GetComponent<Button>().interactable = false;
+                courseSelectionLocks[i].SetActive(true);
+                courseSelectionProgress[i].SetActive(false);
+            }
         }
-        else{
-            lockedIndicator[1].SetActive(false);
-        }
+    }
 
-        if (DataManager.GetProgrammingLanguageProgress("python") == -1) {
-            lockedIndicator[2].SetActive(true);
+    private void DisplayCoursePrices() {
+        int unlockedLanguages = DataManager.GetUnlockedProgrammingLanguageCount();
+
+        for (int i = 0; i < _progLanguages.Length; i++)
+        {
+            // Add sale on the first language
+            if (DataManager.FirstProgrammingLanguage() && DataManager.GetProgrammingLanguageProgress(_progLanguages[i]) == 0) {
+                _coursePrices[i] = 0;
+                progLanguagePriceTxts[i].text = _coursePrices[i].ToString();
+            }
+            else {
+                _coursePrices[i] = unlockedLanguages != 0 ? unlockedLanguages * 1000 : 1000;
+                progLanguagePriceTxts[i].text = _coursePrices[i].ToString();
+            }
         }
-        else{
-            lockedIndicator[2].SetActive(false);
-        }
+    }
+
+    IEnumerator ShowInsufficientText() {
+        insufficientMoneyTxt.SetActive(true);
+        yield return new WaitForSeconds(1.5f);
+        insufficientMoneyTxt.SetActive(false);
+    }
+
+    IEnumerator ShowReduceFunds(int price) {
+        reducedMoneyTxt.gameObject.SetActive(true);
+        reducedMoneyTxt.text = "-" + price.ToString();
+        yield return new WaitForSeconds(1.5f);
+        reducedMoneyTxt.gameObject.SetActive(false);
     }
 }
