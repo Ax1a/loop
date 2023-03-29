@@ -8,6 +8,7 @@ public class PlayerData
     */
     public int money = 0;
     public int exp = 0;
+    public int playerLevel = 1;
     public Vector3 playerPos = new Vector3(-2.98900008f, 6.064f, -4.40799999f);
     public int hr = 7, min = 0, day = 1, month = 1, year = 2022;
     public string name;
@@ -22,11 +23,6 @@ public class PlayerData
 
     public List<Quest> questList = new List<Quest>();
     public List<Quest> currentQuests = new List<Quest>();
-    // public Dictionary<string, int> playerReachedLevels = new Dictionary<string, int>() {
-    //     {"c++", 1},
-    //     {"java", 1},
-    //     {"python", 1}
-    // };
 }
 
 /* 
@@ -39,11 +35,6 @@ public class DrinkInventoryList
     public int energy;
     public int quantity;
 }
-// public enum CourseProgress {
-//     InProgress, // 0 - Index
-//     Completed, // 1 - Index
-//     Locked // 2 - Index
-// }
 
 public static class DataManager
 {
@@ -81,20 +72,6 @@ public static class DataManager
     {
         playerData.money -= amount;
         AudioManager.Instance.PlaySfx("Purchase");
-    }
-
-    /*
-        Experience
-        Getters & Setters
-    */
-    public static int GetExp()
-    {
-        return playerData.exp;
-    }
-
-    public static void AddExp(int amount)
-    {
-        playerData.exp += amount;
     }
 
     /*
@@ -152,6 +129,7 @@ public static class DataManager
     }
 
     /*
+        // PLAYER INFOS //
         Player Name
         Getters & Setters
     */
@@ -165,6 +143,34 @@ public static class DataManager
         playerData.name = name;
         SavePlayerData();
     }
+
+    /*
+        Player Level
+        Getters & Setters
+    */
+
+    public static int GetPlayerLevel() {
+        return playerData.playerLevel;
+    }
+
+    public static void AddPlayerLevel(int level) {
+        playerData.playerLevel += level;
+    }
+
+    /*
+        Player Experience
+        Getters & Setters
+    */
+    public static int GetExp()
+    {
+        return playerData.exp;
+    }
+
+    public static void AddExp(int amount)
+    {
+        playerData.exp += amount;
+    }
+
 
     /*
         Player Coord
@@ -286,8 +292,8 @@ public static class DataManager
         Getters & Setters
 
         Usage:
-        DataManager.Instance.GetProgrammingLanguageProgress("c++"); This will get the progress of the C++ Language
-        DataManager.Instance.AddProgrammingLanguageProgress("c++"); This will add 1 progress to the C++ Language
+        DataManager.GetProgrammingLanguageProgress("c++"); This will get the progress of the C++ Language
+        DataManager.AddProgrammingLanguageProgress("c++"); This will add 1 progress to the C++ Language
 
         Keys:
         c++, java, python
@@ -299,6 +305,7 @@ public static class DataManager
         if (playerData.programmingLanguage.ContainsKey(key))
         {
             playerData.programmingLanguage[key] += 1;
+            Debug.Log("Added progress to: " + key);
             SavePlayerData();
         }
     }
@@ -309,7 +316,6 @@ public static class DataManager
 
         // Prevents error of null
         if (playerData.programmingLanguage == null) {
-            // PlayerData playerData = new PlayerData();
             playerData.programmingLanguage = new Dictionary<string, int>();
         }
 
@@ -327,7 +333,6 @@ public static class DataManager
 
          // Prevents error of null
         if (playerData.programmingLanguage == null) {
-            // PlayerData playerData = new PlayerData();
             playerData.programmingLanguage = new Dictionary<string, int>();
         }
 
@@ -346,28 +351,26 @@ public static class DataManager
         return false;
     }
 
-    // public static void AddLevelProgress(string key)
-    // {
-    //     if (playerData.playerReachedLevels.ContainsKey(key))
-    //     {
-    //         playerData.playerReachedLevels[key] += 1;
-    //         SavePlayerData();
-    //     }
+    public static int GetUnlockedProgrammingLanguageCount() {
+        int count = 0;
 
-    // }
-    // public static int GetLevelProgress(string key)
-    // {
-    //     int result = 0;
-    //     PlayerData playerData = new PlayerData();
-    //     if (playerData.playerReachedLevels.ContainsKey(key))
-    //     {
-    //         result = playerData.playerReachedLevels[key];
-    //     }
+         // Prevents error of null
+        if (playerData.programmingLanguage == null) {
+            playerData.programmingLanguage = new Dictionary<string, int>();
+        }
 
-    //     return result;
-    // }
+        foreach (var progLanguage in playerData.programmingLanguage)
+        {
+            if (progLanguage.Value >= 0)
+            {
+                count++;
+            }
+        }
 
+        return count;
+    }
 
+    // OLD Lesson Script
     public static int getReachedLesson()
     {
         return playerData.reachedLesson;
