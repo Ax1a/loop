@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using System.ComponentModel;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -29,6 +31,8 @@ public class QuizManager : MonoBehaviour
     [HideInInspector] public int scoreCount;
     public static QuizManager Instance;
     public GameObject[] rewardsPanel;
+    [SerializeField] private Courses course;
+    private string _currentCourse;
 
     #endregion
 
@@ -40,6 +44,16 @@ public class QuizManager : MonoBehaviour
             Instance = this;
         }
     }
+
+    public enum Courses {
+        [DefaultValue("python")]
+        Python,
+        [DefaultValue("c++")]
+        C,
+        [DefaultValue("java")]
+        Java,
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -50,7 +64,14 @@ public class QuizManager : MonoBehaviour
         timer = GameObject.Find("StartPanel").GetComponent<quizTimer>();
         _energy = Energy.Instance.GetCurrentEnergy();
 
+        // Get the default value for the selected enum option
+        DefaultValueAttribute[] attributes = (DefaultValueAttribute[])course.GetType().GetField(course.ToString()).GetCustomAttributes(typeof(DefaultValueAttribute), false);
+        string defaultValue = (string)attributes[0].Value;
+
+        // Assign the default value to the _currentCourse variable
+        _currentCourse = defaultValue;
     }
+
     public int GetScore()
     {
         return scoreCount;
@@ -92,7 +113,7 @@ public class QuizManager : MonoBehaviour
     {
         int Compare(QuestAndAns a, QuestAndAns b)
         {
-            return Random.Range(-1, 2);
+            return UnityEngine.Random.Range(-1, 2);
         }
 
         QnA.Sort(Compare);
