@@ -5,23 +5,24 @@ using UnityEngine.UI;
 
 public class LessonsLevelManager : MonoBehaviour
 {
-    [Header ("Instances")]
+    [Header("Instances")]
     public Button[] lessonBtn;
     [SerializeField] private GameObject[] headers;
     [SerializeField] private GameObject[] progressIndicators;
 
-    [Header ("Params")]
+    [Header("Params")]
     [SerializeField] private int easyLevelCount;
     [SerializeField] private int mediumLevelCount;
     [SerializeField] private int difficultLevelCount;
     private Progress _easy, _medium, _difficult;
+    [SerializeField] CurrentCourse currentCourse;
     int reachedLesson;
-
+    int level;
+    public string course;
     public static LessonsLevelManager Instance;
-
     private void Awake()
     {
-        if(Instance == null)
+        if (Instance == null)
         {
             Instance = this;
         }
@@ -29,10 +30,36 @@ public class LessonsLevelManager : MonoBehaviour
 
     void Start()
     {
-        reachedLesson = DataManager.getReachedLesson();
+        GetCurrentCourse();
         UpdateLessonState();
         // addReachedLesson();
         Debug.Log("reached lesson" + reachedLesson);
+
+    }
+
+    void Update()
+    {
+        if (reachedLesson != DataManager.GetProgrammingLanguageProgress(course))
+        {
+            reachedLesson = DataManager.GetProgrammingLanguageProgress(course);
+        }
+    }
+
+    //This will get current course taking
+    void GetCurrentCourse()
+    {
+        if (currentCourse == CurrentCourse.c)
+        {
+            course = "c++";
+        }
+        else if (currentCourse == CurrentCourse.python)
+        {
+            course = "python";
+        }
+        else
+        {
+            course = "java";
+        }
     }
 
     //for testing only 
@@ -46,7 +73,7 @@ public class LessonsLevelManager : MonoBehaviour
         Debug.Log("reached lesson" + reachedLesson);
 
     }
-//function for adding level
+    //function for adding level
     public void addReachedLesson()
     {
         DataManager.addReachedLesson();
@@ -54,8 +81,8 @@ public class LessonsLevelManager : MonoBehaviour
         UpdateLessonState();
     }
 
-//disable all button
-//activate if level is reached.
+    //disable all button
+    //activate if level is reached.
     public void UpdateLessonState()
     {
         DisplayProgressState();
@@ -89,33 +116,41 @@ public class LessonsLevelManager : MonoBehaviour
     }
 
     // Update Difficulty Level Icon
-    private void DisplayProgressState() {
+    private void DisplayProgressState()
+    {
         // Conditions to check based on the reached lessons
-        if (DataManager.getReachedLesson() <= easyLevelCount) {
+        if (DataManager.GetProgrammingLanguageProgress(course) <= easyLevelCount)
+        {
             UpdateProgressEnums(0, 2, 2);
         }
-        else if (DataManager.getReachedLesson() >= easyLevelCount + mediumLevelCount + difficultLevelCount){
+        else if (DataManager.GetProgrammingLanguageProgress(course) >= easyLevelCount + mediumLevelCount + difficultLevelCount)
+        {
             UpdateProgressEnums(1, 1, 1);
         }
-        else if (DataManager.getReachedLesson() > mediumLevelCount + easyLevelCount) {
+        else if (DataManager.GetProgrammingLanguageProgress(course) > mediumLevelCount + easyLevelCount)
+        {
             UpdateProgressEnums(1, 1, 0);
         }
-        else if (DataManager.getReachedLesson() > easyLevelCount) {
+        else if (DataManager.GetProgrammingLanguageProgress(course) > easyLevelCount)
+        {
             UpdateProgressEnums(1, 0, 2);
         }
 
         // Display the Difficulty State based on the Enum Progress
         foreach (var header in headers)
         {
-            if (header.name == "EasyHeader") {
+            if (header.name == "EasyHeader")
+            {
                 if (header.transform.childCount > 1) Destroy(header.transform.GetChild(1).gameObject); // Check if there is an existing indicator and delete it
                 Instantiate(progressIndicators[(int)_easy], header.transform); // Add new state based on prefab
             }
-            else if (header.name == "MediumHeader") {
+            else if (header.name == "MediumHeader")
+            {
                 if (header.transform.childCount > 1) Destroy(header.transform.GetChild(1).gameObject); // Check if there is an existing indicator and delete it
                 Instantiate(progressIndicators[(int)_medium], header.transform); // Add new state based on prefab
             }
-            else if (header.name == "DifficultHeader") {
+            else if (header.name == "DifficultHeader")
+            {
                 if (header.transform.childCount > 1) Destroy(header.transform.GetChild(1).gameObject); // Check if there is an existing indicator and delete it
                 Instantiate(progressIndicators[(int)_difficult], header.transform); // Add new state based on prefab
             }
@@ -123,15 +158,23 @@ public class LessonsLevelManager : MonoBehaviour
 
     }
 
-    private void UpdateProgressEnums(int easy, int medium, int difficult) {
+    private void UpdateProgressEnums(int easy, int medium, int difficult)
+    {
         _easy = (Progress)easy;
         _medium = (Progress)medium;
         _difficult = (Progress)difficult;
     }
 
-    enum Progress {
+    enum Progress
+    {
         InProgress, // 0 - Index
         Completed, // 1 - Index
         Locked // 2 - Index
+    }
+    enum CurrentCourse
+    {
+        c,
+        python,
+        java
     }
 }

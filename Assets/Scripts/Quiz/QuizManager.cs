@@ -122,7 +122,10 @@ public class QuizManager : MonoBehaviour
             Win();
             RewardManager.Instance.AssessReward();
             StartCoroutine(DelayAddProgress());
-            LessonsLevelManager.Instance.addReachedLesson();
+            // LessonsLevelManager.Instance.addReachedLesson();
+
+            //to-do: should add level depending on the course they are taking
+            DataManager.AddProgrammingLanguageProgress(LessonsLevelManager.Instance.course);
         }
         else
         {
