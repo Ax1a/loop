@@ -21,6 +21,15 @@ public class SaveGame : MonoBehaviour
         }
     }
 
+    private IEnumerator Start()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(300);
+            SaveGameState();
+        }
+    }
+
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -34,7 +43,6 @@ public class SaveGame : MonoBehaviour
         DataManager.SetPlayerCoord(player.transform.position);
         DataManager.SetDay(_timeAndDate.Day);
         DataManager.SetHour(_timeAndDate.Hour);
-        DataManager.SetMonth(_timeAndDate.Month);
         DataManager.SetMinute(_timeAndDate.Minute);
         
         DataManager.SavePlayerData();

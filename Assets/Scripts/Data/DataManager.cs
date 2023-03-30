@@ -10,7 +10,7 @@ public class PlayerData
     public int exp = 0;
     public int playerLevel = 1;
     public Vector3 playerPos = new Vector3(-2.98900008f, 6.064f, -4.40799999f);
-    public int hr = 7, min = 0, day = 1, month = 1, year = 2022;
+    public int hr = 7, min = 0, day = 1;
     public string name;
     public int tutorialProgress = 0;
     public int reachedLesson = 1;
@@ -93,26 +93,6 @@ public static class DataManager
         return playerData.day;
     }
 
-    public static int GetMonth()
-    {
-        return playerData.month;
-    }
-
-    public static int GetYear()
-    {
-        return playerData.year;
-    }
-
-    public static void SetYear(int year)
-    {
-        playerData.year = year;
-    }
-
-    public static void SetMonth(int month)
-    {
-        playerData.month = month;
-    }
-
     public static void SetDay(int day)
     {
         playerData.day = day;
@@ -171,6 +151,9 @@ public static class DataManager
         playerData.exp += amount;
     }
 
+    public static void SetExp(int amount) {
+        playerData.exp = amount;
+    }
 
     /*
         Player Coord

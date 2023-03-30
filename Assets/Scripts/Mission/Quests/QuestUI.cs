@@ -53,7 +53,6 @@ public class QuestUI : MonoBehaviour
     public bool questAvailable = false;
     public bool questRunning = false;
     private bool _questPanelActive = false;
-    private bool _questLogPanelActive = false;
     private bool _onMainQTab = false;
 
     public static QuestUI Instance;

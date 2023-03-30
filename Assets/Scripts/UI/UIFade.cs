@@ -11,7 +11,9 @@ public class UIFade : MonoBehaviour
     */
     [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private float animationDuration;
+		[SerializeField] private float animationDelay = 0;
 		[SerializeField] private bool isFadeOut = false;
+		[SerializeField] private bool autoDisableObj = false;
 
     private Tween fadeTween;
 
@@ -34,7 +36,9 @@ public class UIFade : MonoBehaviour
 				{
 						canvasGroup.interactable = false;
 						canvasGroup.blocksRaycasts = false;
+						if (autoDisableObj) gameObject.SetActive(false);
 				});
+
 		}
 
 		private void FadeIn() {
@@ -52,7 +56,7 @@ public class UIFade : MonoBehaviour
 						fadeTween.Kill(false);
 				}
 
-				fadeTween = canvasGroup.DOFade(endValue, duration);
+				fadeTween = canvasGroup.DOFade(endValue, duration).SetDelay(animationDelay);
 				fadeTween.onComplete += onEnd;
 		}
 }

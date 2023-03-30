@@ -11,6 +11,7 @@ public class QuestManager : MonoBehaviour
     public List<Quest> currentQuestList = new List<Quest>();
 
     public static QuestManager Instance;
+    private bool firstLoad = true;
 
     private void Awake() {
         if (Instance == null) {
@@ -64,11 +65,11 @@ public class QuestManager : MonoBehaviour
                     Debug.Log("Quest ID: " + QO.receivableQuestIDs[j] + " is " + currentQuestList[i].progress);
 
                     QuestUI.Instance.questRunning = true;
-                    if (!QuestUI.Instance.activeQuest.Contains(questList[i])) {
-                        Debug.Log("Current List: " + currentQuestList[i].title);
+                    // if (!QuestUI.Instance.activeQuest.Contains(questList[i])) {
+                    //     Debug.Log("Current List: " + currentQuestList[i].title);
                         // QuestUI.Instance.activeQuest.Add(questList[i]);
                         // Debug.Log("Added active quest" + questList[j].title);
-                    }
+                    // }
                     // CompleteQuest(QO.receivableQuestIDs[j]);
                 }
             }
@@ -78,7 +79,10 @@ public class QuestManager : MonoBehaviour
         QuestUI.Instance.activeQuest.AddRange(currentQuestList);
         // Update the UI to show the available quests
         QuestUI.Instance.SetQuestUI();
-        SaveGame.Instance.SaveGameState();
+        if (!firstLoad) {
+            firstLoad = false;
+            SaveGame.Instance.SaveGameState();
+        }
     }
 
     // Accept quest based on the id 
