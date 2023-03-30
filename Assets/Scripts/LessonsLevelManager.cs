@@ -16,8 +16,8 @@ public class LessonsLevelManager : MonoBehaviour
     [SerializeField] private int difficultLevelCount;
     private Progress _easy, _medium, _difficult;
     [SerializeField] CurrentCourse currentCourse;
-    int reachedLesson;
-    int level;
+    private int _reachedLesson;
+    private int _level;
     public string course;
     public static LessonsLevelManager Instance;
     private void Awake()
@@ -33,15 +33,17 @@ public class LessonsLevelManager : MonoBehaviour
         GetCurrentCourse();
         UpdateLessonState();
         // addReachedLesson();
-        Debug.Log("reached lesson" + reachedLesson);
+        Debug.Log("reached lesson" + _reachedLesson);
 
     }
 
     void Update()
     {
-        if (reachedLesson != DataManager.GetProgrammingLanguageProgress(course))
+        if (_reachedLesson != DataManager.GetProgrammingLanguageProgress(course))
         {
-            reachedLesson = DataManager.GetProgrammingLanguageProgress(course);
+            _reachedLesson = DataManager.GetProgrammingLanguageProgress(course);
+            UpdateLessonState();
+            Debug.Log(DataManager.GetProgrammingLanguageProgress("python"));
         }
     }
 
@@ -67,17 +69,17 @@ public class LessonsLevelManager : MonoBehaviour
     public void resetLesonLevel()
     {
         DataManager.resetLevel();
-        reachedLesson = 1;
+        _reachedLesson = 1;
         UpdateLessonState();
         Debug.Log("Level Reset");
-        Debug.Log("reached lesson" + reachedLesson);
+        Debug.Log("reached lesson" + _reachedLesson);
 
     }
     //function for adding level
     public void addReachedLesson()
     {
         DataManager.addReachedLesson();
-        reachedLesson++;
+        _reachedLesson++;
         UpdateLessonState();
     }
 
@@ -94,9 +96,9 @@ public class LessonsLevelManager : MonoBehaviour
             btn.interactable = false;
         }
 
-        if (lessonBtn.Length >= reachedLesson)
+        if (lessonBtn.Length >= _reachedLesson)
         {
-            for (int i = 0; i < reachedLesson; i++)
+            for (int i = 0; i < _reachedLesson; i++)
             {
                 Image image = lessonBtn[i].transform.GetChild(3).GetComponent<Image>();
                 image.gameObject.SetActive(false);
