@@ -19,7 +19,6 @@ public class Inventory : MonoBehaviour
 
     [Header ("Instances")]
     [SerializeField] private ShopItemsDatabase shopDB;
-    [SerializeField] float itemSpacing = 1f;
     float itemHeight;
     Coroutine showFullEnergyCoroutine, showAddEnergyCoroutine;
 

@@ -46,5 +46,7 @@ public class CellphonePopUp : MonoBehaviour
         }
     }
 
- 
+    public bool IsPhoneActive() {
+        return _isActive;
+    }
 }

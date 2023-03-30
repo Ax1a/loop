@@ -21,13 +21,12 @@ public class ShopCourse : MonoBehaviour
     [SerializeField] private TextMeshProUGUI reducedMoneyTxt;
     private string[] _progLanguages = { "c++", "java", "python" };
     private int[] _coursePrices = new int[3];
-    private bool _iconIsAdded = false;
     private Coroutine _showCoroutineReduce, _showCoroutineInsufficient;
 
     void Start()
     {
         DisplayCourseStateIndicator();
-        DisplayCoursePrices();
+        DisplayCourseRequirements();
 
         // Add button listener to add buttons
         for (int i = 0; i < buyBtns.Length; i++)
@@ -49,7 +48,7 @@ public class ShopCourse : MonoBehaviour
             purchasedIndicators[languageIndex].SetActive(true);
             buyBtns[languageIndex].interactable = false;
 
-            DisplayCoursePrices();
+            DisplayCourseRequirements();
             DisplayCourseStateIndicator();
 
             QuestManager.Instance.AddQuestItem("Buy any course from the shop", 1);
@@ -89,7 +88,7 @@ public class ShopCourse : MonoBehaviour
         }
     }
 
-    private void DisplayCoursePrices() {
+    private void DisplayCourseRequirements() {
         int unlockedLanguages = DataManager.GetUnlockedProgrammingLanguageCount();
 
         for (int i = 0; i < _progLanguages.Length; i++)

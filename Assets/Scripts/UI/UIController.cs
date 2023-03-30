@@ -30,9 +30,6 @@ public class UIController : MonoBehaviour
     [SerializeField] private Button optionBtn;
     [SerializeField] private Button quitBtn;
 
-    [Header ("Params")]
-    [SerializeField] private float animationDuration = 0f;
-
     private bool _anyActive;
     public static UIController Instance;
 

@@ -8,30 +8,25 @@ public class Clock : MonoBehaviour
     public TextMeshProUGUI[] UI_TIME_TEXT;
     public TextMeshProUGUI[] UI_DATE_TEXT;
     public TimeFormat timeFormat = TimeFormat.Hour_24;
-    public DateFormat dateFormat = DateFormat.MM_DD_YYYY;
     public float secPerMin = 1;
     
     private string _time;
     private string _date;
     
     private bool isAm = false;
+    [SerializeField] private GameObject currentDayPopup;
+    private TextMeshProUGUI currentDayText;
 
     [Header("Skybox")]
-    [SerializeField] private Material DaySkybox;
-    [SerializeField] private Material NightSkybox;
+    [SerializeField] private Material daySkyBox;
+    [SerializeField] private Material nightSkybox;
 
     private int hr;
     private int min;
-
     private int day;
-    private int month;
-    private int year;
 
     int maxHr = 24;
     int maxMin = 60;
-
-    int maxDay = 30;
-    int maxMonth = 12;
 
     float timer = 0;
 
@@ -41,21 +36,11 @@ public class Clock : MonoBehaviour
         Hour_12
     }
 
-    public enum DateFormat
-    {
-        MM_DD_YYYY,
-        DD_MM_YYYY,
-        YYYY_MM_DD,
-        YYYY_DD_MM
-    }
-
     private void Awake()
     {
         hr = DataManager.GetHour();
         min = DataManager.GetMinute();
         day = DataManager.GetDay();
-        month = DataManager.GetMonth();
-        year = DataManager.GetYear();
 
         if (hr < 12)
         {
@@ -93,18 +78,6 @@ public class Clock : MonoBehaviour
                 {
                     hr = 0;
                     day++;
-
-                    if (day >= maxDay)
-                    {
-                        day = 1;
-                        month++;
-
-                        if (month >= maxMonth)
-                        {
-                            month = 1;
-                            year++;
-                        }
-                    }
                 }
             }
 
@@ -123,6 +96,10 @@ public class Clock : MonoBehaviour
         min = 0;
         hr = 7;
         day += 1;
+
+        currentDayPopup.SetActive(true);
+        currentDayText.text = "Day " + day;
+        currentDayPopup.GetComponent<CanvasGroup>().alpha = 1;
     }
     
     public void AddHour(int hr) {
@@ -211,30 +188,6 @@ public class Clock : MonoBehaviour
                 }
         }
 
-        switch (dateFormat)
-        {
-            case DateFormat.DD_MM_YYYY:
-                {
-                    _date = day + "/" + month + "/" + year;
-                    break;
-                }
-            case DateFormat.MM_DD_YYYY:
-                {
-                    _date = month + "/" + day + "/" + year;
-                    break;
-                }
-            case DateFormat.YYYY_DD_MM:
-                {
-                    _date = year + "/" + day + "/" + month;
-                    break;
-                }
-            case DateFormat.YYYY_MM_DD:
-                {
-                    _date = year + "/" + month + "/" + day;
-                    break;
-                }
-        }
-
         foreach (var time in UI_TIME_TEXT)
         {
             time.text = _time;
@@ -242,8 +195,11 @@ public class Clock : MonoBehaviour
 
         for (int i = 0; i < UI_DATE_TEXT.Length; i++)
         {
-            UI_DATE_TEXT[i].text = _date;
+            UI_DATE_TEXT[i].text = "Day " + day;
         }
+
+        if (currentDayText == null) currentDayText = currentDayPopup.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
+        currentDayText.text = "Day " + day;
     }
 
     public int Minute
@@ -270,15 +226,6 @@ public class Clock : MonoBehaviour
         set
         {
             day = value;
-        }
-    }
-
-    public int Month
-    {
-        get { return month; }
-        set
-        {
-            month = value;
         }
     }
 }
