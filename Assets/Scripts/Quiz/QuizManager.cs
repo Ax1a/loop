@@ -14,6 +14,10 @@ public class QuizManager : MonoBehaviour
     int _totalQuestions = 0;
     int _questionIndex;
     int _energy;
+    private string _currentCourse;
+    [SerializeField] private Courses course;
+    [SerializeField] private Image questionImage;
+    [SerializeField] private GameObject questionImageButton;
     //bool isComplete = false;
 
     #endregion
@@ -24,6 +28,7 @@ public class QuizManager : MonoBehaviour
     public TextMeshProUGUI text;
     public GameObject quizPanel;
     public GameObject gameOverPanel;
+    public GameObject popUpImage;
     public GameObject winPanel;
     GameObject startPanel;
     public TextMeshProUGUI[] scoreTxt;
@@ -31,8 +36,6 @@ public class QuizManager : MonoBehaviour
     [HideInInspector] public int scoreCount;
     public static QuizManager Instance;
     public GameObject[] rewardsPanel;
-    [SerializeField] private Courses course;
-    private string _currentCourse;
 
     #endregion
 
@@ -63,6 +66,8 @@ public class QuizManager : MonoBehaviour
         quizPanel.SetActive(true);
         timer = GameObject.Find("StartPanel").GetComponent<quizTimer>();
         _energy = Energy.Instance.GetCurrentEnergy();
+        questionImageButton.SetActive(false);
+
 
         // Get the default value for the selected enum option
         DefaultValueAttribute[] attributes = (DefaultValueAttribute[])course.GetType().GetField(course.ToString()).GetCustomAttributes(typeof(DefaultValueAttribute), false);
@@ -70,6 +75,8 @@ public class QuizManager : MonoBehaviour
 
         // Assign the default value to the _currentCourse variable
         _currentCourse = defaultValue;
+
+    
     }
 
     public int GetScore()
@@ -99,6 +106,7 @@ public class QuizManager : MonoBehaviour
             _questionIndex = 0;
             scoreCount = 0;
             gameOverPanel.SetActive(false);
+            popUpImage.SetActive(false);
             timer.resetTime();
             SetCurrentQuestion(_questionIndex);
             Energy.Instance.UseEnergy(1);
@@ -178,7 +186,18 @@ public class QuizManager : MonoBehaviour
 
         currentQuestion = QnA[questionIndex];
 
+        if(currentQuestion.withImage)
+        {
+            questionImageButton.SetActive(true);
+        }
+        else 
+        {
+            questionImageButton.SetActive(false);
+        }
+
         text.text = currentQuestion.Questions;
+
+        questionImage.sprite = currentQuestion.QustionImage;
 
         for (int i = 0; i < options.Length; i++)
         {
