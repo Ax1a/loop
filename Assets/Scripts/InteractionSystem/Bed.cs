@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Bed : MonoBehaviour, Interactable
 {
-    Energy _energy;
     Clock _clock;
     [SerializeField] private GameObject Time;
     [SerializeField] GameObject EnergyPanel;
@@ -17,7 +16,6 @@ public class Bed : MonoBehaviour, Interactable
     {
         if (DataManager.GetTutorialProgress() >= 4) {
             _clock = Time.GetComponent<Clock>();
-            Energy.Instance.ResetEnergy();
 
             if (_clock.Hour < 17) {
                 sleepConfirmation.SetActive(true);

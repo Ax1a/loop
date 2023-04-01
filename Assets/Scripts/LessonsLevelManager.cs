@@ -43,7 +43,6 @@ public class LessonsLevelManager : MonoBehaviour
         {
             _reachedLesson = DataManager.GetProgrammingLanguageProgress(course);
             UpdateLessonState();
-            Debug.Log(DataManager.GetProgrammingLanguageProgress("python"));
         }
     }
 
@@ -89,6 +88,8 @@ public class LessonsLevelManager : MonoBehaviour
     {
         DisplayProgressState();
 
+        Debug.Log(_reachedLesson);
+
         foreach (Button btn in lessonBtn)
         {
             Image image = btn.transform.GetChild(3).GetComponent<Image>();
@@ -111,7 +112,7 @@ public class LessonsLevelManager : MonoBehaviour
             {
                 btn.interactable = true;
                 Image image = btn.transform.GetChild(3).GetComponent<Image>();
-                image.gameObject.SetActive(true);
+                image.gameObject.SetActive(false);
             }
             Debug.Log("No Levels Left");
         }

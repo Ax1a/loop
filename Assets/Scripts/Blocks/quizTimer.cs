@@ -99,7 +99,8 @@ public class quizTimer : MonoBehaviour
             if (currTime <= 0)
             {
                 currTime = 0;
-                gameOverPanel.SetActive(true);
+                // gameOverPanel.SetActive(true);
+                QuizManager.Instance.GameOver();
                 gameOverPanel.transform.SetAsLastSibling();
                 isStart = false;
             }

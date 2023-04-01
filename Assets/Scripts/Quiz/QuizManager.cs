@@ -66,7 +66,7 @@ public class QuizManager : MonoBehaviour
         quizPanel.SetActive(true);
         timer = GameObject.Find("StartPanel").GetComponent<quizTimer>();
         _energy = Energy.Instance.GetCurrentEnergy();
-        questionImageButton.SetActive(false);
+        if (questionImageButton != null) questionImageButton.SetActive(false);
 
 
         // Get the default value for the selected enum option
@@ -93,7 +93,8 @@ public class QuizManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("No energy Left");
+            NPCDialogue.Instance.AddDialogue("I'm exhausted and need to rest. Where can I go to recharge and regain some energy?", DataManager.GetPlayerName());
+            NPCDialogue.Instance.ShowDialogue();
             return;
         }
     }
@@ -106,14 +107,15 @@ public class QuizManager : MonoBehaviour
             _questionIndex = 0;
             scoreCount = 0;
             gameOverPanel.SetActive(false);
-            popUpImage.SetActive(false);
+            if (popUpImage != null) popUpImage.SetActive(false);
             timer.resetTime();
             SetCurrentQuestion(_questionIndex);
             Energy.Instance.UseEnergy(1);
         }
         else
         {
-            Debug.Log("No energy Left");
+            NPCDialogue.Instance.AddDialogue("I'm exhausted and need to rest. Where can I go to recharge and regain some energy?", DataManager.GetPlayerName());
+            NPCDialogue.Instance.ShowDialogue();
             return;
         }
     }
@@ -134,16 +136,24 @@ public class QuizManager : MonoBehaviour
         timer.stopTime();
         gameOverPanel.SetActive(true);
         //Lose score index : 0
-        scoreTxt[0].text = scoreCount + "/" + _totalQuestions;
+        SetScoreCount();
     }
     public void Win()
     {
         timer.stopTime();
         winPanel.SetActive(true);
         //Lose score index : 1
-        scoreTxt[1].text = scoreCount + "/" + _totalQuestions;
+        SetScoreCount();
         StartCoroutine(DisplayRewards());
     }
+
+    private void SetScoreCount() {
+        foreach (var score in scoreTxt)
+        {
+            score.text = scoreCount + "/" + _totalQuestions;
+        }
+    }
+
     public void OpenPanel()
     {
         if (scoreCount >= _totalQuestions)
@@ -188,16 +198,16 @@ public class QuizManager : MonoBehaviour
 
         if(currentQuestion.withImage)
         {
-            questionImageButton.SetActive(true);
+            if (questionImageButton != null) questionImageButton.SetActive(true);
         }
         else 
         {
-            questionImageButton.SetActive(false);
+            if (questionImageButton != null) questionImageButton.SetActive(false);
         }
 
         text.text = currentQuestion.Questions;
 
-        questionImage.sprite = currentQuestion.QustionImage;
+        if (questionImage != null) questionImage.sprite = currentQuestion.QustionImage;
 
         for (int i = 0; i < options.Length; i++)
         {
