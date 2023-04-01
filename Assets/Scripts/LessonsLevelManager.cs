@@ -18,7 +18,7 @@ public class LessonsLevelManager : MonoBehaviour
     [SerializeField] CurrentCourse currentCourse;
     private int _reachedLesson;
     private int _level;
-    public string course;
+    [HideInInspector] public string course;
     public static LessonsLevelManager Instance;
     private void Awake()
     {

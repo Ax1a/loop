@@ -21,7 +21,6 @@ public class OpenScreen : MonoBehaviour
             panel.SetActive(!isActive);
         }
     }
-
     public void MinimizeScreen(GameObject panel) {
         if (panel != null)
         {

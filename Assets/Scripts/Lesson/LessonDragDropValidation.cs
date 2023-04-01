@@ -9,6 +9,11 @@ public class LessonDragDropValidation : Singleton<LessonDragDropValidation>
     string _playerName;
     [HideInInspector] public bool isCorrect = false;
     public LessonInitPos initPos;
+
+    void Start ()
+    {
+        _playerName = DataManager.GetPlayerName();
+    }
     public void Validate()
     {
         if (_currPts >= ptsToWin)
