@@ -17,7 +17,7 @@ public class Computer : MonoBehaviour, Interactable
     void Start ()
     {
         //For testing. Must remove
-        PlayerPrefs.DeleteKey("ComputerOpenedBefore");
+        //PlayerPrefs.DeleteKey("ComputerOpenedBefore");
     }
     public bool Interact(InteractObject interactor)
     {

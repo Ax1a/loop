@@ -10,10 +10,9 @@ public class LessonInteractions : MonoBehaviour
     [SerializeField] private string[] correctAnswers;
     public TMP_InputField[] userAnswer;
     string _playerName;
-
     void Start()
     {
-        _playerName = DataManager.GetPlayerName();
+        _playerName = DataManager.GetPlayerName(); 
     }
     public void CheckAnswer()
     {
@@ -60,4 +59,5 @@ public class LessonInteractions : MonoBehaviour
         NPCDialogue.Instance.AddDialogue(message, _playerName);
         NPCDialogue.Instance.ShowDialogue();
     }
+
 }
