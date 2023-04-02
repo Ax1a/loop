@@ -17,10 +17,19 @@ public class OpenScreen : MonoBehaviour
         if (panel != null)
         {
             bool isActive = panel.activeSelf;
-            if (panel.name == "Lesson Screen") taskbarIcons[0].SetActive(!isActive);
             panel.SetActive(!isActive);
+            SetTaskbarIcons(panel);
         }
     }
+
+    private void SetTaskbarIcons(GameObject panel) {
+        bool isActive = panel.activeSelf;
+        
+        if (panel.name == "Lesson Screen") taskbarIcons[0].SetActive(!isActive);
+        if (panel.name == "BlocksIDE") taskbarIcons[1].SetActive(!isActive);
+        if (panel.name == "SystemInformation") taskbarIcons[2].SetActive(!isActive);
+    }
+
     public void MinimizeScreen(GameObject panel) {
         if (panel != null)
         {

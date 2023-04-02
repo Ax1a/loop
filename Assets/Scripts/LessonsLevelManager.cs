@@ -88,8 +88,6 @@ public class LessonsLevelManager : MonoBehaviour
     {
         DisplayProgressState();
 
-        Debug.Log(_reachedLesson);
-
         foreach (Button btn in lessonBtn)
         {
             Image image = btn.transform.GetChild(3).GetComponent<Image>();
