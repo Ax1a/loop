@@ -7,51 +7,64 @@ using UnityEngine.SceneManagement;
 
 public class Win : MonoBehaviour
 {
-    quizTimer _timer;
-    TMP_InputField _input;
-    int _currPts = 0;
-    public int ptsToWin = 0;
-    public GameObject myBlocks;
-    public Toggle checkBox;
+    [Header ("Quiz Interaction Panels")]
     public GameObject gameOverPanel;
-    public initialPosition blocksInitPos;
     public GameObject startPanel;
     public GameObject WinLosePanel;
+
+    [Header ("Quiz Interaction Objects")]
+    public Toggle checkBox;
+    public initialPosition blocksInitPos;
     public Transform simpleBlock;
     public TextMeshProUGUI output;
-    public static Win Instance;
-    private void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-    }
-    void Start()
+    [SerializeField] private GameObject instructionTxt;
+    [SerializeField] private Transform blocksParent;
+    [SerializeField] private Transform blockPlaceholdersParent;
+
+    [Header ("Reward Objects")]
+    [SerializeField] private quizTimer quizTimerScript;
+    [SerializeField] private TextMeshProUGUI moneyTxt;
+    [SerializeField] private TextMeshProUGUI expTxt;
+    [SerializeField] private GameObject[] popupGameObjects;
+    [SerializeField] private InteractionQuizInfo interactionQuiz;
+
+    private int _ptsToWin = 0;
+    private int _currPts = 0;
+    TMP_InputField _input;
+
+    void OnEnable()
     {
         gameOverPanel.SetActive(false);
-        _timer = GameObject.Find("StartPanel").GetComponent<quizTimer>();
-        blocksInitPos = GameObject.Find("resetPos").GetComponent<initialPosition>();
+        // blocksInitPos = GameObject.Find("resetPos").GetComponent<initialPosition>();
+
+        _ptsToWin = blockPlaceholdersParent.childCount;
     }
     public void retry()
     {
         startPanel.transform.SetAsLastSibling();
-        _timer.resetTime();
+        quizTimerScript.stopTime();
+        quizTimerScript.resetTime();
         startPanel.transform.localScale = new Vector3(1, 1, 1);
         gameOverPanel.SetActive(false);
-        blocksInitPos.ResetPositions();
+
+        // Add reset position on retry
         _currPts = 0;
     }
     public void validate()
     {
-        if (_currPts >= ptsToWin)
+        if (_currPts >= _ptsToWin)
         {
+            Debug.Log("Points: " + _currPts);
+            checkBox.GetComponent<Toggle>().isOn = true;
+            
             WinLosePanel.transform.gameObject.SetActive(true);
             WinLosePanel.transform.SetAsLastSibling();
-            checkBox.GetComponent<Toggle>().isOn = true;
-            _timer.stopTime();
-            Debug.Log("Points: " + _currPts);
+
+            StartCoroutine(DisplayObjects());
+
+            quizTimerScript.stopTime();
             RewardManager.Instance.AssessReward();
+            InteractionQuizManager.Instance.SetInteractionAsComplete(interactionQuiz);
 
             if (simpleBlock != null)
             {
@@ -64,19 +77,31 @@ public class Win : MonoBehaviour
             Debug.Log("Points: " + _currPts);
             gameOverPanel.transform.SetAsLastSibling();
             gameOverPanel.SetActive(true);
-            _timer.stopTime();
+            quizTimerScript.stopTime();
         }
     }
     public void AddPoints()
     {
+        if (instructionTxt != null) instructionTxt.SetActive(false);
         _currPts += 1;
         Debug.Log(_currPts);
     }
 
     public void MinusPoints()
     {
+        if (instructionTxt != null) instructionTxt.SetActive(false);
         _currPts -= 1;
         Debug.Log(_currPts);
     }
+
+    private IEnumerator DisplayObjects() {
+        // Add set of money and exp values here
+
+        foreach (var obj in popupGameObjects)
+        {
+            obj.SetActive(true);
+            yield return new WaitForSeconds(1.5f);
+        }
+    } 
 
 }
