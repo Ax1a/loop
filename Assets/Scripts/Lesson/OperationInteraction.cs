@@ -149,7 +149,7 @@ public class OperationInteraction : MonoBehaviour
         {
             if (!isEmpty)
             {
-                Debug.Log(input1 + input2);
+                NPCCall("Great! Seems like I understand the lesson");
                 concatOutput.text = input1 + input2;
             }
             else

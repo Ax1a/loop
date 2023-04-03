@@ -18,7 +18,7 @@ public class LessonDragDropValidation : Singleton<LessonDragDropValidation>
     {
         if (_currPts >= ptsToWin)
         {
-            NPCCall("Great! Seems I understand the lesson");
+            NPCCall("Great! Seems like I understand the lesson");
             Debug.Log("You got it right");
         }
         else
