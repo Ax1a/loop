@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Newtonsoft.Json;
+
 [System.Serializable]
 public class PlayerData
 {
@@ -9,6 +11,7 @@ public class PlayerData
     public int money = 0;
     public int exp = 0;
     public int playerLevel = 1;
+    [JsonIgnore]
     public Vector3 playerPos = new Vector3(-2.98900008f, 6.064f, -4.40799999f);
     public int hr = 7, min = 0, day = 1;
     public string name;
@@ -23,6 +26,7 @@ public class PlayerData
 
     public List<Quest> questList = new List<Quest>();
     public List<Quest> currentQuests = new List<Quest>();
+    public List<InteractionQuiz> interactionQuizzes = new List<InteractionQuiz>();
 }
 
 /* 
@@ -39,6 +43,12 @@ public class DrinkInventoryList
 public static class DataManager
 {
     static PlayerData playerData = new PlayerData();
+
+    /*
+        Buggy if not serialized
+        For testing only
+    */
+    static bool isSerialized = true;
 
     static DataManager()
     {
@@ -389,16 +399,62 @@ public static class DataManager
         set { playerData.currentQuests = value; }
     }
 
+    /*
+        Interaction Quiz Progress
+        Getters & Setters
+    */
+
+    public static List<InteractionQuiz> GetInteractionQuizData()
+    {
+        return playerData.interactionQuizzes;
+    }
+
+    public static void AddInteractionQuizData(List<InteractionQuiz> info)
+    {
+        if (playerData.interactionQuizzes == null)
+        {
+            playerData.interactionQuizzes = new List<InteractionQuiz>();
+        }
+
+        // Clear old data
+        playerData.interactionQuizzes.Clear();
+
+        playerData.interactionQuizzes.AddRange(info);
+        SavePlayerData();
+    }
+
+    public static void SetInteractionQuizComplete(int i)
+    {
+        if (playerData.interactionQuizzes == null)
+        {
+            playerData.interactionQuizzes = new List<InteractionQuiz>();
+        }
+
+        playerData.interactionQuizzes[i].isComplete = true;
+        SavePlayerData();
+    }
+
+    public static void ActivateInteractionQuiz(int i)
+    {
+        if (playerData.interactionQuizzes == null)
+        {
+            playerData.interactionQuizzes = new List<InteractionQuiz>();
+        }
+
+        playerData.interactionQuizzes[i].isActive = true;
+        SavePlayerData();
+    }
+
     // Save and Load Functions
     public static void SavePlayerData()
     {
-        BinarySerializer.Save(playerData, "playerData.txt");
+        BinarySerializer.Save(playerData, "playerData.txt", isSerialized);
         UnityEngine.Debug.Log("Player Data Saved");
     }
 
     public static void LoadPlayerData()
     {
-        playerData = BinarySerializer.Load<PlayerData>("playerData.txt");
+        playerData = BinarySerializer.Load<PlayerData>("playerData.txt", isSerialized);
     }
 
 

@@ -10,16 +10,22 @@ public class quizTimer : MonoBehaviour
         easy, medium, hard
     }
 
-    int _energy;
-
+    [Header ("Params")]
     public Difficulty difficulty;
     public float currTime = 0f;
     public float startingTime = 0f;
+    [HideInInspector] public bool isStart = false;
+
+    [Header ("Quiz Game Objects")]
     public GameObject gameOverPanel;
     public GameObject startPanel;
-    [HideInInspector] public bool isStart = false;
     [SerializeField] public TextMeshProUGUI countDownText;
+    [SerializeField] private TextMeshProUGUI quizTitle;
+    [Header ("For Interaction Quiz Only")]
+    [SerializeField] private InteractionQuizInfo interactionInfo;
     public static quizTimer Instance;
+    int _energy;
+    
     private void Awake()
     {
         if (Instance == null)
@@ -46,6 +52,11 @@ public class quizTimer : MonoBehaviour
         currTime = startingTime;
         gameOverPanel.SetActive(false);
     }
+
+    private void OnEnable() {
+        if (interactionInfo != null) quizTitle.text = interactionInfo.data.quizTitle;
+    }
+    
     // Update is called once per frame    
     public void startGame()
     {

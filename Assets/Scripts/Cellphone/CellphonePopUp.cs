@@ -20,7 +20,7 @@ public class CellphonePopUp : MonoBehaviour
     void Update ()
     {
         if (_playerController.IsPanelActive()) return;
-        if (Input.GetKeyDown(InputManager.Instance.openPhone))
+        if (Input.GetKeyDown(InputManager.Instance.openPhone) && !UIController.Instance.otherPanelActive())
         {
             cellphone.DOAnchorPos(Vector2.zero, animationDuration).SetEase(ease);
         }

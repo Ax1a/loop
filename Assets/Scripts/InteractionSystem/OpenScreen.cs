@@ -17,8 +17,8 @@ public class OpenScreen : MonoBehaviour
         if (panel != null)
         {
             bool isActive = panel.activeSelf;
-            panel.SetActive(!isActive);
             SetTaskbarIcons(panel);
+            panel.SetActive(!isActive);
         }
     }
 

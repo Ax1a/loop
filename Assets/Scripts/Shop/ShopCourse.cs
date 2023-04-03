@@ -16,6 +16,7 @@ public class ShopCourse : MonoBehaviour
     [SerializeField] private GameObject[] lockedIndicators;
     [SerializeField] private GameObject[] purchasedIndicators;
     [SerializeField] private GameObject[] courseSelectionLocks;
+    [SerializeField] private GameObject[] interactionQuizSelectionLocks;
     [SerializeField] private GameObject[] courseSelectionProgress;
     [SerializeField] private GameObject insufficientMoneyTxt;
     [SerializeField] private TextMeshProUGUI reducedMoneyTxt;
@@ -67,6 +68,8 @@ public class ShopCourse : MonoBehaviour
                 lockedIndicators[i].SetActive(true);
                 courseSelectionLocks[i].transform.parent.GetComponent<Button>().interactable = false;
                 courseSelectionLocks[i].SetActive(true);
+                // interactionQuizSelectionLocks[i].transform.parent.GetComponent<Button>().interactable = false;
+                // interactionQuizSelectionLocks[i].SetActive(true);
                 courseSelectionProgress[i].SetActive(false);
             }
             else if (DataManager.GetProgrammingLanguageProgress(_progLanguages[i]) >= 1) {
@@ -74,6 +77,7 @@ public class ShopCourse : MonoBehaviour
                 purchasedIndicators[i].SetActive(true);
                 progLanguagePriceTxts[i].transform.parent.gameObject.SetActive(false);
                 courseSelectionLocks[i].transform.parent.GetComponent<Button>().interactable = true;
+                // interactionQuizSelectionLocks[i].transform.parent.GetComponent<Button>().interactable = true;
                 buyBtns[i].gameObject.SetActive(false);
 
                 courseSelectionProgress[i].SetActive(true);
@@ -83,6 +87,8 @@ public class ShopCourse : MonoBehaviour
                 lockedIndicators[i].SetActive(false);
                 courseSelectionLocks[i].transform.parent.GetComponent<Button>().interactable = false;
                 courseSelectionLocks[i].SetActive(true);
+                // interactionQuizSelectionLocks[i].transform.parent.GetComponent<Button>().interactable = false;
+                // interactionQuizSelectionLocks[i].SetActive(true);
                 courseSelectionProgress[i].SetActive(false);
             }
         }

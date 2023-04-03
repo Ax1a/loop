@@ -7,19 +7,17 @@ using UnityEngine.UI;
 public class Drag : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
 
+    [HideInInspector]
+    public Transform parentAfterDrag;
     private RectTransform rect;
     private CanvasGroup canvasGroup;
-    private Vector2 initPos;
-    public int id;
-    public Transform parentAfterDrag;
-    [SerializeField] public string blockType;
-
+    public Vector2 initPos;
+    public BlockData blockData;
 
     private void Awake()
     {
         rect = GetComponent<RectTransform>();
         canvasGroup = GetComponent<CanvasGroup>();
-
     }
 
     void Start()

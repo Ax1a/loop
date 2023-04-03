@@ -2,6 +2,7 @@ using UnityEngine;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using Newtonsoft.Json;
 
 /// <summary>
 /// BinarySerializer is tool to save your game data in files as binary
@@ -27,21 +28,27 @@ public class BinarySerializer
 	/// <param name="data">your dataClass instance.</param>
 	/// <param name="filename">the file where you want to save data.</param>
 	/// <returns></returns>
-	public static void Save <T> (T data, string filename)
+	public static void Save <T> (T data, string filename, bool isSerialized)
 	{
-		if (IsSerializable <T> ()) {
-			if (!Directory.Exists (GetDirectoryPath ()))
-				Directory.CreateDirectory (GetDirectoryPath ());
+		if (!Directory.Exists (GetDirectoryPath ()))
+			Directory.CreateDirectory (GetDirectoryPath ());
 
-			BinaryFormatter formatter = new BinaryFormatter ();
+		if (isSerialized) {
+			if (IsSerializable <T> ()) {
+				BinaryFormatter formatter = new BinaryFormatter ();
 
-			formatter.SurrogateSelector = surrogateSelector;
+				formatter.SurrogateSelector = surrogateSelector;
 
-			FileStream file = File.Create (GetFilePath (filename));
+				FileStream file = File.Create (GetFilePath (filename));
 
-			formatter.Serialize (file, data);
+				formatter.Serialize (file, data);
 
-			file.Close ();
+				file.Close ();
+			}
+		}
+		else {
+			string jsonData = JsonConvert.SerializeObject(data, Formatting.Indented);
+			File.WriteAllText(GetFilePath(filename), jsonData);
 		}
 	}
 
@@ -56,21 +63,27 @@ public class BinarySerializer
 	/// </summary>
 	/// <param name="filename">the file where you saved data.</param>
 	/// <returns></returns>
-	public static T Load<T> (string filename)
+	public static T Load<T> (string filename, bool isSerialized)
 	{
 		T data = System.Activator.CreateInstance <T> ();
 
 		if (IsSerializable <T> ()) {
 			if (HasSaved (filename)) {
-				BinaryFormatter formatter = new BinaryFormatter ();
+				if (isSerialized) {
+					BinaryFormatter formatter = new BinaryFormatter ();
 
-				formatter.SurrogateSelector = surrogateSelector;
+					formatter.SurrogateSelector = surrogateSelector;
 
-				FileStream file = File.Open (GetFilePath (filename), FileMode.Open);
+					FileStream file = File.Open (GetFilePath (filename), FileMode.Open);
 
-				data = (T)formatter.Deserialize (file);
+					data = (T)formatter.Deserialize (file);
 
-				file.Close ();
+					file.Close ();
+				}
+				else {
+					string json = File.ReadAllText(GetFilePath(filename));
+					data = JsonUtility.FromJson<T>(json);
+				}
 			}
 		}
 
