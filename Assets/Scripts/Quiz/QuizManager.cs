@@ -36,7 +36,6 @@ public class QuizManager : MonoBehaviour
     [HideInInspector] public int scoreCount;
     public static QuizManager Instance;
     public GameObject[] rewardsPanel;
-
     #endregion
 
     #region Methods/Functions
@@ -161,10 +160,10 @@ public class QuizManager : MonoBehaviour
             Win();
             RewardManager.Instance.AssessReward();
             StartCoroutine(DelayAddProgress());
-            // LessonsLevelManager.Instance.addReachedLesson();
+            LessonsLevelManager.Instance.addReachedLesson();
 
             //to-do: should add level depending on the course they are taking
-            DataManager.AddProgrammingLanguageProgress(LessonsLevelManager.Instance.course);
+            // DataManager.AddProgrammingLanguageProgress(levelManager.course);
         }
         else
         {
