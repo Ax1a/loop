@@ -2382,6 +2382,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1633712718}
   - {fileID: 1815525678}
   - {fileID: 707045875}
   m_Father: {fileID: 437705869}
@@ -2400,72 +2401,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainQuestGiver: {fileID: 1815525677}
-  questList:
-  - title: Learning Starts Here
-    id: 0
-    subTitle: Unlock the power of knowledge
-    description: To complete this mission, you need to purchase a course from the
-      shop first. Once you have made a purchase, you can continue with the mission
-      and start your learning journey.
-    congratsText: Congrats!
-    summary: Mission Complete
-    nextQuest: 1
-    questObjectives:
-    - Buy any course from the shop
-    questObjectiveCount: 00000000
-    questObjectiveRequirement: 01000000
-    expReward: 100
-    moneyReward: 0
-    progress: 1
-    questType: 0
-  - title: Complete Your First Lesson
-    id: 1
-    subTitle: 'Open the computer:'
-    description: In this lesson, you will learn the basics of programming and create
-      a simple program. Once you complete the lesson, you will be rewarded with some
-      experience that will aid you on your journey.
-    congratsText: Great! You've finished your first lesson
-    summary: 'Lesson 1 Complete '
-    nextQuest: 2
-    questObjectives:
-    - Finish lesson 1
-    questObjectiveCount: 00000000
-    questObjectiveRequirement: 01000000
-    expReward: 100
-    moneyReward: 50
-    progress: 0
-    questType: 0
-  - title: Next Main Quest
-    id: 2
-    subTitle: Dummy Mission
-    description: Testing Chain quest in main
-    congratsText: dd
-    summary: ddd
-    nextQuest: 0
-    questObjectives:
-    - Testing dynamic quest
-    questObjectiveCount: 0000000000000000
-    questObjectiveRequirement: 0100000001000000
-    expReward: 99999
-    moneyReward: 99999
-    progress: 0
-    questType: 0
-  - title: C++ Syntax Problem
-    id: 3
-    subTitle: Assignment
-    description: Testing Assignment Quest
-    congratsText: dd
-    summary: ddd
-    nextQuest: 0
-    questObjectives:
-    - Open assignment on computer
-    - Answer the assignment
-    questObjectiveCount: 0000000000000000
-    questObjectiveRequirement: 0100000001000000
-    expReward: 99999
-    moneyReward: 99999
-    progress: 1
-    questType: 1
+  questList: []
   currentQuestList: []
 --- !u!1001 &114976158
 PrefabInstance:
@@ -7152,7 +7088,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
-  m_LocalRotation: {x: 0.2222639, y: -0.08559062, z: 0.01959137, w: 0.9710248}
+  m_LocalRotation: {x: 0.22226387, y: -0.08559066, z: 0.019591378, w: 0.9710248}
   m_LocalPosition: {x: -40.755608, y: -19.198257, z: -9.855744}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -11190,6 +11126,116 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.003412183, y: 0.12720306, z: 0.07343325}
   m_Center: {x: 0.06189583, y: 0.0000003697402, z: 0.03815383}
+--- !u!1 &494108087
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 494108088}
+  - component: {fileID: 494108089}
+  m_Layer: 0
+  m_Name: MainQuests
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &494108088
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 494108087}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1633712718}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &494108089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 494108087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b77769a8b4b0a844adfb6c203064020, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  questList:
+  - title: Learning Starts Here
+    id: 0
+    subTitle: Unlock the power of knowledge
+    description: To complete this mission, you need to purchase a course from the
+      shop first. Once you have made a purchase, you can continue with the mission
+      and start your learning journey.
+    congratsText: Congrats!
+    summary: Mission Complete
+    nextQuest: 1
+    questObjectives:
+    - Buy any course from the shop
+    questObjectiveCount: 00000000
+    questObjectiveRequirement: 01000000
+    expReward: 100
+    moneyReward: 0
+    progress: 1
+    questType: 0
+  - title: Complete Your First Lesson
+    id: 1
+    subTitle: 'Open the computer:'
+    description: In this lesson, you will learn the basics of programming and create
+      a simple program. Once you complete the lesson, you will be rewarded with some
+      experience that will aid you on your journey.
+    congratsText: Great! You've finished your first lesson
+    summary: 'Lesson 1 Complete '
+    nextQuest: 2
+    questObjectives:
+    - Finish Lesson 1
+    questObjectiveCount: 00000000
+    questObjectiveRequirement: 01000000
+    expReward: 100
+    moneyReward: 50
+    progress: 0
+    questType: 0
+  - title: Next Main Quest
+    id: 2
+    subTitle: Dummy Mission
+    description: Testing Chain quest in main
+    congratsText: dd
+    summary: ddd
+    nextQuest: 0
+    questObjectives:
+    - Testing dynamic quest
+    questObjectiveCount: 0000000000000000
+    questObjectiveRequirement: 0100000001000000
+    expReward: 99999
+    moneyReward: 99999
+    progress: 0
+    questType: 0
+  - title: C++ Syntax Problem
+    id: 3
+    subTitle: Assignment
+    description: Testing Assignment Quest
+    congratsText: dd
+    summary: ddd
+    nextQuest: 0
+    questObjectives:
+    - Open assignment on computer
+    - Answer the assignment
+    questObjectiveCount: 0000000000000000
+    questObjectiveRequirement: 0100000001000000
+    expReward: 99999
+    moneyReward: 99999
+    progress: 1
+    questType: 1
 --- !u!1 &496994426
 GameObject:
   m_ObjectHideFlags: 0
@@ -17304,6 +17350,51 @@ PrefabInstance:
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f9b178ccd3b86f4ebbfc1f5a2815e56, type: 3}
+--- !u!1 &694299168
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 694299169}
+  - component: {fileID: 694299170}
+  m_Layer: 0
+  m_Name: SideQuests
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &694299169
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 694299168}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1633712718}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &694299170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 694299168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b77769a8b4b0a844adfb6c203064020, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  questList: []
 --- !u!1 &695195205
 GameObject:
   m_ObjectHideFlags: 0
@@ -24245,7 +24336,7 @@ RectTransform:
   m_GameObject: {fileID: 975059077}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.44427082, y: 0.44427082, z: 0.44427082}
+  m_LocalScale: {x: 0.5442708, y: 0.5442708, z: 0.5442708}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1405868908}
@@ -24261,8 +24352,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 426.5, y: 240}
-  m_SizeDelta: {x: 1920, y: 1080.4221}
+  m_AnchoredPosition: {x: 522.5, y: 294}
+  m_SizeDelta: {x: 1920.0001, y: 1080.3445}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &975059079
 MonoBehaviour:
@@ -28539,6 +28630,25 @@ Transform:
   m_Father: {fileID: 1794835625}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1128414447 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3958053071594173770, guid: 1eb1e3fef5ac4974e8574c8908885710,
+    type: 3}
+  m_PrefabInstance: {fileID: 400736678}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &1128414448
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1128414447}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5756995, y: 1.21576, z: 0.45143995}
+  m_Center: {x: 0.04337573, y: 0.58967173, z: -0.008632245}
 --- !u!114 &1139247188 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4935836689413639527, guid: e7a3ba94e015d4f4eb8f7801bfa6056f,
@@ -38884,7 +38994,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1455879008}
-  m_LocalRotation: {x: 0.2222639, y: -0.08559062, z: 0.01959137, w: 0.9710248}
+  m_LocalRotation: {x: 0.22226387, y: -0.08559066, z: 0.019591378, w: 0.9710248}
   m_LocalPosition: {x: -40.755608, y: -19.198257, z: -9.855744}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -43325,6 +43435,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1633712717
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1633712718}
+  m_Layer: 0
+  m_Name: QuestAdderList
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1633712718
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1633712717}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 494108088}
+  - {fileID: 694299169}
+  - {fileID: 2072693263}
+  m_Father: {fileID: 114055923}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1637423861
 GameObject:
   m_ObjectHideFlags: 0
@@ -54664,6 +54808,116 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2071824882}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2072693262
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2072693263}
+  - component: {fileID: 2072693264}
+  m_Layer: 0
+  m_Name: Assignments
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2072693263
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2072693262}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1633712718}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2072693264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2072693262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b77769a8b4b0a844adfb6c203064020, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  questList:
+  - title: Learning Starts Here
+    id: 0
+    subTitle: Unlock the power of knowledge
+    description: To complete this mission, you need to purchase a course from the
+      shop first. Once you have made a purchase, you can continue with the mission
+      and start your learning journey.
+    congratsText: Congrats!
+    summary: Mission Complete
+    nextQuest: 1
+    questObjectives:
+    - Buy any course from the shop
+    questObjectiveCount: 00000000
+    questObjectiveRequirement: 01000000
+    expReward: 100
+    moneyReward: 0
+    progress: 1
+    questType: 0
+  - title: Complete Your First Lesson
+    id: 1
+    subTitle: 'Open the computer:'
+    description: In this lesson, you will learn the basics of programming and create
+      a simple program. Once you complete the lesson, you will be rewarded with some
+      experience that will aid you on your journey.
+    congratsText: Great! You've finished your first lesson
+    summary: 'Lesson 1 Complete '
+    nextQuest: 2
+    questObjectives:
+    - Finish Lesson 1
+    questObjectiveCount: 00000000
+    questObjectiveRequirement: 01000000
+    expReward: 100
+    moneyReward: 50
+    progress: 0
+    questType: 0
+  - title: Next Main Quest
+    id: 2
+    subTitle: Dummy Mission
+    description: Testing Chain quest in main
+    congratsText: dd
+    summary: ddd
+    nextQuest: 0
+    questObjectives:
+    - Testing dynamic quest
+    questObjectiveCount: 0000000000000000
+    questObjectiveRequirement: 0100000001000000
+    expReward: 99999
+    moneyReward: 99999
+    progress: 0
+    questType: 0
+  - title: C++ Syntax Problem
+    id: 3
+    subTitle: Assignment
+    description: Testing Assignment Quest
+    congratsText: dd
+    summary: ddd
+    nextQuest: 0
+    questObjectives:
+    - Open assignment on computer
+    - Answer the assignment
+    questObjectiveCount: 0000000000000000
+    questObjectiveRequirement: 0100000001000000
+    expReward: 99999
+    moneyReward: 99999
+    progress: 1
+    questType: 1
 --- !u!1 &2076773456
 GameObject:
   m_ObjectHideFlags: 0
@@ -58687,35 +58941,39 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 2057250812}
     m_Modifications:
+    - target: {fileID: 792891089, guid: a67ee24e746b2874390017ffc3011d27, type: 3}
+      propertyPath: indicatorCanvas
+      value: 
+      objectReference: {fileID: 443922538}
     - target: {fileID: 46328980725497244, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 46328980725497244, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 46328980725497244, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 46328980725497244, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 46328980725497244, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 75
       objectReference: {fileID: 0}
     - target: {fileID: 46328980725497244, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -375
       objectReference: {fileID: 0}
     - target: {fileID: 317964047655800976, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
@@ -59225,62 +59483,62 @@ PrefabInstance:
     - target: {fileID: 2353971567878783788, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2353971567878783788, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2353971567878783788, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 44.095695
       objectReference: {fileID: 0}
     - target: {fileID: 2353971567878783788, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 293.514
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2353971567878783788, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -22.047848
       objectReference: {fileID: 0}
     - target: {fileID: 2353971567931268637, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2353971567931268637, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2353971567931268637, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 587.028
       objectReference: {fileID: 0}
     - target: {fileID: 2353971567931268637, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 44.095695
       objectReference: {fileID: 0}
     - target: {fileID: 2353971567931268637, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 293.514
       objectReference: {fileID: 0}
     - target: {fileID: 2353971567931268637, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -22.047848
       objectReference: {fileID: 0}
     - target: {fileID: 2353971568151862741, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 44.095695
       objectReference: {fileID: 0}
     - target: {fileID: 2430961074062081750, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
@@ -59580,47 +59838,47 @@ PrefabInstance:
     - target: {fileID: 4195581454636420321, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4195581454636420321, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4195581454636420321, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 64.74
       objectReference: {fileID: 0}
     - target: {fileID: 4195581454636420321, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 277.7651
       objectReference: {fileID: 0}
     - target: {fileID: 4195581454636420321, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -48.37213
       objectReference: {fileID: 0}
     - target: {fileID: 4195581454660853733, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4195581454660853733, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4195581454660853733, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 4195581454660853733, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -40
       objectReference: {fileID: 0}
     - target: {fileID: 4195581454671552666, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
@@ -59709,6 +59967,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4195581454760992146, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4195581454760992146, guid: a67ee24e746b2874390017ffc3011d27,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4195581454760992146, guid: a67ee24e746b2874390017ffc3011d27,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4195581454760992146, guid: a67ee24e746b2874390017ffc3011d27,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -59775,7 +60048,7 @@ PrefabInstance:
     - target: {fileID: 4195581454760992149, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4195581454818178045, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
@@ -59850,52 +60123,52 @@ PrefabInstance:
     - target: {fileID: 4195581455031134415, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4195581455031134415, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4195581455031134415, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 371.1162
       objectReference: {fileID: 0}
     - target: {fileID: 4195581455031134415, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 185.5581
       objectReference: {fileID: 0}
     - target: {fileID: 4195581455031134415, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -25.261
       objectReference: {fileID: 0}
     - target: {fileID: 4195581455080548017, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4195581455080548017, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4195581455080548017, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 125.6397
       objectReference: {fileID: 0}
     - target: {fileID: 4195581455080548017, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 62.81985
       objectReference: {fileID: 0}
     - target: {fileID: 4195581455080548017, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -16.3
       objectReference: {fileID: 0}
     - target: {fileID: 4195581455113126698, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
@@ -59915,27 +60188,27 @@ PrefabInstance:
     - target: {fileID: 4195581455113126704, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4195581455113126704, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4195581455113126704, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 4195581455113126704, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 4195581455113126704, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -50
       objectReference: {fileID: 0}
     - target: {fileID: 4195581455113126705, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
@@ -59990,32 +60263,32 @@ PrefabInstance:
     - target: {fileID: 4195581455509077924, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 353.7145
       objectReference: {fileID: 0}
     - target: {fileID: 4195581455552859269, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4195581455552859269, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4195581455552859269, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 56.744263
       objectReference: {fileID: 0}
     - target: {fileID: 4195581455552859269, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 129.94525
       objectReference: {fileID: 0}
     - target: {fileID: 4195581455552859269, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -48.37213
       objectReference: {fileID: 0}
     - target: {fileID: 4195581455553836826, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
@@ -60045,27 +60318,27 @@ PrefabInstance:
     - target: {fileID: 4195581455583007109, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4195581455583007109, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4195581455583007109, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 125.6397
       objectReference: {fileID: 0}
     - target: {fileID: 4195581455583007109, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 62.81985
       objectReference: {fileID: 0}
     - target: {fileID: 4195581455583007109, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -48.44
       objectReference: {fileID: 0}
     - target: {fileID: 4195581455589063966, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
@@ -60165,82 +60438,82 @@ PrefabInstance:
     - target: {fileID: 4195581455827263567, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4195581455827263567, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4195581455827263567, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 371.1162
       objectReference: {fileID: 0}
     - target: {fileID: 4195581455827263567, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 185.5581
       objectReference: {fileID: 0}
     - target: {fileID: 4195581455827263567, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -202.11826
       objectReference: {fileID: 0}
     - target: {fileID: 4195581455874692361, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4195581455874692361, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4195581455874692361, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 56.744263
       objectReference: {fileID: 0}
     - target: {fileID: 4195581455874692361, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 179.94525
       objectReference: {fileID: 0}
     - target: {fileID: 4195581455874692361, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -48.37213
       objectReference: {fileID: 0}
     - target: {fileID: 4195581455933104315, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4195581455933104315, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4195581455933104315, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 4195581455933104315, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 4195581455933104315, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 75
       objectReference: {fileID: 0}
     - target: {fileID: 4195581455933104315, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -75
       objectReference: {fileID: 0}
     - target: {fileID: 4195581455991755010, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
@@ -60315,32 +60588,32 @@ PrefabInstance:
     - target: {fileID: 4195581456085567765, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4195581456085567765, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4195581456085567765, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 4195581456085567765, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 4195581456085567765, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 75
       objectReference: {fileID: 0}
     - target: {fileID: 4195581456085567765, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -225
       objectReference: {fileID: 0}
     - target: {fileID: 4195581456130833334, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
@@ -60787,6 +61060,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -55.004997
       objectReference: {fileID: 0}
+    - target: {fileID: 6606183778096546892, guid: a67ee24e746b2874390017ffc3011d27,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6669079176336918818, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -60935,6 +61213,16 @@ PrefabInstance:
     - target: {fileID: 7310675799495608956, guid: a67ee24e746b2874390017ffc3011d27,
         type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7376881476652746583, guid: a67ee24e746b2874390017ffc3011d27,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7583480645008847295, guid: a67ee24e746b2874390017ffc3011d27,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7976396374939272702, guid: a67ee24e746b2874390017ffc3011d27,

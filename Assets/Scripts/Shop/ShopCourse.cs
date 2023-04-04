@@ -23,18 +23,40 @@ public class ShopCourse : MonoBehaviour
     private string[] _progLanguages = { "c++", "java", "python" };
     private int[] _coursePrices = new int[3];
     private Coroutine _showCoroutineReduce, _showCoroutineInsufficient;
+    private bool _checkedState = false;
 
     void Start()
     {
-        DisplayCourseStateIndicator();
-        DisplayCourseRequirements();
+        if (DataManager.GetTutorialProgress() >= 4 && !_checkedState) {
+            DisplayCourseStateIndicator();
+            DisplayCourseRequirements();
 
-        // Add button listener to add buttons
-        for (int i = 0; i < buyBtns.Length; i++)
-        {
-            int temp = i;
-            buyBtns[i].onClick.RemoveAllListeners();
-            buyBtns[i].onClick.AddListener(() => BuyProgrammingCourse(temp));
+            // Add button listener to add buttons
+            for (int i = 0; i < buyBtns.Length; i++)
+            {
+                int temp = i;
+                buyBtns[i].onClick.RemoveAllListeners();
+                buyBtns[i].onClick.AddListener(() => BuyProgrammingCourse(temp));
+            }
+
+            _checkedState = true;
+        }
+    }
+
+    private void Update() {
+        if (DataManager.GetTutorialProgress() >= 4 & !_checkedState) {
+            DisplayCourseStateIndicator();
+            DisplayCourseRequirements();
+
+            // Add button listener to add buttons
+            for (int i = 0; i < buyBtns.Length; i++)
+            {
+                int temp = i;
+                buyBtns[i].onClick.RemoveAllListeners();
+                buyBtns[i].onClick.AddListener(() => BuyProgrammingCourse(temp));
+            }
+
+            _checkedState = true;
         }
     }
 
@@ -99,7 +121,7 @@ public class ShopCourse : MonoBehaviour
 
         for (int i = 0; i < _progLanguages.Length; i++)
         {
-            // Add sale on the first language
+            // Add sale on the a language
             if (DataManager.FirstProgrammingLanguage() && DataManager.GetProgrammingLanguageProgress(_progLanguages[i]) == 0) {
                 _coursePrices[i] = 0;
                 progLanguagePriceTxts[i].text = _coursePrices[i].ToString();

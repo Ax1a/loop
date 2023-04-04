@@ -19,7 +19,12 @@ public class UIClose : UIFade
         mainUI.GetComponent<CanvasGroup>().alpha = 1;
         yield return new WaitForSeconds(base.getAnimationDuration());
         gameObject.SetActive(false);
-        indicatorCanvas.SetActive(true);
+        if (indicatorCanvas != null) {
+            indicatorCanvas.SetActive(true);
+        }
+        else {
+            Debug.Log("Indicator Canvas is null");
+        }
         UIController.Instance.SetPanelActive(false);
     }
 
