@@ -5,13 +5,12 @@ using UnityEngine;
 
 public class quizTimer : MonoBehaviour
 {
-    public enum Difficulty
-    {
-        easy, medium, hard
-    }
+    public enum Difficulty { easy, medium, hard }
+    public enum QuizType { Interactive, Multiple  };
 
     [Header ("Params")]
     public Difficulty difficulty;
+    public QuizType quizType;
     public float currTime = 0f;
     public float startingTime = 0f;
     [HideInInspector] public bool isStart = false;
@@ -62,11 +61,13 @@ public class quizTimer : MonoBehaviour
     {
         if (!isStart)
         {
+            currTime = startingTime;
             if (Energy.Instance.GetCurrentEnergy() > 0)
             {
                 Energy.Instance.UseEnergy(1);
                 isStart = true;
-                startPanel.transform.localScale = new Vector3(0, 0, 0);
+                // startPanel.transform.localScale = new Vector3(0, 0, 0);
+                startPanel.gameObject.SetActive(false);
             }
             else
             {
@@ -111,12 +112,22 @@ public class quizTimer : MonoBehaviour
             {
                 currTime = 0;
                 // gameOverPanel.SetActive(true);
-                QuizManager.Instance.GameOver();
+                if(quizType == QuizType.Multiple)
+                {
+                    Debug.Log("Multiple Choice Quiz: GameOver");
+                    QuizManager.Instance.GameOver();
+                }
+                else if (quizType == QuizType.Interactive)
+                {
+                    Debug.Log("Interactive Quiz: GameOver");
+                    Win.Instance.GameOver();
+                }
                 gameOverPanel.transform.SetAsLastSibling();
                 isStart = false;
             }
         }
 
     }
+
 
 }
