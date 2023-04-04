@@ -77,7 +77,9 @@ public class LessonsLevelManager : MonoBehaviour
     //function for adding level
     public void addReachedLesson()
     {
-        DataManager.addReachedLesson();
+        // DataManager.addReachedLesson();
+        DataManager.AddProgrammingLanguageProgress(LessonsLevelManager.Instance.course);
+
         _reachedLesson++;
         UpdateLessonState();
     }
