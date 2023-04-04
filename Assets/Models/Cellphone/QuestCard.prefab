@@ -288,6 +288,7 @@ GameObject:
   - component: {fileID: 2644081349381176601}
   - component: {fileID: 2644081349381176603}
   - component: {fileID: 2644081349381176602}
+  - component: {fileID: -5944831494154486271}
   m_Layer: 0
   m_Name: QuestCard
   m_TagString: Untagged
@@ -338,7 +339,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.1981132, g: 0.1981132, b: 0.1981132, a: 1}
+  m_Color: {r: 0.15352438, g: 0.2640014, b: 0.4716981, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -424,4 +425,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2644081349381176601}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: -5944831494154486271}
+        m_TargetAssemblyTypeName: InboxButton, Assembly-CSharp
+        m_MethodName: ShowInbox
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &-5944831494154486271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2644081349381176583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fae1aa38fb1cbe4ea3fe6ca38d41ecb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 0
+  title: {fileID: 2644081348407406236}
+  description: {fileID: 2644081348516674875}
