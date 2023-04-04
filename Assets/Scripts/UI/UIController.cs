@@ -48,6 +48,8 @@ public class UIController : MonoBehaviour
 
     void Update()
     {
+        Debug.Log("C++: " + DataManager.GetProgrammingLanguageProgress("c++"));
+
         if (!QueueIsEmpty()) {
             foreach (var highlightGuide in highlightGuides)
             {

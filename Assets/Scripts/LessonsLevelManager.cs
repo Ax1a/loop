@@ -32,8 +32,6 @@ public class LessonsLevelManager : MonoBehaviour
     {
         GetCurrentCourse();
         UpdateLessonState();
-        // addReachedLesson();
-        Debug.Log("reached lesson" + _reachedLesson);
 
     }
 

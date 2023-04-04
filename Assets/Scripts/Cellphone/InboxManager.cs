@@ -11,10 +11,13 @@ public class InboxManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI npcName;
     [SerializeField] private TextMeshProUGUI expReward;
     [SerializeField] private TextMeshProUGUI moneyReward;
+    [SerializeField] private GameObject emptyContainer;
+    [SerializeField] private GameObject detailsContainer;
     [SerializeField] private GameObject inboxButtonPrefab;
     [SerializeField] private Transform inboxButtonParent;
     [SerializeField] private Button acceptButton;
     [SerializeField] private Button declineButton;
+    private InboxButton _firstInbox;
     public static InboxManager Instance;
 
     private void Awake() {
@@ -27,21 +30,34 @@ public class InboxManager : MonoBehaviour
         FillInboxButtons();
     }
 
-    private void FillInboxButtons() {
+    public void FillInboxButtons() {
         ClearData();
+        int count = 0;
 
         // Add generation of buttons
         foreach (var item in DataManager.QuestList)
         {
-            Debug.Log(item.questType + " " + item.progress + " " + item.npcName);
             if (item.questType == Quest.QuestType.SIDE && item.progress == Quest.QuestProgress.AVAILABLE && item.npcName != "") {
                 GameObject _inboxItem = Instantiate(inboxButtonPrefab, inboxButtonParent);
                 InboxButton _inboxButton = _inboxItem.GetComponent<InboxButton>();
                 
+                if (_firstInbox == null) _firstInbox = _inboxButton;
+
                 _inboxButton.SetTitle(item.title);
                 _inboxButton.SetDescription(item.description);
                 _inboxButton.SetID(item.id);
+                count++;
             }
+        }
+
+        if (count > 0) {
+            emptyContainer.SetActive(false);
+            detailsContainer.SetActive(true);
+            SetUpInboxDetails(_firstInbox.id);
+        }
+        else {
+            emptyContainer.SetActive(true);
+            detailsContainer.SetActive(false);
         }
     }
 
@@ -51,9 +67,12 @@ public class InboxManager : MonoBehaviour
             if (item.id == id) {
                 title.text = item.title;
                 description.text = item.description;
-                npcName.text = item.npcName;
+                npcName.text = "- " + item.npcName;
                 expReward.text = "+" + item.expReward;
                 moneyReward.text = "+" + item.moneyReward;
+
+                acceptButton.onClick.RemoveAllListeners();
+                acceptButton.onClick.AddListener(() => QuestManager.Instance.AcceptQuest(item.id));
             }
         }
     }

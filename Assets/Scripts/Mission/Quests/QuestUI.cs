@@ -175,11 +175,13 @@ public class QuestUI : MonoBehaviour
     public void SelectTab(string tab) {
         if (tab == "MAIN") {
             _onMainQTab = true;
+            _firstQuestButton = null;
             FillQuestLogButtons();
             l_tabHighlight.transform.DOLocalMoveX(-721.04f, .35f).SetEase(Ease.OutSine);
         }
         else {
             _onMainQTab = false;
+            _firstQuestButton = null;
             FillQuestLogButtons();
             l_tabHighlight.transform.DOLocalMoveX(-291.2f, .35f).SetEase(Ease.OutSine);
         }
@@ -287,6 +289,9 @@ public class QuestUI : MonoBehaviour
             // QuestButtonLog _qButtonLog = l_questButtonParent.GetChild(0).gameObject.GetComponent<QuestButtonLog>();
             _firstQuestButton.ShowAllInfos();
         }
+        else {
+            ClearQuestUI();
+        }
     }
 
     // Check the quest list based on the parameter
@@ -315,25 +320,11 @@ public class QuestUI : MonoBehaviour
     // Clear Quest Data to avoid duplication
     public void ClearQuestData()
     {
-        l_questTitle.text = "No quest available.";
-        l_questDescription.text = "";
-        l_questRewardExp.text = "";
-        l_questRewardMoney.text = "";
-        l_questExpContentPrefab.SetActive(false);
-        l_questMoneyContentPrefab.SetActive(false);
+        ClearQuestUI();
 
         if (s_questPanelParent.childCount > 0)
         {
             Destroy(s_questPanelParent.GetChild(0).gameObject);
-        }
-
-        // Remove the old objectives
-        if (l_questObjectiveParent.childCount > 0)
-        {
-            foreach (Transform child in l_questObjectiveParent)
-            {
-                Destroy(child.gameObject);
-            }
         }
 
         // Remove the quest of the buttons that does not exist
@@ -343,5 +334,23 @@ public class QuestUI : MonoBehaviour
         }
 
         questButtons.Clear();
+    }
+
+    public void ClearQuestUI() {
+        l_questTitle.text = "No quest available.";
+        l_questDescription.text = "";
+        l_questRewardExp.text = "";
+        l_questRewardMoney.text = "";
+        l_questExpContentPrefab.SetActive(false);
+        l_questMoneyContentPrefab.SetActive(false);
+
+        // Remove the old objectives
+        if (l_questObjectiveParent.childCount > 0)
+        {
+            foreach (Transform child in l_questObjectiveParent)
+            {
+                Destroy(child.gameObject);
+            }
+        }
     }
 }

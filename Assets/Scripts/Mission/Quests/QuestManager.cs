@@ -93,12 +93,14 @@ public class QuestManager : MonoBehaviour
                 Debug.Log("Accepted quest");
                 // QuestUI.Instance.activeQuest.Add(questList[i]);
                 questList[i].progress = Quest.QuestProgress.ACCEPTED;
+                QuestUI.Instance.ShowNewQuestBanner(questList[i].title, questList[i].questType);
             }
         }
         
         DataManager.CurrentQuests = currentQuestList;
         QuestUI.Instance.activeQuest.Clear();
         QuestUI.Instance.activeQuest.AddRange(currentQuestList);
+        InboxManager.Instance.FillInboxButtons();
     }
 
     // Give up quest based on the id 
