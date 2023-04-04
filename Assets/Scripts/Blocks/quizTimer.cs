@@ -61,7 +61,7 @@ public class quizTimer : MonoBehaviour
     {
         if (!isStart)
         {
-            currTime = startingTime;
+            // currTime = startingTime;
             if (Energy.Instance.GetCurrentEnergy() > 0)
             {
                 Energy.Instance.UseEnergy(1);
