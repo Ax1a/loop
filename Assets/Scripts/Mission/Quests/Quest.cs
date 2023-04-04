@@ -6,6 +6,7 @@ public class Quest
     public string subTitle;
     public string description;
     public string congratsText;
+    public string npcName;
     public string summary;
     public int nextQuest;
 
