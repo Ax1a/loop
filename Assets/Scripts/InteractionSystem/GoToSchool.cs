@@ -19,7 +19,7 @@ public class GoToSchool : MonoBehaviour, Interactable
 
     public bool Interact(InteractObject interactor)
     {
-        if (DataManager.GetTutorialProgress() >= 4) {
+        if (DataManager.GetTutorialProgress() >= 5) {
             _clock = Time.GetComponent<Clock>();
 
             if (_clock.Hour < 12) {
@@ -34,7 +34,7 @@ public class GoToSchool : MonoBehaviour, Interactable
             // condition to show that user is already late to class
             return true;
         }
-        else if (DataManager.GetTutorialProgress() >= 2) {
+        else if (DataManager.GetTutorialProgress() >= 3) {
             NPCDialogue.Instance.AddDialogue("I'd better build my computer before I do anything else.", DataManager.GetPlayerName());
             NPCDialogue.Instance.ShowDialogue();
         }

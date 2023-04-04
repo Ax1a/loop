@@ -158,6 +158,8 @@ public class UIController : MonoBehaviour
     public void DequeuePopupHighlight(int index) {
         for (int i = 0; i < highlightGuides.Length; i++)
         {
+            if (QueueIsEmpty()) return;
+            
             if (highlightGuides[i].name == popUpUIs.Peek().name) {
                 popUpUIs.Peek().SetActive(false);
                 Debug.Log(popUpUIs.Peek().name + ": Dequeued");

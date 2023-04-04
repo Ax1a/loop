@@ -34,6 +34,11 @@ public class CellphonePopUp : MonoBehaviour
     {
         if (!applicationPanel.activeSelf)
         {
+            if (DataManager.GetTutorialProgress() == 2) {
+                UIController.Instance.DequeuePopupHighlight(0);
+                BotGuide.Instance.AddDialogue("From here, you can browse through the available quests and messages to see what interests you or needs your attention.");
+                BotGuide.Instance.ShowDialogue();
+            }
             _isActive = true;
             applicationPanel.SetActive(true);
             UIController.Instance.SetPanelActive(true);

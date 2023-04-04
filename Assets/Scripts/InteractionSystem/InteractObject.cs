@@ -32,7 +32,7 @@ public class InteractObject : MonoBehaviour
     {
         _numFound = Physics.OverlapSphereNonAlloc(_interactionPoint.position, _interactionPointRadius, _colliders, _interactableMask);
 
-        if (_numFound > 0 && DataManager.GetTutorialProgress() >= 2)
+        if (_numFound > 0 && DataManager.GetTutorialProgress() >= 3)
         {
             _interactable = _colliders[0].GetComponent<Interactable>();
             outline = _colliders[0].GetComponent<Outline>();

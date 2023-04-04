@@ -31,7 +31,7 @@ public class QuestManager : MonoBehaviour
             currentQuestList = DataManager.CurrentQuests;
             QuestUI.Instance.activeQuest.AddRange(currentQuestList);
         }
-        if (DataManager.GetTutorialProgress() >= 4) mainQuestGiver.SetActive(true);
+        if (DataManager.GetTutorialProgress() >= 5) mainQuestGiver.SetActive(true);
     }
 
     public void QuestRequest(QuestObject QO) {

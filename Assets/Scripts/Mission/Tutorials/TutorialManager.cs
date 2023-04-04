@@ -36,7 +36,7 @@ public class TutorialManager : MonoBehaviour
         SetNextTutorial(DataManager.GetTutorialProgress());
         StartCoroutine(DelayStart());
 
-        if (DataManager.GetTutorialProgress() >= 4) {
+        if (DataManager.GetTutorialProgress() >= 5) {
             pcBoxes.SetActive(false);
             computer.SetActive(true);
         }
@@ -59,7 +59,7 @@ public class TutorialManager : MonoBehaviour
         if (currentTutorial && BotGuide.Instance.guideIsActive() == false) currentTutorial.CheckIfHappening();
         if (UIController.Instance.otherPanelActive() == true) return;
         
-        if (DataManager.GetTutorialProgress() == 2 && _activated == false) {
+        if (DataManager.GetTutorialProgress() == 3 && _activated == false) {
             BotGuide.Instance.AddDialogue("You can interact with certain objects in the game using the E key."); 
             BotGuide.Instance.AddDialogue("When you see an object with the 'Interact' prompt above it, just press E to interact with it. Give it a try on that nearby object now!"); 
             BotGuide.Instance.ShowDialogue();

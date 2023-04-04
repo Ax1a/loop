@@ -27,7 +27,7 @@ public class ShopCourse : MonoBehaviour
 
     void Start()
     {
-        if (DataManager.GetTutorialProgress() >= 4 && !_checkedState) {
+        if (DataManager.GetTutorialProgress() >= 5 && !_checkedState) {
             DisplayCourseStateIndicator();
             DisplayCourseRequirements();
 
@@ -44,7 +44,7 @@ public class ShopCourse : MonoBehaviour
     }
 
     private void Update() {
-        if (DataManager.GetTutorialProgress() >= 4 & !_checkedState) {
+        if (DataManager.GetTutorialProgress() >= 5 & !_checkedState) {
             DisplayCourseStateIndicator();
             DisplayCourseRequirements();
 

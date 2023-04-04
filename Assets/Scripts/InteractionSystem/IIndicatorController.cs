@@ -10,7 +10,7 @@ public class IIndicatorController : MonoBehaviour
     
     void Start()
     {
-        if (DataManager.GetTutorialProgress() >= 2) {
+        if (DataManager.GetTutorialProgress() >= 3) {
             foreach (GameObject indicator in indicators)
             {
                 indicator.SetActive(true);
@@ -27,7 +27,7 @@ public class IIndicatorController : MonoBehaviour
 
     private void LateUpdate() {
         // Check if the indicator is already added, no other panel is active, and the tutorial progress is > 2
-        if (!_addedIndicators && DataManager.GetTutorialProgress() >= 2 && !UIController.Instance.otherPanelActive() && UIController.Instance.QueueIsEmpty()) {
+        if (!_addedIndicators && DataManager.GetTutorialProgress() >= 3 && !UIController.Instance.otherPanelActive() && UIController.Instance.QueueIsEmpty()) {
 
             foreach (GameObject indicator in indicators)
             {
