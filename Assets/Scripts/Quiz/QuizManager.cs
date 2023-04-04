@@ -9,7 +9,7 @@ using TMPro;
 public class QuizManager : MonoBehaviour
 {
     #region Private Variables
-    quizTimer timer;
+    // quizTimer timer;
     private QuestAndAns currentQuestion;
     int _totalQuestions = 0;
     int _questionIndex;
@@ -64,7 +64,7 @@ public class QuizManager : MonoBehaviour
         _totalQuestions = QnA.Count;
         winPanel.SetActive(false);
         quizPanel.SetActive(true);
-        timer = GameObject.Find("StartPanel").GetComponent<quizTimer>();
+        // timer = GameObject.Find("StartPanel").GetComponent<quizTimer>();
         _energy = Energy.Instance.GetCurrentEnergy();
         if (questionImageButton != null) questionImageButton.SetActive(false);
 
@@ -108,7 +108,7 @@ public class QuizManager : MonoBehaviour
             scoreCount = 0;
             gameOverPanel.SetActive(false);
             if (popUpImage != null) popUpImage.SetActive(false);
-            timer.resetTime();
+            quizTimer.Instance.resetTime();
             SetCurrentQuestion(_questionIndex);
             Energy.Instance.UseEnergy(1);
         }
@@ -133,14 +133,14 @@ public class QuizManager : MonoBehaviour
     }
     public void GameOver()
     {
-        timer.stopTime();
+        quizTimer.Instance.stopTime();
         gameOverPanel.SetActive(true);
         //Lose score index : 0
         SetScoreCount();
     }
     public void Win()
     {
-        timer.stopTime();
+        quizTimer.Instance.stopTime();
         winPanel.SetActive(true);
         //Lose score index : 1
         SetScoreCount();

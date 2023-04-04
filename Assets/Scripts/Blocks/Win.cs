@@ -32,6 +32,12 @@ public class Win : Singleton<Win>
     private int _currPts = 0;
     TMP_InputField _input;
 
+    void Start()
+    {
+        Debug.Log("Reward"+ RewardManager.Instance._money);
+
+    }
+
     void OnEnable()
     {
         gameOverPanel.SetActive(false);
@@ -52,7 +58,7 @@ public class Win : Singleton<Win>
         gameOverPanel.SetActive(false);
 
         //Resets all position
-        initialPosition.Instance.ResetPositions();
+        //initialPosition.Instance.ResetPositions();
     }
     public void validate()
     {
@@ -113,8 +119,11 @@ public class Win : Singleton<Win>
     {
         // Add set of money and exp values here
         yield return new WaitForSeconds(1f);
-        moneyTxt.text = "+" + RewardManager.Instance._money.ToString();
-        expTxt.text = "+" + RewardManager.Instance._exp.ToString();
+        moneyTxt.text = "+ " + RewardManager.Instance._money.ToString();
+        Debug.Log("Reward"+ RewardManager.Instance._money);
+
+        yield return new WaitForSeconds(1f);
+        expTxt.text = "+ " + RewardManager.Instance._exp.ToString();
 
         foreach (var obj in popupGameObjects)
         {
