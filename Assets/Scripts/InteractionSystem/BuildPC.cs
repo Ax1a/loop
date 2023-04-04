@@ -10,7 +10,7 @@ public class BuildPC : MonoBehaviour, Interactable
 
     public bool Interact(InteractObject interactor)
     {
-        if (DataManager.GetTutorialProgress() >= 2) {
+        if (DataManager.GetTutorialProgress() >= 3) {
             UIController.Instance.ToggleUI("AssemblePopup");
             StartCoroutine(DelayEnqueue());
             

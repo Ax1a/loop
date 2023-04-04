@@ -21,7 +21,7 @@ public class Computer : MonoBehaviour, Interactable
     }
     public bool Interact(InteractObject interactor)
     {
-        if (DataManager.GetTutorialProgress() >= 4) {
+        if (DataManager.GetTutorialProgress() >= 5) {
             // Disable HUD (Fix error when disabled)
             _interactOverlay.SetActive(false);
 

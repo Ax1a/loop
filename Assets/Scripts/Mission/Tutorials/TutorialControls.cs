@@ -5,10 +5,11 @@ using UnityEngine;
 
 public class TutorialControls : Tutorial
 {
-    public List<string> Keys = new List<string>();
+    public List<KeyCode> Keys = new List<KeyCode>();
     [SerializeField] private GameObject parent;
-    [SerializeField] private GameObject highlightGuide;
-    private List<string> _keyCountTemp;
+    [SerializeField] private GameObject shopHighlightGuide;
+    [SerializeField] private GameObject phoneHighlightGuide;
+    private List<KeyCode> _keyCountTemp;
 
     private void OnEnable() {
         _keyCountTemp = Keys.ToList();
@@ -17,7 +18,7 @@ public class TutorialControls : Tutorial
     public override void CheckIfHappening()
     {
         for (int i = 0; i < _keyCountTemp.Count; i++) {
-            if (Input.inputString.Contains(_keyCountTemp[i])) {
+            if (Input.GetKeyDown(_keyCountTemp[i])) {
                 // Change the toggle box to check
                 Transform _panel = parent.gameObject.transform.GetChild(0);
                 QuestUISidePanel _questUI = _panel.GetComponent<QuestUISidePanel>();
@@ -26,22 +27,27 @@ public class TutorialControls : Tutorial
         }
 
         for (int i = 0; i < Keys.Count; i++) {
-            if (Input.inputString.Contains(Keys[i])) {
+            if (Input.GetKeyDown(Keys[i])) {
                 AudioManager.Instance.PlaySfx("Success");
-                Keys.RemoveAt(i);
 
-                if (Input.inputString == "b") {
+                if (Input.GetKeyDown(KeyCode.B)) {
                     DataManager.AddMoney(15);
                     BotGuide.Instance.AddDialogue("Great! You have been given 15 currency units to spend."); 
                     BotGuide.Instance.AddDialogue("Perhaps you could treat yourself to a nice cup of coffee? Try clicking the buy button of an item.");
                     BotGuide.Instance.ShowDialogue();
-                    UIController.Instance.EnqueuePopup(highlightGuide);
+                    UIController.Instance.EnqueuePopup(shopHighlightGuide);
                 }
-                if (Input.inputString == "i") {
+                if (Input.GetKeyDown(KeyCode.I)) {
                     BotGuide.Instance.AddDialogue("Great job! In the inventory, you can browse your items, or use them if needed.");
                     BotGuide.Instance.AddDialogue("Now let's close the inventory to continue the tutorial.");
                     BotGuide.Instance.ShowDialogue();
                 }
+                if (Input.GetKeyDown(KeyCode.UpArrow)) {
+                    UIController.Instance.EnqueuePopup(phoneHighlightGuide);
+                }
+
+                Keys.RemoveAt(i);
+                
                 break;
             }
         }
@@ -59,6 +65,10 @@ public class TutorialControls : Tutorial
                 }
 
                 TutorialManager.Instance.CompletedTutorial();
+
+                if (_keyCountTemp.Contains(KeyCode.UpArrow) || _keyCountTemp.Contains(KeyCode.DownArrow)) {
+                    UIController.Instance.DequeuePopupHighlight(0);
+                }
             }
         }
     }
