@@ -5,7 +5,7 @@ using TMPro;
 
 public class InboxButton : MonoBehaviour
 {
-    [SerializeField] private int id;
+    public int id;
     [SerializeField] private TextMeshProUGUI title;
     [SerializeField] private TextMeshProUGUI description;
 
@@ -22,8 +22,6 @@ public class InboxButton : MonoBehaviour
     }
 
     public void ShowInbox() {
-        // Add show function here
         InboxManager.Instance.SetUpInboxDetails(id);
-        Debug.Log(id);
     }
 }
