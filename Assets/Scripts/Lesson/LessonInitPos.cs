@@ -7,7 +7,6 @@ public class LessonInitPos : MonoBehaviour, IDropHandler
 {
     public GameObject[] objects;
     public Vector3[] initialPositions;
-
     GameObject parent;
     [HideInInspector] public LessonDragBlock drag;
 

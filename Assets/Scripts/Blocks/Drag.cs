@@ -11,7 +11,14 @@ public class Drag : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndD
     public Transform parentAfterDrag;
     private RectTransform rect;
     private CanvasGroup canvasGroup;
-    public Vector2 initPos;
+    Vector2 initPos;
+    GameObject onDragCanvas;
+    public GameObject parent;
+    public Transform parentToReturn = null;
+    GameObject ghostBlock = null;
+
+
+
     public BlockData blockData;
 
     private void Awake()
@@ -23,17 +30,31 @@ public class Drag : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndD
     void Start()
     {
         initPos = transform.position;
+        onDragCanvas = GameObject.FindGameObjectWithTag("onDragCanvas");
+        parent = GameObject.FindGameObjectWithTag("parent");
+        parentToReturn = parent.transform;
+
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
-        Debug.Log("OnBeginDrag");
+        //Creating a placeholder when dragging 
+        ghostBlock = new GameObject();
+        ghostBlock.transform.SetParent (transform.parent);
+        LayoutElement le = ghostBlock.AddComponent<LayoutElement>();
+        le.preferredHeight = GetComponent<LayoutElement>().preferredHeight;
+        le.preferredWidth = GetComponent<LayoutElement>().preferredWidth;
+        le.flexibleHeight = 0;
+        le.flexibleWidth = 0;
 
-        GameObject parent = GameObject.FindGameObjectWithTag("parent");
-        transform.SetParent(parent.transform);
-        transform.SetAsLastSibling();
+        //Making the new created placeholder to be the index of dragging object
+        ghostBlock.transform.SetSiblingIndex(transform.GetSiblingIndex());
 
+        transform.SetParent(onDragCanvas.transform);
         canvasGroup.blocksRaycasts = false;
 
+        // GameObject parent = GameObject.FindGameObjectWithTag("parent");
+        // transform.SetParent(parent.transform);
+        // transform.SetAsLastSibling();
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -46,11 +67,15 @@ public class Drag : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndD
     {
         Debug.Log("OnEndDrag");
 
-        parentAfterDrag = transform.parent;
+        // parentAfterDrag = transform.parent;
+
+        transform.SetParent(parentToReturn);
+
         canvasGroup.blocksRaycasts = true;
 
+        //Destroy invisible block on drag
+        Destroy(ghostBlock);
     }
-
     public void OnPointerDown(PointerEventData eventData)
     {
         AudioManager.Instance.PlaySfx("Pop");
