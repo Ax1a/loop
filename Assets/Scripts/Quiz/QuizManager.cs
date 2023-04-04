@@ -175,7 +175,7 @@ public class QuizManager : MonoBehaviour
     private IEnumerator DelayAddProgress()
     {
         yield return new WaitForSeconds(3.5f);
-        QuestManager.Instance.AddQuestItem("Finish lesson 1", 1);
+        QuestManager.Instance.AddQuestItem("Finish Lesson 1", 1);
     }
     public void Correct()
     {

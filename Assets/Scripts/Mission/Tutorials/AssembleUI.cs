@@ -40,6 +40,14 @@ public class AssembleUI : MonoBehaviour
         }
     }
 
+    private void OnDisable() {
+        if (UIController.Instance.popUpUIs.Count > 0)
+        {
+            if (_firstSelect || UIController.Instance.popUpUIs.Peek().name == "AssembleGuide") UIController.Instance.DequeuePopupHighlight(1);
+        }
+        _firstSelect = false;
+    }
+
     // PC Part Type Onclick button
     void OpenPanel(int index)
     {
