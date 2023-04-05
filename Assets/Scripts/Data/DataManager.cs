@@ -316,8 +316,7 @@ public static class DataManager
         {
             result = playerData.programmingLanguage[key];
         }
-
-        Debug.Log("Programming progress: " + key + " is " + result);
+        
         return result;
     }
 

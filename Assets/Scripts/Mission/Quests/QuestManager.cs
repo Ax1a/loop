@@ -93,7 +93,6 @@ public class QuestManager : MonoBehaviour
                 Debug.Log("Accepted quest");
                 // QuestUI.Instance.activeQuest.Add(questList[i]);
                 questList[i].progress = Quest.QuestProgress.ACCEPTED;
-                QuestUI.Instance.ShowNewQuestBanner(questList[i].title, questList[i].questType);
             }
         }
         

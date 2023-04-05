@@ -2402,6 +2402,7 @@ MonoBehaviour:
       shop first. Once you have made a purchase, you can continue with the mission
       and start your learning journey.
     congratsText: Congrats!
+    npcName: 
     summary: Mission Complete
     nextQuest: 1
     questObjectives:
@@ -2419,6 +2420,7 @@ MonoBehaviour:
       a simple program. Once you complete the lesson, you will be rewarded with some
       experience that will aid you on your journey.
     congratsText: Great! You've finished your first lesson
+    npcName: 
     summary: 'Lesson 1 Complete '
     nextQuest: 2
     questObjectives:
@@ -2434,6 +2436,7 @@ MonoBehaviour:
     subTitle: Dummy Mission
     description: Testing Chain quest in main
     congratsText: dd
+    npcName: 
     summary: ddd
     nextQuest: 0
     questObjectives:
@@ -2449,6 +2452,7 @@ MonoBehaviour:
     subTitle: Assignment
     description: Testing Assignment Quest
     congratsText: dd
+    npcName: 
     summary: ddd
     nextQuest: 0
     questObjectives:
@@ -4001,13 +4005,10 @@ MonoBehaviour:
   - '[ A ] - Left'
   - '[ S ] - Backward'
   - '[ D ] - Right'
-  Keys:
-  - w
-  - a
-  - s
-  - d
+  Keys: 00000000000000000000000000000000
   parent: {fileID: 1894049490}
-  highlightGuide: {fileID: 1168237769}
+  shopHighlightGuide: {fileID: 0}
+  phoneHighlightGuide: {fileID: 0}
 --- !u!114 &185356990
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4026,11 +4027,10 @@ MonoBehaviour:
   Requirement:
   - '[ B ] - Shop'
   - '[ I ] - Inventory'
-  Keys:
-  - b
-  - i
+  Keys: 0000000000000000
   parent: {fileID: 1894049490}
-  highlightGuide: {fileID: 1168237769}
+  shopHighlightGuide: {fileID: 0}
+  phoneHighlightGuide: {fileID: 0}
 --- !u!1 &187745418
 GameObject:
   m_ObjectHideFlags: 0
@@ -7140,7 +7140,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
-  m_LocalRotation: {x: 0.2222639, y: -0.08559062, z: 0.01959137, w: 0.9710248}
+  m_LocalRotation: {x: 0.22226389, y: -0.08559065, z: 0.019591376, w: 0.9710248}
   m_LocalPosition: {x: -40.755608, y: -19.198257, z: -9.855744}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -38856,7 +38856,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1455879008}
-  m_LocalRotation: {x: 0.2222639, y: -0.08559062, z: 0.01959137, w: 0.9710248}
+  m_LocalRotation: {x: 0.22226389, y: -0.08559065, z: 0.019591376, w: 0.9710248}
   m_LocalPosition: {x: -40.755608, y: -19.198257, z: -9.855744}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -48965,6 +48965,16 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: OpenApplication
       objectReference: {fileID: 0}
+    - target: {fileID: 4842425800660462235, guid: 49bbd7cd89c7ece44b159a1a74ae4ab3,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -39.80005
+      objectReference: {fileID: 0}
+    - target: {fileID: 4842425800660462235, guid: 49bbd7cd89c7ece44b159a1a74ae4ab3,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -38.899994
+      objectReference: {fileID: 0}
     - target: {fileID: 4842425800775678042, guid: 49bbd7cd89c7ece44b159a1a74ae4ab3,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -53601,6 +53611,7 @@ MonoBehaviour:
   - {fileID: 1561411260}
   - {fileID: 1291538405}
   - {fileID: 79202438}
+  interactionQuizSelectionLocks: []
   courseSelectionProgress:
   - {fileID: 1516803383}
   - {fileID: 682694207}

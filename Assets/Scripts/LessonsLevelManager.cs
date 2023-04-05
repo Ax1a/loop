@@ -19,14 +19,6 @@ public class LessonsLevelManager : MonoBehaviour
     private int _reachedLesson;
     private int _level;
     [HideInInspector] public string course;
-    public static LessonsLevelManager Instance;
-    private void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-    }
 
     void Start()
     {
@@ -76,7 +68,7 @@ public class LessonsLevelManager : MonoBehaviour
     public void addReachedLesson()
     {
         // DataManager.addReachedLesson();
-        DataManager.AddProgrammingLanguageProgress(LessonsLevelManager.Instance.course);
+        DataManager.AddProgrammingLanguageProgress(course);
 
         _reachedLesson++;
         UpdateLessonState();

@@ -36,6 +36,7 @@ public class QuizManager : MonoBehaviour
     [HideInInspector] public int scoreCount;
     public static QuizManager Instance;
     public GameObject[] rewardsPanel;
+    [SerializeField] private LessonsLevelManager levelManager;
     #endregion
 
     #region Methods/Functions
@@ -160,7 +161,10 @@ public class QuizManager : MonoBehaviour
             Win();
             RewardManager.Instance.AssessReward();
             StartCoroutine(DelayAddProgress());
-            LessonsLevelManager.Instance.addReachedLesson();
+            if (levelManager != null) {
+                levelManager.addReachedLesson();
+            }
+            
 
             //to-do: should add level depending on the course they are taking
             // DataManager.AddProgrammingLanguageProgress(levelManager.course);
@@ -206,8 +210,10 @@ public class QuizManager : MonoBehaviour
 
         text.text = currentQuestion.Questions;
 
-        if (questionImage != null) questionImage.sprite = currentQuestion.QustionImage;
-
+        if (questionImage != null) {
+           questionImage.sprite = currentQuestion.QustionImage;
+           questionImage.preserveAspect = true;
+        }
         for (int i = 0; i < options.Length; i++)
         {
             options[i].GetComponent<AnswerScript>().isCorrect = false;

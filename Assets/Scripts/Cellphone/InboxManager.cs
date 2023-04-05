@@ -72,9 +72,14 @@ public class InboxManager : MonoBehaviour
                 moneyReward.text = "+" + item.moneyReward;
 
                 acceptButton.onClick.RemoveAllListeners();
-                acceptButton.onClick.AddListener(() => QuestManager.Instance.AcceptQuest(item.id));
+                acceptButton.onClick.AddListener(() => AcceptSideQuest(item));
             }
         }
+    }
+
+    private void AcceptSideQuest(Quest quest) {
+        QuestManager.Instance.AcceptQuest(quest.id);
+        QuestUI.Instance.ShowNewQuestBanner(quest.title, quest.questType);
     }
 
     private void ClearData() {
