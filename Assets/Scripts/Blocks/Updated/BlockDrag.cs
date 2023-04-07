@@ -9,23 +9,23 @@ public class BlockDrag : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
     [SerializeField] private GameObject blockPrefab;
     [SerializeField] private bool instantiate = false;
     private GameObject currentDrag;
-    private Transform tempParent;
-    private Transform environmentParent;
-    private GameObject _environmentParent;
+    private Transform _tempParent;
+    private Transform _environmentParent;
+    private GameObject _environmentContainer;
 
     private void Awake() {
-        tempParent = GameObject.FindGameObjectWithTag("BlockTempParent").transform;
-        environmentParent =  GameObject.FindGameObjectWithTag("BlockEnvironmentParent").transform;
-        _environmentParent = GameObject.FindGameObjectWithTag("BlockEnvironment");
+        _tempParent = GameObject.FindGameObjectWithTag("BlockTempParent").transform;
+        _environmentParent =  GameObject.FindGameObjectWithTag("BlockEnvironmentParent").transform;
+        _environmentContainer = GameObject.FindGameObjectWithTag("BlockEnvironment");
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
         // Create a new instance of the block prefab and set it as the current drag object
         if (instantiate) {
-            currentDrag = Instantiate(blockPrefab, transform.position, Quaternion.identity, tempParent);
-            currentDrag.GetComponent<BlockDrag>().tempParent = tempParent;
-            currentDrag.GetComponent<BlockDrag>().environmentParent = environmentParent;
+            currentDrag = Instantiate(blockPrefab, transform.position, Quaternion.identity, _tempParent);
+            currentDrag.GetComponent<BlockDrag>()._tempParent = _tempParent;
+            currentDrag.GetComponent<BlockDrag>()._environmentParent = _environmentParent;
         }
         else {
             currentDrag = gameObject;
@@ -38,18 +38,18 @@ public class BlockDrag : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
         currentDrag.transform.position = Input.mousePosition;
         
         if (!instantiate) {
-            transform.SetParent(tempParent.transform);
+            transform.SetParent(_tempParent.transform);
         }
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
         // Check if the current drag object is within the environment panel's bounds
-        if (RectTransformUtility.RectangleContainsScreenPoint(_environmentParent.GetComponent<RectTransform>(), Input.mousePosition))
+        if (RectTransformUtility.RectangleContainsScreenPoint(_environmentContainer.GetComponent<RectTransform>(), Input.mousePosition))
         {
             // Set the parent of the current drag object to the environmentParent
             // _environmentParent is the parent of environmentParent.
-            currentDrag.transform.SetParent(environmentParent.transform);
+            currentDrag.transform.SetParent(_environmentParent.transform);
         }
         else
         {
