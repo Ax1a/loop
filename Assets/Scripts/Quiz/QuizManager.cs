@@ -9,7 +9,6 @@ using TMPro;
 public class QuizManager : MonoBehaviour
 {
     #region Private Variables
-    // quizTimer timer;
     private QuestAndAns currentQuestion;
     int _totalQuestions = 0;
     int _questionIndex;
@@ -18,6 +17,7 @@ public class QuizManager : MonoBehaviour
     [SerializeField] private Courses course;
     [SerializeField] private Image questionImage;
     [SerializeField] private GameObject questionImageButton;
+    quizTimer timer;
     //bool isComplete = false;
 
     #endregion
@@ -64,7 +64,7 @@ public class QuizManager : MonoBehaviour
         _totalQuestions = QnA.Count;
         winPanel.SetActive(false);
         quizPanel.SetActive(true);
-        // timer = GameObject.Find("StartPanel").GetComponent<quizTimer>();
+        timer = GetComponent<quizTimer>();
         _energy = Energy.Instance.GetCurrentEnergy();
         if (questionImageButton != null) questionImageButton.SetActive(false);
 
@@ -89,7 +89,7 @@ public class QuizManager : MonoBehaviour
         if (Energy.Instance.GetCurrentEnergy() > 0)
         {
             Energy.Instance.UseEnergy(1);
-            quizTimer.Instance.startGame();
+            timer.startGame();
         }
         else
         {
@@ -108,7 +108,7 @@ public class QuizManager : MonoBehaviour
             scoreCount = 0;
             gameOverPanel.SetActive(false);
             if (popUpImage != null) popUpImage.SetActive(false);
-            quizTimer.Instance.resetTime();
+            timer.resetTime();
             SetCurrentQuestion(_questionIndex);
             Energy.Instance.UseEnergy(1);
         }
@@ -133,14 +133,14 @@ public class QuizManager : MonoBehaviour
     }
     public void GameOver()
     {
-        quizTimer.Instance.stopTime();
+        timer.stopTime();
         gameOverPanel.SetActive(true);
         //Lose score index : 0
         SetScoreCount();
     }
     public void Win()
     {
-        quizTimer.Instance.stopTime();
+        timer.stopTime();
         winPanel.SetActive(true);
         //Lose score index : 1
         SetScoreCount();
