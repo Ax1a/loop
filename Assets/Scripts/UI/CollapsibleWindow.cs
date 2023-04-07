@@ -13,10 +13,9 @@ public class CollapsibleWindow : MonoBehaviour
     [SerializeField] private ContentSizeFitter parentContentSizeFitter;
     [SerializeField] private LayoutGroup parentLayout;
     
-    Coroutine _updateCoroutine;
-    
     public void ToggleCollapsibleWindow() {
         bool isActive = body.activeSelf;
+        Debug.Log(body.name);
 
         if (!isActive) {
             body.SetActive(!isActive);
@@ -30,26 +29,11 @@ public class CollapsibleWindow : MonoBehaviour
                 RefreshContentFitters();
             });
         }
-
-        // if (_updateCoroutine != null) StopCoroutine(_updateCoroutine);
-        // _updateCoroutine = StartCoroutine(UpdateLayout());
-
-
         collapseIcon.gameObject.SetActive(!isActive);
         expandIcon.gameObject.SetActive(isActive);
     }
 
     // Fix update layout bug
-    // private IEnumerator UpdateLayout() {
-    //     if (parentContentSizeFitter != null)
-    //     {
-    //         Canvas.ForceUpdateCanvases();
-    //         parentContentSizeFitter.enabled = false;
-    //         yield return new WaitForSeconds(.3f);
-    //         parentContentSizeFitter.enabled = true;
-    //     }
-    // }
-
     public void RefreshContentFitters()
     {
         var rectTransform = (RectTransform)transform;
