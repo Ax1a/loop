@@ -15,7 +15,6 @@ public class CollapsibleWindow : MonoBehaviour
     
     public void ToggleCollapsibleWindow() {
         bool isActive = body.activeSelf;
-        Debug.Log(body.name);
 
         if (!isActive) {
             body.SetActive(!isActive);
