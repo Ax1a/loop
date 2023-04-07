@@ -5,13 +5,19 @@ using UnityEngine.EventSystems;
 
 public class BlockDrag : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
-    public Transform tempParent;
-    public Transform environmentParent;
     [Header ("FOR SIDE PANEL ONLY")]
     [SerializeField] private GameObject blockPrefab;
     [SerializeField] private bool instantiate = false;
+    private GameObject currentDrag;
+    private Transform tempParent;
+    private Transform environmentParent;
+    private GameObject _environmentParent;
 
-    private GameObject currentDrag; // The current drag object
+    private void Awake() {
+        tempParent = GameObject.FindGameObjectWithTag("BlockTempParent").transform;
+        environmentParent =  GameObject.FindGameObjectWithTag("BlockEnvironmentParent").transform;
+        _environmentParent = GameObject.FindGameObjectWithTag("BlockEnvironment");
+    }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -38,9 +44,6 @@ public class BlockDrag : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        // Get the panel with the tag "BlockEnvironment"
-        GameObject _environmentParent = GameObject.FindGameObjectWithTag("BlockEnvironment");
-
         // Check if the current drag object is within the environment panel's bounds
         if (RectTransformUtility.RectangleContainsScreenPoint(_environmentParent.GetComponent<RectTransform>(), Input.mousePosition))
         {
@@ -51,7 +54,6 @@ public class BlockDrag : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
         else
         {
             // Destroy the gameobject when outside of the environment scope
-            // currentDrag.transform.SetParent(listView);
             if (currentDrag != null) {
                 Destroy(currentDrag);
             }
