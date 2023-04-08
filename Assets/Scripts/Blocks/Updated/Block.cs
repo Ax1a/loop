@@ -15,9 +15,12 @@ public abstract class Block : MonoBehaviour
         Simple,
         Conditional,
         Operation,
-        NormalBlock
+        NormalBlock,
+        Comment
     }
 
     public BlockLanguage blockLanguage;
     public BlockType blockType;
+
+    public abstract bool Validate();
 }

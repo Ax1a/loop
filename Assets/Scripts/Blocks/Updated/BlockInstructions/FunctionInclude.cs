@@ -7,9 +7,11 @@ public class FunctionInclude : Block
 {
     public TMP_InputField includeInput;
 
-    private void Update() {
-        if (includeInput.text == "namespace std") {
-            Debug.Log(includeInput.text);
+    public override bool Validate() {
+        if (includeInput.text == "<iostream>") {
+            return true;
         }
+
+        return false;
     }
 }
