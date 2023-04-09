@@ -41,7 +41,7 @@ public class LessonDragBlock : MonoBehaviour, IPointerDownHandler, IBeginDragHan
     {
         //Creating a placeholder when dragging 
         ghostBlock = new GameObject();
-        ghostBlock.transform.SetParent (transform.parent);
+        ghostBlock.transform.SetParent(transform.parent);
         LayoutElement le = ghostBlock.AddComponent<LayoutElement>();
         le.preferredHeight = GetComponent<LayoutElement>().preferredHeight;
         le.preferredWidth = GetComponent<LayoutElement>().preferredWidth;
@@ -50,7 +50,7 @@ public class LessonDragBlock : MonoBehaviour, IPointerDownHandler, IBeginDragHan
 
         //Making the new created placeholder to be the index of dragging object
         ghostBlock.transform.SetSiblingIndex(transform.GetSiblingIndex());
-        
+
         //Make onCanvas to be the parent on drag. 
         transform.SetParent(onDragCanvas.transform);
 
@@ -70,9 +70,11 @@ public class LessonDragBlock : MonoBehaviour, IPointerDownHandler, IBeginDragHan
 
         //Set the parent to its original parent if not dropped in right place
         transform.SetParent(parentToReturn);
-        
+
         //Destroy the ghostblock after dragging
         Destroy(ghostBlock);
+        
+        RefreshContentFitters();
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -84,5 +86,36 @@ public class LessonDragBlock : MonoBehaviour, IPointerDownHandler, IBeginDragHan
         transform.position = initPos;
     }
 
+    // Fix update layout bug
+    public void RefreshContentFitters()
+    {
+        var rectTransform = (RectTransform)transform;
+        RefreshContentFitter(rectTransform);
+    }
 
+    private void RefreshContentFitter(RectTransform transform)
+    {
+        if (transform == null || !transform.gameObject.activeSelf)
+        {
+            return;
+        }
+
+        foreach (RectTransform child in transform)
+        {
+            RefreshContentFitter(child);
+        }
+
+        var layoutGroup = transform.GetComponent<LayoutGroup>();
+        var contentSizeFitter = transform.GetComponent<ContentSizeFitter>();
+        if (layoutGroup != null)
+        {
+            layoutGroup.SetLayoutHorizontal();
+            layoutGroup.SetLayoutVertical();
+        }
+
+        if (contentSizeFitter != null)
+        {
+            LayoutRebuilder.ForceRebuildLayoutImmediate(transform);
+        }
+    }
 }
