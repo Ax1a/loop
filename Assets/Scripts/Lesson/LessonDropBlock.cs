@@ -71,8 +71,8 @@ public class LessonDropBlock : MonoBehaviour, IDropHandler
                 }
             }
         }
+        RefreshContentFitters();
 
-        PanelLayoutRebuilder.RebuildLayout(dragObject.GetComponent<RectTransform>());
     }
     public void CheckAnswer(PointerEventData eventData)
     {
@@ -91,6 +91,39 @@ public class LessonDropBlock : MonoBehaviour, IDropHandler
             Debug.Log("Wrong");
             LessonDragDropValidation.Instance.MinusPoints();
             Debug.Log(_pointsAdded);
+        }
+    }
+
+    // Fix update layout bug
+    public void RefreshContentFitters()
+    {
+        var rectTransform = (RectTransform)transform;
+        RefreshContentFitter(rectTransform);
+    }
+
+    private void RefreshContentFitter(RectTransform transform)
+    {
+        if (transform == null || !transform.gameObject.activeSelf)
+        {
+            return;
+        }
+
+        foreach (RectTransform child in transform)
+        {
+            RefreshContentFitter(child);
+        }
+
+        var layoutGroup = transform.GetComponent<LayoutGroup>();
+        var contentSizeFitter = transform.GetComponent<ContentSizeFitter>();
+        if (layoutGroup != null)
+        {
+            layoutGroup.SetLayoutHorizontal();
+            layoutGroup.SetLayoutVertical();
+        }
+
+        if (contentSizeFitter != null)
+        {
+            LayoutRebuilder.ForceRebuildLayoutImmediate(transform);
         }
     }
 }
