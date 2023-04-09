@@ -7,8 +7,6 @@ public class ToggleSection : MonoBehaviour
 {
     public Transform newVariablePanel;
     public Canvas mainCanvas;
-
-    
     public Sprite IconExpandDown;
     public Sprite IconExpandUp;
 
