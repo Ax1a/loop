@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 [System.Serializable]
 public abstract class Block : MonoBehaviour
@@ -22,7 +23,7 @@ public abstract class Block : MonoBehaviour
 
     public BlockLanguage blockLanguage;
     public BlockType blockType;
+    public List<Transform> childBlockParent;
 
     public abstract bool Validate();
-    public abstract void OnSnap(Transform closestChild, Transform parent, GameObject setGameObject, GameObject currentDrag);
 }

@@ -9,6 +9,7 @@ public class BlockController : MonoBehaviour
     [SerializeField] private Image deleteIcon;
     private List<GameObject> blocks = new List<GameObject>();
     private Sprite _trashClosed, _trashOpen;
+    public List<Transform> childContainers;
 
     public static BlockController Instance;
 
@@ -41,20 +42,30 @@ public class BlockController : MonoBehaviour
     void Update()
     {
         // Testing)
-        if ((blocks == null && environmentParent.childCount != 0) || blocks.Count != environmentParent.childCount) {
-            if (blocks != null) blocks.Clear();
+        // if ((blocks == null && environmentParent.childCount != 0) || blocks.Count != environmentParent.childCount) {
+        //     if (blocks != null) blocks.Clear();
 
-            for (int i = 0; i < environmentParent.childCount; i++)
-            {
-                blocks.Add(environmentParent.GetChild(i).gameObject);
-            }
-        }
+        //     for (int i = 0; i < environmentParent.childCount; i++)
+        //     {
+        //         blocks.Add(environmentParent.GetChild(i).gameObject);
+        //     }
+        // }
 
-        foreach (var item in blocks)
+        // foreach (var item in blocks)
+        // {
+        //     Block blockData = item.GetComponent<Block>();
+        //     if (blockData != null) {
+        //         Debug.Log(blockData.Validate() + " " + blockData.blockLanguage);
+        //     }
+        // }
+        foreach (var item in childContainers)
         {
-            Block blockData = item.GetComponent<Block>();
-            if (blockData != null) {
-                Debug.Log(blockData.Validate() + " " + blockData.blockLanguage);
+            foreach (Transform child in item)
+            {
+                Block blockData = child.GetComponent<Block>();
+                if (blockData != null) {
+                    Debug.Log(blockData.Validate() + " " + blockData.blockLanguage);
+                }
             }
         }
     }

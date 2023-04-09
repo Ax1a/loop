@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BlockSetup : Block
 {
-    public Transform childContainer;
     public BlockSetup() {
         blockType = BlockType.Setup;
     }
@@ -14,12 +13,5 @@ public class BlockSetup : Block
 
         return false;
     }
-
-    public override void OnSnap(Transform closestChild, Transform parent, GameObject setGameObject, GameObject currentDrag)
-    {
-        setGameObject.transform.SetParent(parent.transform, false);
-        setGameObject.transform.SetSiblingIndex(closestChild.GetSiblingIndex());
-    }
-
     
 }

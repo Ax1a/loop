@@ -23,6 +23,10 @@ public class BlockDrag : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
         _deleteBlockContainer = GameObject.FindGameObjectWithTag("BlockDelete");
     }
 
+    private void Start() {
+        if (!BlockController.Instance.childContainers.Contains(_environmentParent)) BlockController.Instance.childContainers.Add(_environmentParent);    
+    }
+
     public void OnBeginDrag(PointerEventData eventData)
     {
         // Create a new instance of the block prefab and set it as the current drag object
@@ -48,7 +52,7 @@ public class BlockDrag : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
         }
 
         // Check if the current drag object is within the environment panel's bounds
-        if (RectTransformUtility.RectangleContainsScreenPoint(_environmentContainer.GetComponent<RectTransform>(), Input.mousePosition))
+        if (RectTransformUtility.RectangleContainsScreenPoint(_environmentParent.GetComponent<RectTransform>(), Input.mousePosition))
         {
             SnapDraggedBlock(eventData, _shadow);
             _shadow.GetComponent<RectTransform>().sizeDelta = _currentDrag.GetComponent<RectTransform>().sizeDelta;
@@ -74,6 +78,14 @@ public class BlockDrag : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
         // If the mouse of the user is near the trash container, then delete the block and reset the icon to closed
         if (RectTransformUtility.RectangleContainsScreenPoint(_deleteBlockContainer.GetComponent<RectTransform>(), Input.mousePosition))
         {
+            Block block = _currentDrag.GetComponent<Block>();
+
+            foreach (Transform item in block.childBlockParent)
+            {
+                if (BlockController.Instance.childContainers.Contains(item)) {
+                    BlockController.Instance.childContainers.Remove(item);
+                }
+            }
             Destroy(_currentDrag);
             BlockController.Instance.SetTrashIcon(false);
             if (_shadow != null) Destroy(_shadow);
@@ -81,20 +93,21 @@ public class BlockDrag : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
         }
 
         // Check if the current drag object is within the environment panel's bounds
-        if (RectTransformUtility.RectangleContainsScreenPoint(_environmentContainer.GetComponent<RectTransform>(), Input.mousePosition))
+        if (RectTransformUtility.RectangleContainsScreenPoint(_environmentParent.GetComponent<RectTransform>(), Input.mousePosition))
         {
             SnapDraggedBlock(eventData, _currentDrag);
+            Block block = _currentDrag.GetComponent<Block>();
+            
+            foreach (Transform child in block.childBlockParent)
+            {
+                if (!BlockController.Instance.childContainers.Contains(child)){ 
+                    BlockController.Instance.childContainers.Add(child);
+                }
+            }
         }
         else
         {
-            // Destroy the gameobject when outside of the environment scope
-            if (_currentDrag != null && instantiate)
-            {
-                Destroy(_currentDrag);
-            }
-            else {
-                _currentDrag.transform.SetParent(_environmentParent.transform);
-            }
+            _currentDrag.transform.SetParent(_tempParent.transform);
         }
 
         _currentDrag = null;
@@ -115,47 +128,65 @@ public class BlockDrag : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
 
             // Check snap function for each block type
             if (_currentDrag.GetComponent<Block>().blockType == Block.BlockType.Setup) {
+                closestChild = GetClosestChild(closestDistance, localMousePos);
                 BlockSetup blockSetup = _currentDrag.GetComponent<BlockSetup>();
 
-                closestChild = GetClosestChild(closestDistance, localMousePos, _environmentParent);
                 if (closestChild != null) {
-                    blockSetup.OnSnap(closestChild, _environmentParent, setGameObject, _currentDrag);
+                    setGameObject.transform.SetParent(_environmentParent.transform, false);
+                    setGameObject.transform.SetSiblingIndex(closestChild.GetSiblingIndex());
                     _shadow.SetActive(true);
                 }
-                // setGameObject.transform.SetParent(closestChild.GetComponent<BlockSetup>().childContainer, false);
-                // setGameObject.transform.SetParent(_environmentParent.transform, false);
-                // setGameObject.transform.SetSiblingIndex(closestChild.GetSiblingIndex());
             }
-            else if (_currentDrag.GetComponent<Block>().blockType == Block.BlockType.NormalBlock) {
-                BlockNormal blockNormal = _currentDrag.GetComponent<BlockNormal>();
+            else if (_currentDrag.GetComponent<Block>().blockType == Block.BlockType.NormalBlock || _currentDrag.GetComponent<Block>().blockType == Block.BlockType.Conditional) {
+                // BlockNormal blockNormal = _currentDrag.GetComponent<BlockNormal>();
+                closestChild = GetClosestChild(closestDistance, localMousePos);
 
-                closestChild = GetClosestChild(closestDistance, localMousePos, _environmentParent);
-                _currentDrag.GetComponent<BlockNormal>().OnSnap(closestChild, _environmentParent, setGameObject, _currentDrag);
+                if (closestChild != null) {
+                    Block childBlock = closestChild.GetComponent<Block>();
+                    if (childBlock == null) return;
+                    Transform parent = null;
+
+                    foreach (Transform item in childBlock.childBlockParent)
+                    {
+                        if (BlockController.Instance.childContainers.Contains(item)) {
+                            parent = item;   
+                        }
+                    }
+                    _shadow.SetActive(true);
+                    setGameObject.transform.SetParent(parent, false);
+                    setGameObject.transform.SetSiblingIndex(closestChild.GetSiblingIndex());
+                }
             }
             else {
                 _shadow.SetActive(false);
             }
-
-            // Set the parent and sibling index of the current drag object
-            // if (closestChild != null)
-            // {
-            //     setGameObject.transform.SetParent(_environmentParent.transform, false);
-            //     Debug.Log(closestChild.GetSiblingIndex() + closestChild.name);
-            //     setGameObject.transform.SetSiblingIndex(closestChild.GetSiblingIndex());
-            // }
-            // else
-            // {
-            //     setGameObject.transform.SetParent(_environmentParent.transform, false);
-            //     setGameObject.transform.SetAsLastSibling();
-            // }
         }
     }
 
-    public Transform GetClosestChild(float closestDistance, Vector2 localMousePos, Transform parent) {
+    private bool IsChildOfContainer(Transform child)
+    {
+        foreach (Transform container in BlockController.Instance.childContainers)
+        {
+            if (child.IsChildOf(container))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public Transform GetClosestChild(float closestDistance, Vector2 localMousePos)
+    {
         Transform closestChild = null;
 
-        foreach (Transform child in parent.transform)
+        foreach (Transform child in _environmentParent)
         {
+            if (!IsChildOfContainer(child))
+            {
+                continue;
+            }
+
             float distance = Vector2.Distance(localMousePos, child.GetComponent<RectTransform>().anchoredPosition);
 
             // Check the position difference between the current drag object and the child
@@ -173,6 +204,7 @@ public class BlockDrag : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
 
         return closestChild;
     }
+
 
     // Shadow to indicate where the block will snap
     public void CreateBlockShadow() {

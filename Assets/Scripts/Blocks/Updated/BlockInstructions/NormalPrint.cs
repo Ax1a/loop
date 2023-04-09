@@ -5,7 +5,7 @@ using TMPro;
 
 public class NormalPrint : BlockNormal
 {
-    public List<GameObject> dropBlock;
+    public Transform dropBlockParent;
 
     // Start is called before the first frame update
     void Start()
