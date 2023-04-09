@@ -10,8 +10,15 @@ public class BlockTooltip : MonoBehaviour
     [SerializeField] private TextMeshProUGUI tooltipTxt;
     [SerializeField] private float animationDuration;
     [SerializeField] private CanvasGroup canvasGroup;
+    public Vector3 tooltipOffset;
     private Tween fadeTween;
     private bool isFadeOut = false;
+
+    private void OnEnable() {
+        float xRatio = (float)Screen.width / 1920f;
+        float yRatio = (float)Screen.height / 1080f;
+        tooltipOffset = new Vector3(tooltipOffset.x * xRatio, tooltipOffset.y * yRatio, tooltipOffset.z);
+    }
 
     public void SetTooltipText(string text) {
         tooltipTxt.text = text;

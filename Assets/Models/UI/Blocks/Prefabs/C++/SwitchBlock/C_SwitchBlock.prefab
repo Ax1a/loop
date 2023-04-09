@@ -996,6 +996,7 @@ GameObject:
   - component: {fileID: 3211267134753191194}
   - component: {fileID: 3211267134753190631}
   - component: {fileID: 1936184869886369179}
+  - component: {fileID: 9079994721927841314}
   m_Layer: 5
   m_Name: AddCase
   m_TagString: Untagged
@@ -1142,6 +1143,21 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &9079994721927841314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3211267134753191192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e75417168b8d61e4b895543b48be5a2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: This will add a switch case
+  tooltipPrefab: {fileID: 8608550590712195680, guid: 153a84b0a6cbfbd41a6a9c068ddd424a,
+    type: 3}
 --- !u!1 &3211267134839154952
 GameObject:
   m_ObjectHideFlags: 0
@@ -1291,6 +1307,7 @@ GameObject:
   - component: {fileID: 3211267134922604897}
   - component: {fileID: 3211267134922604902}
   - component: {fileID: 2440532746728394118}
+  - component: {fileID: 5195604305730272530}
   m_Layer: 5
   m_Name: DeleteCase
   m_TagString: Untagged
@@ -1437,6 +1454,21 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &5195604305730272530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3211267134922604900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e75417168b8d61e4b895543b48be5a2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: This will remove a switch case
+  tooltipPrefab: {fileID: 8608550590712195680, guid: 153a84b0a6cbfbd41a6a9c068ddd424a,
+    type: 3}
 --- !u!1 &3211267134978548170
 GameObject:
   m_ObjectHideFlags: 0
@@ -1748,7 +1780,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 121.32295, y: 0}
+  m_AnchoredPosition: {x: 116.32295, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &6102450857642261461
@@ -1892,7 +1924,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 153.12454, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 38.0777}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6102450857997696402
@@ -2442,7 +2474,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_IgnoreLayout: 0
   m_MinWidth: -1
-  m_MinHeight: 537.4653
+  m_MinHeight: -1
   m_PreferredWidth: 276.24908
   m_PreferredHeight: 537.4653
   m_FlexibleWidth: -1
@@ -2633,10 +2665,10 @@ RectTransform:
   m_Father: {fileID: 6102450857997696400}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 129.1189, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 124.1189, y: -19.03885}
+  m_SizeDelta: {x: 0, y: 38.0777}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7814684544901899431
 CanvasRenderer:
@@ -2703,7 +2735,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_IgnoreLayout: 0
-  m_MinWidth: 80
+  m_MinWidth: 70
   m_MinHeight: -1
   m_PreferredWidth: -1
   m_PreferredHeight: -1
@@ -3032,7 +3064,7 @@ PrefabInstance:
     - target: {fileID: 5335738576255508762, guid: 4e27d2c98c114ff4596112fe0e73e703,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 136.32295
+      value: 131.32295
       objectReference: {fileID: 0}
     - target: {fileID: 5335738576255508762, guid: 4e27d2c98c114ff4596112fe0e73e703,
         type: 3}
@@ -3212,7 +3244,7 @@ PrefabInstance:
     - target: {fileID: 5335738577896938743, guid: 4e27d2c98c114ff4596112fe0e73e703,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 107.4073
+      value: 102.4073
       objectReference: {fileID: 0}
     - target: {fileID: 5335738577896938743, guid: 4e27d2c98c114ff4596112fe0e73e703,
         type: 3}
