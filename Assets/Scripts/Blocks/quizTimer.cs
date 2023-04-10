@@ -115,7 +115,8 @@ public class quizTimer : MonoBehaviour
                 if(quizType == QuizType.Multiple)
                 {
                     Debug.Log("Multiple Choice Quiz: GameOver");
-                    QuizManager.Instance.GameOver();
+                    // QuizManager.Instance.GameOver();
+                    gameOverPanel.SetActive(true);
                 }
                 else if (quizType == QuizType.Interactive)
                 {
