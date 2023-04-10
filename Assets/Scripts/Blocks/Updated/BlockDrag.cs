@@ -18,6 +18,8 @@ public class BlockDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     private Transform refreshParent = null;
     private GameObject _currentDrag;
     private bool deleteObject = false;
+    public enum BlockType { Type1, Type2, Type3 }
+    public BlockType blockType;
 
     public virtual void Start()
     {
@@ -55,6 +57,7 @@ public class BlockDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             Color color = dropZoneImage.color;
             color.a = 0.5f;
             dropZoneImage.color = color; // Set the new color with alpha 0 to the drop zone image
+            _currentDrag.GetComponent<BlockDrag>()._dropZone = null;
         }
 
         if (addedPoints) {
@@ -78,15 +81,16 @@ public class BlockDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         _currentDrag.GetComponent<CanvasGroup>().alpha = 1;
         _currentDrag.GetComponent<CanvasGroup>().interactable = true;
         
+        if (_currentDrag.GetComponent<BlockDrag>().deleteObject) {
+            validationManager.SetTrashIcon(false);
+            _currentDrag.GetComponent<BlockDrag>().deleteObject = false;
+            Destroy(_currentDrag);
+            return;
+        }
+        
         if (isOverDropZone)
         {
-            if (deleteObject) {
-                Destroy(_currentDrag);
-                return;
-            }
-
             BlockDrag blockDrag = _currentDrag.GetComponent<BlockDrag>();
-            RefreshContentFitter((RectTransform)blockDrag.refreshParent);
             
             if (blockDrag._dropZone != null) {
                 _currentDrag.transform.SetParent(blockDrag._dropZone.transform); // Snap the block to the drop zone
@@ -104,6 +108,8 @@ public class BlockDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                     }
                 }
             }
+
+            RefreshContentFitter((RectTransform)blockDrag.refreshParent);
         }
         else
         {
@@ -119,44 +125,80 @@ public class BlockDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         pointerEventData.position = Input.mousePosition;
         List<RaycastResult> raycastResults = new List<RaycastResult>();
         EventSystem.current.RaycastAll(pointerEventData, raycastResults);
+        BlockDrag blockDrag = _currentDrag.GetComponent<BlockDrag>();
 
         if (raycastResults.Count > 0)
         {
             foreach (RaycastResult raycastResult in raycastResults)
             {
-                if (raycastResult.gameObject.CompareTag("BlockDrop"))
+                if (raycastResult.gameObject.CompareTag("BlockDrop1") && blockDrag.blockType == BlockType.Type1)
                 {
                     BlockDrop dropZone = raycastResult.gameObject.GetComponent<BlockDrop>();
+                    if (dropZone == null) return;
                     if (dropZone.transform.childCount == 0 && dropZone.name != "ChildContainer") {
                         CanvasGroup canvasGroup = dropZone.transform.GetComponent<CanvasGroup>();
                         if (canvasGroup == null || canvasGroup.interactable) {
-                            _currentDrag.GetComponent<BlockDrag>()._dropZone = dropZone.gameObject;
-                            refreshParent = _currentDrag.transform.parent.transform.parent.transform;
+                            blockDrag._dropZone = dropZone.gameObject;
+                            blockDrag.refreshParent = _currentDrag.transform.parent.transform.parent.transform;
                             isOverDropZone = true;
                         }
                     }
                     else if (dropZone.name == "ChildContainer") {
                         CanvasGroup canvasGroup = dropZone.transform.parent.GetComponentInParent<CanvasGroup>();
                         if (canvasGroup.interactable) {
-                            _currentDrag.GetComponent<BlockDrag>()._dropZone = dropZone.gameObject;
-                            refreshParent = _currentDrag.transform.parent.transform.parent.transform;
+                            blockDrag._dropZone = dropZone.gameObject;
+                            blockDrag.refreshParent = _currentDrag.transform.parent.transform.parent.transform;
                             isOverDropZone = true;
                         }
                     }
-                    deleteObject = true;
+                    blockDrag.deleteObject = false;
+
+                    return;
+                }
+                else if (raycastResult.gameObject.CompareTag("BlockDrop2") && blockDrag.blockType == BlockType.Type2) {
+                    BlockDrop dropZone = raycastResult.gameObject.GetComponent<BlockDrop>();
+                    if (dropZone == null) return;
+                    if (dropZone.transform.childCount == 0 && dropZone.name != "ChildContainer") {
+                        CanvasGroup canvasGroup = dropZone.transform.parent.transform.GetComponent<CanvasGroup>();
+                        if (canvasGroup == null || canvasGroup.interactable) {
+                            blockDrag._dropZone = dropZone.gameObject;
+                            blockDrag.refreshParent = _currentDrag.transform.parent.transform.parent.transform;
+                            isOverDropZone = true;
+                        }
+                    }
+                   blockDrag.deleteObject = false;
+
+                    return;
+                }
+                else if (raycastResult.gameObject.CompareTag("BlockDrop3") && blockDrag.blockType == BlockType.Type3) {
+                    BlockDrop dropZone = raycastResult.gameObject.GetComponent<BlockDrop>();
+                    if (dropZone == null) return;
+                    if (dropZone.transform.childCount == 0 && dropZone.name != "ChildContainer") {
+                        CanvasGroup canvasGroup = dropZone.transform.parent.transform.GetComponent<CanvasGroup>();
+                        if (canvasGroup == null || canvasGroup.interactable) {
+                            blockDrag._dropZone = dropZone.gameObject;
+                            blockDrag.refreshParent = _currentDrag.transform.parent.transform.parent.transform;
+                            isOverDropZone = true;
+                        }
+                    }
+                    blockDrag.deleteObject = false;
 
                     return;
                 }
                 else if (raycastResult.gameObject.CompareTag("BlockDelete")) {
                     validationManager.SetTrashIcon(true);
-                    Debug.Log("test");
-                    // Destroy(_currentDrag);
-                    deleteObject = true;
+                    blockDrag.deleteObject = true;
+
+                    return;
                 }
-                else {
+                else if (raycastResult.gameObject.CompareTag("BlockEnvironment")) {
                     validationManager.SetTrashIcon(false);
-                    deleteObject = false;
+                    blockDrag.deleteObject = false;
+
+                    return;
                 }
+                
+                isOverDropZone = false;
             }
         }
         isOverDropZone = false;
