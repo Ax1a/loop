@@ -7,11 +7,15 @@ using TMPro;
 public class ValidateController : MonoBehaviour
 {
     [SerializeField] private int requiredPoints;
+    public int currentPoints; // Hide
+    [Header ("Objects")]
     [SerializeField] private TextMeshProUGUI consoleTxt;
-    [SerializeField] private string consoleLog;
-    [SerializeField] private Transform blocksParent;
     [SerializeField] private Image deleteIcon;
-    public int currentPoints;
+    
+    [Header ("Blocks Parents")]
+    [SerializeField] private Transform blocksParent;
+    [SerializeField] private Transform tempParent;
+    private string _consoleLog;
     private Sprite _trashClosed, _trashOpen;
 
     private void Start() {
@@ -20,7 +24,6 @@ public class ValidateController : MonoBehaviour
     }
 
     public void SetTrashIcon(bool isOpen) {
-        Debug.Log(_trashOpen);
         deleteIcon.sprite = isOpen ? _trashOpen : _trashClosed;
     }
 
@@ -34,6 +37,22 @@ public class ValidateController : MonoBehaviour
 
     public void ResetBlocks() {
         currentPoints = 0;
+        foreach (Transform child in blocksParent)
+        {
+            Image placeholder = child.GetComponent<Image>();
+            Color color = placeholder.color;
+            color.a = 0.5f;
+            placeholder.color = color; 
+            foreach (Transform subChild in child)
+            {
+                Destroy(subChild.gameObject);
+            }
+        }
+
+        foreach (Transform child in tempParent)
+        {
+            Destroy(child.gameObject);
+        }
     }
 
     // Recursion to check all the child of block parent 
@@ -46,11 +65,10 @@ public class ValidateController : MonoBehaviour
             BlockInput blockInput = child.GetComponent<BlockInput>();
             if (blockInput != null)
             {
-                Debug.Log(child);
                 // Check the console value of the BlockInput script
                 if (blockInput.consoleValue != "")
                 {
-                    consoleLog += blockInput.consoleValue + "\n";
+                    _consoleLog += blockInput.consoleValue + "\n";
                 }
             }
             
@@ -60,9 +78,10 @@ public class ValidateController : MonoBehaviour
     }
 
     public void RunCommands() {
-        consoleLog = "";
+        _consoleLog = "";
         CheckConsoleValues(blocksParent);
-        consoleTxt.text = consoleLog;
+        _consoleLog += "...Program Finished";
+        consoleTxt.text = _consoleLog;
     }
 
     // Update is called once per frame
