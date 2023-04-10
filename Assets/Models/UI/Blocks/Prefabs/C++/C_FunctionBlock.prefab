@@ -508,6 +508,7 @@ GameObject:
   - component: {fileID: 12362155233489227}
   - component: {fileID: 12362155233489224}
   - component: {fileID: 4406200795126176098}
+  - component: {fileID: -8703407464063924076}
   m_Layer: 5
   m_Name: C_FunctionBlock
   m_TagString: Untagged
@@ -680,6 +681,18 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!225 &-8703407464063924076
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 12362155233489238}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &12362155330555393
 GameObject:
   m_ObjectHideFlags: 0
@@ -2554,14 +2567,13 @@ GameObject:
   - component: {fileID: 1696864451696123091}
   - component: {fileID: 1963939558621106688}
   - component: {fileID: 8341561981155002242}
-  - component: {fileID: 4839028152778232063}
   m_Layer: 5
   m_Name: DeleteCase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &9088667984740901941
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2713,21 +2725,6 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
---- !u!114 &4839028152778232063
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2346399686127004366}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e75417168b8d61e4b895543b48be5a2f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  text: This will remove a parameter to the function
-  tooltipPrefab: {fileID: 8608550590712195680, guid: 153a84b0a6cbfbd41a6a9c068ddd424a,
-    type: 3}
 --- !u!1 &3995166076727072861
 GameObject:
   m_ObjectHideFlags: 0
@@ -3284,14 +3281,13 @@ GameObject:
   - component: {fileID: 326683486189179879}
   - component: {fileID: 7700938588266162195}
   - component: {fileID: 9087187144925187392}
-  - component: {fileID: 7090366551942415190}
   m_Layer: 5
   m_Name: AddCase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7429010711626749105
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3443,18 +3439,3 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
---- !u!114 &7090366551942415190
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8577280277887525944}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e75417168b8d61e4b895543b48be5a2f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  text: This will add a parameter to the function
-  tooltipPrefab: {fileID: 8608550590712195680, guid: 153a84b0a6cbfbd41a6a9c068ddd424a,
-    type: 3}

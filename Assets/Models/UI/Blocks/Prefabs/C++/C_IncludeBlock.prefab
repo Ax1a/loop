@@ -528,8 +528,7 @@ GameObject:
   - component: {fileID: 7589860587836476814}
   - component: {fileID: 7589860587836476813}
   - component: {fileID: 1997939010418314469}
-  - component: {fileID: 5963184783395550198}
-  - component: {fileID: 1725140727420956342}
+  - component: {fileID: 5043736689387514996}
   m_Layer: 5
   m_Name: C_IncludeBlock
   m_TagString: Untagged
@@ -701,34 +700,15 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
---- !u!114 &5963184783395550198
-MonoBehaviour:
+--- !u!225 &5043736689387514996
+CanvasGroup:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7589860587836476810}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 879da3568d0283a4e8d1c9e9b7d257cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  blockPrefab: {fileID: 7589860587836476810}
-  instantiate: 0
---- !u!114 &1725140727420956342
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7589860587836476810}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8787bc615ff5314d8b268d3dda8961f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  id: 0
-  blockLanguage: 0
-  blockType: 4
-  childContainer: {fileID: 0}
-  includeInput: {fileID: 7589860586833504206}
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
