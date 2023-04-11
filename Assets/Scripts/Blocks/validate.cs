@@ -6,10 +6,11 @@ using UnityEngine.UI;
 
 public class validate : MonoBehaviour
 {
-    private TMP_InputField input;
+    [SerializeField] private TMP_InputField input;
     public GameObject errorMessage;
     public TextMeshProUGUI output;
-    public Transform simpleBlock;
+    // private TMP_InputField input1;
+    // public Transform simpleBlock;
     //public Button btn;
     public bool isValid;
     public static validate Instance;
@@ -20,11 +21,6 @@ public class validate : MonoBehaviour
         {
             Instance = this;
         }
-    }
-
-    void Start()
-    {
-        input = simpleBlock.GetComponentInChildren<TMP_InputField>();
     }
     public void valid()
     {
