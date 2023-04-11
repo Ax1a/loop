@@ -11,13 +11,17 @@ public class ValidateController : MonoBehaviour
     [Header ("Objects")]
     [SerializeField] private TextMeshProUGUI consoleTxt;
     [SerializeField] private Image deleteIcon;
-    [SerializeField] private GameObject variablePrefab;
+    // [SerializeField] private GameObject variablePrefab;
+    [SerializeField] private GameObject variableInputPanel;
     
     [Header ("Blocks Parents")]
     [SerializeField] private Transform blocksParent;
     [SerializeField] private Transform tempParent;
     private string _consoleLog;
     private Sprite _trashClosed, _trashOpen;
+    private BlockVariable _blockVariable;
+    private bool _inputPanelOpen = false;
+    
     private void Start() {
         _trashClosed = Resources.Load<Sprite>("Sprites/trash_closed");
         _trashOpen = Resources.Load<Sprite>("Sprites/trash_open");
@@ -38,7 +42,28 @@ public class ValidateController : MonoBehaviour
         currentPoints -= point;
     }
 
+    public void AskForInput(BlockVariable blockVariable) {
+        _blockVariable = blockVariable;
+        variableInputPanel.SetActive(true);
+        _inputPanelOpen = true;
+    }
+
+    public void InsertInput(TMP_InputField input) {
+        _blockVariable.SetDictionaryValue(input.text);
+        _blockVariable._stringArray = _blockVariable.originalObj.GetComponent<BlockVariable>()._stringArray;
+        _blockVariable._stringVar = _blockVariable.originalObj.GetComponent<BlockVariable>()._stringVar;
+        _blockVariable._intArray = _blockVariable.originalObj.GetComponent<BlockVariable>()._intArray;
+        _blockVariable._intVar = _blockVariable.originalObj.GetComponent<BlockVariable>()._intVar;
+        _blockVariable.inputChanged = true;
+        _blockVariable.originalObj.GetComponent<BlockVariable>().inputChanged = true;
+        
+        variableInputPanel.SetActive(false);
+        _consoleLog += "\n" + input.text;
+        _inputPanelOpen = false;
+    }
+
     public void ResetBlocks() {
+        consoleTxt.text = "";
         currentPoints = 0;
         foreach (Transform child in blocksParent)
         {
@@ -59,32 +84,81 @@ public class ValidateController : MonoBehaviour
     }
 
     // Recursion to check all the child of block parent 
-    public void CheckConsoleValues(Transform parent)
+    public void CheckBlocksPlaced(Transform parent)
     {
         // Loop through all child objects of the parent
         foreach (Transform child in parent)
         {
-            // Check if the child has a BlockInput script
-            BlockInput blockInput = child.GetComponent<BlockInput>();
-            if (blockInput != null)
-            {
-                // Check the console value of the BlockInput script
-                if (blockInput.consoleValue != "")
-                {
-                    _consoleLog += blockInput.consoleValue + "\n";
-                }
+            // if (child.transform.childCount > 0) {
+            BlockDrag blockDrag = child.GetComponent<BlockDrag>();
+            if (blockDrag != null) {
+                if (blockDrag.blockType == BlockDrag.BlockType.Type1) {
+                    // Check if the child has a BlockInput script
+                    BlockInput blockInput = child.GetComponent<BlockInput>();
+                    BlockVariable blockVariable = child.GetComponent<BlockVariable>();
+                    BlockOneDrop blockOneDrop = child.GetComponent<BlockOneDrop>();
+
+                    if (blockInput != null)
+                    {
+                        // Check the console value of the BlockInput script
+                        if (blockInput.consoleValue != "")
+                        {
+                            _consoleLog += blockInput.consoleValue + "\n";
+                        }
+                    }
+                    else if (blockVariable != null) {
+                        // Check the console value of the BlockVariable script
+                        if (blockVariable.consoleValue != "")
+                        {
+                            _consoleLog += blockVariable.consoleValue + "\n";
+                        }
+                    }
+                    else if (blockOneDrop != null && child.transform.name.StartsWith("CharInput")) {
+                        BlockVariable _blockVariable = blockOneDrop.dropBlock.transform.GetChild(0).GetComponent<BlockVariable>();
+                        BlockInput _blockInput = blockOneDrop.dropBlock.transform.GetChild(0).GetComponent<BlockInput>();
+
+                        if (_blockVariable != null) {
+                            AskForInput(_blockVariable);
+                        }
+                        else if (_blockInput != null && _blockInput.consoleValue.Length != 0) {
+                            _blockInput.consoleValue = "";
+                        }
+                    }
+                    else if (blockOneDrop != null) {
+                        if (blockOneDrop.consoleValue != "")
+                        {
+                            _consoleLog += blockOneDrop.consoleValue + "\n";
+                        }
+                    }
+                }    
             }
-            
-            // Check the child's descendants recursively
-            CheckConsoleValues(child);
+
+            CheckBlocksPlaced(child);
         }
     }
 
-    public void RunCommands() {
+    public void ExecuteCommand() {
+        StartCoroutine(RunCommands());
+    }
+
+    public IEnumerator RunCommands() {
         _consoleLog = "";
-        CheckConsoleValues(blocksParent);
-        _consoleLog += "...Program Finished";
+        consoleTxt.text = "";
+        CheckBlocksPlaced(blocksParent);
+        yield return WaitForInputPanelToClose();
+        _consoleLog += "\n" + "...Program Finished";
         consoleTxt.text = _consoleLog;
+    }
+
+    private IEnumerator WaitForInputPanelToClose() {
+        while (_inputPanelOpen) {
+            yield return null;
+        }
+    }
+
+    public void CancelExecute() {
+        consoleTxt.text = "";
+        variableInputPanel.SetActive(false);
     }
 
     // Update is called once per frame
