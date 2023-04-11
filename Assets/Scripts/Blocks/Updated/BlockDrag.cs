@@ -15,6 +15,7 @@ public class BlockDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     [HideInInspector] public ValidateController validationManager;
     [HideInInspector] public bool inputChanged = true;
     [HideInInspector] public GameObject _currentDrag;
+    [HideInInspector] public GameObject originalObj;
     [SerializeField] private bool instantiate = true;
     private Transform refreshParent = null;
     private bool deleteObject = false;
@@ -28,7 +29,7 @@ public class BlockDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         validationManager = GameObject.FindGameObjectWithTag("ValidateController").GetComponent<ValidateController>();
     }
 
-    public void Update() {
+    public virtual void Update() {
         BlockValidation();
     }
 
@@ -39,6 +40,7 @@ public class BlockDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         // Instantiate a copy of the object and set it as the current drag
         if (instantiate) {
             _currentDrag = Instantiate(gameObject, transform.parent);
+            _currentDrag.GetComponent<BlockDrag>().originalObj = gameObject;
         }
         else {
             _currentDrag = gameObject;
