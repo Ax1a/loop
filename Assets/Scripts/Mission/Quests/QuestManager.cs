@@ -117,6 +117,22 @@ public class QuestManager : MonoBehaviour
         DataManager.CurrentQuests = currentQuestList;
     }
 
+    public void EnableQuest(int questID) {
+        for (int i = 0; i < questList.Count; i++) {
+            if (questList[i].id == questID && questList[i].progress == Quest.QuestProgress.NOT_AVAILABLE) {
+                questList[i].progress = Quest.QuestProgress.AVAILABLE;
+                Debug.Log("test");
+                // For testing
+                foreach (var obj in GameObject.FindObjectsOfType<QuestObject>()) {
+                    if (obj.gameObject.name == "[0] Main Quests") {
+                        obj.gameObject.SetActive(false);
+                        obj.gameObject.SetActive(true);
+                    }
+                }
+            }
+        }
+    }
+
     // Complete quest based on the id 
     public void CompleteQuest(int questID) {
         for (int i = 0; i < GetCurrentQuestCount(); i++) {

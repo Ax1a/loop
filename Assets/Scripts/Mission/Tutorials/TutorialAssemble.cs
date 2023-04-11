@@ -63,8 +63,18 @@ public class TutorialAssemble : Tutorial
             GameObject.Destroy(child.gameObject);
         }
 
-
         yield return new WaitForSeconds(2.5f);
+
+        if (DataManager.GetProgrammingLanguageProgress("c++") >= 0) {
+            QuestManager.Instance.EnableQuest(0);
+        }
+        else if (DataManager.GetProgrammingLanguageProgress("python") >= 0) {
+            QuestManager.Instance.EnableQuest(16);
+        }
+        else if (DataManager.GetProgrammingLanguageProgress("java") >= 0) {
+            QuestManager.Instance.EnableQuest(31);
+        }
+        
         questGiver.SetActive(true);
 
         SaveGame.Instance.SaveGameState();

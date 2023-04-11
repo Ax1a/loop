@@ -7319,7 +7319,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
-  m_LocalRotation: {x: 0.22226387, y: -0.08559066, z: 0.019591378, w: 0.9710248}
+  m_LocalRotation: {x: 0.2222639, y: -0.08559062, z: 0.01959137, w: 0.9710248}
   m_LocalPosition: {x: -40.755608, y: -19.198257, z: -9.855744}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -11368,7 +11368,7 @@ GameObject:
   - component: {fileID: 494108088}
   - component: {fileID: 494108089}
   m_Layer: 0
-  m_Name: '[0-50]MainQuests'
+  m_Name: '[0-15]C_MainQuests'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11402,7 +11402,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   questList:
-  - title: Learning Starts Here
+  - title: Learning Starts Here C
     id: 0
     subTitle: Unlock the power of knowledge
     description: To complete this mission, you need to purchase a course from the
@@ -11418,7 +11418,7 @@ MonoBehaviour:
     questObjectiveRequirement: 01000000
     expReward: 100
     moneyReward: 0
-    progress: 1
+    progress: 0
     questType: 0
   - title: Complete Your First Lesson
     id: 1
@@ -34483,6 +34483,103 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1247563256}
   m_CullTransparentMesh: 1
+--- !u!1 &1255226987
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1255226988}
+  - component: {fileID: 1255226989}
+  m_Layer: 0
+  m_Name: '[16-30]P_MainQuests'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1255226988
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1255226987}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1633712718}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1255226989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1255226987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b77769a8b4b0a844adfb6c203064020, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  questList:
+  - title: Learning Starts Here P
+    id: 16
+    subTitle: Unlock the power of knowledge
+    description: To complete this mission, you need to purchase a course from the
+      shop first. Once you have made a purchase, you can continue with the mission
+      and start your learning journey.
+    congratsText: Congrats!
+    npcName: 
+    summary: Mission Complete
+    nextQuest: 17
+    questObjectives:
+    - Buy any course from the shop
+    questObjectiveCount: 00000000
+    questObjectiveRequirement: 01000000
+    expReward: 100
+    moneyReward: 0
+    progress: 0
+    questType: 0
+  - title: Complete Your First Lesson
+    id: 17
+    subTitle: 'Open the computer:'
+    description: In this lesson, you will learn the basics of programming and create
+      a simple program. Once you complete the lesson, you will be rewarded with some
+      experience that will aid you on your journey.
+    congratsText: Great! You've finished your first lesson
+    npcName: 
+    summary: 'Lesson 1 Complete '
+    nextQuest: 18
+    questObjectives:
+    - Finish Lesson 1
+    questObjectiveCount: 00000000
+    questObjectiveRequirement: 01000000
+    expReward: 100
+    moneyReward: 50
+    progress: 0
+    questType: 0
+  - title: Complete Your Second Lesson
+    id: 18
+    subTitle: 'Open the computer:'
+    description: ddd
+    congratsText: Congrats!
+    npcName: 
+    summary: Mission Complete
+    nextQuest: 19
+    questObjectives:
+    - Finish Lesson 2
+    questObjectiveCount: 00000000
+    questObjectiveRequirement: 01000000
+    expReward: 150
+    moneyReward: 50
+    progress: 0
+    questType: 0
 --- !u!1 &1261250879
 GameObject:
   m_ObjectHideFlags: 0
@@ -39505,7 +39602,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1455879008}
-  m_LocalRotation: {x: 0.22226387, y: -0.08559066, z: 0.019591378, w: 0.9710248}
+  m_LocalRotation: {x: 0.2222639, y: -0.08559062, z: 0.01959137, w: 0.9710248}
   m_LocalPosition: {x: -40.755608, y: -19.198257, z: -9.855744}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -41338,6 +41435,103 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1525441200}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1526223035
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1526223036}
+  - component: {fileID: 1526223037}
+  m_Layer: 0
+  m_Name: '[31-50]J_MainQuests'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1526223036
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1526223035}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1633712718}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1526223037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1526223035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b77769a8b4b0a844adfb6c203064020, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  questList:
+  - title: Learning Starts Here J
+    id: 31
+    subTitle: Unlock the power of knowledge
+    description: To complete this mission, you need to purchase a course from the
+      shop first. Once you have made a purchase, you can continue with the mission
+      and start your learning journey.
+    congratsText: Congrats!
+    npcName: 
+    summary: Mission Complete
+    nextQuest: 32
+    questObjectives:
+    - Buy any course from the shop
+    questObjectiveCount: 00000000
+    questObjectiveRequirement: 01000000
+    expReward: 100
+    moneyReward: 0
+    progress: 0
+    questType: 0
+  - title: Complete Your First Lesson
+    id: 32
+    subTitle: 'Open the computer:'
+    description: In this lesson, you will learn the basics of programming and create
+      a simple program. Once you complete the lesson, you will be rewarded with some
+      experience that will aid you on your journey.
+    congratsText: Great! You've finished your first lesson
+    npcName: 
+    summary: 'Lesson 1 Complete '
+    nextQuest: 33
+    questObjectives:
+    - Finish Lesson 1
+    questObjectiveCount: 00000000
+    questObjectiveRequirement: 01000000
+    expReward: 100
+    moneyReward: 50
+    progress: 0
+    questType: 0
+  - title: Complete Your Second Lesson
+    id: 33
+    subTitle: 'Open the computer:'
+    description: ddd
+    congratsText: Congrats!
+    npcName: 
+    summary: Mission Complete
+    nextQuest: 34
+    questObjectives:
+    - Finish Lesson 2
+    questObjectiveCount: 00000000
+    questObjectiveRequirement: 01000000
+    expReward: 150
+    moneyReward: 50
+    progress: 0
+    questType: 0
 --- !u!4 &1530487570 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2291883985484957485, guid: 3d5aa6db18244eb4fa03751b4d6af330,
@@ -43975,6 +44169,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 494108088}
+  - {fileID: 1255226988}
+  - {fileID: 1526223036}
   - {fileID: 694299169}
   - {fileID: 2072693263}
   m_Father: {fileID: 114055923}
@@ -48511,8 +48707,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbe83698f55976646afd8bd029bfb468, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  availableQuestIDs: 000000000100000002000000
-  receivableQuestIDs: 000000000100000002000000
+  availableQuestIDs: 0000000001000000020000001000000011000000120000001f0000002000000021000000
+  receivableQuestIDs: 0000000001000000020000001000000011000000120000001f0000002000000021000000
   isAutoAccept: 1
 --- !u!1 &1827303110
 GameObject:

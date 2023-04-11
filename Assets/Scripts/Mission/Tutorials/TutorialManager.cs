@@ -98,7 +98,6 @@ public class TutorialManager : MonoBehaviour
     public void CompletedAllTutorials() {
         pcBoxes.SetActive(false);
         computer.SetActive(true);
-
         // SaveGame.Instance.SaveGameState();
     }
 

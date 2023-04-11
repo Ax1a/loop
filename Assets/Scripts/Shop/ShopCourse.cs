@@ -66,6 +66,16 @@ public class ShopCourse : MonoBehaviour
                 if (_showCoroutineReduce != null) StopCoroutine(_showCoroutineReduce);
                 _showCoroutineReduce = StartCoroutine(ShowReduceFunds(_coursePrices[languageIndex]));
             }
+            
+            if (languageIndex == 0) {
+                QuestManager.Instance.EnableQuest(0);
+            }
+            else if (languageIndex == 1) {
+                QuestManager.Instance.EnableQuest(31);
+            }
+            else if (languageIndex == 2) {
+                QuestManager.Instance.EnableQuest(16);
+            }
 
             DataManager.AddProgrammingLanguageProgress(_progLanguages[languageIndex]);
             purchasedIndicators[languageIndex].SetActive(true);
