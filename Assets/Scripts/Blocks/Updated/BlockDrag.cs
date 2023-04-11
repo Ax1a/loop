@@ -14,9 +14,9 @@ public class BlockDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     [HideInInspector] public bool addedPoints = false;
     [HideInInspector] public ValidateController validationManager;
     [HideInInspector] public bool inputChanged = true;
+    [HideInInspector] public GameObject _currentDrag;
     [SerializeField] private bool instantiate = true;
     private Transform refreshParent = null;
-    private GameObject _currentDrag;
     private bool deleteObject = false;
     public enum BlockType { Type1, Type2, Type3 }
     public BlockType blockType;

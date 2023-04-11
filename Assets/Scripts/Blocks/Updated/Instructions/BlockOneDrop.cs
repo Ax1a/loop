@@ -28,6 +28,7 @@ public class BlockOneDrop : BlockDrag
 
     public override void BlockValidation()
     {
+        Debug.Log(blockType);
         if (_dropZone == null || !inputChanged) return; // Don't check the validation when not on the drop block
 
         foreach (var dropID in _dropZone.GetComponent<BlockDrop>().ids)

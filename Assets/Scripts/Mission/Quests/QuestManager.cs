@@ -99,7 +99,6 @@ public class QuestManager : MonoBehaviour
         DataManager.CurrentQuests = currentQuestList;
         QuestUI.Instance.activeQuest.Clear();
         QuestUI.Instance.activeQuest.AddRange(currentQuestList);
-        InboxManager.Instance.FillInboxButtons();
     }
 
     // Give up quest based on the id 

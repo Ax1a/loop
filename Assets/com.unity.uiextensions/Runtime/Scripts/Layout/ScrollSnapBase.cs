@@ -342,6 +342,7 @@ namespace UnityEngine.UI.Extensions
                 }
                 GetPositionforPage(_currentPage, ref _lerp_target);
                 ScreenChange();
+                RefreshContentFitter((RectTransform) transform);
             }
 
         }
@@ -364,6 +365,7 @@ namespace UnityEngine.UI.Extensions
                 }
                 GetPositionforPage(_currentPage, ref _lerp_target);
                 ScreenChange();
+                RefreshContentFitter((RectTransform) transform);
             }
         }
 
@@ -675,5 +677,31 @@ namespace UnityEngine.UI.Extensions
         }
 
         #endregion
+
+        public void RefreshContentFitter(RectTransform transform)
+        {
+            if (transform == null || !transform.gameObject.activeSelf)
+            {
+                return;
+            }
+    
+            foreach (RectTransform child in transform)
+            {
+                RefreshContentFitter(child);
+            }
+    
+            var layoutGroup = transform.GetComponent<LayoutGroup>();
+            var contentSizeFitter = transform.GetComponent<ContentSizeFitter>();
+            if (layoutGroup != null)
+            {
+                layoutGroup.SetLayoutHorizontal();
+                layoutGroup.SetLayoutVertical();
+            }
+    
+            if (contentSizeFitter != null)
+            {
+                LayoutRebuilder.ForceRebuildLayoutImmediate(transform);
+            }
+        }
     }
 }

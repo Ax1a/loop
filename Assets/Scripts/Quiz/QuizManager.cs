@@ -17,6 +17,7 @@ public class QuizManager : MonoBehaviour
     [SerializeField] private Courses course;
     [SerializeField] private Image questionImage;
     [SerializeField] private GameObject questionImageButton;
+    [SerializeField] private string questStringProgress;
     quizTimer timer;
     //bool isComplete = false;
 
@@ -178,7 +179,7 @@ public class QuizManager : MonoBehaviour
     private IEnumerator DelayAddProgress()
     {
         yield return new WaitForSeconds(3.5f);
-        QuestManager.Instance.AddQuestItem("Finish Lesson 1", 1);
+        QuestManager.Instance.AddQuestItem(questStringProgress, 1);
     }
     public void Correct()
     {

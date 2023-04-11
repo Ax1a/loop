@@ -11,16 +11,19 @@ public class ValidateController : MonoBehaviour
     [Header ("Objects")]
     [SerializeField] private TextMeshProUGUI consoleTxt;
     [SerializeField] private Image deleteIcon;
+    [SerializeField] private GameObject variablePrefab;
     
     [Header ("Blocks Parents")]
     [SerializeField] private Transform blocksParent;
     [SerializeField] private Transform tempParent;
     private string _consoleLog;
     private Sprite _trashClosed, _trashOpen;
-
     private void Start() {
         _trashClosed = Resources.Load<Sprite>("Sprites/trash_closed");
         _trashOpen = Resources.Load<Sprite>("Sprites/trash_open");
+
+        // Generate variable blocks
+        
     }
 
     public void SetTrashIcon(bool isOpen) {
