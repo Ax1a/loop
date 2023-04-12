@@ -13,27 +13,32 @@ public class BlockOperator : BlockDrag
     [SerializeField] private string operationAnswer;
     [SerializeField] private string l_blockAnswer;
     [SerializeField] private string r_blockAnswer;
-    private int l_childCount, r_childCount;
+    private string l_childConsole, r_childConsole;
     public string consoleValue;
 
     public override void Start() {
         base.Start();
 
-        l_childCount = l_dropBlock.transform.childCount;
-        r_childCount = r_dropBlock.transform.childCount;
         operation.onValueChanged.AddListener(new UnityAction<int>(index => OnInputFieldValueChanged(operation.options[index].text)));
     }
 
     public override void Update() {
         base.Update();
+        BlockOneDrop _l_blockDrop = l_dropBlock.GetComponent<BlockOneDrop>();
+        BlockOneDrop _r_blockDrop = r_dropBlock.GetComponent<BlockOneDrop>();
 
-        if (l_dropBlock.transform.childCount != l_childCount) {
-            l_childCount = l_dropBlock.transform.childCount;
-            inputChanged = true;
+        if (_l_blockDrop != null) {
+            if (_l_blockDrop.consoleValue != l_childConsole) {
+                l_childConsole = _l_blockDrop.consoleValue;
+                inputChanged = true;
+            }
         }
-        if (r_dropBlock.transform.childCount != r_childCount) {
-            r_childCount = r_dropBlock.transform.childCount;
-            inputChanged = true;
+
+        if (_r_blockDrop != null) {
+            if (_r_blockDrop.consoleValue != r_childConsole) {
+                r_childConsole = _r_blockDrop.consoleValue;
+                inputChanged = true;
+            }
         }
     }
 
@@ -74,6 +79,7 @@ public class BlockOperator : BlockDrag
         int operationValue = operation.value;
 
         CheckDropBlockValue();
+
         int l_value, r_value;
 
         if (operation.options[operationValue].text == "+") {
@@ -124,10 +130,20 @@ public class BlockOperator : BlockDrag
         else if (operation.options[operationValue].text == "++") {
             l_dropBlock.SetActive(true);
             r_dropBlock.SetActive(false);
+
+            if (int.TryParse(l_blockDropScript.consoleValue, out l_value)) {
+                int increment = l_value++;
+                consoleValue = increment.ToString();
+            }
         }
         else if (operation.options[operationValue].text == "--") {
             l_dropBlock.SetActive(true);
             r_dropBlock.SetActive(false);
+
+            if (int.TryParse(l_blockDropScript.consoleValue, out l_value)) {
+                int decrement = l_value--;
+                consoleValue = decrement.ToString();
+            }
         }
         else if (operation.options[operationValue].text == "=") {            
             l_dropBlock.SetActive(true);
@@ -168,26 +184,76 @@ public class BlockOperator : BlockDrag
         else if (operation.options[operationValue].text == "==") {
             l_dropBlock.SetActive(true);
             r_dropBlock.SetActive(true);
+
+            if (l_blockDropScript.consoleValue == r_blockDropScript.consoleValue) {
+                consoleValue = "true";
+            }
+            else {
+                consoleValue = "false";
+            }
         }
         else if (operation.options[operationValue].text == "!=") {
             l_dropBlock.SetActive(true);
             r_dropBlock.SetActive(true);
+
+            if (l_blockDropScript.consoleValue != r_blockDropScript.consoleValue) {
+                consoleValue = "true";
+            }
+            else {
+                consoleValue = "false";
+            }
         }
         else if (operation.options[operationValue].text == ">") {
             l_dropBlock.SetActive(true);
             r_dropBlock.SetActive(true);
+
+            if (int.TryParse(l_blockDropScript.consoleValue, out l_value) && int.TryParse(r_blockDropScript.consoleValue, out r_value)) {
+                if (l_value > r_value) {
+                    consoleValue = "true";
+                }
+                else {
+                    consoleValue = "false";
+                }
+            }
         }
         else if (operation.options[operationValue].text == "<") {
             l_dropBlock.SetActive(true);
             r_dropBlock.SetActive(true);
+
+            if (int.TryParse(l_blockDropScript.consoleValue, out l_value) && int.TryParse(r_blockDropScript.consoleValue, out r_value)) {
+                if (l_value < r_value) {
+                    consoleValue = "true";
+                }
+                else {
+                    consoleValue = "false";
+                }
+            }
         }
         else if (operation.options[operationValue].text == ">=") {
             l_dropBlock.SetActive(true);
             r_dropBlock.SetActive(true);
+
+            if (int.TryParse(l_blockDropScript.consoleValue, out l_value) && int.TryParse(r_blockDropScript.consoleValue, out r_value)) {
+                if (l_value >= r_value) {
+                    consoleValue = "true";
+                }
+                else {
+                    consoleValue = "false";
+                }
+            }
         }
         else if (operation.options[operationValue].text == "<=") {
             l_dropBlock.SetActive(true);
             r_dropBlock.SetActive(true);
+
+            if (int.TryParse(l_blockDropScript.consoleValue, out l_value) && int.TryParse(r_blockDropScript.consoleValue, out r_value)) {
+                if (l_value >= r_value) {
+                    consoleValue = "true";
+                }
+                else {
+                    consoleValue = "false";
+                }
+            }
         }
 
         RefreshContentFitter((RectTransform)_environmentParent);
@@ -200,19 +266,19 @@ public class BlockOperator : BlockDrag
 
                 // if (ValidateInput())
                 // {
-                //     if (!addedPoints)
-                //     {
-                //         validationManager.AddPoints(1);
-                //         addedPoints = true;
-                //     }
+                    if (!addedPoints)
+                    {
+                        validationManager.AddPoints(1);
+                        addedPoints = true;
+                    }
                 // }
                 // else
                 // {
-                //     if (addedPoints)
-                //     {
-                //         validationManager.ReducePoints(1);
-                //         addedPoints = false;
-                //     }
+                    // if (addedPoints)
+                    // {
+                    //     validationManager.ReducePoints(1);
+                    //     addedPoints = false;
+                    // }
                 // }
             }
         }

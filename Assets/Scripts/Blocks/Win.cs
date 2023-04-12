@@ -22,11 +22,13 @@ public class Win : Singleton<Win>
     [SerializeField] private Transform blockPlaceholdersParent;
 
     [Header("Reward Objects")]
-    [SerializeField] private quizTimer quizTimerScript;
     [SerializeField] private TextMeshProUGUI moneyTxt;
     [SerializeField] private TextMeshProUGUI expTxt;
     [SerializeField] private GameObject[] popupGameObjects;
+    [Header ("Scripts")]
     [SerializeField] private InteractionQuizInfo interactionQuiz;
+    [SerializeField] private quizTimer quizTimerScript;
+    [SerializeField] private ValidateController validateController;
 
     private int _ptsToWin = 0;
     private int _currPts = 0;
@@ -42,9 +44,9 @@ public class Win : Singleton<Win>
     {
         gameOverPanel.SetActive(false);
         // blocksInitPos = GameObject.Find("resetPos").GetComponent<initialPosition>();
-
+        _ptsToWin = validateController.requiredPoints;
         //Set score based on the blanks placeholder    
-        _ptsToWin = blockPlaceholdersParent.childCount;
+        // _ptsToWin = blockPlaceholdersParent.childCount;
     }
     public void retry()
     {
