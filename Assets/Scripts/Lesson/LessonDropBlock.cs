@@ -71,7 +71,7 @@ public class LessonDropBlock : MonoBehaviour, IDropHandler
                 }
             }
         }
-        RefreshContentFitters();
+        RefreshContentFitter((RectTransform) gameObject.transform);
 
     }
     public void CheckAnswer(PointerEventData eventData)
