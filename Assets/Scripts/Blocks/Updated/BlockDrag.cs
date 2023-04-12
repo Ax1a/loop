@@ -119,7 +119,22 @@ public class BlockDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         }
     }
 
-    public virtual void BlockValidation() {}
+    public virtual void BlockValidation() {
+        if (_dropZone == null) return; // Don't check the validation when not on the drop block
+
+        foreach (var dropID in _dropZone.GetComponent<BlockDrop>().ids)
+        {
+            if (dropID == id)
+            {
+                if (!addedPoints)
+                {
+                    Debug.Log("added points");
+                    validationManager.AddPoints(1);
+                    addedPoints = true;
+                }
+            }
+        }
+    }
 
     public void CheckForDropZone()
     {

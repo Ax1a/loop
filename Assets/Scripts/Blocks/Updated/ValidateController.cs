@@ -6,28 +6,53 @@ using TMPro;
 
 public class ValidateController : MonoBehaviour
 {
-    [SerializeField] private int requiredPoints;
+    [Header ("Params")]
+    public int requiredPoints;
     public int currentPoints; // Hide
+    public int moneyReward;
+    public int expReward;
+    private bool isStart;
+    [SerializeField] private float timeLimit;
+    public float currTime;
+
     [Header ("Objects")]
     [SerializeField] private TextMeshProUGUI consoleTxt;
+    [SerializeField] private TextMeshProUGUI timerTxt;
+    [SerializeField] private TextMeshProUGUI moneyRewardTxt;
+    [SerializeField] private TextMeshProUGUI expRewardTxt;
+    [SerializeField] private Toggle taskCheck;
     [SerializeField] private Image deleteIcon;
     // [SerializeField] private GameObject variablePrefab;
     [SerializeField] private GameObject variableInputPanel;
+    [SerializeField] private GameObject gameOverPanel;
+    [SerializeField] private GameObject winPanel;
+    [SerializeField] private GameObject startPanel;
     
     [Header ("Blocks Parents")]
     [SerializeField] private Transform blocksParent;
     [SerializeField] private Transform tempParent;
+
+    [Header ("Scripts")]
+    [SerializeField] private InteractionQuizInfo interactionQuiz;
     private string _consoleLog;
     private Sprite _trashClosed, _trashOpen;
     private BlockVariable _blockVariable;
     private bool _inputPanelOpen = false;
+    private bool _achievedPoints = false;
     
     private void Start() {
         _trashClosed = Resources.Load<Sprite>("Sprites/trash_closed");
         _trashOpen = Resources.Load<Sprite>("Sprites/trash_open");
 
         // Generate variable blocks
-        
+    }
+
+    private void OnEnable() {
+        startPanel.SetActive(true);
+        winPanel.SetActive(false);
+        gameOverPanel.SetActive(false);
+        _achievedPoints = false;
+        currTime = timeLimit;
     }
 
     public void SetTrashIcon(bool isOpen) {
@@ -65,21 +90,26 @@ public class ValidateController : MonoBehaviour
     public void ResetBlocks() {
         consoleTxt.text = "";
         currentPoints = 0;
-        foreach (Transform child in blocksParent)
-        {
-            Image placeholder = child.GetComponent<Image>();
-            Color color = placeholder.color;
-            color.a = 0.5f;
-            placeholder.color = color; 
-            foreach (Transform subChild in child)
+
+        if (blocksParent.childCount > 0) {
+            foreach (Transform child in blocksParent)
             {
-                Destroy(subChild.gameObject);
+                Image placeholder = child.GetComponent<Image>();
+                Color color = placeholder.color;
+                color.a = 0.5f;
+                placeholder.color = color; 
+                foreach (Transform subChild in child)
+                {
+                    Destroy(subChild.gameObject);
+                }
             }
         }
 
-        foreach (Transform child in tempParent)
-        {
-            Destroy(child.gameObject);
+        if (tempParent.childCount > 0) {
+            foreach (Transform child in tempParent)
+            {
+                Destroy(child.gameObject);
+            }
         }
     }
 
@@ -161,11 +191,88 @@ public class ValidateController : MonoBehaviour
         variableInputPanel.SetActive(false);
     }
 
+    public void SubmitBlocks() {
+        isStart = false;
+
+        if (_achievedPoints) {
+            startPanel.SetActive(false);
+            winPanel.SetActive(true);
+            gameOverPanel.SetActive(false);
+            InteractionQuizManager.Instance.SetInteractionAsComplete(interactionQuiz);
+
+            moneyRewardTxt.text = moneyReward.ToString();
+            expRewardTxt.text = expReward.ToString();
+            DataManager.AddExp(expReward);
+            DataManager.AddMoney(moneyReward);
+        }
+        else {
+            startPanel.SetActive(false);
+            winPanel.SetActive(false);
+            gameOverPanel.SetActive(true);
+        }
+    }
+
+    public void Retry() {
+        currentPoints = 0;
+        ResetBlocks();
+        startPanel.SetActive(false);
+        winPanel.SetActive(false);
+        gameOverPanel.SetActive(false);
+        isStart = true;
+        currTime = timeLimit;
+    }
+
+    public void StartGame()
+    {
+        if (!isStart)
+        {
+            if (Energy.Instance.GetCurrentEnergy() > 0)
+            {
+                currentPoints = 0;
+                currTime = timeLimit;
+                Energy.Instance.UseEnergy(1);
+                isStart = true;
+                startPanel.SetActive(false);
+                winPanel.SetActive(false);
+                gameOverPanel.SetActive(false);
+            }
+            else
+            {
+                NPCDialogue.Instance.AddDialogue("I'm exhausted and need to rest. Where can I go to recharge and regain some energy?", DataManager.GetPlayerName());
+                NPCDialogue.Instance.ShowDialogue();
+                return;
+            }
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
-        if (requiredPoints == currentPoints) {
-            Debug.Log(currentPoints);
+        if (currentPoints >= requiredPoints) {
+            _achievedPoints = true;
+        }
+        else {
+            _achievedPoints = false;
+        }
+
+        if (isStart)
+        {
+            currTime -= 1 * Time.deltaTime;
+            float time = currTime;
+            timerTxt.text = time.ToString("0");
+
+            if (currTime <= 0)
+            {
+                currTime = 0;
+
+                Debug.Log("Interactive Quiz: GameOver");
+
+                startPanel.SetActive(false);
+                winPanel.SetActive(false);
+                gameOverPanel.SetActive(true);
+                gameOverPanel.transform.SetAsLastSibling();
+                isStart = false;
+            }
         }
     }
 }

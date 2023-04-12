@@ -59,9 +59,13 @@ public class BlockOneDrop : BlockDrag
                 }
                 else if (blockType == BlockType.Type1) {
                     BlockOneDrop blockDrop = dropBlock.transform.GetChild(0).GetComponent<BlockOneDrop>();
+                    BlockOperator blockOperator = dropBlock.transform.GetChild(0).GetComponent<BlockOperator>();
 
                     if (blockDrop != null && blockDrop.consoleValue.Length != 0 && blockDrop.consoleValue != consoleValue) {
                         consoleValue = blockDrop.consoleValue;
+                    }
+                    else if (blockOperator != null && blockOperator.consoleValue.Length != 0 && blockOperator.consoleValue != consoleValue) {
+                        consoleValue = blockOperator.consoleValue;
                     }
                     // else if (gameObject.name.StartsWith("CharInput")) {
                     //     BlockVariable blockVariable = dropBlock.transform.GetChild(0).GetComponent<BlockVariable>();
@@ -79,19 +83,21 @@ public class BlockOneDrop : BlockDrag
 
                 // if (ValidateInput())
                 // {
-                //     if (!addedPoints)
-                //     {
-                //         validationManager.AddPoints(1);
-                //         addedPoints = true;
-                //     }
+                    if (!addedPoints)
+                    {
+                        Debug.Log("added points");
+                        validationManager.AddPoints(1);
+                        addedPoints = true;
+                    }
                 // }
                 // else
                 // {
-                //     if (addedPoints)
-                //     {
-                //         validationManager.ReducePoints(1);
-                //         addedPoints = false;
-                //     }
+                    // if (addedPoints)
+                    // {
+                    //     Debug.Log("reduced points");
+                    //     validationManager.ReducePoints(1);
+                    //     addedPoints = false;
+                    // }
                 // }
             }
         }

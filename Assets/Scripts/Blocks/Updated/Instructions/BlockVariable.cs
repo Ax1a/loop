@@ -121,54 +121,55 @@ public class BlockVariable : BlockDrag
 
         foreach (var dropID in _dropZone.GetComponent<BlockDrop>().ids)
         {
+            if (_intArray.Count() > 0) {
+                if (variableArrayIndex.text != "") {
+                    int index = int.Parse(variableArrayIndex.text);
+
+                    if (index > _intArray.First().Value.intArr.Length - 1) {
+                        consoleValue = "Array index out of bounds";
+                    }
+                    else {
+                        consoleValue = _intArray.First().Value.intArr[index].ToString();
+                    }
+                }
+            }
+            else if (_stringArray.Count() > 0) {
+                if (variableArrayIndex.text != "") {
+                    int index = int.Parse(variableArrayIndex.text);
+
+                    if (index > _stringArray.First().Value.stringArr.Length - 1) {
+                        consoleValue = "Array index out of bounds";
+                    }
+                    else {
+                        consoleValue = _stringArray.First().Value.stringArr[index];
+                    }
+                }
+            }
+            else if (_stringVar.Count() > 0) {
+                consoleValue = _stringVar.Values.First().ToString();
+            }
+            else if (_intVar.Count() > 0) {
+                consoleValue = _intVar.Values.First().ToString();
+            }
+            
             if (dropID == id)
             {
-                if (_intArray.Count() > 0) {
-                    if (variableArrayIndex.text != "") {
-                        int index = int.Parse(variableArrayIndex.text);
-
-                        if (index > _intArray.First().Value.intArr.Length - 1) {
-                            consoleValue = "Array index out of bounds";
-                        }
-                        else {
-                            consoleValue = _intArray.First().Value.intArr[index].ToString();
-                        }
-                    }
-                }
-                else if (_stringArray.Count() > 0) {
-                    if (variableArrayIndex.text != "") {
-                        int index = int.Parse(variableArrayIndex.text);
-
-                        if (index > _stringArray.First().Value.stringArr.Length - 1) {
-                            consoleValue = "Array index out of bounds";
-                        }
-                        else {
-                            consoleValue = _stringArray.First().Value.stringArr[index];
-                        }
-                    }
-                }
-                else if (_stringVar.Count() > 0) {
-                    consoleValue = _stringVar.Values.First().ToString();
-                }
-                else if (_intVar.Count() > 0) {
-                    consoleValue = _intVar.Values.First().ToString();
-                }
 
         //         if (ValidateInput())
         //         {
-        //             if (!addedPoints)
-        //             {
-        //                 validationManager.AddPoints(1);
-        //                 addedPoints = true;
-        //             }
+                    if (!addedPoints)
+                    {
+                        validationManager.AddPoints(1);
+                        addedPoints = true;
+                    }
         //         }
         //         else
         //         {
-        //             if (addedPoints)
-        //             {
-        //                 validationManager.ReducePoints(1);
-        //                 addedPoints = false;
-        //             }
+                    // if (addedPoints)
+                    // {
+                    //     validationManager.ReducePoints(1);
+                    //     addedPoints = false;
+                    // }
         //         }
             }
         }

@@ -12,6 +12,7 @@ public class BlockInput : BlockDrag
     [Header ("For Printing to Console Log")]
     public string consoleValue;
     [SerializeField] private bool addConsoleValue;
+    [SerializeField] private string currentAnswer;
 
     public override void Start() {
         base.Start();
@@ -21,6 +22,13 @@ public class BlockInput : BlockDrag
 
     private bool ValidateInput()
     {
+        if (!inputField.multiLine) {
+            return inputField.text.ToLower() == answer.ToLower();
+        }
+        else if (inputField.multiLine) {
+            if (inputField.text.Contains(answer)) return true;
+        }
+
         return inputField.text.ToLower() == answer.ToLower();
     }
 
@@ -33,6 +41,7 @@ public class BlockInput : BlockDrag
 
     public override void BlockValidation()
     {
+        currentAnswer = inputField.text;
         if (_dropZone == null || !inputChanged) return; // Don't check the validation when not on the drop block
 
         foreach (var dropID in _dropZone.GetComponent<BlockDrop>().ids)
