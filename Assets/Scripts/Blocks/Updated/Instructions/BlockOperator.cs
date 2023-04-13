@@ -145,41 +145,89 @@ public class BlockOperator : BlockDrag
                 consoleValue = decrement.ToString();
             }
         }
-        else if (operation.options[operationValue].text == "=") {            
+        else if (operation.options[operationValue].text == "=") {
             l_dropBlock.SetActive(true);
             r_dropBlock.SetActive(true);
+
+            l_blockDropScript.consoleValue = r_blockDropScript.consoleValue;
         }
         else if (operation.options[operationValue].text == "+=") {
             l_dropBlock.SetActive(true);
             r_dropBlock.SetActive(true);
+            
+            if (int.TryParse(l_blockDropScript.consoleValue, out l_value) && int.TryParse(r_blockDropScript.consoleValue, out r_value)) {
+                int sum = l_value + r_value;
+                consoleValue = sum.ToString();
+            }
         }
         else if (operation.options[operationValue].text == "-=") {
             l_dropBlock.SetActive(true);
             r_dropBlock.SetActive(true);
+            
+            if (int.TryParse(l_blockDropScript.consoleValue, out l_value) && int.TryParse(r_blockDropScript.consoleValue, out r_value)) {
+                int diff = l_value - r_value;
+                consoleValue = diff.ToString();
+            }
         }
         else if (operation.options[operationValue].text == "*=") {
             l_dropBlock.SetActive(true);
             r_dropBlock.SetActive(true);
+
+            if (int.TryParse(l_blockDropScript.consoleValue, out l_value) && int.TryParse(r_blockDropScript.consoleValue, out r_value)) {
+                int product = l_value * r_value;
+                consoleValue = product.ToString();
+            }
         }
         else if (operation.options[operationValue].text == "/=") {
             l_dropBlock.SetActive(true);
             r_dropBlock.SetActive(true);
+
+            if (int.TryParse(l_blockDropScript.consoleValue, out l_value) && int.TryParse(r_blockDropScript.consoleValue, out r_value)) {
+                int quotient = l_value / r_value;
+                consoleValue = quotient.ToString();
+            }
         }
         else if (operation.options[operationValue].text == "%=") {
             l_dropBlock.SetActive(true);
             r_dropBlock.SetActive(true);
+
+            if (int.TryParse(l_blockDropScript.consoleValue, out l_value) && int.TryParse(r_blockDropScript.consoleValue, out r_value)) {
+                int remainder = l_value % r_value;
+                consoleValue = remainder.ToString();
+            }
         }
         else if (operation.options[operationValue].text == "&&") {
             l_dropBlock.SetActive(true);
             r_dropBlock.SetActive(true);
+
+            if (l_blockDropScript.consoleValue == "true" && l_blockDropScript.consoleValue == "true") {
+                consoleValue = "true";
+            }
+            else {
+                consoleValue = "false";
+            }
         }
         else if (operation.options[operationValue].text == "||") {
             l_dropBlock.SetActive(true);
             r_dropBlock.SetActive(true);
+
+            if (l_blockDropScript.consoleValue == "true" || l_blockDropScript.consoleValue == "true") {
+                consoleValue = "true";
+            }
+            else {
+                consoleValue = "false";
+            }
         }
         else if (operation.options[operationValue].text == "!") {
             l_dropBlock.SetActive(false);
             r_dropBlock.SetActive(true);
+
+            if (r_blockDropScript.consoleValue == "true") {
+                consoleValue = "false";
+            }
+            else {
+                consoleValue = "true";
+            }
         }
         else if (operation.options[operationValue].text == "==") {
             l_dropBlock.SetActive(true);
