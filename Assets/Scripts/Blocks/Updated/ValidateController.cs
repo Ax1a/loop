@@ -8,12 +8,12 @@ public class ValidateController : MonoBehaviour
 {
     [Header ("Params")]
     public int requiredPoints;
-    public int currentPoints; // Hide
     public int moneyReward;
     public int expReward;
     private bool isStart;
     [SerializeField] private float timeLimit;
-    public float currTime;
+    public int currentPoints; // Hide
+    private float currTime;
 
     [Header ("Objects")]
     [SerializeField] private TextMeshProUGUI consoleTxt;
@@ -23,7 +23,9 @@ public class ValidateController : MonoBehaviour
     [SerializeField] private Toggle taskCheck;
     [SerializeField] private Image deleteIcon;
     // [SerializeField] private GameObject variablePrefab;
+    [Header ("Panels")]
     [SerializeField] private GameObject variableInputPanel;
+    [SerializeField] private GameObject helpPopup;
     [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private GameObject winPanel;
     [SerializeField] private GameObject startPanel;
@@ -220,6 +222,11 @@ public class ValidateController : MonoBehaviour
         gameOverPanel.SetActive(false);
         isStart = true;
         currTime = timeLimit;
+    }
+
+    public void ToggleHelpPopup(bool isOpen) {
+        isStart = !isOpen;
+        helpPopup.SetActive(isOpen);
     }
 
     public void StartGame()

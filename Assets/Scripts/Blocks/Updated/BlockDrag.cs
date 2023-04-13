@@ -19,6 +19,7 @@ public class BlockDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     [SerializeField] private bool instantiate = true;
     private Transform refreshParent = null;
     private bool deleteObject = false;
+    private int siblingIndex = -1;
     public enum BlockType { Type1, Type2, Type3 }
     public BlockType blockType;
 
@@ -117,6 +118,12 @@ public class BlockDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         {
             _currentDrag.transform.SetParent(_tempParent);
         }
+
+        if (siblingIndex >= 0)
+        {
+            _currentDrag.transform.SetSiblingIndex(siblingIndex);
+        }
+        
     }
 
     public virtual void BlockValidation() {
@@ -160,14 +167,38 @@ public class BlockDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                             isOverDropZone = true;
                         }
                     }
-                    else if (dropZone.name == "ChildContainer") {
+                    else if (dropZone.name == "ChildContainer")
+                    {
                         CanvasGroup canvasGroup = dropZone.transform.parent.GetComponentInParent<CanvasGroup>();
-                        if (canvasGroup.interactable) {
+                        if (canvasGroup.interactable)
+                        {
                             blockDrag._dropZone = dropZone.gameObject;
                             blockDrag.refreshParent = _currentDrag.transform.parent.transform.parent.transform;
                             isOverDropZone = true;
+
+                            // get the child objects of the child container
+                            Transform childContainer = dropZone.transform;
+                            float minDistance = float.MaxValue;
+
+                            for (int i = 0; i < childContainer.childCount; i++)
+                            {
+                                Transform child = childContainer.GetChild(i);
+                                float distance = Vector2.Distance(pointerEventData.position, child.position);
+                                if (distance < minDistance)
+                                {
+                                    minDistance = distance;
+                                    siblingIndex = i;
+                                }
+                            }
+
+                            // // insert the current drag into the nearest sibling index
+                            // if (siblingIndex >= 0)
+                            // {
+                            //     blockDrag.transform.SetSiblingIndex(siblingIndex);
+                            // }
                         }
                     }
+
                     blockDrag.deleteObject = false;
 
                     return;
