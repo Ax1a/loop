@@ -37,15 +37,15 @@ public class quizTimer : MonoBehaviour
         //Define starting time based on difficulty levels.. 
         if (difficulty == Difficulty.easy)
         {
-            startingTime = 20f;
+            startingTime = 60f;
         }
         else if (difficulty == Difficulty.medium)
         {
-            startingTime = 30f;
+            startingTime = 80f;
         }
         else
         {
-            startingTime = 60f;
+            startingTime = 90f;
         }
 
         currTime = startingTime;
