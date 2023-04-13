@@ -29,6 +29,7 @@ public class ValidateController : MonoBehaviour
     [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private GameObject winPanel;
     [SerializeField] private GameObject startPanel;
+    [SerializeField] private GameObject highlightGuide;
     
     [Header ("Blocks Parents")]
     [SerializeField] private Transform blocksParent;
@@ -45,11 +46,12 @@ public class ValidateController : MonoBehaviour
     private void Start() {
         _trashClosed = Resources.Load<Sprite>("Sprites/trash_closed");
         _trashOpen = Resources.Load<Sprite>("Sprites/trash_open");
-
-        // Generate variable blocks
     }
 
     private void OnEnable() {
+        // For testing
+        // PlayerPrefs.DeleteKey("FirstInteract");
+
         startPanel.SetActive(true);
         winPanel.SetActive(false);
         gameOverPanel.SetActive(false);
@@ -200,12 +202,15 @@ public class ValidateController : MonoBehaviour
             startPanel.SetActive(false);
             winPanel.SetActive(true);
             gameOverPanel.SetActive(false);
-            InteractionQuizManager.Instance.SetInteractionAsComplete(interactionQuiz);
 
-            moneyRewardTxt.text = moneyReward.ToString();
-            expRewardTxt.text = expReward.ToString();
-            DataManager.AddExp(expReward);
-            DataManager.AddMoney(moneyReward);
+            if (!interactionQuiz.data.isComplete) {
+                InteractionQuizManager.Instance.SetInteractionAsComplete(interactionQuiz);
+                moneyRewardTxt.text = moneyReward.ToString();
+                expRewardTxt.text = expReward.ToString();
+                DataManager.AddExp(expReward);
+                DataManager.AddMoney(moneyReward);
+            }
+
         }
         else {
             startPanel.SetActive(false);
@@ -225,6 +230,14 @@ public class ValidateController : MonoBehaviour
     }
 
     public void ToggleHelpPopup(bool isOpen) {
+        if (!PlayerPrefs.HasKey("FirstInteract") && isOpen) {
+            UIController.Instance.DequeuePopupHighlight(0);
+        }
+        else if (!PlayerPrefs.HasKey("FirstInteract") && !isOpen) {
+            PlayerPrefs.SetInt("FirstInteract", 1);
+            BotGuide.Instance.AddDialogue("Great job on learning the basics, now it's time to put your block-building skills to the test!");
+            BotGuide.Instance.ShowDialogue();
+        }
         isStart = !isOpen;
         helpPopup.SetActive(isOpen);
     }
@@ -242,6 +255,13 @@ public class ValidateController : MonoBehaviour
                 startPanel.SetActive(false);
                 winPanel.SetActive(false);
                 gameOverPanel.SetActive(false);
+
+                if (!PlayerPrefs.HasKey("FirstInteract")) {
+                    BotGuide.Instance.AddDialogue("Hello there! Let's put your block-building skills to the test and have some fun!");
+                    BotGuide.Instance.AddDialogue("But first, let's cover the basics first before we dive into the interactive quiz.");
+                    BotGuide.Instance.ShowDialogue();
+                    UIController.Instance.EnqueuePopup(highlightGuide);
+                }
             }
             else
             {

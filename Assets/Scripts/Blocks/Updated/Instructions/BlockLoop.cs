@@ -2,17 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BlockLoop : MonoBehaviour
+public class BlockLoop : BlockDrag
 {
-    // Start is called before the first frame update
-    void Start()
-    {
+    public string consoleValue;
+    public GameObject dropBlock;
+    public GameObject childContainer;
+    private int childCount;
+
+    public override void Update() {
+        base.Update();
         
+        if (dropBlock.transform.childCount != childCount) {
+            childCount = dropBlock.transform.childCount;
+            inputChanged = true;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void BlockValidation()
     {
-        
+        if (_dropZone == null) return; // Don't check the validation when not on the drop block
+        if (dropBlock.transform.childCount == 0) return;
+
+        BlockOperator blockOperator = dropBlock.GetComponent<BlockOperator>();
+
+        if (blockOperator.consoleValue == "true") {
+            consoleValue = "true";
+        }
+        else {
+            consoleValue = "false";
+        }
     }
 }

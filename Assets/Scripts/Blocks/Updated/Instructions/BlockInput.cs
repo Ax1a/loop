@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using TMPro;
 using UnityEngine.EventSystems;
@@ -12,11 +13,9 @@ public class BlockInput : BlockDrag
     [Header ("For Printing to Console Log")]
     public string consoleValue;
     [SerializeField] private bool addConsoleValue;
-    [SerializeField] private string currentAnswer;
 
     public override void Start() {
         base.Start();
-
         inputField.onValueChanged.AddListener(OnInputFieldValueChanged);
     }
 
@@ -25,11 +24,21 @@ public class BlockInput : BlockDrag
         if (!inputField.multiLine) {
             return inputField.text.ToLower() == answer.ToLower();
         }
-        else if (inputField.multiLine) {
-            if (inputField.text.Contains(answer)) return true;
-        }
+        else {
+            string[] lines = inputField.text.Split('\n'); // Split the input text into an array of lines
+            string[] answerLines = answer.Replace("\\n", "\n").Split(new string[] { "\n" }, StringSplitOptions.None);
+            bool allLinesMatch = true;
 
-        return inputField.text.ToLower() == answer.ToLower();
+            for (int i = 0; i < lines.Length; i++)
+            {
+                if (lines[i].Trim() != answerLines[i].Trim())
+                {
+                    allLinesMatch = false;
+                    break;
+                }
+            }
+            return allLinesMatch;
+        }
     }
 
     // Function to check if input or dropdown changes
@@ -41,7 +50,6 @@ public class BlockInput : BlockDrag
 
     public override void BlockValidation()
     {
-        currentAnswer = inputField.text;
         if (_dropZone == null || !inputChanged) return; // Don't check the validation when not on the drop block
 
         foreach (var dropID in _dropZone.GetComponent<BlockDrop>().ids)
