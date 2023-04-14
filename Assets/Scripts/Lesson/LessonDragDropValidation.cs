@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class LessonDragDropValidation : Singleton<LessonDragDropValidation>
 {
@@ -35,6 +37,7 @@ public class LessonDragDropValidation : Singleton<LessonDragDropValidation>
         initPos.ResetPositions();
         Debug.Log("Reset");
         LessonDropBlock.Instance._pointsAdded = false;
+        LayoutRefresher.Instance.RefreshContentFitter(transform.parent as RectTransform);
     }
 
     public void AddPoints()
