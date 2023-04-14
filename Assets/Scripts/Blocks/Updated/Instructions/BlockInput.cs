@@ -10,10 +10,6 @@ public class BlockInput : BlockDrag
     public TMP_InputField inputField;
     public string answer;
 
-    [Header ("For Printing to Console Log")]
-    public string consoleValue;
-    [SerializeField] private bool addConsoleValue;
-
     public override void Start() {
         base.Start();
         inputField.onValueChanged.AddListener(OnInputFieldValueChanged);
@@ -56,11 +52,12 @@ public class BlockInput : BlockDrag
         {
             if (dropID == id)
             {
-                if (addConsoleValue) consoleValue = inputField.text;
+                error = false;
+                consoleValue = inputField.text;
 
                 if (ValidateInput())
                 {
-                    if (!addedPoints)
+                    if (!addedPoints && addPoints)
                     {
                         validationManager.AddPoints(1);
                         addedPoints = true;
@@ -68,12 +65,17 @@ public class BlockInput : BlockDrag
                 }
                 else
                 {
-                    if (addedPoints)
+                    if (addedPoints && addPoints)
                     {
                         validationManager.ReducePoints(1);
                         addedPoints = false;
                     }
                 }
+
+                return;
+            }
+            else {
+                error = true;
             }
         }
 

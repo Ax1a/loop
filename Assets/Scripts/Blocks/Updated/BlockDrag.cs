@@ -14,10 +14,11 @@ public class BlockDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     [HideInInspector] public bool addedPoints = false;
     [HideInInspector] public ValidateController validationManager;
     [HideInInspector] public bool inputChanged = true;
-    [HideInInspector] public bool error = false;
+    public bool error = false;
     [HideInInspector] public GameObject _currentDrag;
     [HideInInspector] public GameObject originalObj;
     [SerializeField] private bool instantiate = true;
+    public bool addPoints = false;
     private Transform refreshParent = null;
     private bool deleteObject = false;
     private int siblingIndex = -1;
@@ -25,6 +26,8 @@ public class BlockDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public enum BlockLanguage { C, Python, Java }
     public BlockType blockType;
     public BlockLanguage blockLanguage;
+    public string consoleValue;
+    public bool printConsole = false;
 
     public virtual void Start()
     {
@@ -109,10 +112,11 @@ public class BlockDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 {
                     if (dropID == id)
                     {
-                        inputChanged = true;
                         BlockValidation();
                     }
                 }
+
+                inputChanged = true;
             }
 
             RefreshContentFitter((RectTransform)blockDrag.refreshParent);

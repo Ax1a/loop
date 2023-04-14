@@ -42,6 +42,7 @@ public class ValidateController : MonoBehaviour
     private BlockVariable _blockVariable;
     private bool _inputPanelOpen = false;
     private bool _achievedPoints = false;
+    private bool errorDetected = false;
     
     private void Start() {
         _trashClosed = Resources.Load<Sprite>("Sprites/trash_closed");
@@ -84,7 +85,7 @@ public class ValidateController : MonoBehaviour
         _blockVariable._intArray = _blockVariable.originalObj.GetComponent<BlockVariable>()._intArray;
         _blockVariable._intVar = _blockVariable.originalObj.GetComponent<BlockVariable>()._intVar;
         _blockVariable.inputChanged = true;
-        _blockVariable.originalObj.GetComponent<BlockVariable>().inputChanged = true;
+        _blockVariable.originalObj.GetComponent<BlockDrag>().inputChanged = true;
         
         variableInputPanel.SetActive(false);
         _consoleLog += "\n" + input.text;
@@ -120,52 +121,55 @@ public class ValidateController : MonoBehaviour
     // Recursion to check all the child of block parent 
     public void CheckBlocksPlaced(Transform parent)
     {
+        errorDetected = false;
         // Loop through all child objects of the parent
         foreach (Transform child in parent)
         {
-            // if (child.transform.childCount > 0) {
+            if (child.name.Equals("IfCondition")) {
+                if (child.parent.GetComponent<BlockDrag>()?.consoleValue == "false") continue;
+            }
+            else if (child.name.Equals("ElseCondition")) {
+                if (child.parent.GetComponent<BlockDrag>()?.consoleValue == "true") continue;
+            }
+
             BlockDrag blockDrag = child.GetComponent<BlockDrag>();
             if (blockDrag != null) {
-                if (blockDrag.blockType == BlockDrag.BlockType.Type1) {
-                    // Check if the child has a BlockInput script
-                    BlockInput blockInput = child.GetComponent<BlockInput>();
-                    BlockVariable blockVariable = child.GetComponent<BlockVariable>();
-                    BlockOneDrop blockOneDrop = child.GetComponent<BlockOneDrop>();
+                if (blockDrag.error) {
+                    errorDetected = true;
+                    break;
+                }
 
-                    if (blockInput != null)
+                if (blockDrag.blockType == BlockDrag.BlockType.Type1) {
+                    if (child.name.StartsWith("C_IfCondition") && !blockDrag.consoleValue.ToLower().Equals("true"))
                     {
-                        // Check the console value of the BlockInput script
-                        if (blockInput.consoleValue != "")
-                        {
-                            _consoleLog += blockInput.consoleValue + "\n";
-                        }
+                        continue; // skip this block and its children
                     }
-                    else if (blockVariable != null) {
-                        // Check the console value of the BlockVariable script
-                        if (blockVariable.consoleValue != "")
-                        {
-                            _consoleLog += blockVariable.consoleValue + "\n";
-                        }
-                    }
-                    else if (blockOneDrop != null && child.transform.name.StartsWith("CharInput")) {
+
+                    BlockOneDrop blockOneDrop = child.GetComponent<BlockOneDrop>();
+                    if (blockOneDrop != null && child.transform.name.StartsWith("CharInput")) {
                         BlockVariable _blockVariable = blockOneDrop.dropBlock.transform.GetChild(0).GetComponent<BlockVariable>();
-                        BlockInput _blockInput = blockOneDrop.dropBlock.transform.GetChild(0).GetComponent<BlockInput>();
+                        BlockDrag _blockDrag = blockOneDrop.dropBlock.transform.GetChild(0).GetComponent<BlockDrag>();
 
                         if (_blockVariable != null) {
                             AskForInput(_blockVariable);
                         }
-                        else if (_blockInput != null && _blockInput.consoleValue.Length != 0) {
-                            _blockInput.consoleValue = "";
+                        else if (_blockDrag != null && _blockDrag.consoleValue.Length != 0 && _blockDrag.printConsole) {
+                            _blockDrag.consoleValue = "";
                         }
                     }
-                    else if (blockOneDrop != null) {
-                        if (blockOneDrop.consoleValue != "")
-                        {
-                            _consoleLog += blockOneDrop.consoleValue + "\n";
-                        }
+                    else if (blockDrag.consoleValue != "" && blockDrag.printConsole)
+                    {
+                        _consoleLog += blockDrag.consoleValue + "\n";
                     }
+                    // else if (blockOneDrop != null) {
+                    //     if (blockOneDrop.consoleValue != "")
+                    //     {
+                    //         _consoleLog += blockOneDrop.consoleValue + "\n";
+                    //     }
+                    // }
                 }    
             }
+            if (errorDetected) break;
 
             CheckBlocksPlaced(child);
         }
@@ -180,7 +184,12 @@ public class ValidateController : MonoBehaviour
         consoleTxt.text = "";
         CheckBlocksPlaced(blocksParent);
         yield return WaitForInputPanelToClose();
-        _consoleLog += "\n" + "...Program Finished";
+        if (!errorDetected) {
+            _consoleLog += "\n" + "...Program Finished";
+        }
+        else {
+            _consoleLog = "\n" + "...Error";
+        }
         consoleTxt.text = _consoleLog;
     }
 
