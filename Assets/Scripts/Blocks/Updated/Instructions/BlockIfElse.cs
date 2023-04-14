@@ -7,7 +7,6 @@ public class BlockIfElse : BlockDrag
     public GameObject dropBlock;
     public GameObject ifChildContainer;
     public GameObject elseChildContainer;
-    public string consoleValue;
     private int childCount;
 
     public override void Update() {
@@ -26,12 +25,12 @@ public class BlockIfElse : BlockDrag
 
         BlockOperator blockOperator = dropBlock.GetComponent<BlockOperator>();
 
-        if (blockOperator.consoleValue == "true") {
-            consoleValue = "true";
-        }
-        else {
-            consoleValue = "false";
-        }
+        // if (blockOperator.consoleValue == "true") {
+        //     consoleValue = "true";
+        // }
+        // else {
+        //     consoleValue = "false";
+        // }
 
         foreach (var dropID in _dropZone.GetComponent<BlockDrop>().ids)
         {
@@ -55,6 +54,10 @@ public class BlockIfElse : BlockDrag
                     //     addedPoints = false;
                     // }
                 // }
+                return;
+            }
+            else {
+                error = true;
             }
         }
     }

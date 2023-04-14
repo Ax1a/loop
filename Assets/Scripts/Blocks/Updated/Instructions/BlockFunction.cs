@@ -63,9 +63,10 @@ public class BlockFunction :  BlockDrag
         {
             if (dropID == id)
             {
+                error = false;
                 if (ValidateInput() && ValidateDrowdown())
                 {
-                    if (!addedPoints)
+                    if (!addedPoints && addPoints)
                     {
                         validationManager.AddPoints(1);
                         addedPoints = true;
@@ -73,12 +74,16 @@ public class BlockFunction :  BlockDrag
                 }
                 else
                 {
-                    if (addedPoints)
+                    if (addedPoints && addPoints)
                     {
                         validationManager.ReducePoints(1);
                         addedPoints = false;
                     }
                 }
+                return;
+            }
+            else {
+                error = true;
             }
         }
 

@@ -18,9 +18,6 @@ public class BlockVariable : BlockDrag
     [SerializeField] private TextMeshProUGUI variableNameTxt;
     [SerializeField] private TMP_InputField variableArrayIndex;
 
-    [Header ("For Printing to Console Log")]
-    public string consoleValue;
-
     public override void Start() {
         base.Start();
 
@@ -97,7 +94,7 @@ public class BlockVariable : BlockDrag
 
             originalObj.GetComponent<BlockVariable>()._stringVar.Remove(firstKey);
             originalObj.GetComponent<BlockVariable>()._stringVar.Add(firstKey, input);
-            originalObj.GetComponent<BlockVariable>().consoleValue = input;
+            originalObj.GetComponent<BlockDrag>().consoleValue = input;
         }
         else if (_intVar.Count() > 0) {
             // Get the first key in the dictionary
@@ -109,15 +106,15 @@ public class BlockVariable : BlockDrag
 
             originalObj.GetComponent<BlockVariable>()._intVar.Remove(firstKey);
             originalObj.GetComponent<BlockVariable>()._intVar.Add(firstKey, int.Parse(input));
-            originalObj.GetComponent<BlockVariable>().consoleValue = input;
+            originalObj.GetComponent<BlockDrag>().consoleValue = input;
         }
-        originalObj.GetComponent<BlockVariable>().inputChanged = true;
+        originalObj.GetComponent<BlockDrag>().inputChanged = true;
         inputChanged = true;
     }
 
     public override void BlockValidation()
     {
-        if (_dropZone == null || originalObj.GetComponent<BlockVariable>().inputChanged || inputChanged) return; // Don't check the validation when not on the drop block
+        if (_dropZone == null || originalObj.GetComponent<BlockDrag>().inputChanged || inputChanged) return; // Don't check the validation when not on the drop block
 
         foreach (var dropID in _dropZone.GetComponent<BlockDrop>().ids)
         {
@@ -154,10 +151,10 @@ public class BlockVariable : BlockDrag
             
             if (dropID == id)
             {
-
+                
         //         if (ValidateInput())
         //         {
-                    if (!addedPoints)
+                    if (!addedPoints && addPoints)
                     {
                         validationManager.AddPoints(1);
                         addedPoints = true;
@@ -171,6 +168,7 @@ public class BlockVariable : BlockDrag
                     //     addedPoints = false;
                     // }
         //         }
+                return;
             }
         }
 

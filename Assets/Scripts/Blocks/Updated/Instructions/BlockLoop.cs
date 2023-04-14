@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BlockLoop : BlockDrag
 {
-    public string consoleValue;
     public GameObject dropBlock;
     public GameObject childContainer;
     private int childCount;
@@ -54,6 +53,7 @@ public class BlockLoop : BlockDrag
                     //     addedPoints = false;
                     // }
                 // }
+                return;
             }
         }
     }

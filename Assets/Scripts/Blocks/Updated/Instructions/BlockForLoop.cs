@@ -5,7 +5,6 @@ using TMPro;
 
 public class BlockForLoop : BlockDrag
 {
-    public string consoleValue;
     public GameObject childContainer;
     public TMP_InputField variableValue;
     public TMP_InputField conditionValue;
@@ -45,7 +44,7 @@ public class BlockForLoop : BlockDrag
 
                 // if (ValidateInput())
                 // {
-                    if (!addedPoints)
+                    if (!addedPoints && addPoints)
                     {
                         validationManager.AddPoints(1);
                         addedPoints = true;
