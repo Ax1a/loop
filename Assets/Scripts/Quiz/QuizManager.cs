@@ -37,6 +37,7 @@ public class QuizManager : MonoBehaviour
     [HideInInspector] public int scoreCount;
     public static QuizManager Instance;
     public GameObject[] rewardsPanel;
+    public int questionCount = 5;
     [SerializeField] private LessonsLevelManager levelManager;
     #endregion
 
@@ -62,7 +63,7 @@ public class QuizManager : MonoBehaviour
     void Start()
     {
         ShuffleQuestions();
-        _totalQuestions = QnA.Count;
+        _totalQuestions = questionCount;
         winPanel.SetActive(false);
         quizPanel.SetActive(true);
         timer = GetComponent<quizTimer>();
@@ -165,7 +166,6 @@ public class QuizManager : MonoBehaviour
             if (levelManager != null) {
                 levelManager.addReachedLesson();
             }
-            
 
             //to-do: should add level depending on the course they are taking
             // DataManager.AddProgrammingLanguageProgress(levelManager.course);
@@ -192,7 +192,8 @@ public class QuizManager : MonoBehaviour
     }
     void SetCurrentQuestion(int questionIndex)
     {
-        if (questionIndex >= QnA.Count)
+        // if (questionIndex >= QnA.Count)
+        if (questionIndex >= questionCount)
         {
             OpenPanel();
             return;
