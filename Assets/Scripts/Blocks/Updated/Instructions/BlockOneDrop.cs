@@ -7,7 +7,7 @@ public class BlockOneDrop : BlockDrag
     public GameObject dropBlock;
     public string consoleValue;
     private int childCount;
-    // public string answer;
+    public string answer;
 
 
     // public override void Start() {
@@ -16,10 +16,16 @@ public class BlockOneDrop : BlockDrag
     //     inputField.onValueChanged.AddListener(OnInputFieldValueChanged);
     // }
 
-    // private bool ValidateInput()
-    // {
-    //     return inputField.text.ToLower() == answer.ToLower();
-    // }
+    private bool ValidateInput()
+    {
+        if (answer != "" || answer == null) {
+            return consoleValue.ToLower() == answer.ToLower();
+        }
+        else {
+            return true;
+        }
+
+    }
 
     // // Function to check if input or dropdown changes
     // // This prevents the block validation for always checking
@@ -40,12 +46,33 @@ public class BlockOneDrop : BlockDrag
     public override void BlockValidation()
     {
         if (_dropZone == null) return; // Don't check the validation when not on the drop block
-        if (dropBlock.transform.childCount == 0) return;
+        if (dropBlock.transform.childCount == 0) {
+            consoleValue = "";
+            return;
+        };
         
         foreach (var dropID in _dropZone.GetComponent<BlockDrop>().ids)
         {
             if (dropID == id)
             {
+                if (ValidateInput())
+                {
+                    if (!addedPoints)
+                    {
+                        Debug.Log("added points");
+                        validationManager.AddPoints(1);
+                        addedPoints = true;
+                    }
+                }
+                else
+                {
+                    if (addedPoints)
+                    {
+                        Debug.Log("reduced points");
+                        validationManager.ReducePoints(1);
+                        addedPoints = false;
+                    }
+                }
                 if (blockType == BlockType.Type2) {
                     BlockInput blockInput = dropBlock.transform.GetChild(0).GetComponent<BlockInput>();
                     BlockVariable blockVariable = dropBlock.transform.GetChild(0).GetComponent<BlockVariable>();
@@ -80,25 +107,6 @@ public class BlockOneDrop : BlockDrag
                     // }
                 }
                 // if (addConsoleValue) consoleValue = inputField.text;
-
-                // if (ValidateInput())
-                // {
-                    if (!addedPoints)
-                    {
-                        Debug.Log("added points");
-                        validationManager.AddPoints(1);
-                        addedPoints = true;
-                    }
-                // }
-                // else
-                // {
-                    // if (addedPoints)
-                    // {
-                    //     Debug.Log("reduced points");
-                    //     validationManager.ReducePoints(1);
-                    //     addedPoints = false;
-                    // }
-                // }
             }
         }
 
