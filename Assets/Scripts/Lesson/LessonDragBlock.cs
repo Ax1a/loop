@@ -14,6 +14,7 @@ public class LessonDragBlock : MonoBehaviour, IPointerDownHandler, IBeginDragHan
     GameObject onDragCanvas;
     GameObject ghostBlock = null;
     public Transform parentToReturn = null;
+    private Transform parentToRefresh = null;
     public enum BlockType
     {
         normalBlock, operation, simple, conditional
@@ -57,6 +58,9 @@ public class LessonDragBlock : MonoBehaviour, IPointerDownHandler, IBeginDragHan
         //Turning off raycasts to detect object under the dragging object
         canvasGroup.blocksRaycasts = false;
 
+        //Start layout refreshing 
+        LayoutRefresher.Instance.RefreshContentFitter(transform.parent as RectTransform);
+
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -72,8 +76,13 @@ public class LessonDragBlock : MonoBehaviour, IPointerDownHandler, IBeginDragHan
         transform.SetParent(parentToReturn);
 
         //Destroy the ghostblock after dragging
-        Destroy(ghostBlock);
-        
+        if (ghostBlock != null)
+        {
+            Destroy(ghostBlock);
+        }
+
+        //Start layout refreshing 
+        LayoutRefresher.Instance.RefreshContentFitter(transform.parent as RectTransform);
     }
 
     public void OnPointerDown(PointerEventData eventData)
