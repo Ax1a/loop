@@ -31,5 +31,30 @@ public class BlockIf : BlockDrag
         else {
             consoleValue = "false";
         }
+
+        foreach (var dropID in _dropZone.GetComponent<BlockDrop>().ids)
+        {
+            if (dropID == id)
+            {
+                // if (addConsoleValue) consoleValue = inputField.text;
+
+                // if (ValidateInput())
+                // {
+                    if (!addedPoints)
+                    {
+                        validationManager.AddPoints(1);
+                        addedPoints = true;
+                    }
+                // }
+                // else
+                // {
+                    // if (addedPoints)
+                    // {
+                    //     validationManager.ReducePoints(1);
+                    //     addedPoints = false;
+                    // }
+                // }
+            }
+        }
     }
 }

@@ -75,14 +75,13 @@ public class BlockOperator : BlockDrag
     public override void BlockValidation()
     {
         if (_dropZone == null || !inputChanged) return; // Don't check the validation when not on the drop block
-
-        int operationValue = operation.value;
-
         CheckDropBlockValue();
 
+        int operationValue = operation.value;
         int l_value, r_value;
 
         if (operation.options[operationValue].text == "+") {
+            if (l_blockDropScript == null && r_blockDropScript == null) return;
             l_dropBlock.SetActive(true);
             r_dropBlock.SetActive(true);
 
@@ -92,6 +91,7 @@ public class BlockOperator : BlockDrag
             }
         }
         else if (operation.options[operationValue].text == "-") {
+            if (l_blockDropScript == null && r_blockDropScript == null) return;
             l_dropBlock.SetActive(true);
             r_dropBlock.SetActive(true);
             
@@ -101,6 +101,7 @@ public class BlockOperator : BlockDrag
             }
         }
         else if (operation.options[operationValue].text == "*") {
+            if (l_blockDropScript == null && r_blockDropScript == null) return;
             l_dropBlock.SetActive(true);
             r_dropBlock.SetActive(true);
             
@@ -110,6 +111,7 @@ public class BlockOperator : BlockDrag
             }
         }
         else if (operation.options[operationValue].text == "/") {
+            if (l_blockDropScript == null && r_blockDropScript == null) return;
             l_dropBlock.SetActive(true);
             r_dropBlock.SetActive(true);
 
@@ -119,6 +121,7 @@ public class BlockOperator : BlockDrag
             }
         }
         else if (operation.options[operationValue].text == "%") {
+            if (l_blockDropScript == null && r_blockDropScript == null) return;
             l_dropBlock.SetActive(true);
             r_dropBlock.SetActive(true);
 
@@ -128,6 +131,7 @@ public class BlockOperator : BlockDrag
             }
         }
         else if (operation.options[operationValue].text == "++") {
+            if (l_blockDropScript == null) return;
             l_dropBlock.SetActive(true);
             r_dropBlock.SetActive(false);
 
@@ -137,6 +141,7 @@ public class BlockOperator : BlockDrag
             }
         }
         else if (operation.options[operationValue].text == "--") {
+            if (l_blockDropScript == null) return;
             l_dropBlock.SetActive(true);
             r_dropBlock.SetActive(false);
 
@@ -146,12 +151,14 @@ public class BlockOperator : BlockDrag
             }
         }
         else if (operation.options[operationValue].text == "=") {
+            if (l_blockDropScript == null && r_blockDropScript == null) return;
             l_dropBlock.SetActive(true);
             r_dropBlock.SetActive(true);
 
             l_blockDropScript.consoleValue = r_blockDropScript.consoleValue;
         }
         else if (operation.options[operationValue].text == "+=") {
+            if (l_blockDropScript == null && r_blockDropScript == null) return;
             l_dropBlock.SetActive(true);
             r_dropBlock.SetActive(true);
             
@@ -161,6 +168,7 @@ public class BlockOperator : BlockDrag
             }
         }
         else if (operation.options[operationValue].text == "-=") {
+            if (l_blockDropScript == null && r_blockDropScript == null) return;
             l_dropBlock.SetActive(true);
             r_dropBlock.SetActive(true);
             
@@ -170,6 +178,7 @@ public class BlockOperator : BlockDrag
             }
         }
         else if (operation.options[operationValue].text == "*=") {
+            if (l_blockDropScript == null && r_blockDropScript == null) return;
             l_dropBlock.SetActive(true);
             r_dropBlock.SetActive(true);
 
@@ -179,6 +188,7 @@ public class BlockOperator : BlockDrag
             }
         }
         else if (operation.options[operationValue].text == "/=") {
+            if (l_blockDropScript == null && r_blockDropScript == null) return;
             l_dropBlock.SetActive(true);
             r_dropBlock.SetActive(true);
 
@@ -188,6 +198,7 @@ public class BlockOperator : BlockDrag
             }
         }
         else if (operation.options[operationValue].text == "%=") {
+            if (l_blockDropScript == null && r_blockDropScript == null) return;
             l_dropBlock.SetActive(true);
             r_dropBlock.SetActive(true);
 
@@ -197,6 +208,7 @@ public class BlockOperator : BlockDrag
             }
         }
         else if (operation.options[operationValue].text == "&&") {
+            if (l_blockDropScript == null && r_blockDropScript == null) return;
             l_dropBlock.SetActive(true);
             r_dropBlock.SetActive(true);
 
@@ -208,6 +220,7 @@ public class BlockOperator : BlockDrag
             }
         }
         else if (operation.options[operationValue].text == "||") {
+            if (l_blockDropScript == null && r_blockDropScript == null) return;
             l_dropBlock.SetActive(true);
             r_dropBlock.SetActive(true);
 
@@ -219,6 +232,7 @@ public class BlockOperator : BlockDrag
             }
         }
         else if (operation.options[operationValue].text == "!") {
+            if (r_blockDropScript == null) return;
             l_dropBlock.SetActive(false);
             r_dropBlock.SetActive(true);
 
@@ -230,6 +244,7 @@ public class BlockOperator : BlockDrag
             }
         }
         else if (operation.options[operationValue].text == "==") {
+            if (l_blockDropScript == null && r_blockDropScript == null) return;
             l_dropBlock.SetActive(true);
             r_dropBlock.SetActive(true);
 
@@ -241,6 +256,7 @@ public class BlockOperator : BlockDrag
             }
         }
         else if (operation.options[operationValue].text == "!=") {
+            if (l_blockDropScript == null && r_blockDropScript == null) return;
             l_dropBlock.SetActive(true);
             r_dropBlock.SetActive(true);
 
@@ -252,6 +268,7 @@ public class BlockOperator : BlockDrag
             }
         }
         else if (operation.options[operationValue].text == ">") {
+            if (l_blockDropScript == null && r_blockDropScript == null) return;
             l_dropBlock.SetActive(true);
             r_dropBlock.SetActive(true);
 
@@ -265,6 +282,7 @@ public class BlockOperator : BlockDrag
             }
         }
         else if (operation.options[operationValue].text == "<") {
+            if (l_blockDropScript == null && r_blockDropScript == null) return;
             l_dropBlock.SetActive(true);
             r_dropBlock.SetActive(true);
 
@@ -278,6 +296,7 @@ public class BlockOperator : BlockDrag
             }
         }
         else if (operation.options[operationValue].text == ">=") {
+            if (l_blockDropScript == null && r_blockDropScript == null) return;
             l_dropBlock.SetActive(true);
             r_dropBlock.SetActive(true);
 
@@ -291,6 +310,7 @@ public class BlockOperator : BlockDrag
             }
         }
         else if (operation.options[operationValue].text == "<=") {
+            if (l_blockDropScript == null && r_blockDropScript == null) return;
             l_dropBlock.SetActive(true);
             r_dropBlock.SetActive(true);
 
