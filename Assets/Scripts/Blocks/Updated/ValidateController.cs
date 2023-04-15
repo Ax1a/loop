@@ -251,6 +251,10 @@ public class ValidateController : MonoBehaviour
         helpPopup.SetActive(isOpen);
     }
 
+    private void OnDisable() {
+        isStart = false;
+    }
+
     public void StartGame()
     {
         if (!isStart)
