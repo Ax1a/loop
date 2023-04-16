@@ -77,7 +77,6 @@ public class ValidateController : MonoBehaviour
     public void AskForInput(BlockVariable blockVariable) {
         _blockVariable = blockVariable;
         variableInputPanel.SetActive(true);
-        _inputPanelOpen = true;
     }
 
     public void InsertInput(TMP_InputField input) {
@@ -89,8 +88,13 @@ public class ValidateController : MonoBehaviour
         _blockVariable.inputChanged = true;
         _blockVariable.originalObj.GetComponent<BlockDrag>().inputChanged = true;
         
+        // _consoleLog += "\n" + input.text;
         variableInputPanel.SetActive(false);
-        _consoleLog += "\n" + input.text;
+        StartCoroutine(DelayDisable());
+    }
+
+    private IEnumerator DelayDisable() {
+        yield return new WaitForSeconds(0.1f);
         _inputPanelOpen = false;
     }
 
@@ -121,7 +125,7 @@ public class ValidateController : MonoBehaviour
     }
 
     // Recursion to check all the child of block parent 
-    public void CheckBlocksPlaced(Transform parent)
+    public IEnumerator CheckBlocksPlaced(Transform parent)
     {
         errorDetected = false;
         // Loop through all child objects of the parent
@@ -146,14 +150,16 @@ public class ValidateController : MonoBehaviour
                     {
                         continue; // skip this block and its children
                     }
-
+                    
                     BlockOneDrop blockOneDrop = child.GetComponent<BlockOneDrop>();
-                    if (blockOneDrop != null && child.transform.name.StartsWith("CharInput")) {
+                    if (blockOneDrop != null && child.transform.name.StartsWith("C_CharInput")) {
                         BlockVariable _blockVariable = blockOneDrop.dropBlock.transform.GetChild(0).GetComponent<BlockVariable>();
                         BlockDrag _blockDrag = blockOneDrop.dropBlock.transform.GetChild(0).GetComponent<BlockDrag>();
 
                         if (_blockVariable != null) {
                             AskForInput(_blockVariable);
+                            _inputPanelOpen = true;
+                            yield return WaitForInputPanelToClose();
                         }
                         else if (_blockDrag != null && _blockDrag.consoleValue.Length != 0 && _blockDrag.printConsole) {
                             _blockDrag.consoleValue = "";
@@ -161,19 +167,15 @@ public class ValidateController : MonoBehaviour
                     }
                     else if (blockDrag.consoleValue != "" && blockDrag.printConsole)
                     {
+                        if (child.name.StartsWith("C_Print")) Debug.Log("updated print value");
                         _consoleLog += blockDrag.consoleValue + "\n";
                     }
-                    // else if (blockOneDrop != null) {
-                    //     if (blockOneDrop.consoleValue != "")
-                    //     {
-                    //         _consoleLog += blockOneDrop.consoleValue + "\n";
-                    //     }
-                    // }
+
                 }    
             }
             if (errorDetected) break;
 
-            CheckBlocksPlaced(child);
+            StartCoroutine(CheckBlocksPlaced(child));
         }
     }
 
@@ -184,8 +186,12 @@ public class ValidateController : MonoBehaviour
     public IEnumerator RunCommands() {
         _consoleLog = "";
         consoleTxt.text = "";
-        CheckBlocksPlaced(blocksParent);
-        yield return WaitForInputPanelToClose();
+        yield return StartCoroutine(CheckBlocksPlaced(blocksParent));
+
+        if (_inputPanelOpen) {
+            yield return WaitForInputPanelToClose();
+        }
+
         if (!errorDetected) {
             _consoleLog += "\n" + "...Program Finished";
         }
@@ -290,6 +296,18 @@ public class ValidateController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (tempParent.childCount > 0) {
+            foreach (Transform child in tempParent.transform)
+            {
+                BlockDrag blockDrag = child.GetComponent<BlockDrag>();
+
+                if (blockDrag != null && blockDrag.addedPoints) {
+                    blockDrag.addedPoints = false;
+                    ReducePoints(1);
+                }
+            }
+        }
+
         if (currentPoints >= requiredPoints) {
             _achievedPoints = true;
         }

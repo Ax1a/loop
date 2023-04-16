@@ -13,8 +13,8 @@ public class BlockOperator : BlockDrag
     [SerializeField] private string operationAnswer;
     [SerializeField] private string l_blockAnswer;
     [SerializeField] private string r_blockAnswer;
-    private string l_childConsole, r_childConsole;
-    private BlockDrag _l_blockDrop, _r_blockDrop;
+    public string l_childConsole, r_childConsole;
+    public BlockDrag _l_blockDrop, _r_blockDrop;
 
     public override void Start() {
         base.Start();
@@ -51,6 +51,16 @@ public class BlockOperator : BlockDrag
     {
         int operationValue = operation.value;
         if (operation.options[operationValue].text == operationAnswer)  {
+            if (_l_blockDrop != null && _r_blockDrop != null){
+                return _l_blockDrop.consoleValue == l_blockAnswer && _r_blockDrop.consoleValue == r_blockAnswer;
+            }
+            else if (_l_blockDrop != null) {
+                return _l_blockDrop.consoleValue == l_blockAnswer;
+            }
+            else if (_r_blockDrop != null) {
+                return _r_blockDrop.consoleValue == r_blockAnswer;
+            }
+            
             return true;
         }
 
@@ -74,6 +84,7 @@ public class BlockOperator : BlockDrag
         if (_dropZone == null || !inputChanged) return; // Don't check the validation when not on the drop block
         CheckDropBlockValue();
 
+        Debug.Log("Checking Operator" + gameObject.name + inputChanged);
         int operationValue = operation.value;
         int l_value, r_value;
 
@@ -330,22 +341,23 @@ public class BlockOperator : BlockDrag
                 error = false;
                 // if (addConsoleValue) consoleValue = inputField.text;
 
-                // if (ValidateInput())
-                // {
+                if (ValidateInput())
+                {
                     if (!addedPoints && addPoints)
                     {
                         validationManager.AddPoints(1);
                         addedPoints = true;
                     }
-                // }
-                // else
-                // {
-                    // if (addedPoints)
-                    // {
-                    //     validationManager.ReducePoints(1);
-                    //     addedPoints = false;
-                    // }
-                // }
+                }
+                else
+                {
+                    if (addedPoints)
+                    {
+                        validationManager.ReducePoints(1);
+                        addedPoints = false;
+                    }
+                }
+                inputChanged = false;
                 return;
             }
             else {

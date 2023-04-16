@@ -17,6 +17,7 @@ public class BlockVariable : BlockDrag
     [Header ("Objects")]
     [SerializeField] private TextMeshProUGUI variableNameTxt;
     [SerializeField] private TMP_InputField variableArrayIndex;
+    private BlockVariable origBlockVariable = null;
 
     public override void Start() {
         base.Start();
@@ -37,6 +38,56 @@ public class BlockVariable : BlockDrag
         else if (_intVar.Count() > 0) {
             variableArrayIndex.transform.parent.gameObject.SetActive(false);
             variableNameTxt.text = _intVar.Keys.First().ToString();
+        }
+        inputChanged = true;
+    }
+
+    public override void Update() {
+        base.Update();
+
+        if (origBlockVariable != null) {
+            if (_intArray.Count() > 0 && _intArray != origBlockVariable._intArray) {
+                _intArray = origBlockVariable._intArray;
+
+                if (variableArrayIndex.text != "") {
+                    int index = int.Parse(variableArrayIndex.text);
+
+                    if (index > _intArray.First().Value.intArr.Length - 1) {
+                        consoleValue = "Array index out of bounds";
+                    }
+                    else {
+                        consoleValue = _intArray.First().Value.intArr[index].ToString();
+                    }
+                }
+            }
+            else if (_stringArray.Count() > 0 && _stringArray != origBlockVariable._stringArray) {
+                _stringArray = origBlockVariable._stringArray;
+
+                if (variableArrayIndex.text != "") {
+                    int index = int.Parse(variableArrayIndex.text);
+
+                    if (index > _stringArray.First().Value.stringArr.Length - 1) {
+                        consoleValue = "Array index out of bounds";
+                    }
+                    else {
+                        consoleValue = _stringArray.First().Value.stringArr[index];
+                    }
+                }
+            }
+            else if (_stringVar.Count() > 0 && _stringVar != origBlockVariable._stringVar) {
+                _stringVar = origBlockVariable._stringVar;
+                consoleValue = _stringVar.Values.First().ToString();
+            }
+            else if (_intVar.Count() > 0 && _intVar != origBlockVariable._intVar) {
+                _intVar = origBlockVariable._intVar;
+                consoleValue = _intVar.Values.First().ToString();
+            }
+
+            if (originalObj.GetComponent<BlockDrag>().inputChanged) inputChanged = true;
+        }
+        else {
+            if (originalObj != null) origBlockVariable = originalObj.GetComponent<BlockVariable>();
+            inputChanged = true;
         }
     }
 
@@ -114,7 +165,7 @@ public class BlockVariable : BlockDrag
 
     public override void BlockValidation()
     {
-        if (_dropZone == null) return; // Don't check the validation when not on the drop block
+        if (_dropZone == null || !inputChanged) return; // Don't check the validation when not on the drop block
 
         foreach (var dropID in _dropZone.GetComponent<BlockDrop>().ids)
         {
@@ -155,6 +206,7 @@ public class BlockVariable : BlockDrag
                 {
                     validationManager.AddPoints(1);
                     addedPoints = true;
+                    inputChanged = false;
                 }
                 return;
             }

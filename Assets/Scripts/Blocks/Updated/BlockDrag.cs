@@ -11,7 +11,7 @@ public class BlockDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     [HideInInspector] public Transform _tempParent = null;
     public GameObject _dropZone;
     [HideInInspector] public bool isOverDropZone = false;
-    [HideInInspector] public bool addedPoints = false;
+     public bool addedPoints = false;
     [HideInInspector] public ValidateController validationManager;
     [HideInInspector] public bool inputChanged = true;
     public bool error = false;
