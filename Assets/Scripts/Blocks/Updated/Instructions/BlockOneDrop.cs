@@ -7,17 +7,11 @@ public class BlockOneDrop : BlockDrag
     public GameObject dropBlock;
     private int childCount;
     public string answer;
-
-
-    // public override void Start() {
-    //     base.Start();
-
-    //     inputField.onValueChanged.AddListener(OnInputFieldValueChanged);
-    // }
+    private string dropConsoleValue;
 
     private bool ValidateInput()
     {
-        if (answer != "" || answer == null) {
+        if (answer != "") {
             return consoleValue.ToLower() == answer.ToLower();
         }
         else {
@@ -39,36 +33,23 @@ public class BlockOneDrop : BlockDrag
             childCount = dropBlock.transform.childCount;
             inputChanged = true;
         }
+
+        if (dropBlock.transform.childCount > 0 && dropBlock.transform.GetChild(0).GetComponent<BlockDrag>().consoleValue != dropConsoleValue) {
+            dropConsoleValue = dropBlock.transform.GetChild(0).GetComponent<BlockDrag>().consoleValue;
+            inputChanged = true;
+        }
     }
 
 
     public override void BlockValidation()
     {
-        if (_dropZone == null) return; // Don't check the validation when not on the drop block
+        if (_dropZone == null || !inputChanged) return; // Don't check the validation when not on the drop block
         
-        Debug.Log(gameObject.name);
         foreach (var dropID in _dropZone.GetComponent<BlockDrop>().ids)
         {
             if (dropID == id)
             {
                 error = false;
-                if (ValidateInput())
-                {
-                    if (!addedPoints && addPoints)
-                    {
-                        validationManager.AddPoints(1);
-                        addedPoints = true;
-                    }
-                }
-                else
-                {
-                    if (addedPoints && addPoints)
-                    {
-                        validationManager.ReducePoints(1);
-                        addedPoints = false;
-                    }
-                }
-
                 if (dropBlock.transform.childCount > 0) {
                     // if (blockType == BlockType.Type2) {
                         BlockDrag blockDrag = dropBlock.transform.GetChild(0).GetComponent<BlockDrag>();
@@ -95,10 +76,29 @@ public class BlockOneDrop : BlockDrag
                     // }
                 }
                 else {
+                    inputChanged = false;
                     consoleValue = "";
                     return;
                 }
-                // if (addConsoleValue) consoleValue = inputField.text;
+
+                if (ValidateInput())
+                {
+                    if (!addedPoints && addPoints)
+                    {
+                        validationManager.AddPoints(1);
+                        addedPoints = true;
+                    }
+                }
+                else
+                {
+                    if (addedPoints && addPoints)
+                    {
+                        validationManager.ReducePoints(1);
+                        addedPoints = false;
+                    }
+                }
+
+                inputChanged = false;
                 return;
             }
             else {
