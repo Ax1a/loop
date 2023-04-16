@@ -8,6 +8,7 @@ public class AssembleUI : MonoBehaviour
 {
     [SerializeField] private Button buildBtn;
     [SerializeField] private GameObject TutorialObject;
+    [SerializeField] private GameObject highlightGuide;
     [SerializeField] private Button[] partBtns;
     [SerializeField] private Button[] itemBtns;
     [SerializeField] private GameObject[] partContainers;
@@ -41,6 +42,8 @@ public class AssembleUI : MonoBehaviour
     }
 
     private void OnDisable() {
+        highlightGuide.SetActive(false);
+
         if (UIController.Instance.popUpUIs.Count > 0)
         {
             if (_firstSelect || UIController.Instance.popUpUIs.Peek().name == "AssembleGuide") UIController.Instance.DequeuePopupHighlight(1);
@@ -67,6 +70,7 @@ public class AssembleUI : MonoBehaviour
     // PC Part Item Onclick button
     public void SelectPCPart(int index)
     {
+        highlightGuide.SetActive(false);
         if (UIController.Instance.popUpUIs.Count > 0)
         {
             if (_firstSelect || UIController.Instance.popUpUIs.Peek().name == "AssembleGuide") UIController.Instance.DequeuePopupHighlight(1);

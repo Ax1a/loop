@@ -40,12 +40,12 @@ public class Computer : MonoBehaviour, Interactable
     }
 
     IEnumerator OpenPanelDelay() {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(.98f);
 
         isOpened = true;
         Open = _computer.GetComponent<OpenPanel>();
         Open._OpenPanel();
-        // StartCoroutine(Bot());
+
         yield return new WaitForSeconds(3.3f);
         
         _computerOpenedBefore = PlayerPrefs.GetInt("ComputerOpenedBefore", 0) == 1;
@@ -59,9 +59,4 @@ public class Computer : MonoBehaviour, Interactable
             BotGuide.Instance.ShowDialogue();
         }
     }
-
-    // IEnumerator Bot () 
-    // {
-        
-    // }
 }

@@ -12,7 +12,8 @@ public class BuildPC : MonoBehaviour, Interactable
     {
         if (DataManager.GetTutorialProgress() >= 3) {
             UIController.Instance.ToggleUI("AssemblePopup");
-            StartCoroutine(DelayEnqueue());
+            // StartCoroutine(DelayEnqueue());
+            highlightGuide.SetActive(true);
             
             return true;
         }

@@ -65,10 +65,12 @@ public class ValidateController : MonoBehaviour
     }
 
     public void AddPoints(int point) {
+        Debug.Log("Added points");
         currentPoints += point;
     }
 
     public void ReducePoints(int point) {
+        Debug.Log("Reduced Points");
         currentPoints -= point;
     }
 
@@ -207,7 +209,7 @@ public class ValidateController : MonoBehaviour
     public void SubmitBlocks() {
         isStart = false;
 
-        if (_achievedPoints) {
+        if (_achievedPoints && !errorDetected) {
             startPanel.SetActive(false);
             winPanel.SetActive(true);
             gameOverPanel.SetActive(false);

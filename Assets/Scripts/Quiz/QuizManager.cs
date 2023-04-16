@@ -77,14 +77,13 @@ public class QuizManager : MonoBehaviour
 
         // Assign the default value to the _currentCourse variable
         _currentCourse = defaultValue;
-
-    
     }
 
     public int GetScore()
     {
         return scoreCount;
     }
+
 
     public void StartGame()
     {
@@ -123,13 +122,16 @@ public class QuizManager : MonoBehaviour
     }
     private void ShuffleQuestions()
     {
-        int Compare(QuestAndAns a, QuestAndAns b)
+        int n = QnA.Count;
+        while (n > 1)
         {
-            return UnityEngine.Random.Range(-1, 2);
+            n--;
+            int k = UnityEngine.Random.Range(0, n + 1);
+            QuestAndAns temp = QnA[k];
+            QnA[k] = QnA[n];
+            QnA[n] = temp;
         }
-
-        QnA.Sort(Compare);
-
+        
         // Add questions
         SetCurrentQuestion(_questionIndex);
     }

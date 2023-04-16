@@ -114,7 +114,7 @@ public class BlockVariable : BlockDrag
 
     public override void BlockValidation()
     {
-        if (_dropZone == null || originalObj.GetComponent<BlockDrag>().inputChanged || inputChanged) return; // Don't check the validation when not on the drop block
+        if (_dropZone == null) return; // Don't check the validation when not on the drop block
 
         foreach (var dropID in _dropZone.GetComponent<BlockDrop>().ids)
         {
@@ -151,24 +151,19 @@ public class BlockVariable : BlockDrag
             
             if (dropID == id)
             {
-                
-        //         if (ValidateInput())
-        //         {
-                    if (!addedPoints && addPoints)
-                    {
-                        validationManager.AddPoints(1);
-                        addedPoints = true;
-                    }
-        //         }
-        //         else
-        //         {
-                    // if (addedPoints)
-                    // {
-                    //     validationManager.ReducePoints(1);
-                    //     addedPoints = false;
-                    // }
-        //         }
+                if (!addedPoints && addPoints)
+                {
+                    validationManager.AddPoints(1);
+                    addedPoints = true;
+                }
                 return;
+            }
+            else {
+                if (addedPoints && addPoints)
+                {
+                    validationManager.ReducePoints(1);
+                    addedPoints = false;
+                }
             }
         }
 

@@ -9,7 +9,7 @@ public class BlockDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public int id;
     [HideInInspector] public Transform _environmentParent = null;
     [HideInInspector] public Transform _tempParent = null;
-    [HideInInspector] public GameObject _dropZone;
+    public GameObject _dropZone;
     [HideInInspector] public bool isOverDropZone = false;
     [HideInInspector] public bool addedPoints = false;
     [HideInInspector] public ValidateController validationManager;
@@ -43,7 +43,6 @@ public class BlockDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public void OnBeginDrag(PointerEventData eventData)
     {
         inputChanged = false;
-
         // Instantiate a copy of the object and set it as the current drag
         if (instantiate) {
             _currentDrag = Instantiate(gameObject, transform.parent);
@@ -81,6 +80,16 @@ public class BlockDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         if (_currentDrag != null) {
             _currentDrag.transform.position = Input.mousePosition;
             CheckForDropZone();
+
+            if (!isOverDropZone) {
+                _dropZone = null;
+
+                if (addedPoints && addPoints)
+                {
+                    validationManager.ReducePoints(1);
+                    addedPoints = false;
+                }
+            }
         }
     }
 
