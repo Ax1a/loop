@@ -6,6 +6,7 @@ using TMPro;
 
 public class ValidateController : MonoBehaviour
 {
+    #region Variables
     [Header ("Params")]
     public int requiredPoints;
     public int moneyReward;
@@ -42,7 +43,8 @@ public class ValidateController : MonoBehaviour
     private BlockVariable _blockVariable;
     private bool _inputPanelOpen = false;
     private bool _achievedPoints = false;
-    private bool errorDetected = false;
+    private bool errorDetected = false, blocksPlaced = false, coroutineRunning = false;
+    #endregion
     
     private void Start() {
         _trashClosed = Resources.Load<Sprite>("Sprites/trash_closed");
@@ -140,18 +142,21 @@ public class ValidateController : MonoBehaviour
 
             BlockDrag blockDrag = child.GetComponent<BlockDrag>();
             if (blockDrag != null) {
+                blocksPlaced = true;
                 if (blockDrag.error) {
                     errorDetected = true;
                     break;
                 }
 
                 if (blockDrag.blockType == BlockDrag.BlockType.Type1) {
+                    BlockOneDrop blockOneDrop = child.GetComponent<BlockOneDrop>();
+
                     if (child.name.StartsWith("C_IfCondition") && !blockDrag.consoleValue.ToLower().Equals("true"))
                     {
                         continue; // skip this block and its children
                     }
                     
-                    BlockOneDrop blockOneDrop = child.GetComponent<BlockOneDrop>();
+                    
                     if (blockOneDrop != null && child.transform.name.StartsWith("C_CharInput")) {
                         BlockVariable _blockVariable = blockOneDrop.dropBlock.transform.GetChild(0).GetComponent<BlockVariable>();
                         BlockDrag _blockDrag = blockOneDrop.dropBlock.transform.GetChild(0).GetComponent<BlockDrag>();
@@ -171,7 +176,8 @@ public class ValidateController : MonoBehaviour
                         _consoleLog += blockDrag.consoleValue + "\n";
                     }
 
-                }    
+                }   
+                // blockDrag.inputChanged = true; 
             }
             if (errorDetected) break;
 
@@ -180,13 +186,19 @@ public class ValidateController : MonoBehaviour
     }
 
     public void ExecuteCommand() {
+        if (coroutineRunning) return;
         StartCoroutine(RunCommands());
     }
 
     public IEnumerator RunCommands() {
+        coroutineRunning = true;
         _consoleLog = "";
         consoleTxt.text = "";
+        blocksPlaced = false;
         yield return StartCoroutine(CheckBlocksPlaced(blocksParent));
+        coroutineRunning = false;
+
+        if (!blocksPlaced) yield break;
 
         if (_inputPanelOpen) {
             yield return WaitForInputPanelToClose();
