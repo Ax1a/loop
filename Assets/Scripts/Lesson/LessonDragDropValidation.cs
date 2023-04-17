@@ -2,23 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
-
 public class LessonDragDropValidation : Singleton<LessonDragDropValidation>
 {
-    [HideInInspector] public int _currPts = 0;
+    private int _currPts = 0;
+    public int CurrPts
+    {
+        get { return _currPts; }
+        set { _currPts = value; }
+    }
     public int ptsToWin = 0;
     string _playerName;
     [HideInInspector] public bool isCorrect = false;
     public LessonInitPos initPos;
 
-    void Start ()
+    void Start()
     {
         _playerName = DataManager.GetPlayerName();
     }
     public void Validate()
     {
-        if (_currPts >= ptsToWin)
+        if (CurrPts >= ptsToWin)
         {
             NPCCall("Great! Seems like I understand the lesson");
             Debug.Log("You got it right");
@@ -26,37 +29,42 @@ public class LessonDragDropValidation : Singleton<LessonDragDropValidation>
         else
         {
             NPCCall("I better review the lesson again! :<");
+            isCorrect = false;
             Debug.Log("There is something wrong");
+        }
+    }
+    public void IsCorrect()
+    {
+        if (CurrPts >= ptsToWin)
+        {
+            isCorrect = true;
         }
     }
 
     public void Reset()
     {
-        _currPts = 0;
-        Debug.Log(_currPts);
+        CurrPts = 0;
         initPos.ResetPositions();
-        Debug.Log("Reset");
         LessonDropBlock.Instance._pointsAdded = false;
+        isCorrect = false;
         LayoutRefresher.Instance.RefreshContentFitter(transform.parent as RectTransform);
     }
 
     public void AddPoints()
     {
-        _currPts += 1;
-        Debug.Log(_currPts);
+        CurrPts += 1;
+
     }
 
     public void MinusPoints()
     {
-        _currPts -= 1;
+        CurrPts -= 1;
 
-        if (_currPts < 0)
+        if (CurrPts < 0)
         {
-            _currPts = 0;
-            Debug.Log(_currPts);
+            CurrPts = 0;
         }
-        Debug.Log(_currPts);
-        Debug.Log("points minus");
+
     }
 
     void NPCCall(string message)

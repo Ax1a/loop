@@ -24,7 +24,7 @@ public class validate : MonoBehaviour
     }
     public void valid()
     {
-        int _currPts = LessonDragDropValidation.Instance._currPts;
+        int _currPts = LessonDragDropValidation.Instance.CurrPts;
         int ptsToWin = LessonDragDropValidation.Instance.ptsToWin;
 
         if (input.text.Length != 0 && _currPts >= ptsToWin)
