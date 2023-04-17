@@ -6,13 +6,12 @@ using TMPro;
 
 
 public class LessonInteractions : MonoBehaviour
-{   
+{
     public GameObject outputParent;
     [SerializeField] private string[] correctAnswers;
     public TMP_InputField[] userAnswer;
     string _playerName;
     bool allCorrect = false;
-    bool allEmpty;
     void Start()
     {
         _playerName = DataManager.GetPlayerName();
@@ -20,14 +19,14 @@ public class LessonInteractions : MonoBehaviour
     public void CheckAnswer()
     {
         allCorrect = true;
-        allEmpty = false;
         string incorrectAnswers = "";
         for (int i = 0; i < userAnswer.Length; i++)
         {
             //To - fix : NPC when all input box are empty.
             if (userAnswer[i].text == "")
             {
-                allEmpty = true;
+                NPCCall("I think I should input some values...");
+                return;
             }
 
             if (userAnswer[i].text != correctAnswers[i])
@@ -37,31 +36,21 @@ public class LessonInteractions : MonoBehaviour
                 incorrectAnswers += "Question " + (i + 1) + " is incorrect.\n";
             }
         }
+        LessonDragDropValidation.Instance.IsCorrect();
+        allCorrect = LessonDragDropValidation.Instance.isCorrect;
+    }
 
-        if (allEmpty)
-        {
-            NPCCall("I think I should input some values...");
-            allEmpty = false;
-        }
-
+    public void ListOutput()
+    {
         if (allCorrect)
         {
-            LessonDragDropValidation.Instance.Validate();
-            allCorrect = true;
+            NPCCall("Great! I understand how to create a list!");
         }
         else
         {
             NPCCall("I better review the lesson again! :<");
-            Debug.Log("Try again :<");
         }
-
     }
-    void NPCCall(string message)
-    {
-        NPCDialogue.Instance.AddDialogue(message, _playerName);
-        NPCDialogue.Instance.ShowDialogue();
-    }
-
     public void ForLoopOutput()
     {
         if (allCorrect)
@@ -70,7 +59,7 @@ public class LessonInteractions : MonoBehaviour
         }
     }
 
-    public void ClearForLoopConsole ()
+    public void ClearForLoopConsole()
     {
         foreach (Transform childTransform in outputParent.transform)
         {
@@ -93,6 +82,12 @@ public class LessonInteractions : MonoBehaviour
             // Wait for the specified delay before activating the next child object
             yield return new WaitForSeconds(0.5f);
         }
+    }
+
+    void NPCCall(string message)
+    {
+        NPCDialogue.Instance.AddDialogue(message, _playerName);
+        NPCDialogue.Instance.ShowDialogue();
     }
 
 }

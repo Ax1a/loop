@@ -34,7 +34,7 @@ public class OperationInteraction : MonoBehaviour
         int userNum1;
         int userNum2;
         int correctAnswer;
-        int _currPts = LessonDragDropValidation.Instance._currPts;
+        int _currPts = LessonDragDropValidation.Instance.CurrPts;
         int ptsToWin = LessonDragDropValidation.Instance.ptsToWin;
 
         //Checks if blocks are drag in the right place
@@ -128,7 +128,7 @@ public class OperationInteraction : MonoBehaviour
         string input1 = str1.text;
         string input2 = str2.text;
         bool isEmpty = false;
-        int _currPts = LessonDragDropValidation.Instance._currPts;
+        int _currPts = LessonDragDropValidation.Instance.CurrPts;
         int ptsToWin = LessonDragDropValidation.Instance.ptsToWin;
 
         //Checks if inputs are not empty
@@ -195,7 +195,7 @@ public class OperationInteraction : MonoBehaviour
         float leftOperand;
         float rightOperand;
 
-        int _currPts = LessonDragDropValidation.Instance._currPts;
+        int _currPts = LessonDragDropValidation.Instance.CurrPts;
         int ptsToWin = LessonDragDropValidation.Instance.ptsToWin;
 
         //Checks if blocks are drag in the right place
