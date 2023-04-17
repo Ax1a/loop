@@ -14,7 +14,6 @@ public class LessonDragBlock : MonoBehaviour, IPointerDownHandler, IBeginDragHan
     GameObject onDragCanvas;
     GameObject ghostBlock = null;
     public Transform parentToReturn = null;
-    private Transform parentToRefresh = null;
     public enum BlockType
     {
         normalBlock, operation, simple, conditional
@@ -80,9 +79,10 @@ public class LessonDragBlock : MonoBehaviour, IPointerDownHandler, IBeginDragHan
         {
             Destroy(ghostBlock);
         }
-
+        
         //Start layout refreshing 
         LayoutRefresher.Instance.RefreshContentFitter(transform.parent as RectTransform);
+ 
     }
 
     public void OnPointerDown(PointerEventData eventData)
