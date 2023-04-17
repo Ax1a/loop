@@ -31,7 +31,11 @@ public class BlockFunction :  BlockDrag
         for (int i = 0; i < inputField.Length; i++)
         {
             if (inputField[i].text.ToLower() == inputAnswers[i].ToLower()) {
+                if (inputAnswers[i].ToLower() == "main") error = false;
                 return true;
+            }
+            else {
+                if (inputAnswers[i].ToLower() == "main") error = true;
             }
         }
         return false;
@@ -58,7 +62,6 @@ public class BlockFunction :  BlockDrag
     public override void BlockValidation()
     {
         if (_dropZone == null || !inputChanged) return; // Don't check the validation when not on the drop block
-        
         foreach (var dropID in _dropZone.GetComponent<BlockDrop>().ids)
         {
             if (dropID == id)
@@ -80,6 +83,7 @@ public class BlockFunction :  BlockDrag
                         addedPoints = false;
                     }
                 }
+                inputChanged = false;
                 return;
             }
             else {

@@ -6,18 +6,19 @@ using UnityEngine.EventSystems;
 
 public class BlockDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
+    #region Variables
     public int id;
     [HideInInspector] public Transform _environmentParent = null;
     [HideInInspector] public Transform _tempParent = null;
     public GameObject _dropZone;
     [HideInInspector] public bool isOverDropZone = false;
-     public bool addedPoints = false;
+    [HideInInspector] public bool addedPoints = false;
     [HideInInspector] public ValidateController validationManager;
-    [HideInInspector] public bool inputChanged = true;
+     public bool inputChanged = true;
     public bool error = false;
     [HideInInspector] public GameObject _currentDrag;
     [HideInInspector] public GameObject originalObj;
-    [SerializeField] private bool instantiate = true;
+    [SerializeField] public bool instantiate = true;
     public bool addPoints = false;
     private Transform refreshParent = null;
     private bool deleteObject = false;
@@ -28,6 +29,7 @@ public class BlockDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public BlockLanguage blockLanguage;
     public string consoleValue;
     public bool printConsole = false;
+    #endregion
 
     public virtual void Start()
     {
@@ -125,7 +127,7 @@ public class BlockDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                     }
                 }
 
-                inputChanged = true;
+                _currentDrag.GetComponent<BlockDrag>().inputChanged = true;
             }
 
             RefreshContentFitter((RectTransform)blockDrag.refreshParent);

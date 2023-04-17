@@ -17,7 +17,7 @@ public class BlockVariable : BlockDrag
     [Header ("Objects")]
     [SerializeField] private TextMeshProUGUI variableNameTxt;
     [SerializeField] private TMP_InputField variableArrayIndex;
-    private BlockVariable origBlockVariable = null;
+    public BlockVariable origBlockVariable = null;
 
     public override void Start() {
         base.Start();
@@ -45,8 +45,9 @@ public class BlockVariable : BlockDrag
     public override void Update() {
         base.Update();
 
-        if (origBlockVariable != null) {
-            if (_intArray.Count() > 0 && _intArray != origBlockVariable._intArray) {
+        if (origBlockVariable != null && !instantiate) {
+            // Debug.Log(_intVar.Count() + " " + origBlockVariable._intVar.Values.First());
+            if (_intArray.Count() > 0) {
                 _intArray = origBlockVariable._intArray;
 
                 if (variableArrayIndex.text != "") {
@@ -60,7 +61,7 @@ public class BlockVariable : BlockDrag
                     }
                 }
             }
-            else if (_stringArray.Count() > 0 && _stringArray != origBlockVariable._stringArray) {
+            else if (_stringArray.Count() > 0) {
                 _stringArray = origBlockVariable._stringArray;
 
                 if (variableArrayIndex.text != "") {
@@ -74,18 +75,21 @@ public class BlockVariable : BlockDrag
                     }
                 }
             }
-            else if (_stringVar.Count() > 0 && _stringVar != origBlockVariable._stringVar) {
+            else if (_stringVar.Count() > 0 && _stringVar.Values.First().ToString() != consoleValue) {
                 _stringVar = origBlockVariable._stringVar;
                 consoleValue = _stringVar.Values.First().ToString();
             }
-            else if (_intVar.Count() > 0 && _intVar != origBlockVariable._intVar) {
+            else if (_intVar.Count() > 0 && _intVar.Values.First().ToString() != consoleValue) {
                 _intVar = origBlockVariable._intVar;
-                consoleValue = _intVar.Values.First().ToString();
+                consoleValue = origBlockVariable._intVar.Values.First().ToString();
             }
 
-            if (originalObj.GetComponent<BlockDrag>().inputChanged) inputChanged = true;
+            if (originalObj.GetComponent<BlockDrag>().inputChanged) {
+                inputChanged = true;
+                originalObj.GetComponent<BlockDrag>().inputChanged = false;
+            }
         }
-        else {
+        else if (origBlockVariable == null && !instantiate) {
             if (originalObj != null) origBlockVariable = originalObj.GetComponent<BlockVariable>();
             inputChanged = true;
         }
@@ -104,6 +108,7 @@ public class BlockVariable : BlockDrag
     }
 
     public void SetDictionaryValue(string input) {
+        // Debug.Log(input);
         if (_intArray.Count() > 0) {
             if (variableArrayIndex.text != "") {
                 int index = int.Parse(variableArrayIndex.text);
@@ -159,7 +164,8 @@ public class BlockVariable : BlockDrag
             originalObj.GetComponent<BlockVariable>()._intVar.Add(firstKey, int.Parse(input));
             originalObj.GetComponent<BlockDrag>().consoleValue = input;
         }
-        originalObj.GetComponent<BlockDrag>().inputChanged = true;
+
+        // originalObj.GetComponent<BlockDrag>().inputChanged = true;
         inputChanged = true;
     }
 
@@ -206,8 +212,8 @@ public class BlockVariable : BlockDrag
                 {
                     validationManager.AddPoints(1);
                     addedPoints = true;
-                    inputChanged = false;
                 }
+                inputChanged = false;
                 return;
             }
             else {

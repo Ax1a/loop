@@ -29,6 +29,11 @@ public class BlockOneDrop : BlockDrag
     public override void Update() {
         base.Update();
         
+        if (dropBlock.transform.childCount == 0) {
+            error = true;
+            inputChanged = false;
+        }
+
         if (dropBlock.transform.childCount != childCount) {
             childCount = dropBlock.transform.childCount;
             inputChanged = true;
