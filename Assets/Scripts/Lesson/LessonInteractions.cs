@@ -6,18 +6,21 @@ using TMPro;
 
 
 public class LessonInteractions : MonoBehaviour
-{
+{   
+    public GameObject outputParent;
     [SerializeField] private string[] correctAnswers;
     public TMP_InputField[] userAnswer;
     string _playerName;
+    bool allCorrect = false;
+    bool allEmpty;
     void Start()
     {
-        _playerName = DataManager.GetPlayerName(); 
+        _playerName = DataManager.GetPlayerName();
     }
     public void CheckAnswer()
     {
-        bool allCorrect = true;
-        bool allEmpty = false;
+        allCorrect = true;
+        allEmpty = false;
         string incorrectAnswers = "";
         for (int i = 0; i < userAnswer.Length; i++)
         {
@@ -43,8 +46,8 @@ public class LessonInteractions : MonoBehaviour
 
         if (allCorrect)
         {
-            NPCCall("Great! Seems I understand the lesson");
-            Debug.Log("All are correct");
+            LessonDragDropValidation.Instance.Validate();
+            allCorrect = true;
         }
         else
         {
@@ -53,11 +56,43 @@ public class LessonInteractions : MonoBehaviour
         }
 
     }
-
     void NPCCall(string message)
     {
         NPCDialogue.Instance.AddDialogue(message, _playerName);
         NPCDialogue.Instance.ShowDialogue();
+    }
+
+    public void ForLoopOutput()
+    {
+        if (allCorrect)
+        {
+            StartCoroutine(ActivateOutput());
+        }
+    }
+
+    public void ClearForLoopConsole ()
+    {
+        foreach (Transform childTransform in outputParent.transform)
+        {
+            // Get the child game object from the transform
+            GameObject childObject = childTransform.gameObject;
+
+            // Activate the child game object
+            childObject.SetActive(false);
+        }
+    }
+    IEnumerator ActivateOutput()
+    {
+        // Iterate through all child game objects of the parentObject using foreach
+        foreach (Transform childTransform in outputParent.transform)
+        {
+            // Get the child game object from the transform
+            GameObject childObject = childTransform.gameObject;
+            // Activate the child game object
+            childObject.SetActive(true);
+            // Wait for the specified delay before activating the next child object
+            yield return new WaitForSeconds(0.5f);
+        }
     }
 
 }

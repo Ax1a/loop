@@ -35,11 +35,21 @@ public class LessonDropBlock : MonoBehaviour, IDropHandler
     {
         _pointsAdded = false;
     }
+    void Update()
+    {
+        if (slot)
+        {
+            GetComponent<Image>().enabled = false;
+        }
+        else
+        {
+            GetComponent<Image>().enabled = true;
+        }
+    }
 
     public void OnDrop(PointerEventData eventData)
     {
         LessonDragBlock dragObject = eventData.pointerDrag.GetComponent<LessonDragBlock>();
-        Debug.Log(dragObject.name + " was dropped on " + gameObject.name);
         if (dragObject.tag == "Block")
         {
             /*
@@ -53,12 +63,14 @@ public class LessonDropBlock : MonoBehaviour, IDropHandler
             {
                 if (dragObject.blockType == blockType)
                 {
+
                     /* dragObject.GetComponent<RectTransform>().transform.position =
                        GetComponent<RectTransform>().transform.position; */
                     dragObject.parentToReturn = transform;
                     AudioManager.Instance.PlaySfx("Pop");
                     Debug.Log("Dropped");
                     CheckAnswer(eventData);
+                    LayoutRefresher.Instance.RefreshContentFitter(transform as RectTransform);
                 }
                 else
                 {
