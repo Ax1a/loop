@@ -17,7 +17,7 @@ public class BlockVariable : BlockDrag
     [Header ("Objects")]
     [SerializeField] private TextMeshProUGUI variableNameTxt;
     [SerializeField] private TMP_InputField variableArrayIndex;
-    public BlockVariable origBlockVariable = null;
+    private BlockVariable origBlockVariable = null;
 
     public override void Start() {
         base.Start();
@@ -76,6 +76,7 @@ public class BlockVariable : BlockDrag
                 }
             }
             else if (_stringVar.Count() > 0 && _stringVar.Values.First().ToString() != consoleValue) {
+                Debug.Log("going");
                 _stringVar = origBlockVariable._stringVar;
                 consoleValue = _stringVar.Values.First().ToString();
             }

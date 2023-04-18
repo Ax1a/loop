@@ -6,15 +6,24 @@ public class BlockIf : BlockDrag
 {
     public GameObject dropBlock;
     public GameObject ifChildContainer;
-    private int childCount;
+    [SerializeField] private string answer;
+    BlockDrag blockDrag = null;
 
     public override void Update() {
         base.Update();
-        
-        if (dropBlock.transform.childCount != childCount) {
-            childCount = dropBlock.transform.childCount;
-            inputChanged = true;
+
+        if (dropBlock.transform.childCount > 0) {
+            blockDrag = dropBlock.transform.GetChild(0)?.GetComponent<BlockDrag>();
+
+            if (blockDrag.consoleValue != consoleValue) {
+                consoleValue = blockDrag.consoleValue;
+                inputChanged = true;
+            }
         }
+    }
+
+    private bool ValidateInput() {
+        return answer.ToLower() == consoleValue.ToLower();
     }
 
     public override void BlockValidation()
@@ -22,7 +31,7 @@ public class BlockIf : BlockDrag
         if (dropBlock.transform.childCount == 0 || !inputChanged) return;
         if (_dropZone == null) return; // Don't check the validation when not on the drop block
 
-        BlockDrag blockDrag = dropBlock.transform.GetChild(0)?.GetComponent<BlockDrag>();
+        blockDrag = dropBlock.transform.GetChild(0)?.GetComponent<BlockDrag>();
         consoleValue = (blockDrag?.consoleValue == "true") ? "true" : "false";
 
         foreach (var dropID in _dropZone.GetComponent<BlockDrop>().ids)
@@ -30,29 +39,32 @@ public class BlockIf : BlockDrag
             if (dropID == id)
             {
                 error = false;
-                // if (addConsoleValue) consoleValue = inputField.text;
 
-                // if (ValidateInput())
-                // {
+                if (ValidateInput())
+                {
                     if (!addedPoints && addPoints)
                     {
                         validationManager.AddPoints(1);
                         addedPoints = true;
                     }
-                // }
-                // else
-                // {
-                    // if (addedPoints)
-                    // {
-                    //     validationManager.ReducePoints(1);
-                    //     addedPoints = false;
-                    // }
-                // }
+                }
+                else
+                {
+                    if (addedPoints)
+                    {
+                        validationManager.ReducePoints(1);
+                        addedPoints = false;
+                    }
+                }
+
+                inputChanged = false;
                 return;
             }
             else {
                 error = true;
             }
         }
+
+        inputChanged = false;
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class BlockOneDrop : BlockDrag
 {
@@ -11,6 +12,16 @@ public class BlockOneDrop : BlockDrag
 
     private bool ValidateInput()
     {
+        string[] answerLines = answer.Split(new string[] { "|" }, StringSplitOptions.None);
+        if (answerLines.Length > 1) {
+            foreach (var answer in answerLines)
+            {
+                if (consoleValue.ToLower() == answer.ToLower()) return true;
+            }
+
+            return false;
+        }
+
         if (answer != "") {
             return consoleValue.ToLower() == answer.ToLower();
         }

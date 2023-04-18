@@ -239,7 +239,7 @@ public class BlockOperator : BlockDrag
 
             if (l_dropBlock?.transform.GetChild(0)?.transform.GetChild(0)?.childCount > 0) {
                 BlockVariable blockVariable = l_dropBlock.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).GetComponent<BlockVariable>();
-                if (int.TryParse(r_blockDropScript.consoleValue, out int value) && blockVariable != null) {
+                if (blockVariable != null) {
                     blockVariable.SetDictionaryValue(r_blockDropScript.consoleValue);
                 }
             }
@@ -339,7 +339,7 @@ public class BlockOperator : BlockDrag
                 }
             }
         }
-        else if (operation.options[operationValue].text == "&&") {
+        else if (operation.options[operationValue].text == "&&" || operation.options[operationValue].text == "and") {
             l_dropBlock.SetActive(true);
             r_dropBlock.SetActive(true);
             if (l_blockDropScript == null || r_blockDropScript == null) return;
@@ -351,7 +351,7 @@ public class BlockOperator : BlockDrag
                 consoleValue = "false";
             }
         }
-        else if (operation.options[operationValue].text == "||") {
+        else if (operation.options[operationValue].text == "||" || operation.options[operationValue].text == "or") {
             l_dropBlock.SetActive(true);
             r_dropBlock.SetActive(true);
             if (l_blockDropScript == null || r_blockDropScript == null) return;
@@ -363,7 +363,7 @@ public class BlockOperator : BlockDrag
                 consoleValue = "false";
             }
         }
-        else if (operation.options[operationValue].text == "!") {
+        else if (operation.options[operationValue].text == "!" || operation.options[operationValue].text == "not") {
             l_dropBlock.SetActive(false);
             r_dropBlock.SetActive(true);
             if (r_blockDropScript == null) return;

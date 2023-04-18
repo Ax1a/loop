@@ -28,6 +28,7 @@ public class BlockFunction :  BlockDrag
 
     private bool ValidateInput()
     {
+        if (blockLanguage == BlockLanguage.Java) return true;
         for (int i = 0; i < inputField.Length; i++)
         {
             if (inputField[i].text.ToLower() == inputAnswers[i].ToLower()) {
@@ -42,6 +43,7 @@ public class BlockFunction :  BlockDrag
     }
 
     private bool ValidateDrowdown() {
+        if (blockLanguage == BlockLanguage.Java) return true;
         for (int i = 0; i < typesDropdown.Length; i++)
         {
             int value = typesDropdown[i].value;

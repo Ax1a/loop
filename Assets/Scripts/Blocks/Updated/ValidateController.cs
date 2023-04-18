@@ -172,7 +172,7 @@ public class ValidateController : MonoBehaviour
                     }
                     else if (blockDrag.consoleValue != "" && blockDrag.printConsole)
                     {
-                        if (child.name.StartsWith("C_Print")) Debug.Log("updated print value");
+                        // if (child.name.StartsWith("C_Print")) 
                         _consoleLog += blockDrag.consoleValue + "\n";
                     }
 
