@@ -14,16 +14,21 @@ public class LessonDragDropValidation : Singleton<LessonDragDropValidation>
     string _playerName;
     [HideInInspector] public bool isCorrect = false;
     public LessonInitPos initPos;
+    GameObject rootPanel;
+
 
     void Start()
     {
         _playerName = DataManager.GetPlayerName();
+        rootPanel = GameObject.FindGameObjectWithTag("root");
+
     }
     public void Validate()
     {
         if (CurrPts >= ptsToWin)
         {
             NPCCall("Great! Seems like I understand the lesson");
+            isCorrect = true;
             Debug.Log("You got it right");
         }
         else
@@ -38,6 +43,7 @@ public class LessonDragDropValidation : Singleton<LessonDragDropValidation>
         if (CurrPts >= ptsToWin)
         {
             isCorrect = true;
+            Debug.Log("isCorrect is true");
         }
     }
 
@@ -47,7 +53,9 @@ public class LessonDragDropValidation : Singleton<LessonDragDropValidation>
         initPos.ResetPositions();
         LessonDropBlock.Instance._pointsAdded = false;
         isCorrect = false;
-        LayoutRefresher.Instance.RefreshContentFitter(transform.parent as RectTransform);
+        // LayoutRefresher.Instance.RefreshContentFitter(transform.parent as RectTransform);
+        LayoutRefresher.Instance.RefreshContentFitter((RectTransform)rootPanel.transform);
+
     }
 
     public void AddPoints()
