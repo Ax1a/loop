@@ -15,11 +15,30 @@ public class LessonInteractions : MonoBehaviour
     void Start()
     {
         _playerName = DataManager.GetPlayerName();
+
+        UpdateAllCorrect();
+        
+        // Add an OnValueChanged event to each TMP_InputField object
+        foreach (TMP_InputField inputField in userAnswer)
+        {
+            inputField.onValueChanged.AddListener(delegate { UpdateAllCorrect(); });
+        }
+    }
+    private void UpdateAllCorrect()
+    {
+        allCorrect = true;
+
+        for (int i = 0; i < userAnswer.Length; i++)
+        {
+            if (userAnswer[i].text != correctAnswers[i])
+            {
+                allCorrect = false;
+                break;
+            }
+        }
     }
     public void CheckAnswer()
     {
-        allCorrect = true;
-        string incorrectAnswers = "";
         for (int i = 0; i < userAnswer.Length; i++)
         {
             //To - fix : NPC when all input box are empty.
@@ -28,16 +47,9 @@ public class LessonInteractions : MonoBehaviour
                 NPCCall("I think I should input some values...");
                 return;
             }
-
-            if (userAnswer[i].text != correctAnswers[i])
-            {
-                allCorrect = false;
-                //Optional: getting the incorrect answer.
-                incorrectAnswers += "Question " + (i + 1) + " is incorrect.\n";
-            }
+            
+            // allCorrect = userAnswer[i].text == correctAnswers[i];
         }
-        LessonDragDropValidation.Instance.IsCorrect();
-        allCorrect = LessonDragDropValidation.Instance.isCorrect;
     }
 
     public void ListOutput()
@@ -51,15 +63,32 @@ public class LessonInteractions : MonoBehaviour
             NPCCall("I better review the lesson again! :<");
         }
     }
-    public void ForLoopOutput()
+    public void ConsoleOutput()
     {
-        if (allCorrect)
+        //Clear the console
+        ClearConsole();
+
+        int currentPts = LessonDragDropValidation.Instance.CurrPts;
+        int ptsTowin = LessonDragDropValidation.Instance.ptsToWin;
+
+        CheckAnswer();
+
+        if (allCorrect && currentPts >= ptsTowin)
         {
+            NPCCall("Great! I understand the lesson completely");
             StartCoroutine(ActivateOutput());
+        }
+        else if (currentPts < ptsTowin)
+        {
+            NPCCall("I should put the blocks in the right place!");
+        }
+        else
+        {
+            NPCCall("My answers may be correct but I need to follow the instructions...");
         }
     }
 
-    public void ClearForLoopConsole()
+    public void ClearConsole()
     {
         foreach (Transform childTransform in outputParent.transform)
         {
@@ -68,6 +97,15 @@ public class LessonInteractions : MonoBehaviour
 
             // Activate the child game object
             childObject.SetActive(false);
+        }
+
+    }
+    public void ClearUserInput ()
+    {
+        //Clear user input
+        for (int i = 0; i < userAnswer.Length; i++)
+        {
+            userAnswer[i].text = "";
         }
     }
     IEnumerator ActivateOutput()

@@ -14,6 +14,7 @@ public class LessonDragBlock : MonoBehaviour, IPointerDownHandler, IBeginDragHan
     GameObject onDragCanvas;
     GameObject ghostBlock = null;
     public Transform parentToReturn = null;
+    GameObject rootPanel;
     public enum BlockType
     {
         normalBlock, operation, simple, conditional
@@ -32,6 +33,7 @@ public class LessonDragBlock : MonoBehaviour, IPointerDownHandler, IBeginDragHan
     {
         parent = GameObject.FindGameObjectWithTag("parent");
         onDragCanvas = GameObject.FindGameObjectWithTag("onDragCanvas");
+        rootPanel = GameObject.FindGameObjectWithTag("root");
         initPos = transform.position;
         rect = GetComponent<RectTransform>();
         canvasGroup = GetComponent<CanvasGroup>();
@@ -58,7 +60,9 @@ public class LessonDragBlock : MonoBehaviour, IPointerDownHandler, IBeginDragHan
         canvasGroup.blocksRaycasts = false;
 
         //Start layout refreshing 
-        LayoutRefresher.Instance.RefreshContentFitter(transform.parent as RectTransform);
+        // LayoutRefresher.Instance.RefreshContentFitter(transform.parent as RectTransform);
+        LayoutRefresher.Instance.RefreshContentFitter((RectTransform)rootPanel.transform);
+
 
     }
 
@@ -81,7 +85,7 @@ public class LessonDragBlock : MonoBehaviour, IPointerDownHandler, IBeginDragHan
         }
         
         //Start layout refreshing 
-        LayoutRefresher.Instance.RefreshContentFitter(transform.parent as RectTransform);
+        LayoutRefresher.Instance.RefreshContentFitter((RectTransform)rootPanel.transform);
  
     }
 
