@@ -31,6 +31,7 @@ public class ValidateController : MonoBehaviour
     [SerializeField] private GameObject winPanel;
     [SerializeField] private GameObject startPanel;
     [SerializeField] private GameObject highlightGuide;
+    [SerializeField] private GameObject loadingLog;
     
     [Header ("Blocks Parents")]
     [SerializeField] private Transform blocksParent;
@@ -38,10 +39,10 @@ public class ValidateController : MonoBehaviour
 
     [Header ("Scripts")]
     [SerializeField] private InteractionQuizInfo interactionQuiz;
-    private string _consoleLog;
+    [HideInInspector] public string _consoleLog;
     private Sprite _trashClosed, _trashOpen;
     private BlockVariable _blockVariable;
-    private bool _inputPanelOpen = false;
+    public bool processWait = false;
     private bool _achievedPoints = false;
     private bool errorDetected = false, blocksPlaced = false, coroutineRunning = false;
     #endregion
@@ -95,9 +96,9 @@ public class ValidateController : MonoBehaviour
         StartCoroutine(DelayDisable());
     }
 
-    private IEnumerator DelayDisable() {
+    public IEnumerator DelayDisable() {
         yield return new WaitForSeconds(0.1f);
-        _inputPanelOpen = false;
+        processWait = false;
     }
 
     public void ResetBlocks() {
@@ -126,6 +127,19 @@ public class ValidateController : MonoBehaviour
         }
     }
 
+    private IEnumerator UpdateBlocks(Transform parent) {
+        foreach (Transform child in parent)
+        {
+            BlockDrag blockDrag = child.GetComponent<BlockDrag>();
+            if (blockDrag != null) {
+                Debug.Log(child.name);
+                blockDrag.inputChanged = true;
+            }
+
+            yield return UpdateBlocks(child);
+        }
+    }
+
     // Recursion to check all the child of block parent 
     public IEnumerator CheckBlocksPlaced(Transform parent)
     {
@@ -143,6 +157,15 @@ public class ValidateController : MonoBehaviour
             BlockDrag blockDrag = child.GetComponent<BlockDrag>();
             if (blockDrag != null) {
                 blocksPlaced = true;
+
+                // Execute loops
+                BlockLoop blockLoop = child.GetComponent<BlockLoop>();
+                if (blockLoop != null) {
+                    StartCoroutine(blockLoop.DelayLoop());
+                    processWait = true;
+                    yield return WaitForProcessToFinish();
+                }
+
                 if (blockDrag.error) {
                     errorDetected = true;
                     break;
@@ -155,6 +178,9 @@ public class ValidateController : MonoBehaviour
                     {
                         continue; // skip this block and its children
                     }
+                    else if (child.name.StartsWith("C_WhileLoop") || child.name.StartsWith("C_DoWhileLoop") || child.name.StartsWith("C_ForLoop")) {
+                        continue;
+                    }
                     
                     
                     if (blockOneDrop != null && child.transform.name.StartsWith("C_CharInput")) {
@@ -163,8 +189,8 @@ public class ValidateController : MonoBehaviour
 
                         if (_blockVariable != null) {
                             AskForInput(_blockVariable);
-                            _inputPanelOpen = true;
-                            yield return WaitForInputPanelToClose();
+                            processWait = true;
+                            yield return WaitForProcessToFinish();
                         }
                         else if (_blockDrag != null && _blockDrag.consoleValue.Length != 0 && _blockDrag.printConsole) {
                             _blockDrag.consoleValue = "";
@@ -191,18 +217,22 @@ public class ValidateController : MonoBehaviour
     }
 
     public IEnumerator RunCommands() {
-        coroutineRunning = true;
         _consoleLog = "";
         consoleTxt.text = "";
+        loadingLog.SetActive(true);
+        yield return StartCoroutine(UpdateBlocks(blocksParent));
+        coroutineRunning = true;
         blocksPlaced = false;
         yield return StartCoroutine(CheckBlocksPlaced(blocksParent));
         coroutineRunning = false;
 
         if (!blocksPlaced) yield break;
 
-        if (_inputPanelOpen) {
-            yield return WaitForInputPanelToClose();
+        if (processWait) {
+            yield return WaitForProcessToFinish();
         }
+
+        loadingLog.SetActive(false);
 
         if (!errorDetected) {
             _consoleLog += "\n" + "...Program Finished";
@@ -213,8 +243,8 @@ public class ValidateController : MonoBehaviour
         consoleTxt.text = _consoleLog;
     }
 
-    private IEnumerator WaitForInputPanelToClose() {
-        while (_inputPanelOpen) {
+    private IEnumerator WaitForProcessToFinish() {
+        while (processWait) {
             yield return null;
         }
     }
