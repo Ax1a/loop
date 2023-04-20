@@ -76,7 +76,6 @@ public class BlockVariable : BlockDrag
                 }
             }
             else if (_stringVar.Count() > 0 && _stringVar.Values.First().ToString() != consoleValue) {
-                Debug.Log("going");
                 _stringVar = origBlockVariable._stringVar;
                 consoleValue = _stringVar.Values.First().ToString();
             }
@@ -88,6 +87,15 @@ public class BlockVariable : BlockDrag
             if (originalObj.GetComponent<BlockDrag>().inputChanged) {
                 inputChanged = true;
                 originalObj.GetComponent<BlockDrag>().inputChanged = false;
+
+                if (_stringVar.Count() > 0) {
+                    _stringVar = origBlockVariable._stringVar;
+                    consoleValue = _stringVar.Values.First().ToString();
+                }
+                 else if (_intVar.Count() > 0) {
+                    _intVar = origBlockVariable._intVar;
+                    consoleValue = origBlockVariable._intVar.Values.First().ToString();
+                }
             }
         }
         else if (origBlockVariable == null && !instantiate) {
@@ -154,19 +162,24 @@ public class BlockVariable : BlockDrag
             originalObj.GetComponent<BlockDrag>().consoleValue = input;
         }
         else if (_intVar.Count() > 0) {
-            // Get the first key in the dictionary
-            string firstKey = _intVar.Keys.First();
-            consoleValue = input;
-            
-            _intVar.Remove(firstKey);
-            _intVar.Add(firstKey, int.Parse(input));
+            if (int.TryParse(input, out int value)) {
+                error = false;
+                // Get the first key in the dictionary
+                string firstKey = _intVar.Keys.First();
+                consoleValue = input;
+                _intVar.Remove(firstKey);
+                _intVar.Add(firstKey, int.Parse(input));
 
-            originalObj.GetComponent<BlockVariable>()._intVar.Remove(firstKey);
-            originalObj.GetComponent<BlockVariable>()._intVar.Add(firstKey, int.Parse(input));
-            originalObj.GetComponent<BlockDrag>().consoleValue = input;
+                originalObj.GetComponent<BlockVariable>()._intVar.Remove(firstKey);
+                originalObj.GetComponent<BlockVariable>()._intVar.Add(firstKey, int.Parse(input));
+                originalObj.GetComponent<BlockDrag>().consoleValue = input;
+            }
+            else {
+                error = true;
+            }
         }
 
-        // originalObj.GetComponent<BlockDrag>().inputChanged = true;
+        originalObj.GetComponent<BlockDrag>().inputChanged = true;
         inputChanged = true;
     }
 

@@ -40,7 +40,6 @@ public class BlockOperator : BlockDrag
 
         if (r_blockDropScript != null) {
             if (r_blockDropScript.consoleValue != r_childConsole) {
-                Debug.Log(r_blockDropScript.consoleValue + " " + r_childConsole);
                 r_childConsole = r_blockDropScript.consoleValue;
                 inputChanged = true;
             }
@@ -84,8 +83,18 @@ public class BlockOperator : BlockDrag
     }
 
     public void CheckDropBlockValue() {
-        l_blockDropScript = l_dropBlock.transform.childCount > 0 ? l_dropBlock.transform.GetChild(0).GetComponent<BlockDrag>() : null;
-        r_blockDropScript = r_dropBlock.transform.childCount > 0 ? r_dropBlock.transform.GetChild(0).GetComponent<BlockDrag>() : null;
+        if (l_dropBlock != null) {
+            l_blockDropScript = l_dropBlock.transform.childCount > 0 ? l_dropBlock.transform.GetChild(0).GetComponent<BlockDrag>() : null;
+        }
+        else {
+            l_blockDropScript = null;
+        }
+        if (r_dropBlock != null) {
+            r_blockDropScript = r_dropBlock.transform.childCount > 0 ? r_dropBlock.transform.GetChild(0).GetComponent<BlockDrag>() : null;
+        }
+        else {
+            r_blockDropScript = null;
+        }
     }
 
     public override void BlockValidation()
@@ -131,6 +140,51 @@ public class BlockOperator : BlockDrag
         inputChanged = false;
     }
 
+    public void IncrementValue() {
+        int operationValue = operation.value;
+        int l_value;
+        if (operation.options[operationValue].text == "++") {
+            l_dropBlock.SetActive(true);
+            if (l_blockDropScript == null) return;
+
+            if (int.TryParse(l_blockDropScript.consoleValue, out l_value)) {
+                int increment = ++l_value;
+
+                if (l_dropBlock?.transform.GetChild(0)?.transform.GetChild(0)?.childCount > 0) {
+                    // int value;
+                    BlockVariable blockVariable = l_dropBlock.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).GetComponent<BlockVariable>();
+                    if ( blockVariable != null) {
+                        // value++;
+                        blockVariable.consoleValue = increment.ToString();
+                        blockVariable.SetDictionaryValue(increment.ToString());
+                    }
+                }
+                consoleValue = increment.ToString();
+            }
+
+        }
+        else if (operation.options[operationValue].text == "--") {
+            l_dropBlock.SetActive(true);
+            if (l_blockDropScript == null) return;
+
+            if (int.TryParse(l_blockDropScript.consoleValue, out l_value)) {
+                int decrement = --l_value;
+                // consoleValue = decrement.ToString();
+
+                if (l_dropBlock?.transform.GetChild(0)?.transform.GetChild(0)?.childCount > 0) {
+                    // int value;
+                    BlockVariable blockVariable = l_dropBlock.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).GetComponent<BlockVariable>();
+                    if (blockVariable != null) {
+                        // value--;
+                        blockVariable.consoleValue = decrement.ToString();
+                        blockVariable.SetDictionaryValue(decrement.ToString());
+                    }
+                }
+                consoleValue = decrement.ToString();
+            }
+        }
+    }
+
     public void ExecuteOperator() {
         int operationValue = operation.value;
         int l_value, r_value;
@@ -143,6 +197,16 @@ public class BlockOperator : BlockDrag
             if (int.TryParse(l_blockDropScript.consoleValue, out l_value) && int.TryParse(r_blockDropScript.consoleValue, out r_value)) {
                 int sum = l_value + r_value;
                 consoleValue = sum.ToString();
+            }
+            else {
+                string concat = l_blockDropScript.consoleValue + r_blockDropScript.consoleValue;
+                
+                if (l_dropBlock?.transform.GetChild(0)?.transform.GetChild(0)?.childCount > 0) {
+                    BlockVariable blockVariable = l_dropBlock.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).GetComponent<BlockVariable>();
+                    if (blockVariable != null) {
+                        blockVariable.SetDictionaryValue(concat);
+                    }
+                }
             }
         }
         else if (operation.options[operationValue].text == "-") {
@@ -185,50 +249,6 @@ public class BlockOperator : BlockDrag
                 consoleValue = remainder.ToString();
             }
         }
-        else if (operation.options[operationValue].text == "++") {
-            l_dropBlock.SetActive(true);
-            r_dropBlock.SetActive(false);
-            if (l_blockDropScript == null) return;
-
-            if (int.TryParse(l_blockDropScript.consoleValue, out l_value)) {
-                int increment = l_value++;
-
-                if (l_dropBlock?.transform.GetChild(0)?.transform.GetChild(0)?.childCount > 0) {
-                    // int value;
-                    BlockVariable blockVariable = l_dropBlock.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).GetComponent<BlockVariable>();
-                    if ( blockVariable != null) {
-                        // value++;
-                        blockVariable.consoleValue = increment.ToString();
-                        blockVariable.SetDictionaryValue(increment.ToString());
-                    }
-                }
-                consoleValue = increment.ToString();
-            }
-
-        }
-        else if (operation.options[operationValue].text == "--") {
-            l_dropBlock.SetActive(true);
-            r_dropBlock.SetActive(false);
-            if (l_blockDropScript == null) return;
-
-            if (int.TryParse(l_blockDropScript.consoleValue, out l_value)) {
-                int decrement = l_value--;
-                // consoleValue = decrement.ToString();
-
-                if (l_dropBlock?.transform.GetChild(0)?.transform.GetChild(0)?.childCount > 0) {
-                    // int value;
-                    BlockVariable blockVariable = l_dropBlock.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).GetComponent<BlockVariable>();
-                    if (blockVariable != null) {
-                        // value--;
-                        blockVariable.consoleValue = decrement.ToString();
-                        blockVariable.SetDictionaryValue(decrement.ToString());
-                        inputChanged = false;
-                    }
-                }
-                consoleValue = decrement.ToString();
-            }
-
-        }
         else if (operation.options[operationValue].text == "=") {
             l_dropBlock.SetActive(true);
             r_dropBlock.SetActive(true);
@@ -255,13 +275,21 @@ public class BlockOperator : BlockDrag
                 if (l_dropBlock?.transform.GetChild(0)?.transform.GetChild(0)?.childCount > 0) {
                     BlockVariable blockVariable = l_dropBlock.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).GetComponent<BlockVariable>();
                     if (blockVariable != null) {
-                        // int sum = l_value + r_value;
                         blockVariable.SetDictionaryValue(sum.ToString());
                     }
                 }
                 consoleValue = sum.ToString();
             }
-
+            else {
+                string concat = l_blockDropScript.consoleValue + r_blockDropScript.consoleValue;
+                
+                if (l_dropBlock?.transform.GetChild(0)?.transform.GetChild(0)?.childCount > 0) {
+                    BlockVariable blockVariable = l_dropBlock.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).GetComponent<BlockVariable>();
+                    if (blockVariable != null) {
+                        blockVariable.SetDictionaryValue(concat);
+                    }
+                }
+            }
         }
         else if (operation.options[operationValue].text == "-=") {
             l_dropBlock.SetActive(true);

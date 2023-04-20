@@ -6,8 +6,8 @@ using TMPro;
 public class BlockForLoop : BlockDrag
 {
     public GameObject childContainer;
+    public GameObject conditionValue;
     public TMP_InputField variableValue;
-    public TMP_InputField conditionValue;
     public TMP_Dropdown conditionOperator;
     public TMP_Dropdown assignOperator;
 
