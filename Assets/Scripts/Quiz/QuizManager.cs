@@ -68,7 +68,7 @@ public class QuizManager : MonoBehaviour
         quizPanel.SetActive(true);
         timer = GetComponent<quizTimer>();
         _energy = Energy.Instance.GetCurrentEnergy();
-        if (questionImageButton != null) questionImageButton.SetActive(false);
+        // if (questionImageButton != null) questionImageButton.SetActive(false);
 
 
         // Get the default value for the selected enum option
