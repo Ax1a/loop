@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class LessonInitPos : MonoBehaviour, IDropHandler
+public class LessonInitPos : MonoBehaviour
 {
     public GameObject[] objects;
   
@@ -21,16 +21,7 @@ public class LessonInitPos : MonoBehaviour, IDropHandler
         for (int i = 0; i < objects.Length; i++)
         {
             objects[i].transform.SetParent(parent.transform);
-        }
-    }
-    public void OnDrop(PointerEventData eventData)
-    {
-        if (eventData.pointerDrag != null)
-        {
-
-            eventData.pointerDrag.GetComponent<LessonDragBlock>().ResetPos();
-            Debug.Log("LessonInitPos: Reset Position");
-
+            objects[i].GetComponent<LessonDragBlock>().parentToReturn = parent.transform;
         }
     }
 }

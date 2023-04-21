@@ -91,10 +91,15 @@ public class LessonDragBlock : MonoBehaviour, IPointerDownHandler, IBeginDragHan
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        // parentToReturn = parent.transform;
         AudioManager.Instance.PlaySfx("Pop");
     }
     public void ResetPos()
     {
         transform.position = initPos;
+    }
+    public Transform GetParentToReturn()
+    {
+        return parentToReturn;
     }
 }
