@@ -46,7 +46,7 @@ public class BlockVariable : BlockDrag
         base.Update();
 
         if (origBlockVariable != null && !instantiate) {
-            // Debug.Log(_intVar.Count() + " " + origBlockVariable._intVar.Values.First());
+            Debug.Log(originalObj.name);
             if (_intArray.Count() > 0) {
                 _intArray = origBlockVariable._intArray;
 
@@ -117,7 +117,6 @@ public class BlockVariable : BlockDrag
     }
 
     public void SetDictionaryValue(string input) {
-        // Debug.Log(input);
         if (_intArray.Count() > 0) {
             if (variableArrayIndex.text != "") {
                 int index = int.Parse(variableArrayIndex.text);
@@ -170,7 +169,7 @@ public class BlockVariable : BlockDrag
                 _intVar.Remove(firstKey);
                 _intVar.Add(firstKey, int.Parse(input));
 
-                if (originalObj = null) {
+                if (originalObj != null) {
                     originalObj.GetComponent<BlockVariable>()._intVar.Remove(firstKey);
                     originalObj.GetComponent<BlockVariable>()._intVar.Add(firstKey, int.Parse(input));
                     originalObj.GetComponent<BlockDrag>().consoleValue = input;
