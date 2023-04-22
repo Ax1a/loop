@@ -132,7 +132,6 @@ public class ValidateController : MonoBehaviour
         {
             BlockDrag blockDrag = child.GetComponent<BlockDrag>();
             if (blockDrag != null) {
-                Debug.Log(child.name);
                 blockDrag.inputChanged = true;
             }
 
@@ -160,11 +159,18 @@ public class ValidateController : MonoBehaviour
 
                 // Execute loops
                 BlockLoop blockLoop = child.GetComponent<BlockLoop>();
+                BlockForLoop blockForLoop = child.GetComponent<BlockForLoop>();
                 if (blockLoop != null) {
                     StartCoroutine(blockLoop.DelayLoop());
                     processWait = true;
                     yield return WaitForProcessToFinish();
                 }
+                else if (blockForLoop != null) {
+                    StartCoroutine(blockForLoop.DelayLoop());
+                    processWait = true;
+                    yield return WaitForProcessToFinish();
+                }   
+                
 
                 if (blockDrag.error) {
                     errorDetected = true;
@@ -174,11 +180,15 @@ public class ValidateController : MonoBehaviour
                 if (blockDrag.blockType == BlockDrag.BlockType.Type1) {
                     BlockOneDrop blockOneDrop = child.GetComponent<BlockOneDrop>();
 
-                    if (child.name.StartsWith("C_IfCondition") && !blockDrag.consoleValue.ToLower().Equals("true"))
+                    if (child.name.StartsWith("C_IfCondition") && !blockDrag.consoleValue.ToLower().Equals("true") ||
+                        child.name.StartsWith("J_IfCondition") && !blockDrag.consoleValue.ToLower().Equals("true") ||
+                        child.name.StartsWith("P_IfCondition") && !blockDrag.consoleValue.ToLower().Equals("true"))
                     {
                         continue; // skip this block and its children
                     }
-                    else if (child.name.StartsWith("C_WhileLoop") || child.name.StartsWith("C_DoWhileLoop") || child.name.StartsWith("C_ForLoop")) {
+                    else if (child.name.StartsWith("C_WhileLoop") || child.name.StartsWith("C_DoWhileLoop") || child.name.StartsWith("C_ForLoop") ||
+                            child.name.StartsWith("J_WhileLoop") || child.name.StartsWith("J_DoWhileLoop") || child.name.StartsWith("J_ForLoop") ||
+                            child.name.StartsWith("P_WhileLoop") || child.name.StartsWith("P_DoWhileLoop") || child.name.StartsWith("P_ForLoop")) {
                         continue;
                     }
                     
@@ -220,8 +230,8 @@ public class ValidateController : MonoBehaviour
         _consoleLog = "";
         consoleTxt.text = "";
         loadingLog.SetActive(true);
-        yield return StartCoroutine(UpdateBlocks(blocksParent));
         coroutineRunning = true;
+        yield return StartCoroutine(UpdateBlocks(blocksParent));
         blocksPlaced = false;
         yield return StartCoroutine(CheckBlocksPlaced(blocksParent));
         coroutineRunning = false;

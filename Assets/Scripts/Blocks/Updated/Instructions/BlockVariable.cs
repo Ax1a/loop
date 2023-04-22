@@ -170,16 +170,18 @@ public class BlockVariable : BlockDrag
                 _intVar.Remove(firstKey);
                 _intVar.Add(firstKey, int.Parse(input));
 
-                originalObj.GetComponent<BlockVariable>()._intVar.Remove(firstKey);
-                originalObj.GetComponent<BlockVariable>()._intVar.Add(firstKey, int.Parse(input));
-                originalObj.GetComponent<BlockDrag>().consoleValue = input;
+                if (originalObj = null) {
+                    originalObj.GetComponent<BlockVariable>()._intVar.Remove(firstKey);
+                    originalObj.GetComponent<BlockVariable>()._intVar.Add(firstKey, int.Parse(input));
+                    originalObj.GetComponent<BlockDrag>().consoleValue = input;
+                }
             }
             else {
                 error = true;
             }
         }
 
-        originalObj.GetComponent<BlockDrag>().inputChanged = true;
+        if (originalObj != null) originalObj.GetComponent<BlockDrag>().inputChanged = true;
         inputChanged = true;
     }
 

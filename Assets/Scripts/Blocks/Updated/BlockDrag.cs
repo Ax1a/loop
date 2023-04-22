@@ -10,14 +10,14 @@ public class BlockDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public int id;
     [HideInInspector] public Transform _environmentParent = null;
     [HideInInspector] public Transform _tempParent = null;
-    public GameObject _dropZone;
+    [HideInInspector] public GameObject _dropZone;
     [HideInInspector] public bool isOverDropZone = false;
     [HideInInspector] public bool addedPoints = false;
     [HideInInspector] public ValidateController validationManager;
-     public bool inputChanged = true;
-    public bool error = false;
+    [HideInInspector] public bool inputChanged = true;
+     public bool error = false;
     [HideInInspector] public GameObject _currentDrag;
-    [HideInInspector] public GameObject originalObj;
+    public GameObject originalObj;
     [SerializeField] public bool instantiate = true;
     public bool addPoints = false;
     private Transform refreshParent = null;

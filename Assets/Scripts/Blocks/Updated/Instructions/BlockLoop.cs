@@ -25,22 +25,24 @@ public class BlockLoop : BlockDrag
 
     public void LoopChildBlocks() {
         if (childContainer.transform.childCount > 0) {
+
             foreach (Transform child in childContainer.transform) {
                 BlockDrag blockDragChild = child.GetComponent<BlockDrag>();
                 BlockOperator blockOperator = child.GetComponent<BlockOperator>();
                 if (blockOperator != null) {
                     blockOperator.IncrementValue();
-
-                    BlockOperator headerOperator = dropBlock.transform.GetChild(0).GetComponent<BlockOperator>();
-                    if (headerOperator != null) headerOperator.inputChanged = true;
-                    CheckHeaderOperator();
-                }
+                }                
 
                 if (blockDragChild != null && blockDragChild.printConsole) {
-                    Debug.Log(child.name + " " + blockDragChild.consoleValue);
+                    // Debug.Log(child.name + " " + blockDragChild.consoleValue);
                     validationManager._consoleLog += blockDragChild.consoleValue + "\n";
                 }
             }
+            BlockOperator headerOperator = dropBlock.transform.GetChild(0).GetComponent<BlockOperator>();
+            if (headerOperator != null) {
+                headerOperator.ExecuteOperator();
+            }
+            CheckHeaderOperator();
         }
 
         ctr++;
