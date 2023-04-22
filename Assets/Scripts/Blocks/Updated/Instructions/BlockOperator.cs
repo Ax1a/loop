@@ -13,7 +13,7 @@ public class BlockOperator : BlockDrag
     [SerializeField] private string operationAnswer;
     [SerializeField] private string l_blockAnswer;
     [SerializeField] private string r_blockAnswer;
-    public string l_childConsole, r_childConsole;
+    private string l_childConsole, r_childConsole;
 
     public override void Start() {
         base.Start();

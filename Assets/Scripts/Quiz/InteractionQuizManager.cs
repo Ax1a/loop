@@ -42,10 +42,10 @@ public class InteractionQuizManager : MonoBehaviour
         FillLanguageButtons();
 
         // Testing
-        foreach (var item in _interactionData)
-        {
-            Debug.Log(item.quizID + ": " + item.isComplete);
-        }
+        // foreach (var item in _interactionData)
+        // {
+        //     Debug.Log(item.quizID + ": " + item.isComplete);
+        // }
     }
 
     public void EnablePanel(int id) {
