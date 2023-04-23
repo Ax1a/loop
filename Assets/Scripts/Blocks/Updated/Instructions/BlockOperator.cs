@@ -200,7 +200,7 @@ public class BlockOperator : BlockDrag
             }
             else {
                 string concat = l_blockDropScript.consoleValue + r_blockDropScript.consoleValue;
-                
+                consoleValue = concat;
                 if (l_dropBlock?.transform.GetChild(0)?.transform.GetChild(0)?.childCount > 0) {
                     BlockVariable blockVariable = l_dropBlock.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).GetComponent<BlockVariable>();
                     if (blockVariable != null) {

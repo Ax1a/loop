@@ -37,20 +37,44 @@ public class BlockForLoop : BlockDrag
         inputChanged = true;
     }
 
-    public void LoopChildBlocks() {
-        if (childContainer.transform.childCount > 0) {
+    private IEnumerator UpdateBlocks(Transform parent) {
+        foreach (Transform child in parent) {
+            if (child.GetComponent<BlockDrag>() != null) {
+                BlockDrag _blockDrag = child.GetComponent<BlockDrag>();
+                _blockDrag.inputChanged = true;
+            }
 
-            foreach (Transform child in childContainer.transform) {
-                BlockDrag blockDragChild = child.GetComponent<BlockDrag>();
-                if (blockDragChild != null && blockDragChild.printConsole) {
-                    // Debug.Log(child.name + " " + blockDragChild.consoleValue);
-                    // blockDragChild.inputChanged = true;
-                    // Debug.Log(blockDragChild.consoleValue);
-                    validationManager._consoleLog += blockDragChild.consoleValue + "\n";
+            yield return UpdateBlocks(child);
+        }
+    }
+    public IEnumerator LoopChildBlocks(Transform childContainer) {
+        if (childContainer.transform.childCount > 0) {
+            // yield return StartCoroutine(UpdateBlocks(childContainer));
+            foreach (Transform child in childContainer) {
+                if (child.name.Equals("IfCondition")) {
+                    if (child.parent.GetComponent<BlockDrag>()?.consoleValue == "false") continue;
                 }
+                else if (child.name.Equals("ElseCondition")) {
+                    if (child.parent.GetComponent<BlockDrag>()?.consoleValue == "true") continue;
+                }
+                
+                if (child.GetComponent<BlockDrag>() != null) {
+                    BlockDrag blockDragChild = child.GetComponent<BlockDrag>();
+                    if (child.name.StartsWith("C_IfCondition") && !blockDragChild.consoleValue.ToLower().Equals("true") ||
+                        child.name.StartsWith("J_IfCondition") && !blockDragChild.consoleValue.ToLower().Equals("true") ||
+                        child.name.StartsWith("P_IfCondition") && !blockDragChild.consoleValue.ToLower().Equals("true"))
+                    {
+                        continue;
+                    }
+
+                    if (blockDragChild.printConsole && blockDragChild.blockType == BlockType.Type1) {
+                        validationManager._consoleLog += blockDragChild.consoleValue + "\n";
+                    }
+                }
+                
+                yield return LoopChildBlocks(child);
             }
         }
-
     }
 
     public IEnumerator DelayLoop() {
@@ -79,7 +103,9 @@ public class BlockForLoop : BlockDrag
                                         if (ctr > maxLoop) break;
                                         variable.SetDictionaryValue(loopVar.ToString());
                                         yield return new WaitForSeconds(0.1f);
-                                        LoopChildBlocks();
+                                        yield return StartCoroutine(UpdateBlocks(childContainer.transform));
+                                        yield return new WaitForSeconds(0.1f);
+                                        yield return StartCoroutine(LoopChildBlocks(childContainer.transform));
                                         ctr++;
                                     }
                                 } else if (incrementOperatorText == "--") {
@@ -87,7 +113,9 @@ public class BlockForLoop : BlockDrag
                                         if (ctr > maxLoop) break;
                                         variable.SetDictionaryValue(loopVar.ToString());
                                         yield return new WaitForSeconds(0.1f);
-                                        LoopChildBlocks();
+                                        yield return StartCoroutine(UpdateBlocks(childContainer.transform));
+                                        yield return new WaitForSeconds(0.1f);
+                                        yield return StartCoroutine(LoopChildBlocks(childContainer.transform));
                                         ctr++;
                                     }
                                 }
@@ -98,7 +126,9 @@ public class BlockForLoop : BlockDrag
                                         if (ctr > maxLoop) break;
                                         variable.SetDictionaryValue(loopVar.ToString());
                                         yield return new WaitForSeconds(0.1f);
-                                        LoopChildBlocks();
+                                        yield return StartCoroutine(UpdateBlocks(childContainer.transform));
+                                        yield return new WaitForSeconds(0.1f);
+                                        yield return StartCoroutine(LoopChildBlocks(childContainer.transform));
                                         ctr++;
                                     }
                                 } else if (incrementOperatorText == "--") {
@@ -106,7 +136,9 @@ public class BlockForLoop : BlockDrag
                                         if (ctr > maxLoop) break;
                                         variable.SetDictionaryValue(loopVar.ToString());
                                         yield return new WaitForSeconds(0.1f);
-                                        LoopChildBlocks();
+                                        yield return StartCoroutine(UpdateBlocks(childContainer.transform));
+                                        yield return new WaitForSeconds(0.1f);
+                                        yield return StartCoroutine(LoopChildBlocks(childContainer.transform));
                                         ctr++;
                                     }
                                 }
@@ -117,7 +149,9 @@ public class BlockForLoop : BlockDrag
                                         if (ctr > maxLoop) break;
                                         variable.SetDictionaryValue(loopVar.ToString());
                                         yield return new WaitForSeconds(0.1f);
-                                        LoopChildBlocks();
+                                        yield return StartCoroutine(UpdateBlocks(childContainer.transform));
+                                        yield return new WaitForSeconds(0.1f);
+                                        yield return StartCoroutine(LoopChildBlocks(childContainer.transform));
                                         ctr++;
                                     }
                                 } else if (incrementOperatorText == "--") {
@@ -125,7 +159,9 @@ public class BlockForLoop : BlockDrag
                                         if (ctr > maxLoop) break;
                                         variable.SetDictionaryValue(loopVar.ToString());
                                         yield return new WaitForSeconds(0.1f);
-                                        LoopChildBlocks();
+                                        yield return StartCoroutine(UpdateBlocks(childContainer.transform));
+                                        yield return new WaitForSeconds(0.1f);
+                                        yield return StartCoroutine(LoopChildBlocks(childContainer.transform));
                                         ctr++;
                                     }
                                 }
@@ -136,7 +172,9 @@ public class BlockForLoop : BlockDrag
                                         if (ctr > maxLoop) break;
                                         variable.SetDictionaryValue(loopVar.ToString());
                                         yield return new WaitForSeconds(0.1f);
-                                        LoopChildBlocks();
+                                        yield return StartCoroutine(UpdateBlocks(childContainer.transform));
+                                        yield return new WaitForSeconds(0.1f);
+                                        yield return StartCoroutine(LoopChildBlocks(childContainer.transform));
                                         ctr++;
                                     }
                                 } else if (incrementOperatorText == "--") {
@@ -144,7 +182,9 @@ public class BlockForLoop : BlockDrag
                                         if (ctr > maxLoop) break;
                                         variable.SetDictionaryValue(loopVar.ToString());
                                         yield return new WaitForSeconds(0.1f);
-                                        LoopChildBlocks();
+                                        yield return StartCoroutine(UpdateBlocks(childContainer.transform));
+                                        yield return new WaitForSeconds(0.1f);
+                                        yield return StartCoroutine(LoopChildBlocks(childContainer.transform));
                                         ctr++;
                                     }
                                 }
@@ -155,7 +195,9 @@ public class BlockForLoop : BlockDrag
                                         if (ctr > maxLoop) break;
                                         variable.SetDictionaryValue(loopVar.ToString());
                                         yield return new WaitForSeconds(0.1f);
-                                        LoopChildBlocks();
+                                        yield return StartCoroutine(UpdateBlocks(childContainer.transform));
+                                        yield return new WaitForSeconds(0.1f);
+                                        yield return StartCoroutine(LoopChildBlocks(childContainer.transform));
                                         ctr++;
                                     }
                                 } else if (incrementOperatorText == "--") {
@@ -163,7 +205,9 @@ public class BlockForLoop : BlockDrag
                                         if (ctr > maxLoop) break;
                                         variable.SetDictionaryValue(loopVar.ToString());
                                         yield return new WaitForSeconds(0.1f);
-                                        LoopChildBlocks();
+                                        yield return StartCoroutine(UpdateBlocks(childContainer.transform));
+                                        yield return new WaitForSeconds(0.1f);
+                                        yield return StartCoroutine(LoopChildBlocks(childContainer.transform));
                                         ctr++;
                                     }
                                 }
@@ -174,7 +218,9 @@ public class BlockForLoop : BlockDrag
                                         if (ctr > maxLoop) break;
                                         variable.SetDictionaryValue(loopVar.ToString());
                                         yield return new WaitForSeconds(0.1f);
-                                        LoopChildBlocks();
+                                        yield return StartCoroutine(UpdateBlocks(childContainer.transform));
+                                        yield return new WaitForSeconds(0.1f);
+                                        yield return StartCoroutine(LoopChildBlocks(childContainer.transform));
                                         ctr++;
                                     }
                                 } else if (incrementOperatorText == "--") {
@@ -182,7 +228,9 @@ public class BlockForLoop : BlockDrag
                                         if (ctr > maxLoop) break;
                                         variable.SetDictionaryValue(loopVar.ToString());
                                         yield return new WaitForSeconds(0.1f);
-                                        LoopChildBlocks();
+                                        yield return StartCoroutine(UpdateBlocks(childContainer.transform));
+                                        yield return new WaitForSeconds(0.1f);
+                                        yield return StartCoroutine(LoopChildBlocks(childContainer.transform));
                                         ctr++;
                                     }
                                 }
