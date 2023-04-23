@@ -12,12 +12,12 @@ public class Instructions : MonoBehaviour
     void Start()
     {
         _playerName = DataManager.GetPlayerName();
-        LayoutRefresher.Instance.RefreshContentFitter((RectTransform) transform);
     }
     void OnEnable()
     {
         isActive = true;
         Instruction();
+        LayoutRefresher.Instance.RefreshContentFitter((RectTransform) transform);
     }
     void OnDisable()
     {

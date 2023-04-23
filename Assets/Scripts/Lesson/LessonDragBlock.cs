@@ -34,8 +34,8 @@ public class LessonDragBlock : MonoBehaviour, IPointerDownHandler, IBeginDragHan
         parent = GameObject.FindGameObjectWithTag("parent");
         onDragCanvas = GameObject.FindGameObjectWithTag("onDragCanvas");
         rootPanel = GameObject.FindGameObjectWithTag("root");
-        initPos = transform.position;
         rect = GetComponent<RectTransform>();
+        initPos = transform.position;
         canvasGroup = GetComponent<CanvasGroup>();
         parentToReturn = parent.transform;
     }
@@ -68,7 +68,9 @@ public class LessonDragBlock : MonoBehaviour, IPointerDownHandler, IBeginDragHan
 
     public void OnDrag(PointerEventData eventData)
     {
-        transform.position = eventData.position;
+        // transform.position = eventData.position;
+        transform.position = Input.mousePosition;
+       
     }
 
     public void OnEndDrag(PointerEventData eventData)
