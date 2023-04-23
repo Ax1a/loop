@@ -46,7 +46,6 @@ public class BlockVariable : BlockDrag
         base.Update();
 
         if (origBlockVariable != null && !instantiate) {
-            Debug.Log(originalObj.name);
             if (_intArray.Count() > 0) {
                 _intArray = origBlockVariable._intArray;
 

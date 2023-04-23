@@ -23,29 +23,82 @@ public class BlockLoop : BlockDrag
         }
     }
 
-    public void LoopChildBlocks() {
-        if (childContainer.transform.childCount > 0) {
-
-            foreach (Transform child in childContainer.transform) {
-                BlockDrag blockDragChild = child.GetComponent<BlockDrag>();
-                BlockOperator blockOperator = child.GetComponent<BlockOperator>();
-                if (blockOperator != null) {
-                    blockOperator.IncrementValue();
-                }                
-
-                if (blockDragChild != null && blockDragChild.printConsole) {
-                    // Debug.Log(child.name + " " + blockDragChild.consoleValue);
-                    validationManager._consoleLog += blockDragChild.consoleValue + "\n";
-                }
+    private IEnumerator UpdateBlocks(Transform parent) {
+        foreach (Transform child in parent) {
+            if (child.GetComponent<BlockDrag>() != null) {
+                BlockDrag _blockDrag = child.GetComponent<BlockDrag>();
+                _blockDrag.inputChanged = true;
             }
+
+            yield return UpdateBlocks(child);
+        }
+    }
+    
+    // public void LoopChildBlocks() {
+    //     if (childContainer.transform.childCount > 0) {
+
+    //         foreach (Transform child in childContainer.transform) {
+    //             BlockDrag blockDragChild = child.GetComponent<BlockDrag>();
+    //             BlockOperator blockOperator = child.GetComponent<BlockOperator>();
+    //             if (blockOperator != null) {
+    //                 blockOperator.IncrementValue();
+    //             }                
+
+    //             if (blockDragChild != null && blockDragChild.printConsole) {
+    //                 // Debug.Log(child.name + " " + blockDragChild.consoleValue);
+    //                 validationManager._consoleLog += blockDragChild.consoleValue + "\n";
+    //             }
+    //         }
+    //         BlockOperator headerOperator = dropBlock.transform.GetChild(0).GetComponent<BlockOperator>();
+    //         if (headerOperator != null) {
+    //             headerOperator.ExecuteOperator();
+    //         }
+    //         CheckHeaderOperator();
+    //     }
+
+    //     ctr++;
+    // }
+
+    public IEnumerator LoopChildBlocks(Transform childContainer) {
+        if (childContainer.transform.childCount > 0) {
+            // yield return StartCoroutine(UpdateBlocks(childContainer));
+            foreach (Transform child in childContainer) {
+                if (child.name.Equals("IfCondition")) {
+                    if (child.parent.GetComponent<BlockDrag>()?.consoleValue == "false") continue;
+                }
+                else if (child.name.Equals("ElseCondition")) {
+                    if (child.parent.GetComponent<BlockDrag>()?.consoleValue == "true") continue;
+                }
+                
+                if (child.GetComponent<BlockDrag>() != null) {
+                    BlockDrag blockDragChild = child.GetComponent<BlockDrag>();
+                    BlockOperator blockOperator = child.GetComponent<BlockOperator>();
+                    
+                    if (child.name.StartsWith("C_IfCondition") && !blockDragChild.consoleValue.ToLower().Equals("true") ||
+                        child.name.StartsWith("J_IfCondition") && !blockDragChild.consoleValue.ToLower().Equals("true") ||
+                        child.name.StartsWith("P_IfCondition") && !blockDragChild.consoleValue.ToLower().Equals("true"))
+                    {
+                        continue;
+                    }
+
+                    if (blockOperator != null) {
+                        blockOperator.IncrementValue();
+                    }
+
+                    if (blockDragChild.printConsole && blockDragChild.blockType == BlockType.Type1) {
+                        validationManager._consoleLog += blockDragChild.consoleValue + "\n";
+                    }
+                }
+                
+                yield return LoopChildBlocks(child);
+            }
+
             BlockOperator headerOperator = dropBlock.transform.GetChild(0).GetComponent<BlockOperator>();
             if (headerOperator != null) {
                 headerOperator.ExecuteOperator();
             }
             CheckHeaderOperator();
         }
-
-        ctr++;
     }
 
     public IEnumerator DelayLoop() {
@@ -53,24 +106,32 @@ public class BlockLoop : BlockDrag
         ctr = 0;
         if (loopType == LoopType.While) {
             while (consoleValue == "true" && ctr < maxLoop) {
-                LoopChildBlocks();
+                yield return StartCoroutine(UpdateBlocks(childContainer.transform));
                 yield return new WaitForSeconds(0.1f);
+                yield return StartCoroutine(LoopChildBlocks(childContainer.transform));
+                yield return new WaitForSeconds(0.1f);
+                Debug.Log(consoleValue);
+                ctr++;
             }
         }
         else if (loopType == LoopType.DoWhile) {
             do {
-                LoopChildBlocks();
+                yield return StartCoroutine(UpdateBlocks(childContainer.transform));
                 yield return new WaitForSeconds(0.1f);
+                yield return StartCoroutine(LoopChildBlocks(childContainer.transform));
+                yield return new WaitForSeconds(0.1f);
+                Debug.Log(consoleValue);
+                ctr++;
             }
             while (consoleValue == "true" && ctr < maxLoop);
         }
 
         // Remove the last line from the console log
-        string[] consoleLogLines = validationManager._consoleLog.Split('\n');
-        if (consoleLogLines.Length > 1) {
-            validationManager._consoleLog = string.Join("\n", consoleLogLines, 0, consoleLogLines.Length - 2);
-            validationManager._consoleLog += "\n";
-        }
+        // string[] consoleLogLines = validationManager._consoleLog.Split('\n');
+        // if (consoleLogLines.Length > 1) {
+        //     validationManager._consoleLog = string.Join("\n", consoleLogLines, 0, consoleLogLines.Length - 2);
+        //     validationManager._consoleLog += "\n";
+        // }
         
         StartCoroutine(validationManager.DelayDisable());
     }

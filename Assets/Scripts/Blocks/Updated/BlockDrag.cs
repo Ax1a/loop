@@ -7,7 +7,8 @@ using UnityEngine.EventSystems;
 public class BlockDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     #region Variables
-    public int id;
+
+    #region Hidden
     [HideInInspector] public Transform _environmentParent = null;
     [HideInInspector] public Transform _tempParent = null;
     [HideInInspector] public GameObject _dropZone;
@@ -15,20 +16,26 @@ public class BlockDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     [HideInInspector] public bool addedPoints = false;
     [HideInInspector] public ValidateController validationManager;
     [HideInInspector] public bool inputChanged = true;
-     public bool error = false;
+    [HideInInspector] public bool error = false;
     [HideInInspector] public GameObject _currentDrag;
-    public GameObject originalObj;
-    [SerializeField] public bool instantiate = true;
+    [HideInInspector] public GameObject originalObj;
+    public string consoleValue;
+    #endregion
+    public int id;
+    [Header ("Settings")]
     public bool addPoints = false;
     private Transform refreshParent = null;
     private bool deleteObject = false;
     private int siblingIndex = -1;
+    private GameObject _shadow;
+    public bool printConsole = false;
+    public bool instantiate = true;
+
+    [Header ("Enums")]
+    public BlockLanguage blockLanguage;
+    public BlockType blockType;
     public enum BlockType { Type1, Type2, Type3 }
     public enum BlockLanguage { C, Python, Java }
-    public BlockType blockType;
-    public BlockLanguage blockLanguage;
-    public string consoleValue;
-    public bool printConsole = false;
     #endregion
 
     public virtual void Start()
@@ -74,6 +81,7 @@ public class BlockDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             addedPoints = false;
             validationManager.ReducePoints(1);
         }
+        
         RefreshContentFitter((RectTransform)_environmentParent);
     }
 
@@ -269,6 +277,23 @@ public class BlockDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         }
         isOverDropZone = false;
     }
+
+    // public void CreateBlockShadow() {
+    //     _shadow = new GameObject("Shadow", typeof(RectTransform), typeof(Image));
+    //     _shadow.transform.SetParent(_environmentParent.transform);
+    //     _shadow.GetComponent<Image>().sprite = _currentDrag.GetComponent<Image>().sprite;
+    //     _shadow.GetComponent<Image>().color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
+    //     _shadow.GetComponent<Image>().type = Image.Type.Sliced;
+
+    //     // Set the size of the shadow to match the size of the block being dragged
+    //     _shadow.GetComponent<RectTransform>().localScale = Vector3.one;
+    //     Rect rect = _currentDrag.GetComponent<RectTransform>().rect;
+    //     _shadow.GetComponent<RectTransform>().sizeDelta = new Vector2(rect.width, rect.height);
+    //     _shadow.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
+        
+    //     _shadow.transform.position = Input.mousePosition;
+    //     _shadow.SetActive(false);
+    // }
 
     public void RefreshContentFitter(RectTransform transform)
     {

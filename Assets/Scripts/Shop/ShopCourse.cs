@@ -110,6 +110,7 @@ public class ShopCourse : MonoBehaviour
                 progLanguagePriceTxts[i].transform.parent.gameObject.SetActive(false);
                 courseSelectionLocks[i].transform.parent.GetComponent<Button>().interactable = true;
                 interactionQuizSelectionLocks[i].transform.parent.GetComponent<Button>().interactable = true;
+                interactionQuizSelectionLocks[i].SetActive(false);
                 buyBtns[i].gameObject.SetActive(false);
 
                 courseSelectionProgress[i].SetActive(true);
