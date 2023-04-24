@@ -85,16 +85,28 @@ public class OperationInteraction : MonoBehaviour
                         }
                         break;
                     case 3: // division
-
-                        if (userNum1 / userNum2 == correctAnswer)
+                        try
                         {
-                            NPCCall("Great job!! I got the right answers!");
-                            //generate new correct answer
-                            GenerateRandomNum(correctAnswer);
+                            if (userNum2 == 0)
+                            {
+                                throw new DivideByZeroException("Cannot divide by zero!");
+                            }
+                            if (userNum1 / userNum2 == correctAnswer)
+                            {
+                                NPCCall("Great job!! I got the right answers!");
+                                //generate new correct answer
+                                GenerateRandomNum(correctAnswer);
+                            }
+                            else
+                            {
+                                NPCCall("I got a wrong answer...");
+                            }
                         }
-                        else
+                        catch (DivideByZeroException ex)
                         {
-                            NPCCall("I got a wrong answer...");
+                            Debug.LogError(ex.Message);
+                            NPCCall(ex.Message);
+
                         }
                         break;
                     case 4: // modulus

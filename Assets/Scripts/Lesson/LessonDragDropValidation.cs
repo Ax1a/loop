@@ -53,7 +53,11 @@ public class LessonDragDropValidation : Singleton<LessonDragDropValidation>
         initPos.ResetPositions();
         LessonDropBlock.Instance._pointsAdded = false;
         isCorrect = false;
-        // LayoutRefresher.Instance.RefreshContentFitter(transform.parent as RectTransform);
+        // reset each LessonDropBlock object in the scene
+        foreach (LessonDropBlock dropBlock in FindObjectsOfType<LessonDropBlock>())
+        {
+            dropBlock.Reset();
+        }
         LayoutRefresher.Instance.RefreshContentFitter((RectTransform)rootPanel.transform);
 
     }
@@ -61,17 +65,17 @@ public class LessonDragDropValidation : Singleton<LessonDragDropValidation>
     public void AddPoints()
     {
         CurrPts += 1;
+        Debug.Log("Current points: " + CurrPts);
 
     }
-
     public void MinusPoints()
     {
         CurrPts -= 1;
-
         if (CurrPts < 0)
         {
             CurrPts = 0;
         }
+        Debug.Log("Current points: " + CurrPts);
 
     }
 
