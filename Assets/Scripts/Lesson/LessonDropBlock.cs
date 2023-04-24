@@ -12,6 +12,7 @@ public class LessonDropBlock : MonoBehaviour, IDropHandler
     public LessonDragBlock.BlockType blockType;
     [HideInInspector] public LessonDragBlock drag;
     public static LessonDropBlock Instance;
+    bool isCorrect = false;
     public GameObject slot
     {
         get
@@ -63,44 +64,53 @@ public class LessonDropBlock : MonoBehaviour, IDropHandler
             {
                 if (dragObject.blockType == blockType)
                 {
-
                     /* dragObject.GetComponent<RectTransform>().transform.position =
                        GetComponent<RectTransform>().transform.position; */
+                    CheckAnswer(eventData);
                     dragObject.parentToReturn = transform;
                     AudioManager.Instance.PlaySfx("Pop");
                     Debug.Log("Dropped");
-                    CheckAnswer(eventData);
-                    LayoutRefresher.Instance.RefreshContentFitter(transform as RectTransform);
+
+
                 }
                 else
                 {
-                    eventData.pointerDrag.GetComponent<LessonDragBlock>().ResetPos();
-                    // dragObject.transform.SetParent(dragObject.parent.transform);
-                    LessonDragDropValidation.Instance.MinusPoints();
+                    dragObject.GetComponent<LessonDragBlock>().ResetPos();
                     Debug.Log("Block type do not match");
                     AudioManager.Instance.PlaySfx("Pop");
-                    Debug.Log("LessonDropBlockScript: Reset Position");
                 }
             }
         }
+        LayoutRefresher.Instance.RefreshContentFitter(transform as RectTransform);
     }
     public void CheckAnswer(PointerEventData eventData)
     {
+        Debug.Log("CheckAnswer Function is Called");
         //Check the correct answer through ID of the blocks
         if (eventData.pointerDrag.GetComponent<LessonDragBlock>().id == id)
         {
-            //to-do: if points was added, it will not generate anymore
-            Debug.Log("Correct");
-            LessonDragDropValidation.Instance.AddPoints();
-            _pointsAdded = true;
-            Debug.Log(_pointsAdded);
+
+            if (!isCorrect) // if the block has not been correctly placed before
+            {
+                LessonDragDropValidation.Instance.AddPoints(); // add points
+                isCorrect = true; // set isCorrect to true
+                Debug.Log("correct: " + isCorrect);
+            }
         }
         else
         {
-            // GameObject.Find("Win").GetComponent<Win>().MinusPoints();
             Debug.Log("Wrong");
-            LessonDragDropValidation.Instance.MinusPoints();
-            Debug.Log(_pointsAdded);
+            if (isCorrect) // if the block was previously correctly placed
+            {
+                LessonDragDropValidation.Instance.MinusPoints(); // deduct points
+                isCorrect = false; // set isCorrect back to false
+                Debug.Log("correct: " + isCorrect);
+            }
         }
+    }
+
+    public void Reset()
+    {
+        isCorrect = false;
     }
 }
