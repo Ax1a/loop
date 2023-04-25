@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using System.Linq;
 
 [System.Serializable]
 public class PlayerData
@@ -71,6 +72,8 @@ public static class DataManager
     public static void AddMoney(int amount)
     {
         playerData.money += amount;
+        GameSharedUI.Instance.UpdateMoneyUITxt();
+        Debug.Log("Added Money: " + amount);
     }
 
     public static bool CanSpendMoney(int amount)
@@ -82,6 +85,7 @@ public static class DataManager
     {
         playerData.money -= amount;
         AudioManager.Instance.PlaySfx("Purchase");
+        GameSharedUI.Instance.UpdateMoneyUITxt();
     }
 
     /*
@@ -299,6 +303,17 @@ public static class DataManager
         {
             playerData.programmingLanguage[key] += 1;
             Debug.Log("Added progress to: " + key);
+            ShopCourse.Instance._checkedState = false;
+            SavePlayerData();
+        }
+    }
+
+    public static void CompleteProgrammingLanguages()
+    {
+        foreach (var key in playerData.programmingLanguage.Keys.ToList())
+        {
+            playerData.programmingLanguage[key] = 10;
+            ShopCourse.Instance._checkedState = false;
             SavePlayerData();
         }
     }

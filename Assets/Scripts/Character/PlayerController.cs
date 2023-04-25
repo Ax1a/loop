@@ -44,14 +44,6 @@ public class PlayerController : MonoBehaviour
         else {
             _animator.SetBool("IsMoving", false);
         }
-
-        //add money press c        
-        #if UNITY_EDITOR
-        if(Input.GetKey(KeyCode.C))
-            DataManager.AddMoney(50);
-        #endif
-
-        GameSharedUI.Instance.UpdateMoneyUITxt();
     }
 
     public void SetIsPanelActive(bool active) {

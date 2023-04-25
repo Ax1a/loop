@@ -16,7 +16,7 @@ public class BlockDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     [HideInInspector] public bool addedPoints = false;
     [HideInInspector] public ValidateController validationManager;
     [HideInInspector] public bool inputChanged = true;
-    [HideInInspector] public bool error = false;
+     public bool error = false;
     [HideInInspector] public GameObject _currentDrag;
     [HideInInspector] public GameObject originalObj;
     public string consoleValue;
@@ -51,6 +51,7 @@ public class BlockDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (validationManager.commandsRunning) return;
         inputChanged = false;
         // Instantiate a copy of the object and set it as the current drag
         if (instantiate) {
@@ -87,6 +88,7 @@ public class BlockDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (validationManager.commandsRunning) return;
         if (_currentDrag != null) {
             _currentDrag.transform.position = Input.mousePosition;
             CheckForDropZone();
@@ -105,6 +107,7 @@ public class BlockDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (validationManager.commandsRunning) return;
         _currentDrag.GetComponent<CanvasGroup>().blocksRaycasts = true;
         _currentDrag.GetComponent<CanvasGroup>().alpha = 1;
         _currentDrag.GetComponent<CanvasGroup>().interactable = true;

@@ -23,7 +23,13 @@ public class ShopCourse : MonoBehaviour
     private string[] _progLanguages = { "c++", "java", "python" };
     private int[] _coursePrices = new int[3];
     private Coroutine _showCoroutineReduce, _showCoroutineInsufficient;
-    private bool _checkedState = false;
+    public bool _checkedState = false;
+
+    public static ShopCourse Instance;
+
+    private void Awake() {
+        if (Instance == null) Instance = this;
+    }
 
     void Start()
     {
@@ -62,6 +68,11 @@ public class ShopCourse : MonoBehaviour
 
     private void BuyProgrammingCourse(int languageIndex) {
         if (_coursePrices[languageIndex] <= DataManager.GetMoney()) {
+            QuestManager.Instance.AddQuestItem("Buy any course from the shop", 1);
+            AudioManager.Instance.PlaySfx("Purchase");
+
+            DataManager.SpendMoney(_coursePrices[languageIndex]);
+
             if (_coursePrices[languageIndex] > 0) {
                 if (_showCoroutineReduce != null) StopCoroutine(_showCoroutineReduce);
                 _showCoroutineReduce = StartCoroutine(ShowReduceFunds(_coursePrices[languageIndex]));
@@ -83,9 +94,6 @@ public class ShopCourse : MonoBehaviour
 
             DisplayCourseRequirements();
             DisplayCourseStateIndicator();
-
-            QuestManager.Instance.AddQuestItem("Buy any course from the shop", 1);
-            AudioManager.Instance.PlaySfx("Purchase");
         }
         else {
             if (_showCoroutineInsufficient != null) StopCoroutine(_showCoroutineInsufficient);

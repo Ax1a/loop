@@ -5,8 +5,10 @@ using System;
 
 public class BlockOneDrop : BlockDrag
 {
+    [Header ("Objects")]
     public GameObject dropBlock;
     private int childCount;
+    [Header ("Answer")]
     public string answer;
     private string dropConsoleValue;
 
@@ -22,7 +24,7 @@ public class BlockOneDrop : BlockDrag
             return false;
         }
 
-        if (answer != "") {
+        if (!string.IsNullOrEmpty(answer)) {
             return consoleValue.ToLower() == answer.ToLower();
         }
         else {

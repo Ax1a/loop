@@ -7,7 +7,9 @@ using UnityEngine.EventSystems;
 
 public class BlockInput : BlockDrag
 {
+    [Header ("Objects")]
     public TMP_InputField inputField;
+    [Header ("Answer")]
     public string answer;
 
     public override void Start() {
@@ -18,7 +20,7 @@ public class BlockInput : BlockDrag
     private bool ValidateInput()
     {
         if (!inputField.multiLine) {
-            if (answer != "") {
+            if (!string.IsNullOrEmpty(answer)) {
                 return inputField.text.ToLower() == answer.ToLower();
             }
             else {
@@ -30,13 +32,18 @@ public class BlockInput : BlockDrag
             string[] answerLines = answer.Replace("\\n", "\n").Split(new string[] { "\n" }, StringSplitOptions.None);
             bool allLinesMatch = true;
 
-            for (int i = 0; i < lines.Length; i++)
-            {
-                if (lines[i].Trim() != answerLines[i].Trim())
+            if (lines.Length == answerLines.Length) {
+                for (int i = 0; i < lines.Length; i++)
                 {
-                    allLinesMatch = false;
-                    break;
+                    if (lines[i].Trim() != answerLines[i].Trim())
+                    {
+                        allLinesMatch = false;
+                        break;
+                    }
                 }
+            }
+            else {
+                allLinesMatch = false;
             }
             return allLinesMatch;
         }
@@ -70,7 +77,6 @@ public class BlockInput : BlockDrag
             {
                 error = false;
                 consoleValue = inputField.text;
-
                 if (ValidateInput())
                 {
                     if (!addedPoints && addPoints)
@@ -87,7 +93,7 @@ public class BlockInput : BlockDrag
                         addedPoints = false;
                     }
                 }
-
+                inputChanged = false;
                 return;
             }
             else {

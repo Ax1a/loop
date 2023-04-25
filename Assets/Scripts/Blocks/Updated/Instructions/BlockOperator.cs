@@ -6,10 +6,13 @@ using TMPro;
 
 public class BlockOperator : BlockDrag
 {
+    [Header ("Objects")]
     [SerializeField] private GameObject l_dropBlock;
     [SerializeField] private GameObject r_dropBlock;
     [SerializeField] private TMP_Dropdown operation;
     private BlockDrag l_blockDropScript, r_blockDropScript;
+    
+    [Header ("Answers")]
     [SerializeField] private string operationAnswer;
     [SerializeField] private string l_blockAnswer;
     [SerializeField] private string r_blockAnswer;
@@ -51,21 +54,23 @@ public class BlockOperator : BlockDrag
         int operationValue = operation.value;
         if (operation.options[operationValue].text == operationAnswer)  {
             if (l_blockDropScript != null && r_blockDropScript != null){
-                Debug.Log(l_blockDropScript.consoleValue == l_blockAnswer && r_blockDropScript.consoleValue == r_blockAnswer);
                 if (l_blockAnswer != "" && r_blockAnswer == "") {
                     return l_blockDropScript.consoleValue == l_blockAnswer;
                 }
                 else if (r_blockAnswer != "" && l_blockAnswer == "") {
                     return r_blockDropScript.consoleValue == r_blockAnswer;
                 }
-                else {
+                else if (l_blockAnswer != "" && r_blockAnswer != "") {
                     return l_blockDropScript.consoleValue == l_blockAnswer && r_blockDropScript.consoleValue == r_blockAnswer;
                 }
+                else {
+                    return true;
+                }
             }
-            else if (l_blockDropScript != null) {
+            else if (l_blockDropScript != null && l_blockAnswer != "") {
                 return l_blockDropScript.consoleValue == l_blockAnswer;
             }
-            else if (r_blockDropScript != null) {
+            else if (r_blockDropScript != null && r_blockAnswer != "") {
                 return r_blockDropScript.consoleValue == r_blockAnswer;
             }
             
@@ -103,7 +108,6 @@ public class BlockOperator : BlockDrag
         if (_dropZone == null || !inputChanged) return; // Don't check the validation when not on the drop block
 
         RefreshContentFitter((RectTransform)_environmentParent);
-
         ExecuteOperator();
 
         foreach (var dropID in _dropZone.GetComponent<BlockDrop>().ids)
@@ -140,12 +144,12 @@ public class BlockOperator : BlockDrag
         inputChanged = false;
     }
 
-    public void IncrementValue() {
+    public IEnumerator IncrementValue() {
         int operationValue = operation.value;
-        int l_value;
+        int l_value, r_value;
         if (operation.options[operationValue].text == "++") {
             l_dropBlock.SetActive(true);
-            if (l_blockDropScript == null) return;
+            if (l_blockDropScript == null) yield return null;
 
             if (int.TryParse(l_blockDropScript.consoleValue, out l_value)) {
                 int increment = ++l_value;
@@ -165,11 +169,10 @@ public class BlockOperator : BlockDrag
         }
         else if (operation.options[operationValue].text == "--") {
             l_dropBlock.SetActive(true);
-            if (l_blockDropScript == null) return;
+            if (l_blockDropScript == null) yield return null;
 
             if (int.TryParse(l_blockDropScript.consoleValue, out l_value)) {
                 int decrement = --l_value;
-                // consoleValue = decrement.ToString();
 
                 if (l_dropBlock?.transform.GetChild(0)?.transform.GetChild(0)?.childCount > 0) {
                     // int value;
@@ -181,6 +184,56 @@ public class BlockOperator : BlockDrag
                     }
                 }
                 consoleValue = decrement.ToString();
+            }
+        }
+        else if (operation.options[operationValue].text == "+=" && blockLanguage == BlockLanguage.Python) {
+            l_dropBlock.SetActive(true);
+            r_dropBlock.SetActive(true);
+            if (l_blockDropScript == null || r_blockDropScript == null) yield return null;
+            
+            if (int.TryParse(l_blockDropScript.consoleValue, out l_value) && int.TryParse(r_blockDropScript.consoleValue, out r_value)) {
+                int sum = l_value + r_value;
+
+                if (l_dropBlock?.transform.GetChild(0)?.transform.GetChild(0)?.childCount > 0) {
+                    BlockVariable blockVariable = l_dropBlock.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).GetComponent<BlockVariable>();
+                    if (blockVariable != null) {
+                        blockVariable.consoleValue = sum.ToString();
+                        blockVariable.SetDictionaryValue(sum.ToString());
+                    }
+                }
+                consoleValue = sum.ToString();
+            }
+            else {
+                string concat = l_blockDropScript.consoleValue + r_blockDropScript.consoleValue;
+                
+                if (l_dropBlock?.transform.GetChild(0)?.transform.GetChild(0)?.childCount > 0) {
+                    BlockVariable blockVariable = l_dropBlock.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).GetComponent<BlockVariable>();
+                    if (blockVariable != null) {
+                        blockVariable.consoleValue = concat.ToString();
+                        blockVariable.SetDictionaryValue(concat);
+                    }
+                }
+                consoleValue = concat;
+            }
+        }
+        else if (operation.options[operationValue].text == "-=" && blockLanguage == BlockLanguage.Python) {
+            l_dropBlock.SetActive(true);
+            r_dropBlock.SetActive(true);
+            if (l_blockDropScript == null || r_blockDropScript == null) yield return null;
+            
+            if (int.TryParse(l_blockDropScript.consoleValue, out l_value) && int.TryParse(r_blockDropScript.consoleValue, out r_value)) {
+                int diff = l_value - r_value;
+                consoleValue = diff.ToString();
+            }
+
+            if (l_dropBlock?.transform.GetChild(0)?.transform.GetChild(0)?.childCount > 0) {
+                BlockVariable blockVariable = l_dropBlock.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).GetComponent<BlockVariable>();
+                
+                if (int.TryParse(l_blockDropScript.consoleValue, out l_value) && int.TryParse(r_blockDropScript.consoleValue, out r_value) && blockVariable != null) {
+                    int difference = l_value - r_value;
+                    blockVariable.consoleValue = difference.ToString();
+                    blockVariable.SetDictionaryValue(difference.ToString());
+                }
             }
         }
     }
@@ -264,7 +317,7 @@ public class BlockOperator : BlockDrag
                 }
             }
         }
-        else if (operation.options[operationValue].text == "+=") {
+        else if (operation.options[operationValue].text == "+=" && blockLanguage != BlockLanguage.Python) {
             l_dropBlock.SetActive(true);
             r_dropBlock.SetActive(true);
             if (l_blockDropScript == null || r_blockDropScript == null) return;
@@ -291,7 +344,7 @@ public class BlockOperator : BlockDrag
                 }
             }
         }
-        else if (operation.options[operationValue].text == "-=") {
+        else if (operation.options[operationValue].text == "-=" && blockLanguage != BlockLanguage.Python) {
             l_dropBlock.SetActive(true);
             r_dropBlock.SetActive(true);
             if (l_blockDropScript == null || r_blockDropScript == null) return;
@@ -433,7 +486,6 @@ public class BlockOperator : BlockDrag
             if (l_blockDropScript == null || r_blockDropScript == null) return;
 
             if (int.TryParse(l_blockDropScript.consoleValue, out l_value) && int.TryParse(r_blockDropScript.consoleValue, out r_value)) {
-                Debug.Log(l_value > r_value);
                 if (l_value > r_value) {
                     consoleValue = "true";
                 }
@@ -476,7 +528,7 @@ public class BlockOperator : BlockDrag
             if (l_blockDropScript == null || r_blockDropScript == null) return;
 
             if (int.TryParse(l_blockDropScript.consoleValue, out l_value) && int.TryParse(r_blockDropScript.consoleValue, out r_value)) {
-                if (l_value >= r_value) {
+                if (l_value <= r_value) {
                     consoleValue = "true";
                 }
                 else {

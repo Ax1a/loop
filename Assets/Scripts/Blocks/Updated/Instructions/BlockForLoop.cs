@@ -7,18 +7,26 @@ using System.Linq;
 
 public class BlockForLoop : BlockDrag
 {
+    [Header ("Objects")]
     [SerializeField] private GameObject childContainer;
     [SerializeField] private GameObject conditionValue;
     [SerializeField] private TMP_InputField variableValue;
     [SerializeField] private TMP_Dropdown conditionOperator;
     [SerializeField] private TMP_Dropdown assignOperator;
-    [SerializeField] private int maxLoop = 100;
     [SerializeField] private BlockVariable variable;
+
+    [Header ("Settings")]
+    [SerializeField] private int maxLoop = 100;
+    [SerializeField] private int ctr = 0;
+    [Header ("Answers")]
+    [SerializeField] private int loopCountAnswer;
+    [SerializeField] private string conditionOperatorAnswer, incrementOperatorAnswer, varValueAnswer;
     private int childCount;
     private BlockDrag blockDrag = null;
 
     public override void Start() {
         base.Start();
+        variableValue.onValueChanged.AddListener(OnInputFieldValueChanged);
         conditionOperator.onValueChanged.AddListener(new UnityAction<int>(index => OnInputFieldValueChanged(conditionOperator.options[index].text)));
         assignOperator.onValueChanged.AddListener(new UnityAction<int>(index => OnInputFieldValueChanged(assignOperator.options[index].text)));
     }
@@ -35,6 +43,17 @@ public class BlockForLoop : BlockDrag
     private void OnInputFieldValueChanged(string newValue)
     {
         inputChanged = true;
+    }
+
+    private bool ValidateInput() {
+        string conditionOperatorText = conditionOperator.options[conditionOperator.value].text;
+        string incrementOperatorText = assignOperator.options[assignOperator.value].text;
+        if (conditionOperatorText == conditionOperatorAnswer 
+            && incrementOperatorText == incrementOperatorAnswer
+            && varValueAnswer == variableValue.text) {
+                return true;
+            }
+        return false;
     }
 
     private IEnumerator UpdateBlocks(Transform parent) {
@@ -60,11 +79,23 @@ public class BlockForLoop : BlockDrag
                 
                 if (child.GetComponent<BlockDrag>() != null) {
                     BlockDrag blockDragChild = child.GetComponent<BlockDrag>();
+                    BlockOperator blockOperator = child.GetComponent<BlockOperator>();
+                    BlockOneDrop blockOneDrop = child.GetComponent<BlockOneDrop>();
+
+                    if (blockDragChild.error) {
+                        validationManager.errorDetected = true;
+                        break;
+                    }
+
                     if (child.name.StartsWith("C_IfCondition") && !blockDragChild.consoleValue.ToLower().Equals("true") ||
                         child.name.StartsWith("J_IfCondition") && !blockDragChild.consoleValue.ToLower().Equals("true") ||
                         child.name.StartsWith("P_IfCondition") && !blockDragChild.consoleValue.ToLower().Equals("true"))
                     {
                         continue;
+                    }
+                    
+                    if (blockOperator != null) {
+                        StartCoroutine(blockOperator.IncrementValue());
                     }
 
                     if (blockDragChild.printConsole && blockDragChild.blockType == BlockType.Type1) {
@@ -79,7 +110,7 @@ public class BlockForLoop : BlockDrag
 
     public IEnumerator DelayLoop() {
         int varValue = 0;
-        int ctr = 0;
+        ctr = 0;
         int operationValue = conditionOperator.value;
         int incrementValue = assignOperator.value;
 
@@ -90,7 +121,6 @@ public class BlockForLoop : BlockDrag
                 if (_conditionBlock != null) {
                     int conditionValue = 0;
                     if (int.TryParse(_conditionBlock.consoleValue, out conditionValue)) {
-
                         string conditionOperatorText = conditionOperator.options[operationValue].text;
                         string incrementOperatorText = assignOperator.options[incrementValue].text;
                         variable.SetDictionaryValue(varValue.ToString());
@@ -100,7 +130,7 @@ public class BlockForLoop : BlockDrag
                             case ">":
                                 if (incrementOperatorText == "++") {
                                     for (; loopVar > conditionValue; loopVar++) {
-                                        if (ctr > maxLoop) break;
+                                        if (ctr > maxLoop || validationManager.errorDetected) break;
                                         variable.SetDictionaryValue(loopVar.ToString());
                                         yield return new WaitForSeconds(0.1f);
                                         yield return StartCoroutine(UpdateBlocks(childContainer.transform));
@@ -110,7 +140,7 @@ public class BlockForLoop : BlockDrag
                                     }
                                 } else if (incrementOperatorText == "--") {
                                     for (; loopVar > conditionValue; loopVar--) {
-                                        if (ctr > maxLoop) break;
+                                        if (ctr > maxLoop || validationManager.errorDetected) break;
                                         variable.SetDictionaryValue(loopVar.ToString());
                                         yield return new WaitForSeconds(0.1f);
                                         yield return StartCoroutine(UpdateBlocks(childContainer.transform));
@@ -119,11 +149,12 @@ public class BlockForLoop : BlockDrag
                                         ctr++;
                                     }
                                 }
+                                inputChanged = true;
                                 break;
                             case "<":
                                 if (incrementOperatorText == "++") {
                                     for (; loopVar < conditionValue; loopVar++) {
-                                        if (ctr > maxLoop) break;
+                                        if (ctr > maxLoop || validationManager.errorDetected) break;
                                         variable.SetDictionaryValue(loopVar.ToString());
                                         yield return new WaitForSeconds(0.1f);
                                         yield return StartCoroutine(UpdateBlocks(childContainer.transform));
@@ -133,7 +164,7 @@ public class BlockForLoop : BlockDrag
                                     }
                                 } else if (incrementOperatorText == "--") {
                                     for (; loopVar < conditionValue; loopVar--) {
-                                        if (ctr > maxLoop) break;
+                                        if (ctr > maxLoop || validationManager.errorDetected) break;
                                         variable.SetDictionaryValue(loopVar.ToString());
                                         yield return new WaitForSeconds(0.1f);
                                         yield return StartCoroutine(UpdateBlocks(childContainer.transform));
@@ -142,11 +173,12 @@ public class BlockForLoop : BlockDrag
                                         ctr++;
                                     }
                                 }
+                                inputChanged = true;
                                 break;
                             case ">=":
                                 if (incrementOperatorText == "++") {
                                     for (; loopVar >= conditionValue; loopVar++) {
-                                        if (ctr > maxLoop) break;
+                                        if (ctr > maxLoop || validationManager.errorDetected) break;
                                         variable.SetDictionaryValue(loopVar.ToString());
                                         yield return new WaitForSeconds(0.1f);
                                         yield return StartCoroutine(UpdateBlocks(childContainer.transform));
@@ -156,7 +188,7 @@ public class BlockForLoop : BlockDrag
                                     }
                                 } else if (incrementOperatorText == "--") {
                                     for (; loopVar >= conditionValue; loopVar--) {
-                                        if (ctr > maxLoop) break;
+                                        if (ctr > maxLoop || validationManager.errorDetected) break;
                                         variable.SetDictionaryValue(loopVar.ToString());
                                         yield return new WaitForSeconds(0.1f);
                                         yield return StartCoroutine(UpdateBlocks(childContainer.transform));
@@ -165,11 +197,12 @@ public class BlockForLoop : BlockDrag
                                         ctr++;
                                     }
                                 }
+                                inputChanged = true;
                                 break;
                             case "<=":
                                 if (incrementOperatorText == "++") {
                                     for (; loopVar <= conditionValue; loopVar++) {
-                                        if (ctr > maxLoop) break;
+                                        if (ctr > maxLoop || validationManager.errorDetected) break;
                                         variable.SetDictionaryValue(loopVar.ToString());
                                         yield return new WaitForSeconds(0.1f);
                                         yield return StartCoroutine(UpdateBlocks(childContainer.transform));
@@ -179,7 +212,7 @@ public class BlockForLoop : BlockDrag
                                     }
                                 } else if (incrementOperatorText == "--") {
                                     for (; loopVar <= conditionValue; loopVar--) {
-                                        if (ctr > maxLoop) break;
+                                        if (ctr > maxLoop || validationManager.errorDetected) break;
                                         variable.SetDictionaryValue(loopVar.ToString());
                                         yield return new WaitForSeconds(0.1f);
                                         yield return StartCoroutine(UpdateBlocks(childContainer.transform));
@@ -188,11 +221,12 @@ public class BlockForLoop : BlockDrag
                                         ctr++;
                                     }
                                 }
+                                inputChanged = true;
                                 break;
                             case "==":
                                 if (incrementOperatorText == "++") {
                                     for (; loopVar == conditionValue; loopVar++) {
-                                        if (ctr > maxLoop) break;
+                                        if (ctr > maxLoop || validationManager.errorDetected) break;
                                         variable.SetDictionaryValue(loopVar.ToString());
                                         yield return new WaitForSeconds(0.1f);
                                         yield return StartCoroutine(UpdateBlocks(childContainer.transform));
@@ -202,7 +236,7 @@ public class BlockForLoop : BlockDrag
                                     }
                                 } else if (incrementOperatorText == "--") {
                                     for (; loopVar == conditionValue; loopVar--) {
-                                        if (ctr > maxLoop) break;
+                                        if (ctr > maxLoop || validationManager.errorDetected) break;
                                         variable.SetDictionaryValue(loopVar.ToString());
                                         yield return new WaitForSeconds(0.1f);
                                         yield return StartCoroutine(UpdateBlocks(childContainer.transform));
@@ -211,11 +245,12 @@ public class BlockForLoop : BlockDrag
                                         ctr++;
                                     }
                                 }
+                                inputChanged = true;
                                 break;
                             case "!=":
                                 if (incrementOperatorText == "++") {
                                     for (; loopVar != conditionValue; loopVar++) {
-                                        if (ctr > maxLoop) break;
+                                        if (ctr > maxLoop || validationManager.errorDetected) break;
                                         variable.SetDictionaryValue(loopVar.ToString());
                                         yield return new WaitForSeconds(0.1f);
                                         yield return StartCoroutine(UpdateBlocks(childContainer.transform));
@@ -225,7 +260,7 @@ public class BlockForLoop : BlockDrag
                                     }
                                 } else if (incrementOperatorText == "--") {
                                     for (; loopVar != conditionValue; loopVar--) {
-                                        if (ctr > maxLoop) break;
+                                        if (ctr > maxLoop || validationManager.errorDetected) break;
                                         variable.SetDictionaryValue(loopVar.ToString());
                                         yield return new WaitForSeconds(0.1f);
                                         yield return StartCoroutine(UpdateBlocks(childContainer.transform));
@@ -234,6 +269,7 @@ public class BlockForLoop : BlockDrag
                                         ctr++;
                                     }
                                 }
+                                inputChanged = true;
                                 break;
                             }
                             
@@ -241,68 +277,28 @@ public class BlockForLoop : BlockDrag
                 }
             }
         }
-
-        // while (consoleValue == "true" && ctr < maxLoop) {
-        //     if (childContainer.transform.childCount > 0) {
-        //         foreach (Transform child in childContainer.transform) {
-        //             BlockDrag blockDragChild = child.GetComponent<BlockDrag>();
-        //             BlockOperator blockOperator = child.GetComponent<BlockOperator>();
-        //             if (blockOperator != null) {
-        //                 blockOperator.IncrementValue();
-
-        //                 // BlockOperator headerOperator = dropBlock.transform.GetChild(0).GetComponent<BlockOperator>();
-        //                 // if (headerOperator != null) headerOperator.inputChanged = true;
-        //                 CheckHeaderOperator();
-        //             }
-
-        //             if (blockDragChild != null && blockDragChild.printConsole) {
-        //                 Debug.Log(child.name + " " + blockDragChild.consoleValue);
-        //                 validationManager._consoleLog += blockDragChild.consoleValue + "\n";
-        //             }
-        //         }
-        //     }
-
-        //     ctr++;
-           
-        // }
-
-        // Remove the last line from the console log
-        // string[] consoleLogLines = validationManager._consoleLog.Split('\n');
-        // if (consoleLogLines.Length > 1) {
-        //     validationManager._consoleLog = string.Join("\n", consoleLogLines, 0, consoleLogLines.Length - 2);
-        //     validationManager._consoleLog += "\n";
-        // }
         
         StartCoroutine(validationManager.DelayDisable());
     }
 
     public override void BlockValidation()
     {
-        if (_dropZone == null || instantiate || inputChanged) return; // Don't check the validation when not on the drop block
-        if (conditionValue.transform.childCount == 0) return;
+        if (_dropZone == null || instantiate || !inputChanged) return; // Don't check the validation when not on the drop block
 
         foreach (var dropID in _dropZone.GetComponent<BlockDrop>().ids)
         {
             if (dropID == id)
             {
-                // if (addConsoleValue) consoleValue = inputField.text;
-
-                // if (ValidateInput())
-                // {
-                    if (!addedPoints)
-                    {
-                        validationManager.AddPoints(1);
-                        addedPoints = true;
-                    }
-                // }
-                // else
-                // {
-                    // if (addedPoints)
-                    // {
-                    //     validationManager.ReducePoints(1);
-                    //     addedPoints = false;
-                    // }
-                // }
+                if (!addedPoints && loopCountAnswer == ctr && ValidateInput())
+                {
+                    validationManager.AddPoints(1);
+                    addedPoints = true;
+                }
+                else if(addedPoints && !ValidateInput())
+                {
+                    validationManager.ReducePoints(1);
+                    addedPoints = false;
+                }
                 inputChanged = false;
                 return;
             }

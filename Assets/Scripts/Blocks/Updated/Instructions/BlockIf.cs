@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class BlockIf : BlockDrag
 {
+    [Header ("Objects")]
     public GameObject dropBlock;
     public GameObject ifChildContainer;
+    
+    [Header ("Answer")]
     [SerializeField] private string answer;
     BlockDrag blockDrag = null;
 
@@ -16,14 +19,18 @@ public class BlockIf : BlockDrag
             blockDrag = dropBlock.transform.GetChild(0)?.GetComponent<BlockDrag>();
 
             if (blockDrag.consoleValue != consoleValue) {
-                consoleValue = blockDrag.consoleValue;
                 inputChanged = true;
             }
         }
     }
 
     private bool ValidateInput() {
-        return answer.ToLower() == consoleValue.ToLower();
+        if (answer != "") {
+            return answer.ToLower() == consoleValue.ToLower();
+        }
+        else {
+            return true;
+        }
     }
 
     public override void BlockValidation()
@@ -31,37 +38,49 @@ public class BlockIf : BlockDrag
         if (dropBlock.transform.childCount == 0 || !inputChanged) return;
         if (_dropZone == null) return; // Don't check the validation when not on the drop block
 
-        blockDrag = dropBlock.transform.GetChild(0)?.GetComponent<BlockDrag>();
-        consoleValue = (blockDrag?.consoleValue == "true") ? "true" : "false";
+        if (blockDrag?.consoleValue == "true") {
+            error = false;
+            consoleValue = "true";
+        }
+        else if (blockDrag?.consoleValue == "false") {
+            error = false;
+            consoleValue = "false";
+        }
+        else {
+            consoleValue = "";
+            error = true;
+        }
 
-        foreach (var dropID in _dropZone.GetComponent<BlockDrop>().ids)
-        {
-            if (dropID == id)
+        if (!error) {
+            foreach (var dropID in _dropZone.GetComponent<BlockDrop>().ids)
             {
-                error = false;
-
-                if (ValidateInput())
+                if (dropID == id)
                 {
-                    if (!addedPoints && addPoints)
-                    {
-                        validationManager.AddPoints(1);
-                        addedPoints = true;
-                    }
-                }
-                else
-                {
-                    if (addedPoints)
-                    {
-                        validationManager.ReducePoints(1);
-                        addedPoints = false;
-                    }
-                }
+                    error = false;
 
-                inputChanged = false;
-                return;
-            }
-            else {
-                error = true;
+                    if (ValidateInput())
+                    {
+                        if (!addedPoints && addPoints)
+                        {
+                            validationManager.AddPoints(1);
+                            addedPoints = true;
+                        }
+                    }
+                    else
+                    {
+                        if (addedPoints)
+                        {
+                            validationManager.ReducePoints(1);
+                            addedPoints = false;
+                        }
+                    }
+
+                    inputChanged = false;
+                    return;
+                }
+                else {
+                    error = true;
+                }
             }
         }
 

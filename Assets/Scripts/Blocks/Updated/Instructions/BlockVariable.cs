@@ -14,36 +14,70 @@ public class BlockVariable : BlockDrag
     [SerializeField] public StringVariable _stringVar;
     [SerializeField] public IntVariable _intVar;
 
+    // Store the default value for variables
+
     [Header ("Objects")]
     [SerializeField] private TextMeshProUGUI variableNameTxt;
     [SerializeField] private TMP_InputField variableArrayIndex;
-    private BlockVariable origBlockVariable = null;
+    [SerializeField] private BlockVariable origBlockVariable = null;
+    
+    [Header ("Ignore")]
+    [SerializeField] private IntVariableArr _defIntArray;
+    [SerializeField] private StringVariableArr _defStringArray;
+    [SerializeField] private StringVariable _defStringVar;
+    [SerializeField] private IntVariable _defIntVar;
 
     public override void Start() {
         base.Start();
 
         variableArrayIndex.onValueChanged.AddListener(OnInputFieldValueChanged);
         if (_intArray.Count() > 0) {
+            _defIntArray.Clear();
+            foreach (var val in _intArray) {
+                _defIntArray.Add(val.Key, val.Value);
+            }
             variableNameTxt.text = _intArray.Keys.First().ToString();
             variableArrayIndex.transform.parent.gameObject.SetActive(true);
         }
         else if (_stringArray.Count() > 0) {
+            _defStringArray.Clear();
+            foreach (var val in _stringArray) {
+                _defStringArray.Add(val.Key, val.Value);
+            }
             variableNameTxt.text = _stringArray.Keys.First().ToString();
             variableArrayIndex.transform.parent.gameObject.SetActive(true);
         }
         else if (_stringVar.Count() > 0) {
+            _defStringVar.Clear();
+            foreach (var val in _stringVar) {
+                _defStringVar.Add(val.Key, val.Value);
+            }
             variableArrayIndex.transform.parent.gameObject.SetActive(false);
             variableNameTxt.text = _stringVar.Keys.First().ToString();
         }
         else if (_intVar.Count() > 0) {
+            _defIntVar.Clear();
+            foreach (var val in _intVar) {
+                _defIntVar.Add(val.Key, val.Value);
+            }
             variableArrayIndex.transform.parent.gameObject.SetActive(false);
             variableNameTxt.text = _intVar.Keys.First().ToString();
         }
         inputChanged = true;
     }
 
+
     public override void Update() {
         base.Update();
+
+        if (validationManager.resetBlocks) {
+            ResetVariables();
+        }
+
+        if (_intArray.Count() > 0) variableNameTxt.text = _intArray.Keys.First().ToString();
+        if (_stringArray.Count() > 0) variableNameTxt.text = _stringArray.Keys.First().ToString();
+        if (_stringVar.Count() > 0) variableNameTxt.text = _stringVar.Keys.First().ToString();
+        if (_intVar.Count() > 0) variableNameTxt.text = _intVar.Keys.First().ToString();
 
         if (origBlockVariable != null && !instantiate) {
             if (_intArray.Count() > 0) {
@@ -62,7 +96,7 @@ public class BlockVariable : BlockDrag
             }
             else if (_stringArray.Count() > 0) {
                 _stringArray = origBlockVariable._stringArray;
-
+                
                 if (variableArrayIndex.text != "") {
                     int index = int.Parse(variableArrayIndex.text);
 
@@ -74,27 +108,19 @@ public class BlockVariable : BlockDrag
                     }
                 }
             }
-            else if (_stringVar.Count() > 0 && _stringVar.Values.First().ToString() != consoleValue) {
+            else if (_stringVar.Count() > 0 && _stringVar != null) {
                 _stringVar = origBlockVariable._stringVar;
                 consoleValue = _stringVar.Values.First().ToString();
-            }
-            else if (_intVar.Count() > 0 && _intVar.Values.First().ToString() != consoleValue) {
-                _intVar = origBlockVariable._intVar;
-                consoleValue = origBlockVariable._intVar.Values.First().ToString();
-            }
-
-            if (originalObj.GetComponent<BlockDrag>().inputChanged) {
-                inputChanged = true;
+                
                 originalObj.GetComponent<BlockDrag>().inputChanged = false;
+                inputChanged = true;
+            }
+            else if (_intVar.Count() > 0 && _intVar != null) {
+                _intVar = origBlockVariable._intVar;
+                consoleValue = _intVar.Values.First().ToString();
 
-                if (_stringVar.Count() > 0) {
-                    _stringVar = origBlockVariable._stringVar;
-                    consoleValue = _stringVar.Values.First().ToString();
-                }
-                 else if (_intVar.Count() > 0) {
-                    _intVar = origBlockVariable._intVar;
-                    consoleValue = origBlockVariable._intVar.Values.First().ToString();
-                }
+                originalObj.GetComponent<BlockDrag>().inputChanged = false;
+                inputChanged = true;
             }
         }
         else if (origBlockVariable == null && !instantiate) {
@@ -102,11 +128,6 @@ public class BlockVariable : BlockDrag
             inputChanged = true;
         }
     }
-
-    // private bool ValidateInput()
-    // {
-    //     return inputField.text.ToLower() == answer.ToLower();
-    // }
 
     // // Function to check if input or dropdown changes
     // // This prevents the block validation for always checking
@@ -123,12 +144,12 @@ public class BlockVariable : BlockDrag
 
                 if (index > _intArray.First().Value.intArr.Length - 1) {
                     _intArray.First().Value.intArr[index] = 0;
-                    originalObj.GetComponent<BlockVariable>()._intArray.First().Value.intArr[index] = 0;
+                    if (originalObj != null) originalObj.GetComponent<BlockVariable>()._intArray.First().Value.intArr[index] = 0;
                     Debug.Log("Array index out of bounds");
                 }
                 else {
                     _intArray.First().Value.intArr[index] = int.Parse(input);
-                    originalObj.GetComponent<BlockVariable>()._intArray.First().Value.intArr[index] = int.Parse(input);
+                    if (originalObj != null) originalObj.GetComponent<BlockVariable>()._intArray.First().Value.intArr[index] = int.Parse(input);
                 }
             }
         }
@@ -139,11 +160,11 @@ public class BlockVariable : BlockDrag
 
                 if (index > _stringArray.First().Value.stringArr.Length - 1) {
                     _stringArray.First().Value.stringArr[index] = "Array index out of bounds";
-                    originalObj.GetComponent<BlockVariable>()._stringArray.First().Value.stringArr[index] = "Array index out of bounds";
+                    if (originalObj != null) originalObj.GetComponent<BlockVariable>()._stringArray.First().Value.stringArr[index] = "Array index out of bounds";
                 }
                 else {
                     _stringArray.First().Value.stringArr[index] = input;
-                    originalObj.GetComponent<BlockVariable>()._stringArray.First().Value.stringArr[index] = input;
+                    if (originalObj != null) originalObj.GetComponent<BlockVariable>()._stringArray.First().Value.stringArr[index] = input;
                 }
             }
         }
@@ -155,9 +176,11 @@ public class BlockVariable : BlockDrag
             _stringVar.Remove(firstKey);
             _stringVar.Add(firstKey, input);
 
-            originalObj.GetComponent<BlockVariable>()._stringVar.Remove(firstKey);
-            originalObj.GetComponent<BlockVariable>()._stringVar.Add(firstKey, input);
-            originalObj.GetComponent<BlockDrag>().consoleValue = input;
+            if (originalObj != null) {
+                originalObj.GetComponent<BlockVariable>()._stringVar.Remove(firstKey);
+                originalObj.GetComponent<BlockVariable>()._stringVar.Add(firstKey, input);
+                originalObj.GetComponent<BlockDrag>().consoleValue = input;
+            }
         }
         else if (_intVar.Count() > 0) {
             if (int.TryParse(input, out int value)) {
@@ -189,39 +212,39 @@ public class BlockVariable : BlockDrag
 
         foreach (var dropID in _dropZone.GetComponent<BlockDrop>().ids)
         {
-            if (_intArray.Count() > 0) {
-                if (variableArrayIndex.text != "") {
-                    int index = int.Parse(variableArrayIndex.text);
-
-                    if (index > _intArray.First().Value.intArr.Length - 1) {
-                        consoleValue = "Array index out of bounds";
-                    }
-                    else {
-                        consoleValue = _intArray.First().Value.intArr[index].ToString();
-                    }
-                }
-            }
-            else if (_stringArray.Count() > 0) {
-                if (variableArrayIndex.text != "") {
-                    int index = int.Parse(variableArrayIndex.text);
-
-                    if (index > _stringArray.First().Value.stringArr.Length - 1) {
-                        consoleValue = "Array index out of bounds";
-                    }
-                    else {
-                        consoleValue = _stringArray.First().Value.stringArr[index];
-                    }
-                }
-            }
-            else if (_stringVar.Count() > 0) {
-                consoleValue = _stringVar.Values.First().ToString();
-            }
-            else if (_intVar.Count() > 0) {
-                consoleValue = _intVar.Values.First().ToString();
-            }
-            
             if (dropID == id)
             {
+                if (_intArray.Count() > 0) {
+                    if (variableArrayIndex.text != "") {
+                        int index = int.Parse(variableArrayIndex.text);
+
+                        if (index > _intArray.First().Value.intArr.Length - 1) {
+                            consoleValue = "Array index out of bounds";
+                        }
+                        else {
+                            consoleValue = _intArray.First().Value.intArr[index].ToString();
+                        }
+                    }
+                }
+                else if (_stringArray.Count() > 0) {
+                    if (variableArrayIndex.text != "") {
+                        int index = int.Parse(variableArrayIndex.text);
+
+                        if (index > _stringArray.First().Value.stringArr.Length - 1) {
+                            consoleValue = "Array index out of bounds";
+                        }
+                        else {
+                            consoleValue = _stringArray.First().Value.stringArr[index];
+                        }
+                    }
+                }
+                else if (_stringVar.Count() > 0) {
+                    consoleValue = _stringVar.Values.First().ToString();
+                }
+                else if (_intVar.Count() > 0) {
+                    consoleValue = _intVar.Values.First().ToString();
+                }
+
                 if (!addedPoints && addPoints)
                 {
                     validationManager.AddPoints(1);
@@ -240,6 +263,35 @@ public class BlockVariable : BlockDrag
         }
 
         inputChanged = false;
+    }
+
+    private void ResetVariables() {
+        if (_intArray.Count() > 0) {
+            _intArray.Clear();
+            foreach (var val in _defIntArray) {
+                _intArray.Add(val.Key, val.Value);
+            }
+        }
+        if (_stringArray.Count() > 0) {
+            _stringArray.Clear();
+            foreach (var val in _defStringArray) {
+                _stringArray.Add(val.Key, val.Value);
+            }
+        }
+        if (_stringVar.Count() > 0) {
+            _stringVar.Clear();
+            foreach (var val in _defStringVar) {
+                _stringVar.Add(val.Key, val.Value);
+            }
+        }
+        if (_intVar.Count() > 0) {
+            _intVar.Clear();
+            foreach (var val in _defIntVar) {
+                _intVar.Add(val.Key, val.Value);
+            }
+        }
+
+        validationManager.resetBlocks = false;  
     }
 }
 

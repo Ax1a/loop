@@ -40,11 +40,11 @@ public class ValidateController : MonoBehaviour
     [Header ("Scripts")]
     [SerializeField] private InteractionQuizInfo interactionQuiz;
     [HideInInspector] public string _consoleLog;
+    [HideInInspector] public bool errorDetected = false, commandsRunning = false, resetBlocks = false;
     private Sprite _trashClosed, _trashOpen;
     private BlockVariable _blockVariable;
-    public bool processWait = false;
     private bool _achievedPoints = false;
-    private bool errorDetected = false, blocksPlaced = false, coroutineRunning = false;
+    private bool processWait = false, blocksPlaced = false;
     #endregion
     
     private void Start() {
@@ -103,6 +103,8 @@ public class ValidateController : MonoBehaviour
 
     public void ResetBlocks() {
         consoleTxt.text = "";
+        processWait = false;
+        resetBlocks = true;
         currentPoints = 0;
 
         if (blocksParent.childCount > 0) {
@@ -160,6 +162,8 @@ public class ValidateController : MonoBehaviour
                 // Execute loops
                 BlockLoop blockLoop = child.GetComponent<BlockLoop>();
                 BlockForLoop blockForLoop = child.GetComponent<BlockForLoop>();
+                BlockForLoopP blockForLoopP = child.GetComponent<BlockForLoopP>();
+
                 if (blockLoop != null) {
                     StartCoroutine(blockLoop.DelayLoop());
                     processWait = true;
@@ -170,8 +174,12 @@ public class ValidateController : MonoBehaviour
                     processWait = true;
                     yield return WaitForProcessToFinish();
                 }   
+                else if (blockForLoopP != null) {
+                    StartCoroutine(blockForLoopP.DelayLoop());
+                    processWait = true;
+                    yield return WaitForProcessToFinish();
+                }
                 
-
                 if (blockDrag.error) {
                     errorDetected = true;
                     break;
@@ -179,6 +187,7 @@ public class ValidateController : MonoBehaviour
 
                 if (blockDrag.blockType == BlockDrag.BlockType.Type1) {
                     BlockOneDrop blockOneDrop = child.GetComponent<BlockOneDrop>();
+                    BlockOperator blockOperator = child.GetComponent<BlockOperator>();
 
                     if (child.name.StartsWith("C_IfCondition") && !blockDrag.consoleValue.ToLower().Equals("true") ||
                         child.name.StartsWith("J_IfCondition") && !blockDrag.consoleValue.ToLower().Equals("true") ||
@@ -191,7 +200,6 @@ public class ValidateController : MonoBehaviour
                             child.name.StartsWith("P_WhileLoop") || child.name.StartsWith("P_DoWhileLoop") || child.name.StartsWith("P_ForLoop")) {
                         continue;
                     }
-                    
                     
                     if (blockOneDrop != null && child.transform.name.StartsWith("C_CharInput")) {
                         BlockVariable _blockVariable = blockOneDrop.dropBlock.transform.GetChild(0).GetComponent<BlockVariable>();
@@ -206,14 +214,19 @@ public class ValidateController : MonoBehaviour
                             _blockDrag.consoleValue = "";
                         }
                     }
+                    else if (blockOperator != null) {
+                        processWait = true;
+                        yield return StartCoroutine(blockOperator.IncrementValue());
+                        yield return StartCoroutine(UpdateBlocks(blocksParent));
+                        StartCoroutine(DelayDisable());
+                        yield return WaitForProcessToFinish();
+                    }
                     else if (blockDrag.consoleValue != "" && blockDrag.printConsole)
                     {
-                        // if (child.name.StartsWith("C_Print")) 
                         _consoleLog += blockDrag.consoleValue + "\n";
                     }
 
                 }   
-                // blockDrag.inputChanged = true; 
             }
             if (errorDetected) break;
 
@@ -222,7 +235,7 @@ public class ValidateController : MonoBehaviour
     }
 
     public void ExecuteCommand() {
-        if (coroutineRunning) return;
+        if (commandsRunning) return;
         StartCoroutine(RunCommands());
     }
 
@@ -230,11 +243,10 @@ public class ValidateController : MonoBehaviour
         _consoleLog = "";
         consoleTxt.text = "";
         loadingLog.SetActive(true);
-        coroutineRunning = true;
+        commandsRunning = true;
         yield return StartCoroutine(UpdateBlocks(blocksParent));
         blocksPlaced = false;
         yield return StartCoroutine(CheckBlocksPlaced(blocksParent));
-        coroutineRunning = false;
 
         if (!blocksPlaced) yield break;
 
@@ -242,6 +254,7 @@ public class ValidateController : MonoBehaviour
             yield return WaitForProcessToFinish();
         }
 
+        commandsRunning = false;
         loadingLog.SetActive(false);
 
         if (!errorDetected) {
@@ -260,8 +273,11 @@ public class ValidateController : MonoBehaviour
     }
 
     public void CancelExecute() {
+        loadingLog.SetActive(false);
         consoleTxt.text = "";
         variableInputPanel.SetActive(false);
+        errorDetected = true;
+        processWait = false;
     }
 
     public void SubmitBlocks() {
