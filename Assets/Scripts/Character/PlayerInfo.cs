@@ -38,9 +38,6 @@ public class PlayerInfo : MonoBehaviour
     }
 
     private void Update() {
-        // For testing
-        if (Input.GetKey(KeyCode.N)) DataManager.AddExp(50);
-
         if (DataManager.GetExp() == _currentExp) return;
 
         _currentExp = DataManager.GetExp();

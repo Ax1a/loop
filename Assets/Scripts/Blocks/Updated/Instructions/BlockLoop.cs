@@ -4,13 +4,17 @@ using UnityEngine;
 
 public class BlockLoop : BlockDrag
 {
+    [Header ("Objects")]
     public GameObject dropBlock;
     public GameObject childContainer;
+    [Header ("Settings")]
     [SerializeField] private int maxLoop = 50;
     [SerializeField] private LoopType loopType;
+    [Header ("Answers")]
+    [SerializeField] private int loopCountAnswer;
+    [SerializeField] private int ctr = 0;
     private enum LoopType { While, DoWhile }
     private int childCount;
-    private int ctr = 0;
     private BlockDrag blockDrag = null;
 
 
@@ -33,31 +37,6 @@ public class BlockLoop : BlockDrag
             yield return UpdateBlocks(child);
         }
     }
-    
-    // public void LoopChildBlocks() {
-    //     if (childContainer.transform.childCount > 0) {
-
-    //         foreach (Transform child in childContainer.transform) {
-    //             BlockDrag blockDragChild = child.GetComponent<BlockDrag>();
-    //             BlockOperator blockOperator = child.GetComponent<BlockOperator>();
-    //             if (blockOperator != null) {
-    //                 blockOperator.IncrementValue();
-    //             }                
-
-    //             if (blockDragChild != null && blockDragChild.printConsole) {
-    //                 // Debug.Log(child.name + " " + blockDragChild.consoleValue);
-    //                 validationManager._consoleLog += blockDragChild.consoleValue + "\n";
-    //             }
-    //         }
-    //         BlockOperator headerOperator = dropBlock.transform.GetChild(0).GetComponent<BlockOperator>();
-    //         if (headerOperator != null) {
-    //             headerOperator.ExecuteOperator();
-    //         }
-    //         CheckHeaderOperator();
-    //     }
-
-    //     ctr++;
-    // }
 
     public IEnumerator LoopChildBlocks(Transform childContainer) {
         if (childContainer.transform.childCount > 0) {
@@ -73,7 +52,13 @@ public class BlockLoop : BlockDrag
                 if (child.GetComponent<BlockDrag>() != null) {
                     BlockDrag blockDragChild = child.GetComponent<BlockDrag>();
                     BlockOperator blockOperator = child.GetComponent<BlockOperator>();
-                    
+                    BlockOneDrop blockOneDrop = child.GetComponent<BlockOneDrop>();
+
+                    if (blockDragChild.error) {
+                        validationManager.errorDetected = true;
+                        break;
+                    }
+
                     if (child.name.StartsWith("C_IfCondition") && !blockDragChild.consoleValue.ToLower().Equals("true") ||
                         child.name.StartsWith("J_IfCondition") && !blockDragChild.consoleValue.ToLower().Equals("true") ||
                         child.name.StartsWith("P_IfCondition") && !blockDragChild.consoleValue.ToLower().Equals("true"))
@@ -82,9 +67,22 @@ public class BlockLoop : BlockDrag
                     }
 
                     if (blockOperator != null) {
-                        blockOperator.IncrementValue();
+                        StartCoroutine(blockOperator.IncrementValue());
                     }
 
+                    // if (blockOneDrop != null && child.transform.name.StartsWith("C_CharInput")) {
+                    //     BlockVariable _blockVariable = blockOneDrop.dropBlock.transform.GetChild(0).GetComponent<BlockVariable>();
+                    //     BlockDrag _blockDrag = blockOneDrop.dropBlock.transform.GetChild(0).GetComponent<BlockDrag>();
+
+                    //     if (_blockVariable != null) {
+                    //         validationManager.AskForInput(_blockVariable);
+                    //         processWait = true;
+                    //         yield return WaitForProcessToFinish();
+                    //     }
+                    //     else if (_blockDrag != null && _blockDrag.consoleValue.Length != 0 && _blockDrag.printConsole) {
+                    //         _blockDrag.consoleValue = "";
+                    //     }
+                    // }
                     if (blockDragChild.printConsole && blockDragChild.blockType == BlockType.Type1) {
                         validationManager._consoleLog += blockDragChild.consoleValue + "\n";
                     }
@@ -105,12 +103,11 @@ public class BlockLoop : BlockDrag
         CheckHeaderOperator();
         ctr = 0;
         if (loopType == LoopType.While) {
-            while (consoleValue == "true" && ctr < maxLoop) {
+            while (consoleValue == "true" && ctr < maxLoop && !validationManager.errorDetected) {
                 yield return StartCoroutine(UpdateBlocks(childContainer.transform));
                 yield return new WaitForSeconds(0.1f);
                 yield return StartCoroutine(LoopChildBlocks(childContainer.transform));
                 yield return new WaitForSeconds(0.1f);
-                Debug.Log(consoleValue);
                 ctr++;
             }
         }
@@ -120,36 +117,36 @@ public class BlockLoop : BlockDrag
                 yield return new WaitForSeconds(0.1f);
                 yield return StartCoroutine(LoopChildBlocks(childContainer.transform));
                 yield return new WaitForSeconds(0.1f);
-                Debug.Log(consoleValue);
                 ctr++;
             }
-            while (consoleValue == "true" && ctr < maxLoop);
+            while (consoleValue == "true" && ctr < maxLoop && !validationManager.errorDetected);
         }
 
         // Remove the last line from the console log
-        // string[] consoleLogLines = validationManager._consoleLog.Split('\n');
-        // if (consoleLogLines.Length > 1) {
-        //     validationManager._consoleLog = string.Join("\n", consoleLogLines, 0, consoleLogLines.Length - 2);
-        //     validationManager._consoleLog += "\n";
-        // }
         
+        inputChanged = true;
         StartCoroutine(validationManager.DelayDisable());
     }
 
     private void CheckHeaderOperator() {
-        blockDrag = dropBlock.transform.GetChild(0)?.GetComponent<BlockDrag>();
+        if (dropBlock.transform.childCount > 0) {
+            blockDrag = dropBlock.transform.GetChild(0)?.GetComponent<BlockDrag>();
 
-        if (blockDrag.consoleValue == "true") {
-            consoleValue = "true";
+            if (blockDrag.consoleValue == "true") {
+                consoleValue = "true";
+            }
+            else {
+                consoleValue = "false";
+            }
         }
         else {
-            consoleValue = "false";
+            error = true;
         }
     }
 
     public override void BlockValidation()
     {
-        if (_dropZone == null || instantiate || inputChanged) return; // Don't check the validation when not on the drop block
+        if (_dropZone == null || instantiate || !inputChanged) return; // Don't check the validation when not on the drop block
         if (dropBlock.transform.childCount == 0) return;
 
         CheckHeaderOperator();
@@ -158,28 +155,16 @@ public class BlockLoop : BlockDrag
         {
             if (dropID == id)
             {
-                if (consoleValue != ""){
-                    // StartCoroutine(DelayLoop());
-                    // return;
+                if (!addedPoints && loopCountAnswer == ctr)
+                {
+                    validationManager.AddPoints(1);
+                    addedPoints = true;
                 }
-                // if (addConsoleValue) consoleValue = inputField.text;
-
-                // if (ValidateInput())
-                // {
-                    if (!addedPoints)
-                    {
-                        validationManager.AddPoints(1);
-                        addedPoints = true;
-                    }
-                // }
-                // else
-                // {
-                    // if (addedPoints)
-                    // {
-                    //     validationManager.ReducePoints(1);
-                    //     addedPoints = false;
-                    // }
-                // }
+                else if (addedPoints && loopCountAnswer != ctr)
+                {
+                    validationManager.ReducePoints(1);
+                    addedPoints = false;
+                }
                 inputChanged = false;
                 return;
             }

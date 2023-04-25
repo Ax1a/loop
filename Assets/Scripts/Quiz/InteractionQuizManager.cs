@@ -241,4 +241,16 @@ public class InteractionQuizManager : MonoBehaviour
             }
         }
     }
+
+    // For presentation
+    public void ActivateAllInteractionQuiz() {
+        for (int i = 0; i < interactionQuizPanels.Count; i++)
+        {
+            InteractionQuiz info = _interactionData[i];
+            info.isActive = true;
+            DataManager.ActivateInteractionQuiz(i);
+            FillLanguageButtons();
+            SaveGame.Instance.SaveGameState();
+        }
+    }
 }
