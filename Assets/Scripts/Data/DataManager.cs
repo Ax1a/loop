@@ -303,7 +303,9 @@ public static class DataManager
         {
             playerData.programmingLanguage[key] += 1;
             Debug.Log("Added progress to: " + key);
-            ShopCourse.Instance._checkedState = false;
+            if (ShopCourse.Instance != null) {
+                ShopCourse.Instance._checkedState = false;
+            }
             SavePlayerData();
         }
     }
@@ -313,7 +315,9 @@ public static class DataManager
         foreach (var key in playerData.programmingLanguage.Keys.ToList())
         {
             playerData.programmingLanguage[key] = 10;
-            ShopCourse.Instance._checkedState = false;
+            if (ShopCourse.Instance != null) {
+                ShopCourse.Instance._checkedState = false;
+            }
             SavePlayerData();
         }
     }
