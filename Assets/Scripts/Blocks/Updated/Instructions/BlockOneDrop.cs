@@ -33,12 +33,6 @@ public class BlockOneDrop : BlockDrag
 
     }
 
-    // // Function to check if input or dropdown changes
-    // // This prevents the block validation for always checking
-    // private void OnInputFieldValueChanged(string newValue)
-    // {
-    //     inputChanged = true;
-    // }
     public override void Update() {
         base.Update();
         
@@ -69,29 +63,25 @@ public class BlockOneDrop : BlockDrag
             {
                 error = false;
                 if (dropBlock.transform.childCount > 0) {
-                    // if (blockType == BlockType.Type2) {
-                        BlockDrag blockDrag = dropBlock.transform.GetChild(0).GetComponent<BlockDrag>();
-                        if (blockDrag != null && blockDrag.consoleValue != consoleValue) {
-                            consoleValue = blockDrag.consoleValue;
+                    BlockDrag blockDrag = dropBlock.transform.GetChild(0).GetComponent<BlockDrag>();
+                    BlockVariable blockVariable = dropBlock.transform.GetChild(0).GetComponent<BlockVariable>();
+                    BlockOperator blockOperator = _dropZone.transform.parent.GetComponent<BlockOperator>();
+                    if (blockVariable != null) {
+                        if (blockVariable.declared) {
+                            consoleValue = blockDrag.consoleValue;    
+                            error = false;
                         }
-                    // }
-                    // else if (blockType == BlockType.Type1) {
-                        // BlockDrag blockDrag = dropBlock.transform.GetChild(0).GetComponent<BlockDrag>();
-                        // if (blockDrag != null && blockDrag.consoleValue.Length != 0 && blockDrag.consoleValue != consoleValue) {
-                        //     consoleValue = blockDrag.consoleValue;
-                        // }
-                        // else if (gameObject.name.StartsWith("CharInput")) {
-                        //     BlockVariable blockVariable = dropBlock.transform.GetChild(0).GetComponent<BlockVariable>();
-                        //     BlockInput blockInput = dropBlock.transform.GetChild(0).GetComponent<BlockInput>();
-
-                        //     if (blockVariable != null) {
-                        //         validationManager.AskForInput(blockVariable);
-                        //     }
-                        //     else if (blockInput != null && blockInput.consoleValue.Length != 0) {
-                        //         blockInput.consoleValue = "";
-                        //     }
-                        // }
-                    // }
+                        else if (blockOperator != null && blockOperator.IsCreateVariable()){
+                            error = false;
+                        }
+                        else {
+                            error = true;
+                        }
+                    }
+                    else if (blockDrag != null && blockDrag.consoleValue != consoleValue) {
+                        consoleValue = blockDrag.consoleValue;
+                        error = false;
+                    }
                 }
                 else {
                     inputChanged = false;

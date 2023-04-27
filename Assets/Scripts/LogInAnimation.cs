@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
+using System.Text;
 
 public class LogInAnimation : MonoBehaviour
 {
@@ -29,10 +30,12 @@ public class LogInAnimation : MonoBehaviour
         desktopScreen.SetActive(false);
         logInPanel.SetActive(true);
         passwordText.text = "";
-
+        
+        StringBuilder passwordBuilder = new StringBuilder();
         for (int i = 0; i < 8; i++)
         {
-            passwordText.text += "*";
+            passwordBuilder.Append("*");
+            passwordText.text = passwordBuilder.ToString();
             yield return new WaitForSeconds(typingSpeed);
         }
 

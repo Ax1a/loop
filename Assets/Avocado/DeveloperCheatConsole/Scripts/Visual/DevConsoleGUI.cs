@@ -13,10 +13,8 @@ namespace Avocado.DeveloperCheatConsole.Scripts.Visual {
         protected bool _inputFocus;
         
         private void Awake() {
-#if UNITY_EDITOR
             _console = DeveloperConsole.Instance;
             GenerateCommands();
-#endif
         }
         
         private void GenerateCommands() {
@@ -24,9 +22,7 @@ namespace Avocado.DeveloperCheatConsole.Scripts.Visual {
         }
         
         private void OnGUI() {
-#if UNITY_EDITOR
             DrawGUI();
-#endif
         }
         
         protected void OnReturn() {

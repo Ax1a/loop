@@ -4,6 +4,7 @@ using UnityEngine;
 using RotaryHeart.Lib.SerializableDictionary;
 using System.Linq;
 using TMPro;
+using System;
 
 public class BlockVariable : BlockDrag
 {
@@ -26,10 +27,11 @@ public class BlockVariable : BlockDrag
     [SerializeField] private StringVariableArr _defStringArray;
     [SerializeField] private StringVariable _defStringVar;
     [SerializeField] private IntVariable _defIntVar;
+    public bool declared = false, forLoopVar = false;
 
     public override void Start() {
         base.Start();
-
+        if (forLoopVar) declared = true;
         variableArrayIndex.onValueChanged.AddListener(OnInputFieldValueChanged);
         if (_intArray.Count() > 0) {
             _defIntArray.Clear();
@@ -80,6 +82,8 @@ public class BlockVariable : BlockDrag
         if (_intVar.Count() > 0) variableNameTxt.text = _intVar.Keys.First().ToString();
 
         if (origBlockVariable != null && !instantiate) {
+            declared = origBlockVariable.declared;
+            
             if (_intArray.Count() > 0) {
                 _intArray = origBlockVariable._intArray;
 
@@ -134,6 +138,27 @@ public class BlockVariable : BlockDrag
     private void OnInputFieldValueChanged(string newValue)
     {
         inputChanged = true;
+    }
+
+    private bool ValidateInput()
+    {
+        string[] answerLines = answer.Split(new string[] { "|" }, StringSplitOptions.None);
+        if (answerLines.Length > 1) {
+            foreach (var answer in answerLines)
+            {
+                if (consoleValue.ToLower() == answer.ToLower()) return true;
+            }
+
+            return false;
+        }
+
+        if (!string.IsNullOrEmpty(answer)) {
+            return consoleValue.ToLower() == answer.ToLower();
+        }
+        else {
+            return true;
+        }
+
     }
 
     public void SetDictionaryValue(string input) {
@@ -245,10 +270,13 @@ public class BlockVariable : BlockDrag
                     consoleValue = _intVar.Values.First().ToString();
                 }
 
-                if (!addedPoints && addPoints)
+                if (ValidateInput())
                 {
-                    validationManager.AddPoints(1);
-                    addedPoints = true;
+                    if (!addedPoints && addPoints)
+                    {
+                        validationManager.AddPoints(1);
+                        addedPoints = true;
+                    }
                 }
                 inputChanged = false;
                 return;
