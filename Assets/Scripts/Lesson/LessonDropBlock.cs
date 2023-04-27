@@ -106,6 +106,12 @@ public class LessonDropBlock : MonoBehaviour, IDropHandler
                 isCorrect = false; // set isCorrect back to false
                 Debug.Log("correct: " + isCorrect);
             }
+            else
+            {
+                LessonDragDropValidation.Instance.MinusPoints(); // deduct points for placing the block in the wrong place initially
+            }
+            isCorrect = false; // set isCorrect back to false
+            Debug.Log("correct: " + isCorrect);
         }
     }
 
