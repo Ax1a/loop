@@ -80,6 +80,36 @@ public class BlockOperator : BlockDrag
         return false;
     }
 
+    public bool IsCreateVariable() {
+        if (l_blockDropScript == null || r_blockDropScript == null) return false;
+
+        int operationValue = operation.value;
+        if (operation.options[operationValue].text == "=") {
+            return true;
+        }
+        return false;
+    }
+
+    public void DeclareVariable() {
+        CheckDropBlockValue();
+        if (l_blockDropScript == null || r_blockDropScript == null) return;
+
+        int operationValue = operation.value;
+        if (operation.options[operationValue].text == "=") {
+            if (l_dropBlock?.transform.GetChild(0)?.transform.GetChild(0)?.childCount > 0) {
+                BlockVariable blockVariable = l_dropBlock.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).GetComponent<BlockVariable>();
+                if (blockVariable != null) {
+                    BlockVariable mainVar = blockVariable.originalObj.GetComponent<BlockVariable>();
+                    blockVariable.declared = true;
+
+                    if (mainVar != null) {
+                        mainVar.declared = true;
+                    }
+                }
+            }   
+        }
+    }
+
     // // Function to check if input or dropdown changes
     // // This prevents the block validation for always checking
     private void OnInputFieldValueChanged(string newValue)

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Computer : MonoBehaviour, Interactable
 {
     OpenPanel Open;
-    [SerializeField] GameObject _computer;
+    [SerializeField] GameObject _computerCanvas;
     [SerializeField] GameObject _hud;
     [SerializeField] GameObject _interactOverlay;
 
@@ -14,11 +14,6 @@ public class Computer : MonoBehaviour, Interactable
     public bool isOpened = false;
     bool _computerOpenedBefore; 
 
-    void Start ()
-    {
-        //For testing. Must remove
-        //PlayerPrefs.DeleteKey("ComputerOpenedBefore");
-    }
     public bool Interact(InteractObject interactor)
     {
         if (DataManager.GetTutorialProgress() >= 5) {
@@ -40,18 +35,18 @@ public class Computer : MonoBehaviour, Interactable
     }
 
     IEnumerator OpenPanelDelay() {
-        yield return new WaitForSeconds(.98f);
+        yield return new WaitForSeconds(.99f);
 
         isOpened = true;
-        Open = _computer.GetComponent<OpenPanel>();
-        Open._OpenPanel();
+        _computerCanvas.SetActive(true);
 
-        yield return new WaitForSeconds(3.3f);
-        
         _computerOpenedBefore = PlayerPrefs.GetInt("ComputerOpenedBefore", 0) == 1;
+        
         //checks if computer canvas is opened for the first time
         if(!_computerOpenedBefore)
         {
+            Debug.Log("test");
+            yield return new WaitForSeconds(3.3f);
             PlayerPrefs.SetInt("ComputerOpenedBefore", 1); 
             BotGuide.Instance.AddDialogue("Hello there! Welcome to your first time opening your computer in the game."); 
             BotGuide.Instance.AddDialogue("All programming lessons from your chosen language will be access in this computer!"); 

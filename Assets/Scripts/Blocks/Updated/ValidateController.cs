@@ -129,15 +129,21 @@ public class ValidateController : MonoBehaviour
         }
     }
 
-    private IEnumerator UpdateBlocks(Transform parent) {
+    private IEnumerator UpdateBlocks(Transform parent, bool onRun) {
         foreach (Transform child in parent)
         {
             BlockDrag blockDrag = child.GetComponent<BlockDrag>();
-            if (blockDrag != null) {
+            BlockVariable blockVariable = child.GetComponent<BlockVariable>();
+
+            if (blockVariable != null && onRun) {
+                blockVariable.declared = false;
+                blockVariable.inputChanged = true;
+            }
+            else if (blockDrag != null) {
                 blockDrag.inputChanged = true;
             }
 
-            yield return UpdateBlocks(child);
+            yield return UpdateBlocks(child, onRun);
         }
     }
 
@@ -179,7 +185,6 @@ public class ValidateController : MonoBehaviour
                     processWait = true;
                     yield return WaitForProcessToFinish();
                 }
-                
                 if (blockDrag.error) {
                     errorDetected = true;
                     break;
@@ -215,9 +220,10 @@ public class ValidateController : MonoBehaviour
                         }
                     }
                     else if (blockOperator != null) {
+                        blockOperator.DeclareVariable();
                         processWait = true;
                         yield return StartCoroutine(blockOperator.IncrementValue());
-                        yield return StartCoroutine(UpdateBlocks(blocksParent));
+                        yield return StartCoroutine(UpdateBlocks(blocksParent, false));
                         StartCoroutine(DelayDisable());
                         yield return WaitForProcessToFinish();
                     }
@@ -244,7 +250,7 @@ public class ValidateController : MonoBehaviour
         consoleTxt.text = "";
         loadingLog.SetActive(true);
         commandsRunning = true;
-        yield return StartCoroutine(UpdateBlocks(blocksParent));
+        yield return StartCoroutine(UpdateBlocks(blocksParent, true));
         blocksPlaced = false;
         yield return StartCoroutine(CheckBlocksPlaced(blocksParent));
 
@@ -344,6 +350,7 @@ public class ValidateController : MonoBehaviour
                 startPanel.SetActive(false);
                 winPanel.SetActive(false);
                 gameOverPanel.SetActive(false);
+                ResetBlocks();
 
                 if (!PlayerPrefs.HasKey("FirstInteract")) {
                     BotGuide.Instance.AddDialogue("Hello there! Let's put your block-building skills to the test and have some fun!");

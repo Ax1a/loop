@@ -6,12 +6,10 @@ namespace Avocado.DeveloperCheatConsole.Scripts.Visual {
         private float _commandDelayCurrent;
 
         private void Update() {
-#if UNITY_EDITOR
             _commandDelayCurrent -= Time.deltaTime;
             if (_commandDelayCurrent < 0) {
                 _commandDelayCurrent = 0;
             }
-#endif
         }
 
         protected override void HandleShowConsole() { 
