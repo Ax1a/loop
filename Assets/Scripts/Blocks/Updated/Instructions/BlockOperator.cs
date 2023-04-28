@@ -142,12 +142,19 @@ public class BlockOperator : BlockDrag
     public void CheckDropBlockValue() {
         if (l_dropBlock != null) {
             l_blockDropScript = l_dropBlock.transform.childCount > 0 ? l_dropBlock.transform.GetChild(0).GetComponent<BlockDrag>() : null;
+
+            if (l_blockDropScript != null) 
+                error = l_blockDropScript.error ? true : false;
         }
         else {
             l_blockDropScript = null;
         }
         if (r_dropBlock != null) {
             r_blockDropScript = r_dropBlock.transform.childCount > 0 ? r_dropBlock.transform.GetChild(0).GetComponent<BlockDrag>() : null;
+
+            if (r_blockDropScript != null) {
+                error = l_blockDropScript.error ? true : false;
+            }
         }
         else {
             r_blockDropScript = null;
@@ -312,6 +319,8 @@ public class BlockOperator : BlockDrag
                         
                     //     blockVariable.EnableVariableType();
                     // }
+                    blockVariable.AddNewElementToArray(r_blockDropScript.consoleValue);
+
                     blockVariable.SetDictionaryValue(r_blockDropScript.consoleValue);
                 }
             }

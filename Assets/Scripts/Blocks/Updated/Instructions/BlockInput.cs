@@ -68,8 +68,7 @@ public class BlockInput : BlockDrag
     private IEnumerator TypingCoroutine()
     {
         // Wait for the typing delay
-        yield return new WaitForSeconds(1);
-        Debug.Log("executed");
+        yield return new WaitForSeconds(.5f);
         // Execute your function here, passing the input field value as a parameter
         RefreshContentFitter((RectTransform)_environmentParent);
 

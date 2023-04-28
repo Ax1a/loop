@@ -155,9 +155,17 @@ public class ValidateController : MonoBehaviour
         foreach (Transform child in parent)
         {
             if (child.name.Equals("IfCondition")) {
+                if (child.parent.GetComponent<BlockDrag>().error) {
+                    errorDetected = true;
+                    break;
+                } 
                 if (child.parent.GetComponent<BlockDrag>()?.consoleValue == "false") continue;
             }
             else if (child.name.Equals("ElseCondition")) {
+                if (child.parent.GetComponent<BlockDrag>().error) {
+                    errorDetected = true;
+                    break;
+                } 
                 if (child.parent.GetComponent<BlockDrag>()?.consoleValue == "true") continue;
             }
 

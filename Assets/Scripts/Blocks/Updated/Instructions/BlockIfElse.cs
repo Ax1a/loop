@@ -36,11 +36,11 @@ public class BlockIfElse : BlockDrag
         if (_dropZone == null) return; // Don't check the validation when not on the drop block
         if (dropBlock.transform.childCount == 0 || !inputChanged) return;
 
-        if (blockDrag?.consoleValue == "true") {
+        if (blockDrag?.consoleValue == "true" && !blockDrag.error) {
             error = false;
             consoleValue = "true";
         }
-        else if (blockDrag?.consoleValue == "false") {
+        else if (blockDrag?.consoleValue == "false" && !blockDrag.error) {
             error = false;
             consoleValue = "false";
         }

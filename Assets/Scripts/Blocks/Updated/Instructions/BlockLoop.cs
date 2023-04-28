@@ -43,9 +43,17 @@ public class BlockLoop : BlockDrag
             // yield return StartCoroutine(UpdateBlocks(childContainer));
             foreach (Transform child in childContainer) {
                 if (child.name.Equals("IfCondition")) {
+                    if (child.parent.GetComponent<BlockDrag>().error) {
+                        validationManager.errorDetected = true;
+                        break;
+                    } 
                     if (child.parent.GetComponent<BlockDrag>()?.consoleValue == "false") continue;
                 }
                 else if (child.name.Equals("ElseCondition")) {
+                    if (child.parent.GetComponent<BlockDrag>().error) {
+                        validationManager.errorDetected = true;
+                        break;
+                    } 
                     if (child.parent.GetComponent<BlockDrag>()?.consoleValue == "true") continue;
                 }
                 
