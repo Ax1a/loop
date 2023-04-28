@@ -11,13 +11,15 @@ public class QuizManager : MonoBehaviour
     #region Private Variables
     private QuestAndAns currentQuestion;
     int _totalQuestions = 0;
-    int _questionIndex;
     int _energy;
     private string _currentCourse;
     [SerializeField] private Courses course;
     [SerializeField] private Image questionImage;
     [SerializeField] private GameObject questionImageButton;
     [SerializeField] private string questStringProgress;
+    [SerializeField] private LessonsLevelManager levelManager;
+    private bool started = false;
+    GameObject startPanel;
     quizTimer timer;
     //bool isComplete = false;
 
@@ -31,14 +33,13 @@ public class QuizManager : MonoBehaviour
     public GameObject gameOverPanel;
     public GameObject popUpImage;
     public GameObject winPanel;
-    GameObject startPanel;
     public TextMeshProUGUI[] scoreTxt;
     public TextMeshProUGUI[] rewardTxt;
     [HideInInspector] public int scoreCount;
     public static QuizManager Instance;
     public GameObject[] rewardsPanel;
     public int questionCount = 5;
-    [SerializeField] private LessonsLevelManager levelManager;
+    [HideInInspector] public int _questionIndex;
     #endregion
 
     #region Methods/Functions
@@ -48,6 +49,15 @@ public class QuizManager : MonoBehaviour
         {
             Instance = this;
         }
+    }
+
+    private void OnEnable() {
+        if (Instance != null)
+        {
+            Instance = this;
+        }
+
+        started = false;
     }
 
     public enum Courses {
@@ -112,6 +122,7 @@ public class QuizManager : MonoBehaviour
             timer.resetTime();
             SetCurrentQuestion(_questionIndex);
             Energy.Instance.UseEnergy(1);
+            started = true;
         }
         else
         {
@@ -120,7 +131,12 @@ public class QuizManager : MonoBehaviour
             return;
         }
     }
-    private void ShuffleQuestions()
+
+    public bool IsStarted() {
+        return started;
+    }
+
+    public void ShuffleQuestions()
     {
         int n = QnA.Count;
         while (n > 1)
@@ -192,7 +208,7 @@ public class QuizManager : MonoBehaviour
     {
         SetCurrentQuestion(_questionIndex);
     }
-    void SetCurrentQuestion(int questionIndex)
+    private void SetCurrentQuestion(int questionIndex)
     {
         // if (questionIndex >= QnA.Count)
         if (questionIndex >= questionCount)

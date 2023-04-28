@@ -220,6 +220,7 @@ public class ValidateController : MonoBehaviour
                         }
                     }
                     else if (blockOperator != null) {
+                        blockOperator.ExecuteAssignmentOperators();
                         blockOperator.DeclareVariable();
                         processWait = true;
                         yield return StartCoroutine(blockOperator.IncrementValue());

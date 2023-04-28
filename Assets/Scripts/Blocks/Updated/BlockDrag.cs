@@ -16,6 +16,7 @@ public class BlockDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     [HideInInspector] public bool addedPoints = false;
     [HideInInspector] public ValidateController validationManager;
     [HideInInspector] public bool inputChanged = true;
+    [HideInInspector] public Transform refreshParent = null;
      public bool error = false;
     [HideInInspector] public GameObject _currentDrag;
     [HideInInspector] public GameObject originalObj;
@@ -24,7 +25,6 @@ public class BlockDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public int id;
     [Header ("Settings")]
     public bool addPoints = false;
-    private Transform refreshParent = null;
     private bool deleteObject = false;
     private int siblingIndex = -1;
     private GameObject _shadow;

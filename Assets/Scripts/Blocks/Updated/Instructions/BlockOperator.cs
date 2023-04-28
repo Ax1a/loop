@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using TMPro;
+using System;
 
 public class BlockOperator : BlockDrag
 {
@@ -91,11 +92,11 @@ public class BlockOperator : BlockDrag
     }
 
     public void DeclareVariable() {
-        CheckDropBlockValue();
         if (l_blockDropScript == null || r_blockDropScript == null) return;
 
         int operationValue = operation.value;
         if (operation.options[operationValue].text == "=") {
+            CheckDropBlockValue();
             if (l_dropBlock?.transform.GetChild(0)?.transform.GetChild(0)?.childCount > 0) {
                 BlockVariable blockVariable = l_dropBlock.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).GetComponent<BlockVariable>();
                 if (blockVariable != null) {
@@ -104,6 +105,27 @@ public class BlockOperator : BlockDrag
 
                     if (mainVar != null) {
                         mainVar.declared = true;
+                    }
+                }
+            }   
+        }
+    }
+
+    public void PreDeclareVariable() {
+        if (l_blockDropScript == null || r_blockDropScript == null) return;
+
+        int operationValue = operation.value;
+        if (operation.options[operationValue].text == "=") {
+
+            if (l_dropBlock?.transform.GetChild(0)?.transform.GetChild(0)?.childCount > 0) {
+                BlockVariable blockVariable = l_dropBlock.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).GetComponent<BlockVariable>();
+                if (blockVariable != null) {
+                    if ((blockVariable.blockLanguage == BlockLanguage.C || blockVariable.blockLanguage == BlockLanguage.Python) && !blockVariable.preDeclare) {
+                        BlockVariable mainVar = blockVariable.originalObj.GetComponent<BlockVariable>();
+                        blockVariable.preDeclare = true;
+                        if (mainVar != null) mainVar.preDeclare = true;
+                        
+                        blockVariable.EnableVariableType();
                     }
                 }
             }   
@@ -135,8 +157,9 @@ public class BlockOperator : BlockDrag
     public override void BlockValidation()
     {
         CheckDropBlockValue();
+        if (_dropZone != null) PreDeclareVariable();
         if (_dropZone == null || !inputChanged) return; // Don't check the validation when not on the drop block
-
+        
         RefreshContentFitter((RectTransform)_environmentParent);
         ExecuteOperator();
 
@@ -268,71 +291,10 @@ public class BlockOperator : BlockDrag
         }
     }
 
-    public void ExecuteOperator() {
+    public void ExecuteAssignmentOperators() {
         int operationValue = operation.value;
         int l_value, r_value;
-
-        if (operation.options[operationValue].text == "+") {
-            l_dropBlock.SetActive(true);
-            r_dropBlock.SetActive(true);
-            if (l_blockDropScript == null || r_blockDropScript == null) return;
-
-            if (int.TryParse(l_blockDropScript.consoleValue, out l_value) && int.TryParse(r_blockDropScript.consoleValue, out r_value)) {
-                int sum = l_value + r_value;
-                consoleValue = sum.ToString();
-            }
-            else {
-                string concat = l_blockDropScript.consoleValue + r_blockDropScript.consoleValue;
-                consoleValue = concat;
-                if (l_dropBlock?.transform.GetChild(0)?.transform.GetChild(0)?.childCount > 0) {
-                    BlockVariable blockVariable = l_dropBlock.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).GetComponent<BlockVariable>();
-                    if (blockVariable != null) {
-                        blockVariable.SetDictionaryValue(concat);
-                    }
-                }
-            }
-        }
-        else if (operation.options[operationValue].text == "-") {
-            l_dropBlock.SetActive(true);
-            r_dropBlock.SetActive(true);
-            if (l_blockDropScript == null || r_blockDropScript == null) return;
-            
-            if (int.TryParse(l_blockDropScript.consoleValue, out l_value) && int.TryParse(r_blockDropScript.consoleValue, out r_value)) {
-                int difference = l_value - r_value;
-                consoleValue = difference.ToString();
-            }
-        }
-        else if (operation.options[operationValue].text == "*") {
-            l_dropBlock.SetActive(true);
-            r_dropBlock.SetActive(true);
-            if (l_blockDropScript == null || r_blockDropScript == null) return;
-            
-            if (int.TryParse(l_blockDropScript.consoleValue, out l_value) && int.TryParse(r_blockDropScript.consoleValue, out r_value)) {
-                int product = l_value * r_value;
-                consoleValue = product.ToString();
-            }
-        }
-        else if (operation.options[operationValue].text == "/") {
-            l_dropBlock.SetActive(true);
-            r_dropBlock.SetActive(true);
-            if (l_blockDropScript == null || r_blockDropScript == null) return;
-
-            if (int.TryParse(l_blockDropScript.consoleValue, out l_value) && int.TryParse(r_blockDropScript.consoleValue, out r_value)) {
-                int quotient = l_value / r_value;
-                consoleValue = quotient.ToString();
-            }
-        }
-        else if (operation.options[operationValue].text == "%") {
-            l_dropBlock.SetActive(true);
-            r_dropBlock.SetActive(true);
-            if (l_blockDropScript == null || r_blockDropScript == null) return;
-
-            if (int.TryParse(l_blockDropScript.consoleValue, out l_value) && int.TryParse(r_blockDropScript.consoleValue, out r_value)) {
-                int remainder = l_value % r_value;
-                consoleValue = remainder.ToString();
-            }
-        }
-        else if (operation.options[operationValue].text == "=") {
+        if (operation.options[operationValue].text == "=") {
             l_dropBlock.SetActive(true);
             r_dropBlock.SetActive(true);
             if (l_blockDropScript == null || r_blockDropScript == null) return;
@@ -343,6 +305,13 @@ public class BlockOperator : BlockDrag
             if (l_dropBlock?.transform.GetChild(0)?.transform.GetChild(0)?.childCount > 0) {
                 BlockVariable blockVariable = l_dropBlock.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).GetComponent<BlockVariable>();
                 if (blockVariable != null) {
+                    // if ((blockVariable.blockLanguage == BlockLanguage.C || blockVariable.blockLanguage == BlockLanguage.Python) && !blockVariable.preDeclare) {
+                    //     BlockVariable mainVar = blockVariable.originalObj.GetComponent<BlockVariable>();
+                    //     blockVariable.preDeclare = true;
+                    //     if (mainVar != null) mainVar.preDeclare = true;
+                        
+                    //     blockVariable.EnableVariableType();
+                    // }
                     blockVariable.SetDictionaryValue(r_blockDropScript.consoleValue);
                 }
             }
@@ -448,6 +417,92 @@ public class BlockOperator : BlockDrag
                     int remainder = l_value % r_value;
                      blockVariable.SetDictionaryValue(remainder.ToString());
                 }
+            }
+        }
+    }
+
+    public void ExecuteOperator() {
+        int operationValue = operation.value;
+        int l_value, r_value;
+
+        if (operation.options[operationValue].text == "+") {
+            l_dropBlock.SetActive(true);
+            r_dropBlock.SetActive(true);
+            if (l_blockDropScript == null || r_blockDropScript == null) return;
+
+            if (int.TryParse(l_blockDropScript.consoleValue, out l_value) && int.TryParse(r_blockDropScript.consoleValue, out r_value)) {
+                int sum = l_value + r_value;
+                consoleValue = sum.ToString();
+            }
+            else {
+                string concat = l_blockDropScript.consoleValue + r_blockDropScript.consoleValue;
+                consoleValue = concat;
+                // if (l_dropBlock?.transform.GetChild(0)?.transform.GetChild(0)?.childCount > 0) {
+                //     BlockVariable blockVariable = l_dropBlock.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).GetComponent<BlockVariable>();
+                //     if (blockVariable != null) {
+                //         blockVariable.SetDictionaryValue(concat);
+                //     }
+                // }
+            }
+        }
+        else if (operation.options[operationValue].text == "-") {
+            l_dropBlock.SetActive(true);
+            r_dropBlock.SetActive(true);
+            if (l_blockDropScript == null || r_blockDropScript == null) return;
+            
+            if (int.TryParse(l_blockDropScript.consoleValue, out l_value) && int.TryParse(r_blockDropScript.consoleValue, out r_value)) {
+                int difference = l_value - r_value;
+                consoleValue = difference.ToString();
+            }
+        }
+        else if (operation.options[operationValue].text == "*") {
+            l_dropBlock.SetActive(true);
+            r_dropBlock.SetActive(true);
+            if (l_blockDropScript == null || r_blockDropScript == null) return;
+            
+            if (int.TryParse(l_blockDropScript.consoleValue, out l_value) && int.TryParse(r_blockDropScript.consoleValue, out r_value)) {
+                int product = l_value * r_value;
+                consoleValue = product.ToString();
+            }
+        }
+        else if (operation.options[operationValue].text == "**") {
+            l_dropBlock.SetActive(true);
+            r_dropBlock.SetActive(true);
+            if (l_blockDropScript == null || r_blockDropScript == null) return;
+            
+            if (int.TryParse(l_blockDropScript.consoleValue, out l_value) && int.TryParse(r_blockDropScript.consoleValue, out r_value)) {
+                double exponent = Math.Pow(l_value, r_value);
+                consoleValue = exponent.ToString();
+            }
+        }
+        else if (operation.options[operationValue].text == "/") {
+            l_dropBlock.SetActive(true);
+            r_dropBlock.SetActive(true);
+            if (l_blockDropScript == null || r_blockDropScript == null) return;
+
+            if (int.TryParse(l_blockDropScript.consoleValue, out l_value) && int.TryParse(r_blockDropScript.consoleValue, out r_value)) {
+                int quotient = l_value / r_value;
+                consoleValue = quotient.ToString();
+            }
+        }
+        else if (operation.options[operationValue].text == "//") {
+            l_dropBlock.SetActive(true);
+            r_dropBlock.SetActive(true);
+            if (l_blockDropScript == null || r_blockDropScript == null) return;
+
+            if (int.TryParse(l_blockDropScript.consoleValue, out l_value) && int.TryParse(r_blockDropScript.consoleValue, out r_value)) {
+                int floorDiv = Mathf.FloorToInt(l_value / r_value);
+                consoleValue = floorDiv.ToString();
+            }
+        }
+        else if (operation.options[operationValue].text == "%") {
+            l_dropBlock.SetActive(true);
+            r_dropBlock.SetActive(true);
+            if (l_blockDropScript == null || r_blockDropScript == null) return;
+
+            if (int.TryParse(l_blockDropScript.consoleValue, out l_value) && int.TryParse(r_blockDropScript.consoleValue, out r_value)) {
+                int remainder = l_value % r_value;
+                consoleValue = remainder.ToString();
             }
         }
         else if (operation.options[operationValue].text == "&&" || operation.options[operationValue].text == "and") {

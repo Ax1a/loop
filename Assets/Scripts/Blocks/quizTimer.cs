@@ -54,6 +54,9 @@ public class quizTimer : MonoBehaviour
 
     private void OnEnable() {
         if (interactionInfo != null) quizTitle.text = interactionInfo.data.quizTitle;
+        isStart = false;
+        startPanel.SetActive(true);
+        gameOverPanel.SetActive(false);
     }
     
     // Update is called once per frame    
@@ -61,22 +64,19 @@ public class quizTimer : MonoBehaviour
     {
         if (!isStart)
         {
-            // currTime = startingTime;
-            if (Energy.Instance.GetCurrentEnergy() > 0)
-            {
-                Energy.Instance.UseEnergy(1);
-                isStart = true;
-                // startPanel.transform.localScale = new Vector3(0, 0, 0);
-                startPanel.gameObject.SetActive(false);
-            }
-            else
-            {
-                Debug.Log("No Energy Left");
-                return;
+            QuizManager.Instance.Retry();
+
+            if (QuizManager.Instance.IsStarted()) {
+                startPanel.SetActive(false);
             }
         }
 
     }
+
+    private void OnDisable() {
+        isStart = false;
+    }
+
     public void stopTime()
     {
         //Check if timer is starting
