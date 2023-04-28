@@ -153,7 +153,7 @@ public class BlockOperator : BlockDrag
             r_blockDropScript = r_dropBlock.transform.childCount > 0 ? r_dropBlock.transform.GetChild(0).GetComponent<BlockDrag>() : null;
 
             if (r_blockDropScript != null) {
-                error = l_blockDropScript.error ? true : false;
+                error = r_blockDropScript.error ? true : false;
             }
         }
         else {

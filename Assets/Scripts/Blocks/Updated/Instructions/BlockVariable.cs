@@ -25,8 +25,6 @@ public class BlockVariable : BlockDrag
     
     // Store the default value for variables
     [Header ("Ignore")]
-    [SerializeField] private IntVariableArr _defIntArray;
-    [SerializeField] private StringVariableArr _defStringArray;
     [SerializeField] private StringVariable _defStringVar;
     [SerializeField] private IntVariable _defIntVar;
     public bool declared = false, preDeclare = false, forLoopVar = false;
@@ -39,20 +37,14 @@ public class BlockVariable : BlockDrag
 
         variableArrayIndex.onValueChanged.AddListener(OnInputFieldValueChanged);
         if (_intArray.Count() > 0) {
-            _defIntArray.Clear();
-            foreach (var val in _intArray) {
-                _defIntArray.Add(val.Key, val.Value);
-            }
             variableNameTxt.text = _intArray.Keys.First().ToString();
             variableArrayIndex.transform.parent.gameObject.SetActive(true);
+            if (blockLanguage == BlockLanguage.Python) variableArrayIndex.transform.parent.gameObject.SetActive(false);
         }
         else if (_stringArray.Count() > 0) {
-            _defStringArray.Clear();
-            foreach (var val in _stringArray) {
-                _defStringArray.Add(val.Key, val.Value);
-            }
             variableNameTxt.text = _stringArray.Keys.First().ToString();
             variableArrayIndex.transform.parent.gameObject.SetActive(true);
+            if (blockLanguage == BlockLanguage.Python) variableArrayIndex.transform.parent.gameObject.SetActive(false);
         }
         else if (_stringVar.Count() > 0) {
             _defStringVar.Clear();
@@ -109,8 +101,14 @@ public class BlockVariable : BlockDrag
     }
 
     public void EnableVariableType() {
-        if (variableType != null)
+        if (variableType != null && (blockLanguage == BlockLanguage.C || blockLanguage == BlockLanguage.Java)) {
             variableType.gameObject.SetActive(true);
+        }
+        else {
+            if (variableType != null) variableType.gameObject.SetActive(false);
+        }
+
+        variableArrayIndex.interactable = false;
         RefreshContentFitter((RectTransform)refreshParent);
     }
 
@@ -208,7 +206,9 @@ public class BlockVariable : BlockDrag
 
     public void AddNewElementToArray(string input) {
         if (_stringArray.Count > 0) {
-            string[] lines = input.Split(',').Select(s => s.Trim()).ToArray();
+            string[] lines = input.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                      .Select(s => s.Trim().Trim('\"'))
+                      .ToArray();
 
             for (int i = 0; i < lines.Length; i++)
             {
@@ -224,7 +224,22 @@ public class BlockVariable : BlockDrag
             }
         }
         else if (_intArray.Count > 0) {
+            string[] lines = input.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                      .Select(s => s.Trim().Trim('\"'))
+                      .ToArray();
 
+            for (int i = 0; i < lines.Length; i++)
+            {
+                // Get the StringValuesArr object associated with the key "myKey"
+                IntValuesArr valuesArr = _intArray[_intArray.Keys.FirstOrDefault()];
+
+                // Add a new element to the stringArr array
+                Array.Resize(ref valuesArr.intArr, valuesArr.intArr.Length + 1);
+                valuesArr.intArr[valuesArr.intArr.Length - 1] = Int32.Parse(lines[i]);
+
+                // Update the dictionary with the modified StringValuesArr object
+                _intArray[_intArray.Keys.FirstOrDefault()] = valuesArr;
+            }
         }
     }
 
@@ -235,11 +250,13 @@ public class BlockVariable : BlockDrag
                 consoleValue = input;
 
                 if (index > _intArray.First().Value.intArr.Length - 1) {
-                    _intArray.First().Value.intArr[index] = 0;
-                    if (originalObj != null) originalObj.GetComponent<BlockVariable>()._intArray.First().Value.intArr[index] = 0;
-                    Debug.Log("Array index out of bounds");
+                    consoleValue = "Array index out of bounds";
+                    // _intArray.First().Value.intArr[index] = 0;
+                    // if (originalObj != null) originalObj.GetComponent<BlockVariable>()._intArray.First().Value.intArr[index] = 0;
+                    error = true;
                 }
                 else {
+                    error = false;
                     _intArray.First().Value.intArr[index] = int.Parse(input);
                     if (originalObj != null) originalObj.GetComponent<BlockVariable>()._intArray.First().Value.intArr[index] = int.Parse(input);
                 }
@@ -251,10 +268,15 @@ public class BlockVariable : BlockDrag
                 consoleValue = input;
 
                 if (index > _stringArray.First().Value.stringArr.Length - 1) {
-                    _stringArray.First().Value.stringArr[index] = "Array index out of bounds";
-                    if (originalObj != null) originalObj.GetComponent<BlockVariable>()._stringArray.First().Value.stringArr[index] = "Array index out of bounds";
+                    consoleValue = "Array index out of bounds";
+                    error = true;
+                    // if (_stringArray.First().Value.stringArr.Length > 0)  {
+                    //     _stringArray.First().Value.stringArr[index] = "Array index out of bounds";
+                    //     if (originalObj != null) originalObj.GetComponent<BlockVariable>()._stringArray.First().Value.stringArr[index] = "Array index out of bounds";
+                    // }
                 }
                 else {
+                    error = false;
                     _stringArray.First().Value.stringArr[index] = input;
                     if (originalObj != null) originalObj.GetComponent<BlockVariable>()._stringArray.First().Value.stringArr[index] = input;
                 }
@@ -362,16 +384,10 @@ public class BlockVariable : BlockDrag
 
     private void ResetVariables() {
         if (_intArray.Count() > 0) {
-            _intArray.Clear();
-            foreach (var val in _defIntArray) {
-                _intArray.Add(val.Key, val.Value);
-            }
+            _intArray[_intArray.First().Key].intArr = new int[0];
         }
         if (_stringArray.Count() > 0) {
-            _stringArray.Clear();
-            foreach (var val in _defStringArray) {
-                _stringArray.Add(val.Key, val.Value);
-            }
+            _stringArray[_stringArray.First().Key].stringArr = new string[0];
         }
         if (_stringVar.Count() > 0) {
             _stringVar.Clear();

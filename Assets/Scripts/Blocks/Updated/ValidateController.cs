@@ -250,11 +250,25 @@ public class ValidateController : MonoBehaviour
     }
 
     public void ExecuteCommand() {
+        if (CheckIfEnvironmentIsEmpty()) return;
         if (commandsRunning) return;
         StartCoroutine(RunCommands());
     }
 
+    private bool CheckIfEnvironmentIsEmpty() {
+        if (blocksParent.childCount > 0) {
+            foreach (Transform child in blocksParent)
+            {
+                if (child.transform.childCount > 0) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     public IEnumerator RunCommands() {
+        resetBlocks = true;
         _consoleLog = "";
         consoleTxt.text = "";
         loadingLog.SetActive(true);
