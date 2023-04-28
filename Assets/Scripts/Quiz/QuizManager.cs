@@ -184,9 +184,6 @@ public class QuizManager : MonoBehaviour
             if (levelManager != null) {
                 levelManager.addReachedLesson();
             }
-
-            //to-do: should add level depending on the course they are taking
-            // DataManager.AddProgrammingLanguageProgress(levelManager.course);
         }
         else
         {

@@ -52,22 +52,10 @@ public class LessonsLevelManager : MonoBehaviour
             course = "java";
         }
     }
-
-    //for testing only 
-    //must remove in final build
-    public void resetLesonLevel()
-    {
-        DataManager.resetLevel();
-        _reachedLesson = 1;
-        UpdateLessonState();
-        Debug.Log("Level Reset");
-        Debug.Log("reached lesson" + _reachedLesson);
-
-    }
+    
     //function for adding level
     public void addReachedLesson()
     {
-        // DataManager.addReachedLesson();
         DataManager.AddProgrammingLanguageProgress(course);
 
         _reachedLesson++;
