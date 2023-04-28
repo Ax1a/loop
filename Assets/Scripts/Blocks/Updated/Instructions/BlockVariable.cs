@@ -8,13 +8,14 @@ using System;
 
 public class BlockVariable : BlockDrag
 {
+    [SerializeField] private VarTypes varType;
+    [Space (10)]
     public string answer;
     [Header ("Variable Attribute | One Only")]
     [SerializeField] public IntVariableArr _intArray;
     [SerializeField] public StringVariableArr _stringArray;
     [SerializeField] public StringVariable _stringVar;
     [SerializeField] public IntVariable _intVar;
-    [SerializeField] private VarTypes varType;
 
     [Header ("Objects")]
     [SerializeField] private TextMeshProUGUI variableType;
@@ -34,6 +35,8 @@ public class BlockVariable : BlockDrag
     public override void Start() {
         base.Start();
         if (forLoopVar) declared = true;
+        SetVariableType();
+
         variableArrayIndex.onValueChanged.AddListener(OnInputFieldValueChanged);
         if (_intArray.Count() > 0) {
             _defIntArray.Clear();
@@ -74,24 +77,40 @@ public class BlockVariable : BlockDrag
     private void SetVariableType() {
         // Set variable type
         if (varType == VarTypes.Int) {
-            
+            if (variableType != null) {
+                if (blockLanguage == BlockLanguage.C) variableType.text = "int";
+                if (blockLanguage == BlockLanguage.Java) variableType.text = "int";
+            }
         }
         else if (varType == VarTypes.Float) {
-            
+            if (variableType != null) {
+                if (blockLanguage == BlockLanguage.C) variableType.text = "float";
+                if (blockLanguage == BlockLanguage.Java) variableType.text = "float";
+            }
         }
         else if (varType == VarTypes.Double) {
-            
+            if (variableType != null) {
+                if (blockLanguage == BlockLanguage.C) variableType.text = "double";
+                if (blockLanguage == BlockLanguage.Java) variableType.text = "double";
+            }
         }
         else if (varType == VarTypes.String) {
-            
+            if (variableType != null) {
+                if (blockLanguage == BlockLanguage.C) variableType.text = "string";
+                if (blockLanguage == BlockLanguage.Java) variableType.text = "String";
+            }
         }
         else if (varType == VarTypes.Bool) {
-            
+            if (variableType != null) {
+                if (blockLanguage == BlockLanguage.C) variableType.text = "bool";
+                if (blockLanguage == BlockLanguage.Java) variableType.text = "boolean";
+            }
         }
     }
 
     public void EnableVariableType() {
-        variableType.gameObject.SetActive(true);
+        if (variableType != null)
+            variableType.gameObject.SetActive(true);
         RefreshContentFitter((RectTransform)refreshParent);
     }
 
@@ -185,7 +204,28 @@ public class BlockVariable : BlockDrag
         else {
             return true;
         }
+    }
 
+    public void AddNewElementToArray(string input) {
+        if (_stringArray.Count > 0) {
+            string[] lines = input.Split(',').Select(s => s.Trim()).ToArray();
+
+            for (int i = 0; i < lines.Length; i++)
+            {
+                // Get the StringValuesArr object associated with the key "myKey"
+                StringValuesArr valuesArr = _stringArray[_stringArray.Keys.FirstOrDefault()];
+
+                // Add a new element to the stringArr array
+                Array.Resize(ref valuesArr.stringArr, valuesArr.stringArr.Length + 1);
+                valuesArr.stringArr[valuesArr.stringArr.Length - 1] = lines[i];
+
+                // Update the dictionary with the modified StringValuesArr object
+                _stringArray[_stringArray.Keys.FirstOrDefault()] = valuesArr;
+            }
+        }
+        else if (_intArray.Count > 0) {
+
+        }
     }
 
     public void SetDictionaryValue(string input) {
