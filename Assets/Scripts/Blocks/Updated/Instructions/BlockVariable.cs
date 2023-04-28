@@ -14,20 +14,22 @@ public class BlockVariable : BlockDrag
     [SerializeField] public StringVariableArr _stringArray;
     [SerializeField] public StringVariable _stringVar;
     [SerializeField] public IntVariable _intVar;
-
-    // Store the default value for variables
+    [SerializeField] private VarTypes varType;
 
     [Header ("Objects")]
+    [SerializeField] private TextMeshProUGUI variableType;
     [SerializeField] private TextMeshProUGUI variableNameTxt;
     [SerializeField] private TMP_InputField variableArrayIndex;
     [SerializeField] private BlockVariable origBlockVariable = null;
     
+    // Store the default value for variables
     [Header ("Ignore")]
     [SerializeField] private IntVariableArr _defIntArray;
     [SerializeField] private StringVariableArr _defStringArray;
     [SerializeField] private StringVariable _defStringVar;
     [SerializeField] private IntVariable _defIntVar;
-    public bool declared = false, forLoopVar = false;
+    public bool declared = false, preDeclare = false, forLoopVar = false;
+    private enum VarTypes { Int, Float, Double, String, Bool}
 
     public override void Start() {
         base.Start();
@@ -66,6 +68,31 @@ public class BlockVariable : BlockDrag
             variableNameTxt.text = _intVar.Keys.First().ToString();
         }
         inputChanged = true;
+        
+    }
+
+    private void SetVariableType() {
+        // Set variable type
+        if (varType == VarTypes.Int) {
+            
+        }
+        else if (varType == VarTypes.Float) {
+            
+        }
+        else if (varType == VarTypes.Double) {
+            
+        }
+        else if (varType == VarTypes.String) {
+            
+        }
+        else if (varType == VarTypes.Bool) {
+            
+        }
+    }
+
+    public void EnableVariableType() {
+        variableType.gameObject.SetActive(true);
+        RefreshContentFitter((RectTransform)refreshParent);
     }
 
 

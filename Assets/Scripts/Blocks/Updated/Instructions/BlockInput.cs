@@ -11,6 +11,7 @@ public class BlockInput : BlockDrag
     public TMP_InputField inputField;
     [Header ("Answer")]
     public string answer;
+    private Coroutine typingCoroutine;
 
     public override void Start() {
         base.Start();
@@ -54,6 +55,25 @@ public class BlockInput : BlockDrag
     private void OnInputFieldValueChanged(string newValue)
     {
         inputChanged = true;
+
+        // Cancel any previous typing coroutine
+        if (typingCoroutine != null)
+        {
+            StopCoroutine(typingCoroutine);
+        }
+
+        typingCoroutine = StartCoroutine(TypingCoroutine());
+    }
+
+    private IEnumerator TypingCoroutine()
+    {
+        // Wait for the typing delay
+        yield return new WaitForSeconds(1);
+        Debug.Log("executed");
+        // Execute your function here, passing the input field value as a parameter
+        RefreshContentFitter((RectTransform)_environmentParent);
+
+        typingCoroutine = null;
     }
 
     public override void BlockValidation()
