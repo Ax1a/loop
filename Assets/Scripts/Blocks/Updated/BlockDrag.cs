@@ -62,6 +62,7 @@ public class BlockDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             _currentDrag = gameObject;
         
         }
+        _currentDrag.SetActive(false);
         _currentDrag.transform.position = transform.position;
         _currentDrag.transform.localScale = transform.localScale;
         _currentDrag.transform.SetParent(_tempParent);
@@ -69,6 +70,7 @@ public class BlockDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         _currentDrag.GetComponent<CanvasGroup>().interactable = false;
         _currentDrag.GetComponent<CanvasGroup>().alpha = 0.6f;
         _currentDrag.GetComponent<BlockDrag>().instantiate = false;
+        _currentDrag.SetActive(true);
 
         if (_currentDrag.GetComponent<BlockDrag>()._dropZone != null) {
             Image dropZoneImage = _currentDrag.GetComponent<BlockDrag>()._dropZone.GetComponent<Image>();
