@@ -6,13 +6,16 @@ public class RoomChecker : MonoBehaviour
 {
     [SerializeField] string roomName;
     [SerializeField] Light[] lights;
+    [SerializeField] private GameObject character;
+    PlayerController _playerController;
 
     private void Start() {
         CameraManager.Instance.SetCurrentCamera("Camera");
+        _playerController = character.GetComponent<PlayerController>();
     }
 
     private void OnTriggerStay(Collider other) {
-        if(other.gameObject.name != "Player"){
+        if(other.gameObject.name != "Player" || _playerController.IsPanelActive()){
             return;
         }
         // Kitchen Camera

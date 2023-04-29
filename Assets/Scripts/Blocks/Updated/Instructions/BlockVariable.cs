@@ -38,13 +38,13 @@ public class BlockVariable : BlockDrag
         variableArrayIndex.onValueChanged.AddListener(OnInputFieldValueChanged);
         if (_intArray.Count() > 0) {
             variableNameTxt.text = _intArray.Keys.First().ToString();
-            variableArrayIndex.transform.parent.gameObject.SetActive(true);
-            if (blockLanguage == BlockLanguage.Python) variableArrayIndex.transform.parent.gameObject.SetActive(false);
+            if (blockLanguage == BlockLanguage.Java || blockLanguage == BlockLanguage.C) variableArrayIndex.transform.parent.gameObject.SetActive(true);
+            // if (blockLanguage == BlockLanguage.Python) variableArrayIndex.transform.parent.gameObject.SetActive(false);
         }
         else if (_stringArray.Count() > 0) {
             variableNameTxt.text = _stringArray.Keys.First().ToString();
-            variableArrayIndex.transform.parent.gameObject.SetActive(true);
-            if (blockLanguage == BlockLanguage.Python) variableArrayIndex.transform.parent.gameObject.SetActive(false);
+            if (blockLanguage == BlockLanguage.Java || blockLanguage == BlockLanguage.C) variableArrayIndex.transform.parent.gameObject.SetActive(true);
+            // if (blockLanguage == BlockLanguage.Python) variableArrayIndex.transform.parent.gameObject.SetActive(false);
         }
         else if (_stringVar.Count() > 0) {
             _defStringVar.Clear();
@@ -105,6 +105,7 @@ public class BlockVariable : BlockDrag
             variableType.gameObject.SetActive(true);
         }
         else {
+            if (variableArrayIndex != null) variableArrayIndex.transform.parent.gameObject.SetActive(false);
             if (variableType != null) variableType.gameObject.SetActive(false);
         }
 

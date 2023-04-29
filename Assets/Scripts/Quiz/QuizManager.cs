@@ -18,6 +18,7 @@ public class QuizManager : MonoBehaviour
     [SerializeField] private GameObject questionImageButton;
     [SerializeField] private string questStringProgress;
     [SerializeField] private LessonsLevelManager levelManager;
+    [SerializeField] private GameObject questGiver;
     private bool started = false;
     GameObject startPanel;
     quizTimer timer;
@@ -267,6 +268,12 @@ public class QuizManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         rewardsPanel[2].SetActive(true);
 
+        yield return new WaitForSeconds(.1f);
+        if (questGiver != null) {
+            questGiver.SetActive(true);
+            yield return new WaitForSeconds(0.1f);
+            questGiver.SetActive(false);
+        }
     }
 
     #endregion

@@ -120,7 +120,14 @@ public class BlockOperator : BlockDrag
             if (l_dropBlock?.transform.GetChild(0)?.transform.GetChild(0)?.childCount > 0) {
                 BlockVariable blockVariable = l_dropBlock.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).GetComponent<BlockVariable>();
                 if (blockVariable != null) {
-                    if ((blockVariable.blockLanguage == BlockLanguage.C || blockVariable.blockLanguage == BlockLanguage.Python) && !blockVariable.preDeclare) {
+                    if ((blockVariable.blockLanguage == BlockLanguage.C || blockVariable.blockLanguage == BlockLanguage.Java) && !blockVariable.preDeclare) {
+                        BlockVariable mainVar = blockVariable.originalObj.GetComponent<BlockVariable>();
+                        blockVariable.preDeclare = true;
+                        if (mainVar != null) mainVar.preDeclare = true;
+                        
+                        blockVariable.EnableVariableType();
+                    }
+                    else if (blockVariable.blockLanguage == BlockLanguage.Python && !blockVariable.preDeclare) {
                         BlockVariable mainVar = blockVariable.originalObj.GetComponent<BlockVariable>();
                         blockVariable.preDeclare = true;
                         if (mainVar != null) mainVar.preDeclare = true;
