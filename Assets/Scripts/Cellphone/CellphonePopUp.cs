@@ -15,6 +15,7 @@ public class CellphonePopUp : MonoBehaviour
     void Start ()
     {
         _playerController = Character.GetComponent<PlayerController>();
+        cellphone.gameObject.SetActive(false);
 
     }
     void Update ()
@@ -22,10 +23,12 @@ public class CellphonePopUp : MonoBehaviour
         if (_playerController.IsPanelActive()) return;
         if (Input.GetKeyDown(InputManager.Instance.openPhone) && !UIController.Instance.otherPanelActive())
         {
+            cellphone.gameObject.SetActive(true);
             cellphone.DOAnchorPos(Vector2.zero, animationDuration).SetEase(ease);
         }
         else if (Input.GetKeyUp(InputManager.Instance.closePhone))
         {
+            cellphone.gameObject.SetActive(false);
             cellphone.DOAnchorPos(new Vector2(0, -606), animationDuration).SetEase(ease);
         }
     }

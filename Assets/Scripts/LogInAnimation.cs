@@ -19,19 +19,20 @@ public class LogInAnimation : MonoBehaviour
     [Header("Params")]
     [SerializeField] private float typingSpeed = 0.5f;
     [SerializeField] private float animationDuration = 0.5f;
-    public static LogInAnimation Instance;
-
+    StringBuilder passwordBuilder;
     private Tween fadeTween;
+
     private void OnEnable() {
+        if (passwordBuilder == null) passwordBuilder = new StringBuilder();
+        desktopScreen.SetActive(false);
+        logInPanel.SetActive(true);
+        passwordText.text = "";
+
         StartCoroutine(PlayLoginAnimation());
     }
 
     IEnumerator PlayLoginAnimation() {
-        desktopScreen.SetActive(false);
-        logInPanel.SetActive(true);
-        passwordText.text = "";
-        
-        StringBuilder passwordBuilder = new StringBuilder();
+        yield return new WaitForSeconds(.3f);
         for (int i = 0; i < 8; i++)
         {
             passwordBuilder.Append("*");

@@ -5,8 +5,9 @@ using UnityEngine;
 public class ShutdownPC : MonoBehaviour
 {
     [SerializeField] private GameObject Panel;
-    [SerializeField] private GameObject _hud;
+    [SerializeField] private Canvas _hud;
     [SerializeField] GameObject compCamera;
+    [SerializeField] GameObject _mainCam;
     [SerializeField] GameObject computer;
     [SerializeField] GameObject loginAnimation;
     [SerializeField] GameObject[] screens;
@@ -36,9 +37,10 @@ public class ShutdownPC : MonoBehaviour
             loginAnimation.SetActive(true);
             UIController.Instance.SetPanelActive(false);
             compCamera.gameObject.SetActive(false);
+            _mainCam.SetActive(true);
 
             // Turn on main UI
-            _hud.gameObject.SetActive(true);
+            _hud.enabled = true;
         }
     }
 }

@@ -5,8 +5,9 @@ using UnityEngine;
 public class Computer : MonoBehaviour, Interactable
 {
     OpenPanel Open;
+    [SerializeField] GameObject _mainCam;
     [SerializeField] GameObject _computerCanvas;
-    [SerializeField] GameObject _hud;
+    [SerializeField] Canvas _hud;
     [SerializeField] GameObject _interactOverlay;
 
     [SerializeField] private string _prompt;
@@ -19,8 +20,9 @@ public class Computer : MonoBehaviour, Interactable
         if (DataManager.GetTutorialProgress() >= 5) {
             // Disable HUD (Fix error when disabled)
             _interactOverlay.SetActive(false);
-
-            // Enable the Camera
+            _hud.enabled = false;
+            _mainCam.SetActive(false);
+            // Enable the Computer Camera
             CameraManager.Instance.ToggleTransitionCamera("CameraComputer");
 
             // // Disable the Camera
@@ -35,7 +37,7 @@ public class Computer : MonoBehaviour, Interactable
     }
 
     IEnumerator OpenPanelDelay() {
-        yield return new WaitForSeconds(.99f);
+        yield return new WaitForSeconds(.96f);
 
         isOpened = true;
         _computerCanvas.SetActive(true);
