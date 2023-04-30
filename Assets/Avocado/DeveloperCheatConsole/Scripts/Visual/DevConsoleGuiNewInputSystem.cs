@@ -19,11 +19,15 @@ namespace Avocado.DeveloperCheatConsole.Scripts.Visual {
                     HandleEscape();
                 }
             }else if (keyboard.upArrowKey.wasPressedThisFrame) {
-                _input = _console.GetBufferCommand(false);
-                GUI.FocusControl("inputField");
+                if (_console.ShowConsole) {
+                    _input = _console.GetBufferCommand(false);
+                    GUI.FocusControl("inputField");
+                }
             }else if (keyboard.downArrowKey.wasPressedThisFrame) {
-                _input = _console.GetBufferCommand(true);
-                GUI.FocusControl("inputField");
+                if (_console.ShowConsole) {
+                    _input = _console.GetBufferCommand(true);
+                    GUI.FocusControl("inputField");
+                }
             }
 #endif
         }
