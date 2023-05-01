@@ -29,6 +29,7 @@ public class QuizManager : MonoBehaviour
 
     #region Public Variables
     public Animator robotAnimator;
+    public bool selectedAnswer = false;
     public List<QuestAndAns> QnA;
     public GameObject[] options;
     public TextMeshProUGUI text;

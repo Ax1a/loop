@@ -8,19 +8,14 @@ public class AnswerScript : MonoBehaviour
     public QuizManager quizManager;
     [SerializeField] private GameObject correctIndicator;
     [SerializeField] private GameObject wrongIndicator;
-    private bool animationDone = true;
-
-    private void Start() {
-        animationDone = true;
-    }
 
     public void Answer(){
-        if (!animationDone) return;
+        if (quizManager.selectedAnswer) return;
         StartCoroutine(AnimateChoice());
     }
 
     private IEnumerator AnimateChoice() {
-        animationDone = false;
+        quizManager.selectedAnswer = true;
         if(isCorrect){
             wrongIndicator.SetActive(false);
             correctIndicator.SetActive(true);
@@ -30,7 +25,7 @@ public class AnswerScript : MonoBehaviour
 
             correctIndicator.SetActive(false);
             quizManager.robotAnimator.SetBool("isCorrect", false);
-            animationDone = true;
+            quizManager.selectedAnswer = false;
             quizManager.Correct();
         }else{
             correctIndicator.SetActive(false);
@@ -41,7 +36,7 @@ public class AnswerScript : MonoBehaviour
 
             quizManager.robotAnimator.SetBool("isWrong", false);
             wrongIndicator.SetActive(false);
-            animationDone = true;
+            quizManager.selectedAnswer = false;
             quizManager.Wrong();
         }
     }
