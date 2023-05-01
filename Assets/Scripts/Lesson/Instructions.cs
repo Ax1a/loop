@@ -29,9 +29,12 @@ public class Instructions : MonoBehaviour
     }
     public void Instruction()
     {
-        if (isActive)
+        if (instruction != "")
         {
-            NPCCall(instruction);
+            if (isActive)
+            {
+                NPCCall(instruction);
+            }
         }
     }
     void NPCCall(string message)
