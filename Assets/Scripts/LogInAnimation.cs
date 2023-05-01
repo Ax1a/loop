@@ -27,6 +27,7 @@ public class LogInAnimation : MonoBehaviour
         desktopScreen.SetActive(false);
         logInPanel.SetActive(true);
         passwordText.text = "";
+        passwordBuilder.Clear();
 
         StartCoroutine(PlayLoginAnimation());
     }

@@ -11,25 +11,44 @@ public class CellphonePopUp : MonoBehaviour
     [SerializeField] private GameObject Character;
     PlayerController _playerController;
     private bool _isActive;
+    private bool _applicationOpen;
+    Sequence sequence;
 
     void Start ()
     {
         _playerController = Character.GetComponent<PlayerController>();
         cellphone.gameObject.SetActive(false);
-
     }
     void Update ()
     {
-        if (_playerController.IsPanelActive()) return;
+        if (_playerController.IsPanelActive()) {
+            if (!_isActive || _applicationOpen) return;
+            if (sequence != null) {
+                sequence.Kill();
+            }
+            sequence = DOTween.Sequence();
+            sequence.Append(cellphone.DOAnchorPos(new Vector2(0, -606), animationDuration).SetEase(ease).OnComplete(() => cellphone.gameObject.SetActive(false)));
+
+            return;
+        }
         if (Input.GetKeyDown(InputManager.Instance.openPhone) && !UIController.Instance.otherPanelActive())
         {
+            if (sequence != null) {
+                sequence.Kill();
+            }
             cellphone.gameObject.SetActive(true);
-            cellphone.DOAnchorPos(Vector2.zero, animationDuration).SetEase(ease);
+            sequence = DOTween.Sequence();
+            sequence.Append(cellphone.DOAnchorPos(Vector2.zero, animationDuration).SetEase(ease));
+            _isActive = true;
         }
-        else if (Input.GetKeyUp(InputManager.Instance.closePhone))
+        else if (Input.GetKeyDown(InputManager.Instance.closePhone))
         {
-            cellphone.gameObject.SetActive(false);
-            cellphone.DOAnchorPos(new Vector2(0, -606), animationDuration).SetEase(ease);
+            if (sequence != null) {
+                sequence.Kill();
+            }
+            sequence = DOTween.Sequence();
+            sequence.Append(cellphone.DOAnchorPos(new Vector2(0, -606), animationDuration).SetEase(ease).OnComplete(() => cellphone.gameObject.SetActive(false)));
+            _isActive = true;
         }
     }
 
@@ -42,15 +61,15 @@ public class CellphonePopUp : MonoBehaviour
                 BotGuide.Instance.AddDialogue("From here, you can browse through the available quests and messages to see what interests you or needs your attention.");
                 BotGuide.Instance.ShowDialogue();
             }
-            _isActive = true;
+            _applicationOpen = true;
             applicationPanel.SetActive(true);
             UIController.Instance.SetPanelActive(true);
         }
         else 
         {
             UIController.Instance.SetPanelActive(false);
-            _isActive = false;
             applicationPanel.SetActive(false);
+            _applicationOpen = false;
         }
     }
 
