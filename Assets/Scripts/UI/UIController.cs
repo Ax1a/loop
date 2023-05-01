@@ -65,7 +65,7 @@ public class UIController : MonoBehaviour
         }
         if (BotGuide.Instance.guideIsActive()) return;
 
-        if(Input.GetKeyDown(InputManager.Instance.exit) && _anyActive == false){
+        if(Input.GetKeyDown(InputManager.Instance.exit)){
             ToggleUI("PauseMenu");
         }
         else if(Input.GetKeyDown(InputManager.Instance.shop)) {

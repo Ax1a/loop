@@ -19,6 +19,7 @@ public class QuizManager : MonoBehaviour
     [SerializeField] private string questStringProgress;
     [SerializeField] private LessonsLevelManager levelManager;
     [SerializeField] private GameObject questGiver;
+    [SerializeField] private GameObject robotObject;
     private bool started = false;
     GameObject startPanel;
     quizTimer timer;
@@ -27,6 +28,7 @@ public class QuizManager : MonoBehaviour
     #endregion
 
     #region Public Variables
+    public Animator robotAnimator;
     public List<QuestAndAns> QnA;
     public GameObject[] options;
     public TextMeshProUGUI text;
@@ -44,6 +46,15 @@ public class QuizManager : MonoBehaviour
     #endregion
 
     #region Methods/Functions
+    public enum Courses {
+        [DefaultValue("python")]
+        Python,
+        [DefaultValue("c++")]
+        C,
+        [DefaultValue("java")]
+        Java,
+    }
+
     private void Awake()
     {
         if (Instance == null)
@@ -59,15 +70,11 @@ public class QuizManager : MonoBehaviour
         }
 
         started = false;
+        robotObject.SetActive(true);
     }
 
-    public enum Courses {
-        [DefaultValue("python")]
-        Python,
-        [DefaultValue("c++")]
-        C,
-        [DefaultValue("java")]
-        Java,
+    private void OnDisable() {
+        robotObject.SetActive(false);
     }
 
     // Start is called before the first frame update
@@ -79,8 +86,6 @@ public class QuizManager : MonoBehaviour
         quizPanel.SetActive(true);
         timer = GetComponent<quizTimer>();
         _energy = Energy.Instance.GetCurrentEnergy();
-        // if (questionImageButton != null) questionImageButton.SetActive(false);
-
 
         // Get the default value for the selected enum option
         DefaultValueAttribute[] attributes = (DefaultValueAttribute[])course.GetType().GetField(course.ToString()).GetCustomAttributes(typeof(DefaultValueAttribute), false);

@@ -101,6 +101,23 @@ public class QuestManager : MonoBehaviour
         QuestUI.Instance.activeQuest.AddRange(currentQuestList);
     }
 
+    // The declined quest will not be available again.
+    public void DeclineQuest(int questID) {
+        for (int i = 0; i < GetCurrentQuestCount(); i++) {
+            if (currentQuestList[i].id == questID && currentQuestList[i].progress == Quest.QuestProgress.ACCEPTED) {
+                currentQuestList[i].progress = Quest.QuestProgress.NOT_AVAILABLE;
+                for (int j = 0; j < currentQuestList[i].questObjectiveCount.Length; j++)
+                {
+                    currentQuestList[i].questObjectiveCount[j] = 0;
+                }
+            }
+        }
+
+        DataManager.CurrentQuests = currentQuestList;
+        QuestUI.Instance.activeQuest.Clear();
+        QuestUI.Instance.activeQuest.AddRange(currentQuestList);
+    }
+
     // Give up quest based on the id 
     public void GiveUpQuest(int questID) {
         for (int i = 0; i < GetCurrentQuestCount(); i++) {

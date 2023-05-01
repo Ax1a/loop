@@ -27,6 +27,8 @@ public class InboxManager : MonoBehaviour
     }
     
     private void OnEnable() {
+        acceptButton.gameObject.SetActive(false);
+        declineButton.gameObject.SetActive(false);
         FillInboxButtons();
     }
 
@@ -65,6 +67,8 @@ public class InboxManager : MonoBehaviour
         foreach (var item in DataManager.QuestList)
         {
             if (item.id == id) {
+                acceptButton.gameObject.SetActive(true);
+                declineButton.gameObject.SetActive(true);
                 title.text = item.title;
                 description.text = item.description;
                 npcName.text = "- " + item.npcName;
@@ -73,6 +77,8 @@ public class InboxManager : MonoBehaviour
 
                 acceptButton.onClick.RemoveAllListeners();
                 acceptButton.onClick.AddListener(() => AcceptSideQuest(item));
+                declineButton.onClick.RemoveAllListeners();
+                declineButton.onClick.AddListener(() => DeclineSideQuest(item));
             }
         }
     }
@@ -80,6 +86,10 @@ public class InboxManager : MonoBehaviour
     private void AcceptSideQuest(Quest quest) {
         QuestManager.Instance.AcceptQuest(quest.id);
         QuestUI.Instance.ShowNewQuestBanner(quest.title, quest.questType);
+    }
+
+    private void DeclineSideQuest(Quest quest) {
+        QuestManager.Instance.DeclineQuest(quest.id);
     }
 
     private void ClearData() {
