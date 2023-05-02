@@ -19,7 +19,7 @@ public class CellphonePopUp : MonoBehaviour
         _playerController = Character.GetComponent<PlayerController>();
         cellphone.gameObject.SetActive(false);
     }
-    void Update ()
+    void LateUpdate ()
     {
         if (_playerController.IsPanelActive()) {
             if (!_isActive || _applicationOpen) return;
