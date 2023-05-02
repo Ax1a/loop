@@ -48,7 +48,6 @@ public class BlockDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public virtual void Update() {
         BlockValidation();
     }
-
     public void OnBeginDrag(PointerEventData eventData)
     {
         if (validationManager.commandsRunning) return;
@@ -123,6 +122,7 @@ public class BlockDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         
         if (isOverDropZone)
         {
+            AudioManager.Instance.PlaySfx("Pop");
             BlockDrag blockDrag = _currentDrag.GetComponent<BlockDrag>();
             
             if (blockDrag._dropZone != null) {

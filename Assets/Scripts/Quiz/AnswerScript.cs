@@ -9,25 +9,31 @@ public class AnswerScript : MonoBehaviour
     [SerializeField] private GameObject correctIndicator;
     [SerializeField] private GameObject wrongIndicator;
 
-    public void Answer(){
+    public void Answer()
+    {
         if (quizManager.selectedAnswer) return;
         StartCoroutine(AnimateChoice());
     }
 
-    private IEnumerator AnimateChoice() {
+    private IEnumerator AnimateChoice()
+    {
         quizManager.selectedAnswer = true;
-        if(isCorrect){
+        if (isCorrect)
+        {
             wrongIndicator.SetActive(false);
             correctIndicator.SetActive(true);
             quizManager.robotAnimator.SetBool("isCorrect", true);
-
+            AudioManager.Instance.PlaySfx("Correct");
             yield return new WaitForSeconds(.85f);
 
             correctIndicator.SetActive(false);
             quizManager.robotAnimator.SetBool("isCorrect", false);
             quizManager.selectedAnswer = false;
             quizManager.Correct();
-        }else{
+        }
+        else
+        {
+            AudioManager.Instance.PlaySfx("Wrong");
             correctIndicator.SetActive(false);
             wrongIndicator.SetActive(true);
             quizManager.robotAnimator.SetBool("isWrong", true);
