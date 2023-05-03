@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -5,30 +6,36 @@ using UnityEngine;
 
 public class Clock : MonoBehaviour
 {
+    [Header ("Objects")]
     public TextMeshProUGUI[] UI_TIME_TEXT;
     public TextMeshProUGUI[] UI_DATE_TEXT;
+    [SerializeField] private GameObject currentDayPopup;
     public TimeFormat timeFormat = TimeFormat.Hour_24;
+    [SerializeField] private Light sunLight;
+    [SerializeField] private Light moonLight;
+
+    [Header ("Params")]
     public float secPerMin = 1;
+    [SerializeField] private float sunriseHour;
+    [SerializeField] private float sunsetHour;
+    [SerializeField] private float maxSunLightIntensity;
+    [SerializeField] private float maxMoonLightIntensity;
+    [SerializeField] private Color dayAmbientLight;
+    [SerializeField] private Color nightAmbientLight;
+    [SerializeField] private AnimationCurve lightChangeCurve;
     
+    #region Private Hidden Variables
     private string _time;
     private string _date;
-    
     private bool isAm = false;
-    [SerializeField] private GameObject currentDayPopup;
     private TextMeshProUGUI currentDayText;
-
-    [Header("Skybox")]
-    [SerializeField] private Material daySkyBox;
-    [SerializeField] private Material nightSkybox;
-
     private int hr;
     private int min;
     private int day;
-
     int maxHr = 24;
     int maxMin = 60;
-
     float timer = 0;
+    #endregion
 
     public enum TimeFormat
     {
@@ -65,6 +72,13 @@ public class Clock : MonoBehaviour
             {
                 min = 0;
                 hr++;
+
+                if (hr > 1 && hr < 7) {
+                    UpdateTime(Color.red);
+                }
+                else {
+                    UpdateTime(Color.white);
+                }
 
                 if (hr < 12)
                 {
@@ -188,18 +202,26 @@ public class Clock : MonoBehaviour
                 }
         }
 
+        UpdateTime(Color.white);
+        UpdateDate();
+
+        if (currentDayText == null) currentDayText = currentDayPopup.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
+        currentDayText.text = "Day " + day;
+    }
+
+    private void UpdateTime(Color color) {
         foreach (var time in UI_TIME_TEXT)
         {
             time.text = _time;
+            time.color = color;
         }
+    }
 
+    private void UpdateDate() {
         for (int i = 0; i < UI_DATE_TEXT.Length; i++)
         {
             UI_DATE_TEXT[i].text = "Day " + day;
         }
-
-        if (currentDayText == null) currentDayText = currentDayPopup.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
-        currentDayText.text = "Day " + day;
     }
 
     public int Minute

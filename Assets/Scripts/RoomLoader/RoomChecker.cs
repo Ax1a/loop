@@ -22,11 +22,13 @@ public class RoomChecker : MonoBehaviour
         if (roomName == "kitchen") {
             CameraManager.Instance.SetCurrentCamera("KitchenCamera");
             lights[1].intensity = 8;
+            lights[0].intensity = 0;
         }
         // Main Room Camera
         else if (roomName == "main") {
             CameraManager.Instance.SetCurrentCamera("Camera");
             lights[1].intensity = 0;
+            lights[0].intensity = 8;
         }
     }
 }
