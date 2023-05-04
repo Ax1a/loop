@@ -4,6 +4,7 @@ using UnityEngine.Events;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using TMPro;
+using Block;
 
 public class BlockFunction :  BlockDrag
 {

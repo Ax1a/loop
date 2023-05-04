@@ -66,7 +66,10 @@ public class UIController : MonoBehaviour
         if (BotGuide.Instance.guideIsActive()) return;
 
         if(Input.GetKeyDown(InputManager.Instance.exit)){
-            ToggleUI("PauseMenu");
+            // ToggleUI("PauseMenu");
+            mainUI.GetComponent<Canvas>().enabled = false;
+            gameUI[1].SetActive(true);
+            SetPanelActive(true);
         }
         else if(Input.GetKeyDown(InputManager.Instance.shop)) {
             ToggleTab("Tab1", "ShopInventoryCanvas");
@@ -128,7 +131,7 @@ public class UIController : MonoBehaviour
                 if (ui.name == uiToOpen) {
                     ui.SetActive(true);
                     indicatorCanvas.SetActive(false);
-                    mainUI.GetComponent<CanvasGroup>().alpha = 0;
+                    mainUI.GetComponent<Canvas>().enabled = false;
 
                     SetPanelActive(true);
                 };
@@ -143,7 +146,7 @@ public class UIController : MonoBehaviour
 
     public void CloseUI(int index) {
         gameUI[index].SetActive(false);
-        mainUI.GetComponent<CanvasGroup>().alpha = 1;
+        mainUI.GetComponent<Canvas>().enabled = true;
 
         SetPanelActive(false);
         indicatorCanvas.SetActive(true);
@@ -153,7 +156,7 @@ public class UIController : MonoBehaviour
         _anyActive = active;
     }
 
-    public bool otherPanelActive() {
+    public bool OtherPanelActive() {
         return _anyActive;
     }
 

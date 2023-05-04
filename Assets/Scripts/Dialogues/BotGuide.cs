@@ -40,8 +40,6 @@ public class BotGuide : MonoBehaviour
 
     [SerializeField] private bool stopAudioSource;
     private AudioSource audioSource;
-
-    PlayerController playerController;
     private bool isActive, canContinueNextLine, canSkip, playerSkipped;
 
     private Coroutine displayLineCoroutine;
@@ -60,7 +58,6 @@ public class BotGuide : MonoBehaviour
     }
 
     private void OnEnable() {
-        playerController = character.GetComponent<PlayerController>();
         audioSource = this.gameObject.AddComponent<AudioSource>();
         audioSource.volume = dialogueVolume;
     }
