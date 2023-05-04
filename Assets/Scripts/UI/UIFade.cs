@@ -26,6 +26,10 @@ public class UIFade : MonoBehaviour
 				}
     }
 
+		private void OnDisable() {
+			canvasGroup.alpha = 0;
+		}
+
     public float getAnimationDuration() {
         return animationDuration;
     }

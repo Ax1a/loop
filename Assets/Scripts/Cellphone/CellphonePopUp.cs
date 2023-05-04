@@ -31,7 +31,7 @@ public class CellphonePopUp : MonoBehaviour
 
             return;
         }
-        if (Input.GetKeyDown(InputManager.Instance.openPhone) && !UIController.Instance.otherPanelActive())
+        if (Input.GetKeyDown(InputManager.Instance.openPhone) && !UIController.Instance.OtherPanelActive())
         {
             if (sequence != null) {
                 sequence.Kill();

@@ -9,7 +9,7 @@ public class InteractObject : MonoBehaviour
     [SerializeField] private float _interactionPointRadius = 0.5f;
     [SerializeField] private LayerMask _interactableMask;
     [SerializeField] private InteractionPromptUI _interactionPromptUI;
-    Outline outline;
+    QuickOutline outline;
 
     private readonly Collider[] _colliders = new Collider[3];
     [SerializeField] private int _numFound;
@@ -35,7 +35,7 @@ public class InteractObject : MonoBehaviour
         if (_numFound > 0 && DataManager.GetTutorialProgress() >= 3)
         {
             _interactable = _colliders[0].GetComponent<Interactable>();
-            outline = _colliders[0].GetComponent<Outline>();
+            outline = _colliders[0].GetComponent<QuickOutline>();
 
             if (_interactable != null)
             {

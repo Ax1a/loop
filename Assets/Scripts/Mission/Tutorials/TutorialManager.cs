@@ -57,7 +57,7 @@ public class TutorialManager : MonoBehaviour
 
     private void Update() {
         if (currentTutorial && BotGuide.Instance.guideIsActive() == false) currentTutorial.CheckIfHappening();
-        if (UIController.Instance.otherPanelActive() == true) return;
+        if (UIController.Instance.OtherPanelActive() == true) return;
         
         if (DataManager.GetTutorialProgress() == 3 && _activated == false) {
             BotGuide.Instance.AddDialogue("You can interact with certain objects in the game using the E key."); 
