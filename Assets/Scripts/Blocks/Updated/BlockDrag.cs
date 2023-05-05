@@ -12,7 +12,7 @@ namespace Block {
         #region Hidden
         [HideInInspector] public Transform _environmentParent = null;
         [HideInInspector] public Transform _tempParent = null;
-        [HideInInspector] public GameObject _dropZone;
+         public GameObject _dropZone;
         [HideInInspector] public bool isOverDropZone = false;
         [HideInInspector] public bool addedPoints = false;
         [HideInInspector] public ValidateController validationManager;
@@ -72,12 +72,15 @@ namespace Block {
             _currentDrag.GetComponent<BlockDrag>().instantiate = false;
             _currentDrag.SetActive(true);
 
-            if (_currentDrag.GetComponent<BlockDrag>()._dropZone != null) {
-                Image dropZoneImage = _currentDrag.GetComponent<BlockDrag>()._dropZone.GetComponent<Image>();
-                Color color = dropZoneImage.color;
-                color.a = 0.5f;
-                dropZoneImage.color = color; // Set the new color with alpha 0 to the drop zone image
-                _currentDrag.GetComponent<BlockDrag>()._dropZone = null;
+            BlockDrag currentBlockDrag = _currentDrag.GetComponent<BlockDrag>();
+            if (currentBlockDrag._dropZone != null) {
+                if ((currentBlockDrag._dropZone.name == "ChildContainer" && currentBlockDrag._dropZone.transform.childCount == 0) || currentBlockDrag._dropZone.name != "ChildContainer") {
+                    Image dropZoneImage = _currentDrag.GetComponent<BlockDrag>()._dropZone.GetComponent<Image>();
+                    Color color = dropZoneImage.color;
+                    color.a = 0.5f;
+                    dropZoneImage.color = color; // Set the new color with alpha 0 to the drop zone image
+                    _currentDrag.GetComponent<BlockDrag>()._dropZone = null;
+                }
             }
 
             if (addedPoints) {

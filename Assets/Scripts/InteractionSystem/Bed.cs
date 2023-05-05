@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class Bed : MonoBehaviour, Interactable
 {
-    Clock _clock;
-    [SerializeField] private GameObject Time;
+    [SerializeField] private Clock timeAndDate;
     [SerializeField] GameObject EnergyPanel;
     [SerializeField] private string _prompt;
     [SerializeField] private GameObject sleepConfirmation;
@@ -15,9 +14,8 @@ public class Bed : MonoBehaviour, Interactable
     public bool Interact(InteractObject interactor)
     {
         if (DataManager.GetTutorialProgress() >= 5) {
-            _clock = Time.GetComponent<Clock>();
 
-            if (_clock.Hour < 17) {
+            if (timeAndDate.Hour < 17) {
                 sleepConfirmation.SetActive(true);
                 UIController.Instance.SetPanelActive(true);
             }

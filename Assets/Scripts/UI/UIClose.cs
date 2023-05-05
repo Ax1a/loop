@@ -17,7 +17,7 @@ public class UIClose : UIFade
 
     private IEnumerator _animationClose() {
         base.FadeOut();
-        mainUI.GetComponent<Canvas>().enabled = true;
+        if (mainUI != null) mainUI.GetComponent<Canvas>().enabled = true;
         yield return new WaitForSeconds(base.getAnimationDuration());
         gameObject.SetActive(false);
         if (indicatorCanvas != null) {

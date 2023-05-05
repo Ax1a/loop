@@ -248,7 +248,7 @@ public class QuizManager : MonoBehaviour
                 options[i].GetComponent<AnswerScript>().isCorrect = true;
             }
         }
-
+        LayoutRefresher.Instance.RefreshContentFitter((RectTransform)gameObject.transform.parent.transform);
         _questionIndex += 1;
     }
 
