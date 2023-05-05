@@ -54,7 +54,7 @@ public class BlockOperator : BlockDrag
     private bool ValidateInput()
     {
         int operationValue = operation.value;
-        if (operation.options[operationValue].text == operationAnswer)  {
+        if (operation.options[operationValue].text == operationAnswer || operationAnswer == "")  {
             if (l_blockDropScript != null && r_blockDropScript != null){
                 if (l_blockAnswer != "" && r_blockAnswer == "") {
                     return l_blockDropScript.consoleValue == l_blockAnswer;

@@ -21,6 +21,13 @@ namespace Avocado.DeveloperCheatConsole.Scripts.Core.Commands.AllCommands {
             DeveloperConsole.Instance.AddCommand(new DevCommand("complete_courses", "This will complete all the available courses", () => {
                 DataManager.CompleteProgrammingLanguages();
             }));
+            
+            DeveloperConsole.Instance.AddCommand(new DevCommand("complete_course", "complete_course [course_name]", delegate(string parameter) {
+                for (int i = 0; i <= 12; i++)
+                {
+                    DataManager.AddProgrammingLanguageProgress(parameter);
+                }
+            }));
 
             DeveloperConsole.Instance.AddCommand(new DevCommand("unlock_interactions", "This will unlock all the available interactions", () => {
                 InteractionQuizManager.Instance.ActivateAllInteractionQuiz();
