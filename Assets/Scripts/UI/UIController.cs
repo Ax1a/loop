@@ -31,6 +31,7 @@ public class UIController : MonoBehaviour
     [SerializeField] private Button quitBtn;
 
     private bool _anyActive;
+    [HideInInspector] public bool gameUIActive;
     public static UIController Instance;
 
     void Awake()
@@ -65,19 +66,22 @@ public class UIController : MonoBehaviour
         }
         if (BotGuide.Instance.guideIsActive()) return;
 
-        if(Input.GetKeyDown(InputManager.Instance.exit)){
-            // ToggleUI("PauseMenu");
+        if(Input.GetKeyDown(InputManager.Instance.exit) && !gameUIActive){
+            gameUIActive = true;
             mainUI.GetComponent<Canvas>().enabled = false;
             gameUI[1].SetActive(true);
             SetPanelActive(true);
         }
         else if(Input.GetKeyDown(InputManager.Instance.shop)) {
+            gameUIActive = true;
             ToggleTab("Tab1", "ShopInventoryCanvas");
         }
         else if(Input.GetKeyDown(InputManager.Instance.inventory)) {
+            gameUIActive = true;
             ToggleTab("Tab2", "ShopInventoryCanvas");
         }
         else if (Input.GetKeyDown(InputManager.Instance.quest)) {
+            gameUIActive = true;
             ToggleTab("Container", "QuestCanvas");
         }
 
@@ -150,6 +154,7 @@ public class UIController : MonoBehaviour
 
         SetPanelActive(false);
         indicatorCanvas.SetActive(true);
+        gameUIActive = false;
     }
 
     public void SetPanelActive(bool active) {

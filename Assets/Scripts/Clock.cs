@@ -33,6 +33,8 @@ public class Clock : MonoBehaviour
     private int hr;
     private int min;
     private int day;
+    int passHr = 2;
+    int passMin = 0;
     int maxHr = 24;
     int maxMin = 60;
     float timer = 0;
@@ -73,30 +75,34 @@ public class Clock : MonoBehaviour
         {
             min++;
 
+            // Show or hide the god rays on the windows
+            if (hr >= 7 && hr <= 11) {
+                godRay.SetActive(true);
+            }
+            else {
+                godRay.SetActive(false);
+            }
+
+            // Set the sun light intensity on the window
+            if (hr >= 6 && hr <= 14) {
+                sunLightEffect.intensity = 134;
+            }
+            else {
+                if (sunLightEffect.intensity > 0) sunLightEffect.intensity -= 5;
+            }
+            
+            // To be updated // generate random time from 2 - 5
+            if (hr == passHr && min == passMin && generatedTime) {
+                StartCoroutine(PassedOut());
+            }
             if (min >= maxMin)
             {
                 min = 0;
                 hr++;
 
-                // Show or hide the god rays on the windows
-                if (hr >= 7 && hr <= 11) {
-                    godRay.SetActive(true);
-                }
-                else {
-                    godRay.SetActive(false);
-                }
-
-                // Set the sun light intensity on the window
-                if (hr >= 7 && hr <= 12) {
-                    sunLightEffect.intensity = 134;
-                }
-                else {
-                    if (sunLightEffect.intensity > 0) sunLightEffect.intensity -= 35;
-                }
-
-                // To be updated // generate random time from 2 - 5
-                if (hr == 2 && !generatedTime) {
-                    StartCoroutine(PassedOut());
+                // Generate random time on 2 am
+                if (hr == 2) {
+                    GenerateRandomTime();
                 }
 
                 // Used for formatting time
@@ -113,7 +119,6 @@ public class Clock : MonoBehaviour
                 {
                     hr = 0;
                     day++;
-                
                 }
             }
 
@@ -131,13 +136,20 @@ public class Clock : MonoBehaviour
         }
     }
 
-    private IEnumerator PassedOut() {
+    private void GenerateRandomTime() {
         generatedTime = true;
+        // Generate random time;
+        passHr = UnityEngine.Random.Range(2, 5);
+        passMin = UnityEngine.Random.Range(0, 60);
+    }
+
+    private IEnumerator PassedOut() {
         passedOutPopup.SetActive(true);
         DataManager.SpendMoney(200);
         yield return new WaitForSeconds(3.5f);
         passedOutPopup.SetActive(false);
         NextDay();
+        generatedTime = false;
     }
 
     private void UpdateLightSettings()

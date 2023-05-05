@@ -5,10 +5,15 @@ using UnityEngine;
 public class StopTime : MonoBehaviour
 {
     private void OnEnable() {
-        Time.timeScale = 0;
+        StartCoroutine(DelayPause());
     }
 
     private void OnDisable() {
         Time.timeScale = 1;
+    }
+
+    private IEnumerator DelayPause() {
+        yield return new WaitForSeconds(0.2f);
+        Time.timeScale = 0;
     }
 }

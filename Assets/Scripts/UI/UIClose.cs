@@ -10,13 +10,14 @@ public class UIClose : UIFade
     void Update()
     {
         if(Input.GetKeyDown(InputManager.Instance.exit)){
+            Time.timeScale = 1;
             StartCoroutine(_animationClose());
         }
     }
 
     private IEnumerator _animationClose() {
         base.FadeOut();
-        mainUI.GetComponent<CanvasGroup>().alpha = 1;
+        mainUI.GetComponent<Canvas>().enabled = true;
         yield return new WaitForSeconds(base.getAnimationDuration());
         gameObject.SetActive(false);
         if (indicatorCanvas != null) {
@@ -26,6 +27,7 @@ public class UIClose : UIFade
             Debug.Log("Indicator Canvas is null");
         }
         UIController.Instance.SetPanelActive(false);
+        UIController.Instance.gameUIActive = false;
     }
 
     // For button functions
