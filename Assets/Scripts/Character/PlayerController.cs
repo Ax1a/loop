@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float turnSmoothTime = 0.1f;
     public CharacterController controller;
     private bool _isPanelActive = false;
+    private bool disableControl = false;
     private float turnSmoothVelocity, horizontal, vertical;
     private GameObject mainUI;
     private GameObject _currentCamera;
@@ -20,7 +21,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (_isPanelActive == false && BotGuide.Instance.guideIsActive() == false){
+        if (!_isPanelActive && !disableControl && !BotGuide.Instance.guideIsActive()){
             horizontal = Input.GetAxisRaw("Horizontal");
             vertical = Input.GetAxisRaw("Vertical");
          
@@ -48,6 +49,10 @@ public class PlayerController : MonoBehaviour
 
     public void SetIsPanelActive(bool active) {
         _isPanelActive = active;
+    }
+
+    public void ToggleControl(bool isDisable) {
+        disableControl = isDisable;
     }
 
     public bool IsPanelActive() {

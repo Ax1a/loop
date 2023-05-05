@@ -212,22 +212,21 @@ namespace Block {
                                 Transform childContainer = dropZone.transform;
                                 float minDistance = float.MaxValue;
 
-                                for (int i = 0; i < childContainer.childCount; i++)
-                                {
-                                    Transform child = childContainer.GetChild(i);
-                                    float distance = Vector2.Distance(pointerEventData.position, child.position);
-                                    if (distance < minDistance)
+                                if (childContainer.childCount == 1) {
+                                    siblingIndex = 1;
+                                }
+                                else {
+                                    for (int i = 0; i < childContainer.childCount; i++)
                                     {
-                                        minDistance = distance;
-                                        siblingIndex = i;
+                                        Transform child = childContainer.GetChild(i);
+                                        float distance = Vector2.Distance(pointerEventData.position, child.position);
+                                        if (distance < minDistance)
+                                        {
+                                            minDistance = distance;
+                                            siblingIndex = i;
+                                        }
                                     }
                                 }
-
-                                // // insert the current drag into the nearest sibling index
-                                // if (siblingIndex >= 0)
-                                // {
-                                //     blockDrag.transform.SetSiblingIndex(siblingIndex);
-                                // }
                             }
                         }
 

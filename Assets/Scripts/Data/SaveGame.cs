@@ -5,11 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class SaveGame : MonoBehaviour
 {
-    [SerializeField] private GameObject timeAndDate;
+    [SerializeField] private Clock timeAndDate;
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject savingAnimation;
     Energy _energy;
-    Clock _timeAndDate;
 
     public static SaveGame Instance;
 
@@ -38,12 +37,10 @@ public class SaveGame : MonoBehaviour
     public void SaveGameState() {
         StartCoroutine(SavingAnimation());
         
-        _timeAndDate = timeAndDate.GetComponent<Clock>();
-
         DataManager.SetPlayerCoord(player.transform.position);
-        DataManager.SetDay(_timeAndDate.Day);
-        DataManager.SetHour(_timeAndDate.Hour);
-        DataManager.SetMinute(_timeAndDate.Minute);
+        DataManager.SetDay(timeAndDate.Day);
+        DataManager.SetHour(timeAndDate.Hour);
+        DataManager.SetMinute(timeAndDate.Minute);
         
         DataManager.SavePlayerData();
     }
