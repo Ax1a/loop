@@ -10,6 +10,16 @@ public class AudioManager : MonoBehaviour
     public Sounds[] musicSounds, sfxSounds;
     public AudioSource musicSource, sfxSource;
     private Sounds currentMusic;
+    private const string MUSIC_VOLUME_KEY = "MusicVolume";
+    private const string SFX_VOLUME_KEY = "SfxVolume";
+
+    void Start () 
+    {
+        float musicVolume = PlayerPrefs.GetFloat(MUSIC_VOLUME_KEY, 1f);
+        float sfxVolume = PlayerPrefs.GetFloat(SFX_VOLUME_KEY, 1f);
+        SetMusicVolume(musicVolume);
+        SetSfxVolume(sfxVolume);
+    }
 
     void Awake()
     {
@@ -61,14 +71,6 @@ public class AudioManager : MonoBehaviour
         musicSource.volume = 0;
         sfxSource.volume = 0;
     }
-    // public void ToggleMusic()
-    // {
-    //     musicSource.mute = !musicSource.mute;
-    // }
-    // public void ToggleSfx()
-    // {
-    //     sfxSource.mute = !sfxSource.mute;
-    // }
     public void MusicVolume(float volume)
     {
         musicSource.volume = volume;
@@ -77,6 +79,19 @@ public class AudioManager : MonoBehaviour
     public void SfxVolume(float volume)
     {
         sfxSource.volume = volume;
+    }
+    public void SetMusicVolume(float volume)
+    {
+        musicSource.volume = volume;
+        // Save music volume to PlayerPrefs
+        PlayerPrefs.SetFloat(MUSIC_VOLUME_KEY, volume);
+    }
+
+    public void SetSfxVolume(float volume)
+    {
+        sfxSource.volume = volume;
+        // Save sfx volume to PlayerPrefs
+        PlayerPrefs.SetFloat(SFX_VOLUME_KEY, volume);
     }
     private void OnEnable()
     {
