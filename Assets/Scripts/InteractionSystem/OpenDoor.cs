@@ -11,7 +11,15 @@ public class OpenDoor : MonoBehaviour, Interactable
 
     public bool Interact(InteractObject interactor)
     {
+        if(HygieneSystem.Instance.currentHygiene < 100){
+
+        HygieneSystem.Instance.IncreaseHygiene();
         Debug.Log("test");
+        }
+        else{
+                NPCDialogue.Instance.AddDialogue("I don't think I need a bath right now.", DataManager.GetPlayerName());
+                NPCDialogue.Instance.ShowDialogue();
+        }
         return true;
     }
 }

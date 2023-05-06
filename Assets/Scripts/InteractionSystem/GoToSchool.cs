@@ -22,8 +22,17 @@ public class GoToSchool : MonoBehaviour, Interactable
         if (DataManager.GetTutorialProgress() >= 5) {
             _clock = Time.GetComponent<Clock>();
 
+            //hygiene: if 0, cant go to school
+            if (HygieneSystem.Instance.currentHygiene == 0) {
+            NPCDialogue.Instance.AddDialogue("*sniffs* ugh... I smell bad right now. I need to take a bath before going to school.", DataManager.GetPlayerName());
+            NPCDialogue.Instance.ShowDialogue();
+            return false;
+            } 
+
             if (_clock.Hour < 12) {
                 Energy.Instance.UseEnergy(5);
+                //hygiene decrease
+                HygieneSystem.Instance.DecreaseHygiene(40f);
                 _clock.AddHour(hoursToSchool);
                 StartCoroutine(PlayAnimation());   
             }

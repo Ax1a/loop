@@ -10,18 +10,27 @@ public class HygieneSystem : MonoBehaviour
     public float currentHygiene;
     public float timeElapsed;
 
+    public static HygieneSystem Instance;
+
+    private void Awake() {
+        if (Instance == null) {
+            Instance = this;
+        }
+    }
+
     private void Start()
     {
         currentHygiene = maxHygiene;
         hygieneSlider.maxValue = maxHygiene;
         hygieneSlider.value = currentHygiene;
+        hygieneSlider.interactable = false;
     }
 
     private void Update()
     {
         // decrease hygiene every 5 seconds, then reset timer.
         timeElapsed += Time.deltaTime;
-        if (timeElapsed >= 5f)
+        if (timeElapsed >= 10f)
         {
             DecreaseHygiene();
             timeElapsed = 0f;
@@ -55,7 +64,7 @@ public class HygieneSystem : MonoBehaviour
     }
 
     //used for decreasing hygiene level 
-    private void DecreaseHygiene(float amount = -1f)
+    public void DecreaseHygiene(float amount = -1f)
     {
         if (amount == -1f)
         {
@@ -71,7 +80,7 @@ public class HygieneSystem : MonoBehaviour
     }
 
     //function for increasing hygiene to max
-    private void IncreaseHygiene()
+    public void IncreaseHygiene()
     {
         currentHygiene = maxHygiene;
         hygieneSlider.value = currentHygiene;
