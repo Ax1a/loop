@@ -9,6 +9,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject popUp;
     [SerializeField] private GameObject optionsPopUp;
     [SerializeField] private GameObject musicSettingPopUp;
+    [SerializeField] private GameObject screenSettingPopUp;
     [SerializeField] private GameObject characterCreation;
     [SerializeField] private GameObject loading;
     [SerializeField] private GameObject characterCamera;
@@ -61,6 +62,11 @@ public class MainMenu : MonoBehaviour
         musicSettingPopUp.SetActive(true);
     }
 
+    public void ScreenOption(){
+        optionsPopUp.SetActive(false);
+        screenSettingPopUp.SetActive(true);
+    }
+
     public void Cancel() {
         if (popUp.activeSelf)
         {
@@ -75,6 +81,13 @@ public class MainMenu : MonoBehaviour
         if (musicSettingPopUp.activeSelf)
         {
         musicSettingPopUp.SetActive(false);
+        optionsPopUp.SetActive(true);
+        }
+
+        if (screenSettingPopUp.activeSelf)
+        {
+        screenSettingPopUp.SetActive(false);
+        optionsPopUp.SetActive(true);
         }
     }
 
