@@ -23,10 +23,11 @@ namespace Avocado.DeveloperCheatConsole.Scripts.Core.Commands.AllCommands {
             }));
             
             DeveloperConsole.Instance.AddCommand(new DevCommand("complete_course", "complete_course [course_name]", delegate(string parameter) {
-                for (int i = 0; i <= 12; i++)
-                {
-                    DataManager.AddProgrammingLanguageProgress(parameter);
-                }
+                DataManager.SetProgrammingLanguageProgress(parameter, 12);
+            }));
+
+            DeveloperConsole.Instance.AddCommand(new DevCommand("test_course", "test_course [course_name]", delegate(string parameter) {
+                DataManager.SetProgrammingLanguageProgress(parameter, 10);
             }));
 
             DeveloperConsole.Instance.AddCommand(new DevCommand("unlock_interactions", "This will unlock all the available interactions", () => {

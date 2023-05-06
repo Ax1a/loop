@@ -64,7 +64,8 @@ public class Clock : MonoBehaviour
     }
 
     private void Start() {
-        directionalLight.transform.rotation = Quaternion.Euler(120,0,0);
+        UpdateLightRotation();
+        UpdateLightSettings();
     }
     
     void Update()
@@ -74,22 +75,6 @@ public class Clock : MonoBehaviour
         if (timer >= secPerMin)
         {
             min++;
-
-            // Show or hide the god rays on the windows
-            if (hr >= 7 && hr <= 11) {
-                godRay.SetActive(true);
-            }
-            else {
-                godRay.SetActive(false);
-            }
-
-            // Set the sun light intensity on the window
-            if (hr >= 6 && hr <= 14) {
-                sunLightEffect.intensity = 134;
-            }
-            else {
-                if (sunLightEffect.intensity > 0) sunLightEffect.intensity -= 5;
-            }
             
             // To be updated // generate random time from 2 - 5
             if (hr == passHr && min == passMin && generatedTime) {
@@ -152,11 +137,27 @@ public class Clock : MonoBehaviour
         generatedTime = false;
     }
 
-    private void UpdateLightSettings()
+    public void UpdateLightSettings()
     {
         float dotProduct = Vector3.Dot(directionalLight.transform.forward, Vector3.down);
         RenderSettings.ambientLight = Color.Lerp(nightAmbientLight, dayAmbientLight, lightChangeCurve.Evaluate(dotProduct));
         directionalLight.colorTemperature = Mathf.Lerp(12707, 3869, lightChangeCurve.Evaluate(dotProduct));
+
+        // Show or hide the god rays on the windows
+        if (hr >= 7 && hr <= 11) {
+            godRay.SetActive(true);
+        }
+        else {
+            godRay.SetActive(false);
+        }
+
+        // Set the sun light intensity on the window
+        if (hr >= 6 && hr <= 14) {
+            sunLightEffect.intensity = 134;
+        }
+        else {
+            if (sunLightEffect.intensity > 0) sunLightEffect.intensity -= 5;
+        }
     }
     
     public void NextDay() {
@@ -169,9 +170,12 @@ public class Clock : MonoBehaviour
         currentDayPopup.SetActive(true);
         currentDayText.text = "Day " + day;
         currentDayPopup.GetComponent<CanvasGroup>().alpha = 1;
+
+        UpdateLightRotation();
+        UpdateLightSettings();
     }
 
-    private void UpdateLightRotation()
+    public void UpdateLightRotation()
     {
         float totalRotation = (hr * rotationPerHr) + (min * rotationPerMin) + 86.95f;
 

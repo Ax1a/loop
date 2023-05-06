@@ -59,6 +59,10 @@ public class LessonsLevelManager : MonoBehaviour
         DataManager.AddProgrammingLanguageProgress(course);
 
         _reachedLesson++;
+
+        if (DataManager.GetProgrammingLanguageProgress(course) >= easyLevelCount + mediumLevelCount + difficultLevelCount) {
+            UnlockOtherCourses();
+        }
         UpdateLessonState();
     }
 
@@ -93,6 +97,28 @@ public class LessonsLevelManager : MonoBehaviour
                 image.gameObject.SetActive(false);
             }
             Debug.Log("No Levels Left");
+        }
+    }
+
+    private void UnlockOtherCourses() {
+        foreach (var item in System.Enum.GetNames (typeof(CurrentCourse)))
+        {
+            if (item.ToLower() == "c" && item != currentCourse.ToString()) {
+                if (DataManager.GetProgrammingLanguageProgress(item) == -1) {
+                    DataManager.SetProgrammingLanguageProgress(item, 0);
+                }
+            }
+            else if (item.ToLower() == "java" && item != currentCourse.ToString()) {
+                if (DataManager.GetProgrammingLanguageProgress(item) == -1) {
+                    DataManager.SetProgrammingLanguageProgress(item, 0);
+                }
+
+            }
+            else if (item.ToLower() == "python" && item != currentCourse.ToString()) {
+                if (DataManager.GetProgrammingLanguageProgress(item) == -1) {
+                    DataManager.SetProgrammingLanguageProgress(item, 0);
+                }
+            }
         }
     }
 

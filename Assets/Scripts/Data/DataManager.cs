@@ -310,6 +310,19 @@ public static class DataManager
         }
     }
 
+    public static void SetProgrammingLanguageProgress(string key, int progress)
+    {
+        if (playerData.programmingLanguage.ContainsKey(key))
+        {
+            playerData.programmingLanguage[key] = progress;
+            Debug.Log("Added progress to: " + key);
+            if (ShopCourse.Instance != null) {
+                ShopCourse.Instance._checkedState = false;
+            }
+            SavePlayerData();
+        }
+    }
+
     public static void CompleteProgrammingLanguages()
     {
         foreach (var key in playerData.programmingLanguage.Keys.ToList())
@@ -373,7 +386,7 @@ public static class DataManager
 
         foreach (var progLanguage in playerData.programmingLanguage)
         {
-            if (progLanguage.Value >= 0)
+            if (progLanguage.Value >= 1)
             {
                 count++;
             }

@@ -56,6 +56,8 @@ public class GoToSchool : MonoBehaviour, Interactable
         IndicatorCanvas.alpha = 1;
         questGiver.SetActive(true);
         SaveGame.Instance.SaveGameState();
+        _clock.UpdateLightRotation();
+        _clock.UpdateLightSettings();
     }
 }
 

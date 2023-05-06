@@ -54,7 +54,6 @@ public class QuestUI : MonoBehaviour
     public bool questRunning = false;
     private bool _questPanelActive = false;
     private bool _onMainQTab = false;
-
     public static QuestUI Instance;
 
     private void Awake()
@@ -78,38 +77,35 @@ public class QuestUI : MonoBehaviour
     }
 
     // Set Up Main Quests
-    public void SetQuestUI()
+    public IEnumerator SetQuestUI()
     {
-        string tempTitle = "";
-        Quest.QuestType tempType = Quest.QuestType.MAIN;
-        int sidePanelQCount = 0;
-
         if (s_questPanelParent.childCount > 0)
         {
-            Destroy(s_questPanelParent.GetChild(0).gameObject);
+            foreach (Transform child in s_questPanelParent)
+            {
+                Destroy(child.gameObject);
+            }
         }
+
+        yield return new WaitForSeconds(0.1f);
 
         foreach (var item in activeQuest)
         {
             if (item.questType == Quest.QuestType.MAIN)
-            {
-                if (sidePanelQCount == 0)
+            {   
+                if (s_questPanelParent.childCount == 0)
                 {
                     ShowQuestSidePanel(item);
-                    sidePanelQCount++;
+                    break;
                 }
 
             }
-
-            // Set popup data
-            tempTitle = item.title; 
-            tempType = item.questType;
         }
 
         // Display the button list on quest log
         FillQuestLogButtons();
         // Show the popup when new mission appears
-        if (_questPanelActive == false) ShowNewQuestBanner(tempTitle, tempType);
+        // if (_questPanelActive == false) ShowNewQuestBanner(tempTitle, tempType);
     }
 
     public void ShowNewQuestBanner(string title, Quest.QuestType type)
@@ -314,7 +310,7 @@ public class QuestUI : MonoBehaviour
     {
         _questPanelActive = true;
         ClearQuestData();
-        SetQuestUI();
+        StartCoroutine(SetQuestUI());
     }
 
     // Clear Quest Data to avoid duplication
