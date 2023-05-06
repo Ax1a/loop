@@ -15,6 +15,13 @@ public class Bed : MonoBehaviour, Interactable
     {
         if (DataManager.GetTutorialProgress() >= 5) {
 
+            //hygiene: if 0, cant sleep
+            if (HygieneSystem.Instance.currentHygiene == 0) {
+            NPCDialogue.Instance.AddDialogue("Yikes, I smell so bad right now. I should take a shower before going to bed!", DataManager.GetPlayerName());
+            NPCDialogue.Instance.ShowDialogue();
+            return false;
+            }        
+            
             if (timeAndDate.Hour < 17) {
                 sleepConfirmation.SetActive(true);
                 UIController.Instance.SetPanelActive(true);
@@ -25,6 +32,7 @@ public class Bed : MonoBehaviour, Interactable
 
             return true;
         }
+
         else if (DataManager.GetTutorialProgress() == 3) {
             NPCDialogue.Instance.AddDialogue("I'd better build my computer before I do anything else.", DataManager.GetPlayerName());
             NPCDialogue.Instance.ShowDialogue();

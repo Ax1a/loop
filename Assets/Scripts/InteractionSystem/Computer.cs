@@ -16,7 +16,15 @@ public class Computer : MonoBehaviour, Interactable
     bool _computerOpenedBefore; 
 
     public bool Interact(InteractObject interactor)
-    {
+    {   
+        
+        //hygiene: if 0, cant use pc
+        if (HygieneSystem.Instance.currentHygiene == 0) {
+        NPCDialogue.Instance.AddDialogue("Urgh.. My body feels sticky and I smell bad.. I should take a bath first before using my computer.", DataManager.GetPlayerName());
+        NPCDialogue.Instance.ShowDialogue();
+        return false;
+        }     
+        
         if (DataManager.GetTutorialProgress() >= 5) {
             // Disable HUD (Fix error when disabled)
             _interactOverlay.SetActive(false);
