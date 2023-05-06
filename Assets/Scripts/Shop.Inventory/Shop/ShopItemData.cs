@@ -9,6 +9,9 @@ public class ShopItemData
     public string itemName;
     [Range (1,15)] public int itemEnergy;
     public int price;
+    public ItemType itemType;
+    public int levelRequirement;
+    public enum ItemType { Drink, Food }
     public bool isPurchased;
 
 }

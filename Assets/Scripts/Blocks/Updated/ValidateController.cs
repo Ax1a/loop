@@ -314,6 +314,7 @@ public class ValidateController : MonoBehaviour
         isStart = false;
 
         if (_achievedPoints && !errorDetected) {
+            AudioManager.Instance.PlaySfx("Success");
             startPanel.SetActive(false);
             winPanel.SetActive(true);
             gameOverPanel.SetActive(false);

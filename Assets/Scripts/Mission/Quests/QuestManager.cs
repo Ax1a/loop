@@ -78,7 +78,7 @@ public class QuestManager : MonoBehaviour
         QuestUI.Instance.activeQuest.Clear();
         QuestUI.Instance.activeQuest.AddRange(currentQuestList);
         // Update the UI to show the available quests
-        QuestUI.Instance.SetQuestUI();
+        StartCoroutine(QuestUI.Instance.SetQuestUI());
         if (!firstLoad) {
             firstLoad = false;
             SaveGame.Instance.SaveGameState();
@@ -93,6 +93,7 @@ public class QuestManager : MonoBehaviour
                 Debug.Log("Accepted quest");
                 // QuestUI.Instance.activeQuest.Add(questList[i]);
                 questList[i].progress = Quest.QuestProgress.ACCEPTED;
+                QuestUI.Instance.ShowNewQuestBanner(questList[i].title, questList[i].questType);
             }
         }
         

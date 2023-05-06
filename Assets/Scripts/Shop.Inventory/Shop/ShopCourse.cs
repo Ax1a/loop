@@ -18,13 +18,14 @@ public class ShopCourse : MonoBehaviour
     [SerializeField] private GameObject[] courseSelectionLocks;
     [SerializeField] private GameObject[] interactionQuizSelectionLocks;
     [SerializeField] private GameObject[] courseSelectionProgress;
+    [SerializeField] private TextMeshProUGUI[] courseRequirementTxt;
     [SerializeField] private GameObject insufficientMoneyTxt;
     [SerializeField] private TextMeshProUGUI reducedMoneyTxt;
+    private int courseLevelRequirement = 0;
     private string[] _progLanguages = { "c++", "java", "python" };
     private int[] _coursePrices = new int[3];
     private Coroutine _showCoroutineReduce, _showCoroutineInsufficient;
     public bool _checkedState = false;
-
     public static ShopCourse Instance;
 
     private void Awake() {
@@ -34,8 +35,9 @@ public class ShopCourse : MonoBehaviour
     void Start()
     {
         if (DataManager.GetTutorialProgress() >= 5 && !_checkedState) {
-            DisplayCourseStateIndicator();
             DisplayCourseRequirements();
+            DisplayCourseStateIndicator();
+            UnlockNewCourse();
 
             // Add button listener to add buttons
             for (int i = 0; i < buyBtns.Length; i++)
@@ -51,8 +53,8 @@ public class ShopCourse : MonoBehaviour
 
     private void Update() {
         if (DataManager.GetTutorialProgress() >= 5 & !_checkedState) {
-            DisplayCourseStateIndicator();
             DisplayCourseRequirements();
+            DisplayCourseStateIndicator();
 
             // Add button listener to add buttons
             for (int i = 0; i < buyBtns.Length; i++)
@@ -63,6 +65,45 @@ public class ShopCourse : MonoBehaviour
             }
 
             _checkedState = true;
+        }
+    }
+
+    private void UnlockNewCourse() {
+        bool existingCourseUnlocked = false;
+
+        for (int i = 0; i < _progLanguages.Length; i++)
+        {
+            if (DataManager.GetProgrammingLanguageProgress(_progLanguages[i]) >= 10) {
+                for (int j = 0; j < _progLanguages.Length; j++)
+                {
+                    if ((DataManager.GetProgrammingLanguageProgress(_progLanguages[j]) >= 1) && (DataManager.GetProgrammingLanguageProgress(_progLanguages[j]) <= 9)) {
+                        existingCourseUnlocked = true;
+                        break;
+                    }
+                }
+
+                if (!existingCourseUnlocked) {
+                    foreach (var item in _progLanguages)
+                    {
+                        if (item.ToLower() == "c++" && item != _progLanguages[i]) {
+                            if (DataManager.GetProgrammingLanguageProgress(item) == -1) {
+                                DataManager.SetProgrammingLanguageProgress(item, 0);
+                            }
+                        }
+                        else if (item.ToLower() == "java" && item != _progLanguages[i]) {
+                            if (DataManager.GetProgrammingLanguageProgress(item) == -1) {
+                                DataManager.SetProgrammingLanguageProgress(item, 0);
+                            }
+
+                        }
+                        else if (item.ToLower() == "python" && item != _progLanguages[i]) {
+                            if (DataManager.GetProgrammingLanguageProgress(item) == -1) {
+                                DataManager.SetProgrammingLanguageProgress(item, 0);
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -92,6 +133,13 @@ public class ShopCourse : MonoBehaviour
             purchasedIndicators[languageIndex].SetActive(true);
             buyBtns[languageIndex].interactable = false;
 
+            foreach (var course in _progLanguages)
+            {
+                if (DataManager.GetProgrammingLanguageProgress(course) == 0) {
+                    DataManager.SetProgrammingLanguageProgress(course, -1);
+                }
+            }
+
             DisplayCourseRequirements();
             DisplayCourseStateIndicator();
         }
@@ -105,6 +153,8 @@ public class ShopCourse : MonoBehaviour
         for (int i = 0; i < _progLanguages.Length; i++)
         {
             if (DataManager.GetProgrammingLanguageProgress(_progLanguages[i]) == -1) {
+                courseRequirementTxt[i].gameObject.SetActive(true);
+                courseRequirementTxt[i].text = "Finish current course \nRequires Level " + courseLevelRequirement;
                 lockedIndicators[i].SetActive(true);
                 courseSelectionLocks[i].transform.parent.GetComponent<Button>().interactable = false;
                 courseSelectionLocks[i].SetActive(true);
@@ -114,6 +164,7 @@ public class ShopCourse : MonoBehaviour
             }
             else if (DataManager.GetProgrammingLanguageProgress(_progLanguages[i]) >= 1) {
                 lockedIndicators[i].SetActive(false);
+                courseRequirementTxt[i].gameObject.SetActive(false);
                 purchasedIndicators[i].SetActive(true);
                 progLanguagePriceTxts[i].transform.parent.gameObject.SetActive(false);
                 courseSelectionLocks[i].transform.parent.GetComponent<Button>().interactable = true;
@@ -125,7 +176,15 @@ public class ShopCourse : MonoBehaviour
                 courseSelectionLocks[i].SetActive(false);
             }
             else {
-                lockedIndicators[i].SetActive(false);
+                if (DataManager.GetPlayerLevel() >= courseLevelRequirement) {
+                    lockedIndicators[i].SetActive(false);
+                    courseRequirementTxt[i].gameObject.SetActive(false);
+                }
+                else {
+                    courseRequirementTxt[i].gameObject.SetActive(true);
+                    courseRequirementTxt[i].text = "Finish current course \nRequires Level " + courseLevelRequirement;
+                    lockedIndicators[i].SetActive(true);
+                }
                 courseSelectionLocks[i].transform.parent.GetComponent<Button>().interactable = false;
                 courseSelectionLocks[i].SetActive(true);
                 interactionQuizSelectionLocks[i].transform.parent.GetComponent<Button>().interactable = false;
@@ -136,6 +195,7 @@ public class ShopCourse : MonoBehaviour
     }
 
     private void DisplayCourseRequirements() {
+        courseLevelRequirement = 0;
         int unlockedLanguages = DataManager.GetUnlockedProgrammingLanguageCount();
 
         for (int i = 0; i < _progLanguages.Length; i++)
@@ -144,9 +204,11 @@ public class ShopCourse : MonoBehaviour
             if (DataManager.FirstProgrammingLanguage() && DataManager.GetProgrammingLanguageProgress(_progLanguages[i]) == 0) {
                 _coursePrices[i] = 0;
                 progLanguagePriceTxts[i].text = _coursePrices[i].ToString();
+                courseLevelRequirement = 0;
             }
             else {
                 _coursePrices[i] = unlockedLanguages != 0 ? unlockedLanguages * 1000 : 1000;
+                courseLevelRequirement = 10 * unlockedLanguages;
                 progLanguagePriceTxts[i].text = _coursePrices[i].ToString();
             }
         }

@@ -6,9 +6,8 @@ using TMPro;
 
 public class SleepingPopUp : MonoBehaviour
 {
-    Clock _clock;
     UIFade uiFade;
-    [SerializeField] private GameObject Time;
+    [SerializeField] private Clock timeAndDate;
     [SerializeField] private Image sleepingIndicator;
     [SerializeField] private TextMeshProUGUI timeText;
     private int _currentHr, _currentMin, _hr;
@@ -24,12 +23,11 @@ public class SleepingPopUp : MonoBehaviour
     }
 
     public IEnumerator ShowPopUp() {
-        _clock = Time.GetComponent<Clock>();
         uiFade = sleepingIndicator.GetComponent<UIFade>();
 
         sleepingIndicator.gameObject.SetActive(true);
-        _currentHr = _clock.Hour;
-        _currentMin = _clock.Minute;
+        _currentHr = timeAndDate.Hour;
+        _currentMin = timeAndDate.Minute;
         UIController.Instance.SetPanelActive(true);
         
         while (true) {
@@ -47,7 +45,7 @@ public class SleepingPopUp : MonoBehaviour
 
         uiFade.FadeOut();
 
-        _clock.NextDay();
+        timeAndDate.NextDay();
         yield return new WaitForSeconds(uiFade.getAnimationDuration());
         sleepingIndicator.gameObject.SetActive(false);
         UIController.Instance.SetPanelActive(false);
