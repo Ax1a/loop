@@ -327,7 +327,7 @@ public static class DataManager
     {
         foreach (var key in playerData.programmingLanguage.Keys.ToList())
         {
-            playerData.programmingLanguage[key] = 11;
+            playerData.programmingLanguage[key] = 12;
             if (ShopCourse.Instance != null) {
                 ShopCourse.Instance._checkedState = false;
             }

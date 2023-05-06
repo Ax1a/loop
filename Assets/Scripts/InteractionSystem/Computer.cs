@@ -47,7 +47,6 @@ public class Computer : MonoBehaviour, Interactable
         //checks if computer canvas is opened for the first time
         if(!_computerOpenedBefore)
         {
-            Debug.Log("test");
             yield return new WaitForSeconds(3.3f);
             PlayerPrefs.SetInt("ComputerOpenedBefore", 1); 
             BotGuide.Instance.AddDialogue("Hello there! Welcome to your first time opening your computer in the game."); 

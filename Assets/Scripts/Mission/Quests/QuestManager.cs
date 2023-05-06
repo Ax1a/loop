@@ -139,7 +139,6 @@ public class QuestManager : MonoBehaviour
         for (int i = 0; i < questList.Count; i++) {
             if (questList[i].id == questID && questList[i].progress == Quest.QuestProgress.NOT_AVAILABLE) {
                 questList[i].progress = Quest.QuestProgress.AVAILABLE;
-                Debug.Log("test");
                 // For testing
                 foreach (var obj in GameObject.FindObjectsOfType<QuestObject>()) {
                     if (obj.gameObject.name == "[0] Main Quests") {
