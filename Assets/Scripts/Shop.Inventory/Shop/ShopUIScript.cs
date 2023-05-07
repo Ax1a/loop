@@ -24,13 +24,37 @@ public class ShopUIScript : MonoBehaviour
     private Coroutine showCoroutineReduce, showCoroutineInsufficient;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         GenerateShopItemsUI();
     }
 
+    private void OnEnable() {
+        if (ShopItemsContainer.childCount > 0) {
+            ShowItemLevelRequirement();
+        }
+    }
+
+    private void ShowItemLevelRequirement() {
+        foreach (Transform child in ShopItemsContainer)
+        {
+            ShopItemsUI uiItem = child.GetComponent<ShopItemsUI>();
+
+            if (uiItem == null) break;
+
+            if (uiItem.levelRequired <= DataManager.GetPlayerLevel()) {
+                uiItem.ToggleLevelRequirement(false);
+            }
+            else {
+                uiItem.ToggleLevelRequirement(true);
+                uiItem.SetItemLevelRequirement(uiItem.levelRequired);
+            }
+        }
+        
+    }
+
     //generates the shop items through the database
-    void GenerateShopItemsUI()
+    private void GenerateShopItemsUI()
     {
         itemHeight = ShopItemsContainer.GetChild(0).GetComponent<RectTransform>().sizeDelta.y;
         Destroy(ShopItemsContainer.GetChild(0).gameObject);
@@ -47,7 +71,7 @@ public class ShopUIScript : MonoBehaviour
             
             //sets the position of generated items based on parent
             uiItem.SetItemPosition(Vector2.right * x * (itemHeight + itemSpacing));
-
+            uiItem.levelRequired = item.levelRequirement;
             uiItem.SetItemImg(item.itemImg);
             uiItem.SetItemName(item.itemName);
             uiItem.SetItemEnergy(item.itemEnergy);
@@ -57,12 +81,14 @@ public class ShopUIScript : MonoBehaviour
         for(int j = 0; j < 24 - itemsDB.itemsCount; j++) {
             Instantiate(placeholderItem, ShopItemsContainer);
         }
+
+        ShowItemLevelRequirement();
     }
 
     // Onclick Function - Add function for storing inventory
     public Inventory inventory;
 
-    void BuyItem(ShopItemData item) 
+    private void BuyItem(ShopItemData item) 
     {
         if(DataManager.CanSpendMoney(item.price)) {
             insufficientFunds.gameObject.SetActive(false);
@@ -91,13 +117,13 @@ public class ShopUIScript : MonoBehaviour
         reduceFunds.gameObject.SetActive(false);
     }
 
-    IEnumerator ShowInsufficientText() {
+    private IEnumerator ShowInsufficientText() {
         insufficientFunds.gameObject.SetActive(true);
         yield return new WaitForSeconds(1.5f);
         insufficientFunds.gameObject.SetActive(false);
     }
 
-    IEnumerator ShowReduceFunds(int price) {
+    private IEnumerator ShowReduceFunds(int price) {
         reduceFunds.gameObject.SetActive(true);
         reduceFunds.text = "-" + price.ToString();
         yield return new WaitForSeconds(1.5f);

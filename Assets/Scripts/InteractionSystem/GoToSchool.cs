@@ -10,30 +10,36 @@ public class GoToSchool : MonoBehaviour, Interactable
     [SerializeField] private int energyCost;
     [SerializeField] private GameObject clockAnimation;
     [SerializeField] private GameObject mainUI;
-    [SerializeField] private GameObject Time;
+    [SerializeField] private Clock timeAndDate;
     [SerializeField] private CanvasGroup IndicatorCanvas;
     [SerializeField] private GameObject questGiver;
     public bool isOpened = false;
-    Clock _clock;
     public string InteractionPrompt => _prompt;
 
     public bool Interact(InteractObject interactor)
     {
         if (DataManager.GetTutorialProgress() >= 5) {
-            _clock = Time.GetComponent<Clock>();
+            Debug.Log((int)timeAndDate.weekDay);
+            if ((int)timeAndDate.weekDay >= 5) {
+                string day = "";
+                day = (int)timeAndDate.weekDay == 5 ? "Saturday" : "Sunday";
+                NPCDialogue.Instance.AddDialogue("I don't have classes on " + day + ". Time to relax!", DataManager.GetPlayerName());
+                NPCDialogue.Instance.ShowDialogue();
+                return false;
+            }
 
             //hygiene: if 0, cant go to school
             if (HygieneSystem.Instance.currentHygiene == 0) {
-            NPCDialogue.Instance.AddDialogue("*sniffs* ugh... I smell bad right now. I need to take a bath before going to school.", DataManager.GetPlayerName());
-            NPCDialogue.Instance.ShowDialogue();
-            return false;
+                NPCDialogue.Instance.AddDialogue("*sniffs* ugh... I smell bad right now. I need to take a bath before going to school.", DataManager.GetPlayerName());
+                NPCDialogue.Instance.ShowDialogue();
+                return false;
             } 
 
-            if (_clock.Hour < 12) {
+            if (timeAndDate.Hour < 12) {
                 Energy.Instance.UseEnergy(5);
                 //hygiene decrease
                 HygieneSystem.Instance.DecreaseHygiene(40f);
-                _clock.AddHour(hoursToSchool);
+                timeAndDate.AddHour(hoursToSchool);
                 StartCoroutine(PlayAnimation());   
             }
             else {
@@ -65,8 +71,8 @@ public class GoToSchool : MonoBehaviour, Interactable
         IndicatorCanvas.alpha = 1;
         questGiver.SetActive(true);
         SaveGame.Instance.SaveGameState();
-        _clock.UpdateLightRotation();
-        _clock.UpdateLightSettings();
+        timeAndDate.UpdateLightRotation();
+        timeAndDate.UpdateLightSettings();
     }
 }
 

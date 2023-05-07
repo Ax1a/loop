@@ -34,7 +34,6 @@ public class SleepingPopUp : MonoBehaviour
             if (_currentHr == 7 && _currentMin == 0) {
                 _hr = 7;
                 SetDisplayTime();
-                Energy.Instance.ResetEnergy();
                 break;
             }
 
@@ -45,6 +44,7 @@ public class SleepingPopUp : MonoBehaviour
 
         uiFade.FadeOut();
 
+        Energy.Instance.ResetEnergy();
         timeAndDate.NextDay();
         yield return new WaitForSeconds(uiFade.getAnimationDuration());
         sleepingIndicator.gameObject.SetActive(false);

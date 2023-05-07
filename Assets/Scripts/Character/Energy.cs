@@ -153,7 +153,7 @@ public class Energy : MonoBehaviour
     {
         if(currEnergy >= maxEnergy)
         {
-            timeTxt.text = "Full";
+            timeTxt.text = "ENERGY";
             return;
         }
 
