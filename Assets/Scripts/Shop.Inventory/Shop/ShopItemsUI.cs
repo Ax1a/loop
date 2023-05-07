@@ -10,9 +10,12 @@ public class ShopItemsUI : MonoBehaviour
     [SerializeField] TMP_Text itemName;
     [SerializeField] TMP_Text itemEnergy;
     [SerializeField] TMP_Text itemPrice;
+    [SerializeField] TMP_Text itemLevelReq;
 
     [Space (20f)]
     [SerializeField] Button itemPurchaseBtn;
+
+    [HideInInspector] public int levelRequired;
 
     public void SetItemPosition(Vector2 pos)
     {
@@ -39,4 +42,12 @@ public class ShopItemsUI : MonoBehaviour
         itemPrice.text = price.ToString();
     }
 
+    public void SetItemLevelRequirement(int level)
+    {
+        itemLevelReq.text = level.ToString();
+    }
+
+    public void ToggleLevelRequirement(bool enable) {
+        itemLevelReq.transform.parent.gameObject.SetActive(enable);
+    }
 }

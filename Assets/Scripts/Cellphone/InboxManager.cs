@@ -15,6 +15,9 @@ public class InboxManager : MonoBehaviour
     [SerializeField] private GameObject detailsContainer;
     [SerializeField] private GameObject inboxButtonPrefab;
     [SerializeField] private Transform inboxButtonParent;
+    [SerializeField] private GameObject newInboxGameObject;
+    [SerializeField] private TextMeshProUGUI newInboxNPCName;
+    [SerializeField] private TextMeshProUGUI newInboxDescription;
     [SerializeField] private Button acceptButton;
     [SerializeField] private Button declineButton;
     private InboxButton _firstInbox;
@@ -30,6 +33,15 @@ public class InboxManager : MonoBehaviour
         acceptButton.gameObject.SetActive(false);
         declineButton.gameObject.SetActive(false);
         FillInboxButtons();
+    }
+
+    public IEnumerator ShowNewInbox(string name, string desc) {
+        newInboxGameObject.SetActive(true);
+        newInboxNPCName.text = name;
+        newInboxDescription.text = desc;
+
+        yield return new WaitForSeconds(2.5f);
+        newInboxGameObject.SetActive(false);
     }
 
     public void FillInboxButtons() {

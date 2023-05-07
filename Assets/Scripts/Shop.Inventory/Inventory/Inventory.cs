@@ -29,6 +29,7 @@ public class Inventory : MonoBehaviour
     // Populating inventory UI
     public void PopulateListUI()
     {
+        int itemCount = 0;
         if (listItemParent.childCount != 0) {
             foreach (Transform item in listItemParent.transform)
             {
@@ -50,14 +51,17 @@ public class Inventory : MonoBehaviour
                     listItem.GetComponent<InventoryUI>().SetInventoryItemName(item.itemName);
                     listItem.GetComponent<InventoryUI>().SetInventoryItemEnergy(item.itemEnergy);
                     listItem.GetComponent<InventoryUI>().SetInventoryItemQuantity(DataManager.GetInventoryItemQuantity(i));
-                    listItem.GetComponentInChildren<Button>().onClick.AddListener(delegate {UseItem(item.itemName, parentObject);});   
+                    listItem.GetComponentInChildren<Button>().onClick.AddListener(delegate {UseItem(item.itemName, parentObject);});
+                    itemCount++;   
                 }
             }
         }
 
-        for(int j = 0; j < 24 - DataManager.GetInventoryListCount(); j++) {
+        for(int j = 0; j < 24 - itemCount; j++) {
             Instantiate(placeholder, listItemParent);
         }
+
+        LayoutRefresher.Instance.RefreshContentFitter((RectTransform)listItemParent);
     }
 
     public void UseItem(string name, Transform parent) {
