@@ -47,7 +47,6 @@ public class ScreenSettingsMenu : MonoBehaviour
     {
         Resolution resolution = resolutions[resolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
-        Debug.Log("New resolution: " + Screen.currentResolution.width + " x " + Screen.currentResolution.height);
     }
     public void SetFullscreen(bool isFullscreen)
     {
