@@ -35,12 +35,17 @@ public class GoToSchool : MonoBehaviour, Interactable
                 return false;
             } 
 
-            if (timeAndDate.Hour < 12) {
+            // Go to school
+            if (timeAndDate.Hour >= 10 && timeAndDate.Hour <= 12) {
                 Energy.Instance.UseEnergy(5);
                 //hygiene decrease
                 HygieneSystem.Instance.DecreaseHygiene(40f);
-                timeAndDate.AddHour(hoursToSchool);
+                timeAndDate.SetHour(hoursToSchool);
                 StartCoroutine(PlayAnimation());   
+            }
+            else if (timeAndDate.Hour < 10) {
+                NPCDialogue.Instance.AddDialogue("It's too early to go to school.", DataManager.GetPlayerName());
+                NPCDialogue.Instance.ShowDialogue();
             }
             else {
                 NPCDialogue.Instance.AddDialogue("I think my class has already ended.", DataManager.GetPlayerName());
@@ -61,14 +66,16 @@ public class GoToSchool : MonoBehaviour, Interactable
         clockAnimation.SetActive(true);
         AudioManager.Instance.PlaySfx("School");
         mainUI.SetActive(false);
-        UIController.Instance.SetPanelActive(true);
+        UIController.Instance.SetPanelActive(false);
         IndicatorCanvas.alpha = 0;
+        UIController.Instance.onTopCanvas.SetActive(false);
 
         yield return new WaitForSeconds(3f);
 
         clockAnimation.SetActive(false);
         mainUI.SetActive(true);
         UIController.Instance.SetPanelActive(false);
+        UIController.Instance.onTopCanvas.SetActive(true);
         IndicatorCanvas.alpha = 1;
         questGiver.SetActive(true);
         SaveGame.Instance.SaveGameState();

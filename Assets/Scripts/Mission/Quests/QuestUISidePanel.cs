@@ -18,6 +18,11 @@ public class QuestUISidePanel : MonoBehaviour
     
     private List<GameObject> _objectives = new List<GameObject>();
 
+    private void OnEnable() {
+        if (LayoutRefresher.Instance != null)
+            LayoutRefresher.Instance.RefreshContentFitter((RectTransform)gameObject.transform.parent);
+    }
+
     public void SetQuestTitle(string _title) {
         title.text = _title;
     }
