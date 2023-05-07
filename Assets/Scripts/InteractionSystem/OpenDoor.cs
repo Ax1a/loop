@@ -26,6 +26,7 @@ public class OpenDoor : MonoBehaviour, Interactable
 
     private IEnumerator TakeBath() {
         UIController.Instance.SetPanelActive(true);
+        AudioManager.Instance.PlaySfx("Shower");
         bathing = true;
         bathPopup.SetActive(true);
         StartCoroutine (ShowBathingText());

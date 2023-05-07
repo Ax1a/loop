@@ -59,6 +59,7 @@ public class GoToSchool : MonoBehaviour, Interactable
 
     private IEnumerator PlayAnimation() {
         clockAnimation.SetActive(true);
+        AudioManager.Instance.PlaySfx("School");
         mainUI.SetActive(false);
         UIController.Instance.SetPanelActive(true);
         IndicatorCanvas.alpha = 0;

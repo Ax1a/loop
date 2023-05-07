@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Clock : MonoBehaviour
 {
-    [Header ("Objects")]
+    [Header("Objects")]
     [SerializeField] private GameObject currentDayPopup;
     [SerializeField] private Light directionalLight;
     [SerializeField] private Light sunLightEffect;
@@ -17,7 +17,7 @@ public class Clock : MonoBehaviour
     public TextMeshProUGUI[] UI_DATE_TEXT;
     public TextMeshProUGUI[] UI_WEEK_TEXT;
 
-    [Header ("Params")]
+    [Header("Params")]
     public TimeFormat timeFormat = TimeFormat.Hour_24;
     public float secPerMin = 1;
     [SerializeField] private float rotationPerHr;
@@ -25,7 +25,7 @@ public class Clock : MonoBehaviour
     [SerializeField] private Color dayAmbientLight;
     [SerializeField] private Color nightAmbientLight;
     [SerializeField] private AnimationCurve lightChangeCurve;
-    
+
     #region Private Hidden Variables
     private string _time;
     private string _date;
@@ -41,6 +41,7 @@ public class Clock : MonoBehaviour
     int maxMin = 60;
     private int dayOfWeek = 1;
     float timer = 0;
+    string currentBgMusic = "";
     #endregion
     [HideInInspector] public Weekdays weekDay;
 
@@ -71,7 +72,8 @@ public class Clock : MonoBehaviour
         {
             isAm = true;
         }
-        else {
+        else
+        {
             isAm = false;
         }
 
@@ -79,11 +81,12 @@ public class Clock : MonoBehaviour
         SetTimeDataString();
     }
 
-    private void Start() {
+    private void Start()
+    {
         UpdateLightRotation();
         UpdateLightSettings();
     }
-    
+
     void Update()
     {
         if (BotGuide.Instance.guideIsActive()) return;
@@ -91,9 +94,10 @@ public class Clock : MonoBehaviour
         if (timer >= secPerMin)
         {
             min++;
-            
+
             // To be updated // generate random time from 2 - 5
-            if (hr == passHr && min == passMin && generatedTime) {
+            if (hr == passHr && min == passMin && generatedTime)
+            {
                 StartCoroutine(PassedOut());
             }
             if (min >= maxMin)
@@ -102,7 +106,8 @@ public class Clock : MonoBehaviour
                 hr++;
 
                 // Generate random time on 2 am
-                if (hr == 2) {
+                if (hr == 2)
+                {
                     GenerateRandomTime();
                 }
 
@@ -111,12 +116,13 @@ public class Clock : MonoBehaviour
                 {
                     isAm = true;
                 }
-                else {
+                else
+                {
                     isAm = false;
                 }
 
                 // Reset hour and add day
-                if(hr >= maxHr) 
+                if (hr >= maxHr)
                 {
                     hr = 0;
                     day++;
@@ -124,7 +130,8 @@ public class Clock : MonoBehaviour
                 }
             }
 
-            if (!UIController.Instance.OtherPanelActive()) {
+            if (!UIController.Instance.OtherPanelActive())
+            {
                 UpdateLightRotation();
                 UpdateLightSettings();
             }
@@ -138,7 +145,8 @@ public class Clock : MonoBehaviour
         }
     }
 
-    private void GenerateRandomTime() {
+    private void GenerateRandomTime()
+    {
         generatedTime = true;
         // Generate random time;
         passHr = UnityEngine.Random.Range(2, 5);
@@ -165,23 +173,46 @@ public class Clock : MonoBehaviour
         directionalLight.colorTemperature = Mathf.Lerp(12707, 3869, lightChangeCurve.Evaluate(dotProduct));
 
         // Show or hide the god rays on the windows
-        if (hr >= 7 && hr <= 11) {
+        if (hr >= 7 && hr <= 11)
+        {
             godRay.SetActive(true);
         }
-        else {
+        else
+        {
             godRay.SetActive(false);
         }
 
         // Set the sun light intensity on the window
-        if (hr >= 6 && hr <= 14) {
+        if (hr >= 6 && hr <= 14)
+        {
             sunLightEffect.intensity = 134;
         }
-        else {
+        else
+        {
             if (sunLightEffect.intensity > 0) sunLightEffect.intensity -= 5;
         }
+
+        // Check if it is night and change the background music accordingly
+        string bgMusic = "";
+        if (hr >= 19 || hr < 7)
+        {
+            bgMusic = "Night";
+        }
+        else
+        {
+            bgMusic = "Day";
+        }
+
+        // Only play new background music if it's different from the current one
+        if (bgMusic != currentBgMusic)
+        {
+            currentBgMusic = bgMusic;
+            AudioManager.Instance.PlayMusic(bgMusic);
+        }
     }
-    
-    public void NextDay() {
+
+    public void NextDay()
+    {
         generatedTime = false;
         isAm = true;
         min = 0;
@@ -212,19 +243,21 @@ public class Clock : MonoBehaviour
             directionalLight.transform.rotation = Quaternion.Euler(totalRotation, 0f, 0f);
         }
     }
-    
-    public void AddHour(int hr) {
+
+    public void AddHour(int hr)
+    {
         this.hr += hr;
 
         if (this.hr < 12)
         {
             isAm = true;
         }
-        else {
+        else
+        {
             isAm = false;
         }
 
-        if(hr >= maxHr) 
+        if (hr >= maxHr)
         {
             hr = 0;
             day++;
@@ -235,7 +268,7 @@ public class Clock : MonoBehaviour
 
     void SetTimeDataString()
     {
-        switch(timeFormat)
+        switch (timeFormat)
         {
             case TimeFormat.Hour_12:
                 {
@@ -299,10 +332,12 @@ public class Clock : MonoBehaviour
                 }
         }
 
-        if (hr > 1 && hr < 7) {
+        if (hr > 1 && hr < 7)
+        {
             UpdateTime(Color.red);
         }
-        else {
+        else
+        {
             UpdateTime(Color.white);
         }
         UpdateWeekday();
@@ -312,7 +347,8 @@ public class Clock : MonoBehaviour
         currentDayText.text = "Day " + day.ToString();
     }
 
-    private void UpdateTime(Color color) {
+    private void UpdateTime(Color color)
+    {
         foreach (var time in UI_TIME_TEXT)
         {
             time.text = _time;
@@ -320,7 +356,8 @@ public class Clock : MonoBehaviour
         }
     }
 
-    private void UpdateDate() {
+    private void UpdateDate()
+    {
         for (int i = 0; i < UI_DATE_TEXT.Length; i++)
         {
             UI_DATE_TEXT[i].text = day.ToString();
