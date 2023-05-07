@@ -16,6 +16,7 @@ public class UIController : MonoBehaviour
     [Header ("Game Objects")]
     [SerializeField] private GameObject mainUI;
     [SerializeField] private GameObject indicatorCanvas;
+    public GameObject onTopCanvas;
     [SerializeField] private GameObject[] gameUI;
     [SerializeField] private GameObject[] tabMenus;
     [SerializeField] private GameObject Character;
@@ -135,6 +136,7 @@ public class UIController : MonoBehaviour
                 if (ui.name == uiToOpen) {
                     ui.SetActive(true);
                     indicatorCanvas.SetActive(false);
+                    onTopCanvas.SetActive(false);
                     mainUI.GetComponent<Canvas>().enabled = false;
 
                     SetPanelActive(true);
@@ -154,6 +156,7 @@ public class UIController : MonoBehaviour
 
         SetPanelActive(false);
         indicatorCanvas.SetActive(true);
+        onTopCanvas.SetActive(true);
         gameUIActive = false;
     }
 

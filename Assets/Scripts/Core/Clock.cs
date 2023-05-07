@@ -214,10 +214,10 @@ public class Clock : MonoBehaviour
     public void NextDay()
     {
         generatedTime = false;
+        if(!(hr >= 0 && hr <= 6)) day += 1;
         isAm = true;
         min = 0;
         hr = 7;
-        if(!(hr >= 0 && hr <= 6)) day += 1;
         dayOfWeek = (day-1) % 7;
 
         currentDayPopup.SetActive(true);
@@ -243,10 +243,9 @@ public class Clock : MonoBehaviour
             directionalLight.transform.rotation = Quaternion.Euler(totalRotation, 0f, 0f);
         }
     }
-
-    public void AddHour(int hr)
-    {
-        this.hr += hr;
+    
+    public void SetHour(int hr) {
+        this.hr = hr;
 
         if (this.hr < 12)
         {
@@ -263,6 +262,8 @@ public class Clock : MonoBehaviour
             day++;
         }
 
+        UpdateLightRotation();
+        UpdateLightSettings();
         SetTimeDataString();
     }
 

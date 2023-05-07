@@ -26,6 +26,7 @@ public class OpenDoor : MonoBehaviour, Interactable
 
     private IEnumerator TakeBath() {
         UIController.Instance.SetPanelActive(true);
+        UIController.Instance.onTopCanvas.SetActive(false);
         AudioManager.Instance.PlaySfx("Shower");
         bathing = true;
         bathPopup.SetActive(true);
@@ -35,6 +36,7 @@ public class OpenDoor : MonoBehaviour, Interactable
         bathing = false;
         bathPopup.SetActive(false);
         UIController.Instance.SetPanelActive(false);
+        UIController.Instance.onTopCanvas.SetActive(true);
         HygieneSystem.Instance.IncreaseHygiene();
         NPCDialogue.Instance.AddDialogue("Ah, this warm bath is just what I needed to relax and refresh myself.", DataManager.GetPlayerName());
         NPCDialogue.Instance.ShowDialogue();

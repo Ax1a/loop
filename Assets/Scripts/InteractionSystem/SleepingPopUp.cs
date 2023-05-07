@@ -26,6 +26,7 @@ public class SleepingPopUp : MonoBehaviour
         uiFade = sleepingIndicator.GetComponent<UIFade>();
 
         sleepingIndicator.gameObject.SetActive(true);
+        UIController.Instance.onTopCanvas.SetActive(false);
         _currentHr = timeAndDate.Hour;
         _currentMin = timeAndDate.Minute;
         UIController.Instance.SetPanelActive(true);
@@ -47,6 +48,7 @@ public class SleepingPopUp : MonoBehaviour
         Energy.Instance.ResetEnergy();
         timeAndDate.NextDay();
         yield return new WaitForSeconds(uiFade.getAnimationDuration());
+        UIController.Instance.onTopCanvas.SetActive(true);
         sleepingIndicator.gameObject.SetActive(false);
         UIController.Instance.SetPanelActive(false);
         SaveGame.Instance.SaveGameState();

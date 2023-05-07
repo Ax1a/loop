@@ -153,8 +153,13 @@ public class ShopCourse : MonoBehaviour
         for (int i = 0; i < _progLanguages.Length; i++)
         {
             if (DataManager.GetProgrammingLanguageProgress(_progLanguages[i]) == -1) {
-                courseRequirementTxt[i].gameObject.SetActive(true);
-                courseRequirementTxt[i].text = "Finish current course \nRequires Level " + courseLevelRequirement;
+                if (courseLevelRequirement != 0) {
+                    courseRequirementTxt[i].gameObject.SetActive(true);
+                    courseRequirementTxt[i].text = "Finish current course \nRequires Level " + courseLevelRequirement;
+                }
+                else {
+                    courseRequirementTxt[i].gameObject.SetActive(false);
+                }
                 lockedIndicators[i].SetActive(true);
                 courseSelectionLocks[i].transform.parent.GetComponent<Button>().interactable = false;
                 courseSelectionLocks[i].SetActive(true);

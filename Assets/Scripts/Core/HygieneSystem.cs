@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class HygieneSystem : MonoBehaviour
 {
+    [SerializeField] private GameObject smokeEffect;
     public Slider hygieneSlider;
     public float maxHygiene = 100f;
     public float hygieneDecrement = 40f;
@@ -30,7 +31,7 @@ public class HygieneSystem : MonoBehaviour
     {
         // decrease hygiene every 5 seconds, then reset timer.
         timeElapsed += Time.deltaTime;
-        if (timeElapsed >= 10f)
+        if (timeElapsed >= 50f)
         {
             DecreaseHygiene();
             timeElapsed = 0f;
@@ -46,6 +47,13 @@ public class HygieneSystem : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.K))
         {
             DecreaseHygiene(40f);
+        }
+
+        if (currentHygiene == 0) {
+            smokeEffect.SetActive(true);
+        }
+        else {
+            smokeEffect.SetActive(false);
         }
 
         // change color of slider fill based on hygiene level

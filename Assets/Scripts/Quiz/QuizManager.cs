@@ -145,7 +145,10 @@ public class QuizManager : MonoBehaviour
 
     public void ShuffleQuestions()
     {
+        // Getting the length or count of the QnA List
         int n = QnA.Count;
+
+        // Start from the last and swap the questions one by one
         while (n > 1)
         {
             n--;
@@ -155,7 +158,7 @@ public class QuizManager : MonoBehaviour
             QnA[n] = temp;
         }
         
-        // Add questions
+        // Set the current question based on the current index
         SetCurrentQuestion(_questionIndex);
     }
     public void GameOver()
