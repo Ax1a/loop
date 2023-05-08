@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace Avocado.DeveloperCheatConsole.Scripts.Core.Commands.AllCommands {
     public class CheatCodes : MonoBehaviour {
+        [SerializeField] private Clock timeAndDate;
         private void Awake() {
             DeveloperConsole.Instance.AddCommand(new DevCommand("add_money", "add_money [amount]", delegate(int parameter) {
                 DataManager.AddMoney(parameter);
@@ -32,6 +33,14 @@ namespace Avocado.DeveloperCheatConsole.Scripts.Core.Commands.AllCommands {
 
             DeveloperConsole.Instance.AddCommand(new DevCommand("unlock_interactions", "This will unlock all the available interactions", () => {
                 InteractionQuizManager.Instance.ActivateAllInteractionQuiz();
+            }));
+
+            DeveloperConsole.Instance.AddCommand(new DevCommand("set_hour", "set_hour [hr]", delegate(int hour) {
+                timeAndDate.SetHour(hour);
+            }));
+
+            DeveloperConsole.Instance.AddCommand(new DevCommand("set_day", "set_day [day]", delegate(int day) {
+                timeAndDate.Day = day;
             }));
             
             // DeveloperConsole.Instance.AddCommand(new DevCommand("test", "test with range string parameters", delegate(List<string> parameters) {

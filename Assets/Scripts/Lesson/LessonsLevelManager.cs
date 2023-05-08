@@ -63,6 +63,7 @@ public class LessonsLevelManager : MonoBehaviour
         if (DataManager.GetProgrammingLanguageProgress(course) >= easyLevelCount + mediumLevelCount + difficultLevelCount) {
             UnlockOtherCourses();
         }
+        
         UpdateLessonState();
     }
 
