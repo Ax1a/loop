@@ -38,9 +38,14 @@ public class ScreenSettingsMenu : MonoBehaviour
         resolutionDropdown.AddOptions(options);
         resolutionDropdown.value = currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
-
-        // Set the default resolution to 1280 x 720
-        Screen.SetResolution(1280, 720, Screen.fullScreen);
+        float aspectRatio = (float)Screen.width / Screen.height;
+        if (aspectRatio == 1.77f) {
+            Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, Screen.fullScreen);
+        }
+        else {
+            // Set the default resolution to 1280 x 720
+            Screen.SetResolution(1280, 720, Screen.fullScreen);
+        }
 
     }
     public void SetResolution(int resolutionIndex)

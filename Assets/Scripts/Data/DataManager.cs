@@ -18,6 +18,7 @@ public class PlayerData
     public string name;
     public int tutorialProgress = 0;
     public int reachedLesson = 1;
+    public int daysAttendedInSchool = 0;
     public List<DrinkInventoryList> inventoryList;
     public Dictionary<string, int> programmingLanguage = new Dictionary<string, int>() {
         {"c++", -1},
@@ -120,6 +121,25 @@ public static class DataManager
     public static void SetHour(int hour)
     {
         playerData.hr = hour;
+    }
+
+
+    /* Days Attended In School
+    */
+
+    public static int GetDaysAttended()
+    {
+        return playerData.daysAttendedInSchool;
+    }
+
+    public static void AddDaysAttended(int day)
+    {
+        playerData.daysAttendedInSchool += day;
+    }
+
+    public static void SetDaysAttended(int day)
+    {
+        playerData.daysAttendedInSchool = day;
     }
 
     /*

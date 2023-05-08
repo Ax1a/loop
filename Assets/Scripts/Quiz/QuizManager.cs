@@ -20,6 +20,7 @@ public class QuizManager : MonoBehaviour
     [SerializeField] private LessonsLevelManager levelManager;
     [SerializeField] private GameObject questGiver;
     [SerializeField] private GameObject robotObject;
+    [SerializeField] private int interactionID;
     private bool started = false;
     GameObject startPanel;
     quizTimer timer;
@@ -257,6 +258,7 @@ public class QuizManager : MonoBehaviour
 
     IEnumerator DisplayRewards()
     {
+        InteractionQuizManager.Instance.ActivateInteractionQuiz(interactionID);
         //Display Money Reward
         //Money index: 0 
         yield return new WaitForSeconds(1f);

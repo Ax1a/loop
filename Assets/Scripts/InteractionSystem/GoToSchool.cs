@@ -80,6 +80,7 @@ public class GoToSchool : MonoBehaviour, Interactable
         questGiver.SetActive(true);
         SaveGame.Instance.SaveGameState();
         timeAndDate.UpdateLightRotation();
+        DataManager.AddDaysAttended(1);
         timeAndDate.UpdateLightSettings();
     }
 }

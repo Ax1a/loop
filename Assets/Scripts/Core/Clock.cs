@@ -149,8 +149,9 @@ public class Clock : MonoBehaviour
     {
         generatedTime = true;
         // Generate random time;
-        passHr = UnityEngine.Random.Range(2, 5);
-        passMin = UnityEngine.Random.Range(0, 60);
+        // passHr = UnityEngine.Random.Range(2, 5);
+        passHr = 2;
+        passMin = UnityEngine.Random.Range(40, 60);
     }
 
     private IEnumerator PassedOut() {
