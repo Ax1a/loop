@@ -100,8 +100,8 @@ public class TutorialManager : MonoBehaviour
         pcBoxes.SetActive(false);
         computer.SetActive(true);
         UIController.Instance.onTopCanvas.SetActive(true);
-        BotGuide.Instance.AddDialogue("Great! Now in school, you can gain an allowance based on the number of school days you have attended in 30 days."); 
-        BotGuide.Instance.ShowDialogue();
+        // BotGuide.Instance.AddDialogue("Great! Now in school, you can gain an allowance based on the number of school days you have attended in 30 days."); 
+        // BotGuide.Instance.ShowDialogue();
         // SaveGame.Instance.SaveGameState();
     }
 

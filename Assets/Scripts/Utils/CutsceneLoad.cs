@@ -12,8 +12,16 @@ public class CutsceneLoad : MonoBehaviour
     [SerializeField] private CanvasGroup canvasGroup;
     private Sequence sequence;
     private CanvasGroup _transitionCG;
+    private bool loading = false;
+    private bool sceneLoaded = false;
+
+    private void Awake() {
+        StartCoroutine(LoadScene());
+    }
 
     private void OnEnable() {
+        loading = false;
+        sceneLoaded = false;
         sequence = DOTween.Sequence();
         skipIndicator.SetActive(true);
         
@@ -26,13 +34,31 @@ public class CutsceneLoad : MonoBehaviour
             PlayTransition();
         }
         
-        if (_transitionCG != null && _transitionCG.alpha == 1) {
-            LoadScene();
+        if (_transitionCG != null && _transitionCG.alpha == 1 && !loading) {
+            if (sceneLoaded) {
+                SceneManager.UnloadSceneAsync(gameObject.scene);
+                SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(sceneID));
+            }
+            else {
+                StartCoroutine(LoadScene());
+            }
         }
     }
 
-    public void LoadScene() {
-        SceneManager.LoadScene(sceneID);
+    public IEnumerator LoadScene() {
+        loading = true;
+        var scene = SceneManager.GetSceneByBuildIndex(sceneID);
+        if (!scene.isLoaded) {
+            var operation = SceneManager.LoadSceneAsync(sceneID, LoadSceneMode.Single);
+            while (!operation.isDone) {
+                yield return null;
+            }
+            sceneLoaded = true;
+        }
+        else {
+            SceneManager.SetActiveScene(scene);
+            sceneLoaded = true;
+        }
     }
 
     public void PlayTransition() {

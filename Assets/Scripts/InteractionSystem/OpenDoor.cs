@@ -9,8 +9,14 @@ public class OpenDoor : MonoBehaviour, Interactable
     [SerializeField] private string _prompt;
     [SerializeField] private GameObject bathPopup;
     [SerializeField] private TextMeshProUGUI bathText;
+    [SerializeField] private GameObject shirt;
     bool bathing = false;
     public string InteractionPrompt => _prompt;
+    private Renderer shirtRenderer;
+
+    private void Start() {
+        shirtRenderer = shirt.GetComponent<Renderer>();
+    }
 
     public bool Interact(InteractObject interactor)
     {
@@ -40,6 +46,9 @@ public class OpenDoor : MonoBehaviour, Interactable
         HygieneSystem.Instance.IncreaseHygiene();
         NPCDialogue.Instance.AddDialogue("Ah, this warm bath is just what I needed to relax and refresh myself.", DataManager.GetPlayerName());
         NPCDialogue.Instance.ShowDialogue();
+
+        Color randomColor = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
+        shirtRenderer.material.color = randomColor;
     }
 
     private IEnumerator ShowBathingText() {
