@@ -228,6 +228,8 @@ public class Clock : MonoBehaviour
         UpdateLightRotation();
         UpdateLightSettings();
         SetTimeDataString();
+        
+        if ((day % 30) == 0) SchoolSystemManager.Instance.ShowGrade();
     }
 
     public void UpdateLightRotation()
@@ -259,8 +261,37 @@ public class Clock : MonoBehaviour
 
         if (hr >= maxHr)
         {
-            hr = 0;
-            day++;
+            this.hr = 0;
+            this.day++;
+        }
+
+        UpdateLightRotation();
+        UpdateLightSettings();
+        SetTimeDataString();
+    }
+
+    public void SetHourAndMinute(int hr, int min) {
+        this.hr = hr;
+        this.min = min;
+
+        if (this.hr < 12)
+        {
+            isAm = true;
+        }
+        else
+        {
+            isAm = false;
+        }
+
+        if (hr >= maxHr)
+        {
+            this.hr = 0;
+            this.day++;
+        }
+
+        if (min >= maxMin) {
+            this.min = 0;
+            this.hr++;
         }
 
         UpdateLightRotation();

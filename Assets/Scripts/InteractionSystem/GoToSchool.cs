@@ -13,13 +13,17 @@ public class GoToSchool : MonoBehaviour, Interactable
     [SerializeField] private Clock timeAndDate;
     [SerializeField] private CanvasGroup IndicatorCanvas;
     [SerializeField] private GameObject questGiver;
+    
+    [Header ("Character Objects")]
+    [SerializeField] private GameObject bagMain;
+    [SerializeField] private GameObject bagSupp;
+    [SerializeField] private GameObject smokeEffect;
     public bool isOpened = false;
     public string InteractionPrompt => _prompt;
 
     public bool Interact(InteractObject interactor)
     {
         if (DataManager.GetTutorialProgress() >= 5) {
-            Debug.Log((int)timeAndDate.weekDay);
             if ((int)timeAndDate.weekDay >= 5) {
                 string day = "";
                 day = (int)timeAndDate.weekDay == 5 ? "Saturday" : "Sunday";
@@ -40,7 +44,10 @@ public class GoToSchool : MonoBehaviour, Interactable
                 Energy.Instance.UseEnergy(5);
                 //hygiene decrease
                 HygieneSystem.Instance.DecreaseHygiene(40f);
-                timeAndDate.SetHour(hoursToSchool);
+                timeAndDate.SetHourAndMinute(hoursToSchool, 30);
+                bagMain.SetActive(true);
+                bagSupp.SetActive(true);
+                smokeEffect.SetActive(true);
                 StartCoroutine(PlayAnimation());   
             }
             else if (timeAndDate.Hour < 10) {
@@ -48,10 +55,10 @@ public class GoToSchool : MonoBehaviour, Interactable
                 NPCDialogue.Instance.ShowDialogue();
             }
             else {
+                // condition to show that user is already late to class
                 NPCDialogue.Instance.AddDialogue("I think my class has already ended.", DataManager.GetPlayerName());
                 NPCDialogue.Instance.ShowDialogue();
             }
-            // condition to show that user is already late to class
             return true;
         }
         else if (DataManager.GetTutorialProgress() >= 3) {
@@ -82,6 +89,8 @@ public class GoToSchool : MonoBehaviour, Interactable
         timeAndDate.UpdateLightRotation();
         DataManager.AddDaysAttended(1);
         timeAndDate.UpdateLightSettings();
+        bagMain.SetActive(false);
+        bagSupp.SetActive(false);
     }
 }
 
