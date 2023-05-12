@@ -5,29 +5,33 @@ using UnityEngine.Events;
 
 public class MazeManager : MonoBehaviour
 {
-    public int BlockItemCount { get; private set;}
-    public int TotalBlockItemCount { get; private set;}
+    public int BlockItemCount { get; private set; }
+    public int TotalBlockItemCount { get; private set; }
     public GameObject BlockItemsParent;
     public UnityEvent<MazeManager> OnBlockItemCollected;
     public UnityEvent OnWin;
     public UnityEvent OnReset;
 
-    void Start ()
+    void Start()
     {
         TotalBlockItemCount = BlockItemsParent.transform.childCount;
     }
-    public void BlocksCollected () 
+    public void BlocksCollected()
     {
         BlockItemCount++;
         OnBlockItemCollected.Invoke(this);
-        CheckForWin();
+        // CheckForWin();
     }
 
-    private void CheckForWin()
+    public void CheckForWin()
     {
         if (BlockItemCount == TotalBlockItemCount)
         {
             OnWin.Invoke();
+        }
+        else
+        {
+            Debug.Log("Collect all the block first");
         }
     }
     public void ResetGame()
@@ -35,7 +39,7 @@ public class MazeManager : MonoBehaviour
         // To-do: Reset player initial position
         BlockItemCount = 0;
         ActivateBlockItems();
-        
+
 
         OnReset.Invoke();
     }
