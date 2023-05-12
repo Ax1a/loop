@@ -6,11 +6,16 @@ public class CollectibleBlock : MonoBehaviour
 {
     public GameObject QuizPanel;
     public MazeQuizManager mazeQuizManager;
+    public bool collected = false;
+    [SerializeField] MazeManager mazeManager;
 
+    void OnEnable()
+    {
+        collected = false;
+    }
     private void OnTriggerEnter(Collider other)
     {
-        MazeManager mazeManager = other.GetComponent<MazeManager>();
-
+        mazeManager = other.GetComponent<MazeManager>();
         if (mazeManager != null)
         {
             if (QuizPanel != null)
@@ -18,11 +23,12 @@ public class CollectibleBlock : MonoBehaviour
                 if (!QuizPanel.activeSelf) // check if quiz panel is not active
                 {
                     QuizPanel.SetActive(true);
-                }
-                else if (mazeQuizManager.currentPoints == mazeQuizManager.pointsToWin) // check if player has answered the quiz
-                {
-                    mazeManager.BlocksCollected();
                     gameObject.SetActive(false);
+                }
+                else if (mazeQuizManager.currentPoints == mazeQuizManager.pointsToWin && !collected) // check if player has answered the quiz
+                {
+                    collected = true;
+                    mazeQuizManager.Correct(); // trigger the correct answer logic
                 }
                 else
                 {
@@ -30,6 +36,26 @@ public class CollectibleBlock : MonoBehaviour
                 }
             }
         }
+    }
+
+
+    public void Collect()
+    {
+        if (!collected)
+        {
+            if (mazeManager != null)
+            {
+                mazeManager.BlocksCollected();
+            }
+            collected = true;
+            gameObject.SetActive(false);
+            Debug.Log("Collected");
+        }
+    }
+
+    public void NoTCollected()
+    {
+        gameObject.SetActive(true);
 
     }
 }

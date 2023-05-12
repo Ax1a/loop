@@ -21,6 +21,7 @@ public class MazeQuizManager : MonoBehaviour
     public GameObject[] options;
     private QuestionAndAnswer currentQuestion;
     public TextMeshProUGUI text;
+    public CollectibleBlock collectibleBlock;
     void Start()
     {
         GenerateQuestion();
@@ -32,15 +33,17 @@ public class MazeQuizManager : MonoBehaviour
     public void Correct()
     {
         // scoreCount += 1;
-        GenerateQuestion();
         currentQuestion.Answered = true;
         currentPoints += 1;
+        collectibleBlock.Collect();
+        QuizPanel.gameObject.SetActive(false);
         Debug.Log("Answer is correct");
     }
     public void Wrong()
     {
         currentQuestion.Answered = true;
-        GenerateQuestion();
+        collectibleBlock.NoTCollected();
+        QuizPanel.gameObject.SetActive(false);
         Debug.Log("Answer is wrong");
 
     }
@@ -66,5 +69,9 @@ public class MazeQuizManager : MonoBehaviour
             }
         }
 
+    }
+    public void ResetQuiz()
+    {
+        currentQuestion.Answered = false;
     }
 }
