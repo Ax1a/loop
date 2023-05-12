@@ -28,7 +28,8 @@ public class ScreenSettingsMenu : MonoBehaviour
             string option = resolutions[i].width + " x " + resolutions[i].height;
             options.Add(option);
 
-            if (resolutions[i].width == 1280 && resolutions[i].height == 720)
+            if (resolutions[i].width == Screen.currentResolution.width &&
+                resolutions[i].height == Screen.currentResolution.height)
             {
                 currentResolutionIndex = i;
             }
@@ -38,15 +39,15 @@ public class ScreenSettingsMenu : MonoBehaviour
         resolutionDropdown.AddOptions(options);
         resolutionDropdown.value = currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
-        float aspectRatio = (float)Screen.width / Screen.height;
-        if (aspectRatio == 1.77f) {
-            Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, Screen.fullScreen);
-        }
-        else {
-            // Set the default resolution to 1280 x 720
-            Screen.SetResolution(1280, 720, Screen.fullScreen);
-        }
 
+        // float aspectRatio = (float)Screen.width / Screen.height;
+        // if (aspectRatio == 1.77f) {
+        //     Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, Screen.fullScreen);
+        // }
+        // else {
+        //     // Set the default resolution to 1280 x 720
+        //     Screen.SetResolution(1280, 720, Screen.fullScreen);
+        // }
     }
     public void SetResolution(int resolutionIndex)
     {
