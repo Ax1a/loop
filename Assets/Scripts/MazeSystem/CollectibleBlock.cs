@@ -18,12 +18,11 @@ public class CollectibleBlock : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            // mazeManager = other.GetComponent<MazeManager>();
             if (mazeManager != null)
             {
                 if (QuizPanel != null)
                 {
-                    if (!QuizPanel.activeSelf) // check if quiz panel is not active
+                    if (!QuizPanel.activeSelf)
                     {
                         MazeUI.Instance.SetInteractionIndicator("Collect Block");
                         canInteract = true;
@@ -31,7 +30,7 @@ public class CollectibleBlock : MonoBehaviour
                     else if (mazeQuizManager.currentPoints == mazeQuizManager.pointsToWin && !collected) // check if player has answered the quiz
                     {
                         collected = true;
-                        mazeQuizManager.Correct(); // trigger the correct answer logic
+                        mazeQuizManager.Correct(); 
                     }
                     else
                     {
