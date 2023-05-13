@@ -42,7 +42,7 @@ public class MazeQuizManager : MonoBehaviour
     public void Wrong()
     {
         currentQuestion.Answered = true;
-        collectibleBlock.NoTCollected();
+        collectibleBlock.NotCollected();
         QuizPanel.gameObject.SetActive(false);
         Debug.Log("Answer is wrong");
 
@@ -68,10 +68,28 @@ public class MazeQuizManager : MonoBehaviour
                 options[i].GetComponent<AnswerManager>().isCorrect = true;
             }
         }
-
     }
+    
     public void ResetQuiz()
     {
         currentQuestion.Answered = false;
+    }
+
+    private void OnEnable() {
+        if (ThirdPersonCamera.Instance != null) {
+            ThirdPersonCamera.Instance.ToggleControl(false);
+            ThirdPersonCamera.Instance.ToggleCursor(true);
+        }
+    }
+
+    private void OnDisable() {
+        if (ThirdPersonCamera.Instance != null) {
+            ThirdPersonCamera.Instance.ToggleControl(true);
+            ThirdPersonCamera.Instance.ToggleCursor(false);
+        }
+
+        if (!currentQuestion.Answered) {
+            collectibleBlock.NotCollected();
+        }
     }
 }

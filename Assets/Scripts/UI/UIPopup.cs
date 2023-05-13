@@ -17,11 +17,12 @@ public class UIPopup : MonoBehaviour
     [Header ("Auto Close Popup")]
     [SerializeField] bool autoClose = false;
     [SerializeField] float delayClose = 2.5f;
+    [SerializeField] float scale = 1f;
 
     private void OnEnable() {
         if (tweenGO == null) { tweenGO = transform; }
         tweenGO.localScale = Vector3.zero;
-        tweenGO.DOScale(1, showTime).SetEase(showEase);
+        tweenGO.DOScale(scale, showTime).SetEase(showEase);
 
         if (autoClose == true) {
             tweenGO.DOScale(0, showTime).SetEase(showEase).SetDelay(delayClose).OnComplete(() => {
