@@ -9,8 +9,14 @@ public class MazeUI : MonoBehaviour
     public TextMeshProUGUI blockText;
     public MazeManager mazeManager;
     public MazePlayerMovement movementManager;
-
     public GameObject interactionPanel;
+    [SerializeField] private TextMeshProUGUI interactIndicator;
+    public static MazeUI Instance;
+    
+    private void Awake() {
+        if (Instance == null) Instance = this;
+    }
+
     void Start()
     {
         mazeManager.OnWin.AddListener(OnWin);
@@ -35,5 +41,13 @@ public class MazeUI : MonoBehaviour
         movementManager.ResetPosition();
     }
 
+    public void SetInteractionIndicator(string text) {
+        interactIndicator.text = text;
+        interactIndicator.transform.parent.gameObject.SetActive(true);
+    }
+
+    public void DisableInteractionIndicator() {
+        interactIndicator.transform.parent.gameObject.SetActive(false);
+    }
 }
  
