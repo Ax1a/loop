@@ -8,7 +8,7 @@ public class MazeUI : MonoBehaviour
 {   
     public TextMeshProUGUI blockText;
     public MazeManager mazeManager;
-    public MovementManager movementManager;
+    public MazePlayerMovement movementManager;
 
     public GameObject interactionPanel;
     void Start()
