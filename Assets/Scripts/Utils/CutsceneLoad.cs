@@ -14,23 +14,27 @@ public class CutsceneLoad : MonoBehaviour
     private CanvasGroup _transitionCG;
     private bool loading = false;
     private bool sceneLoaded = false;
+    private bool skipEnabled = false;
+    private Coroutine loadScene;
 
     private void Awake() {
-        StartCoroutine(LoadScene());
-    }
-
-    private void OnEnable() {
         loading = false;
         sceneLoaded = false;
+        skipEnabled = false;
+        loadScene = StartCoroutine(LoadScene());
+    }
+
+    private IEnumerator Start() {
+        yield return new WaitForSeconds(5f);
         sequence = DOTween.Sequence();
         skipIndicator.SetActive(true);
-        
+        skipEnabled = true;
         PlayAnimation();
     }
 
     private void Update() {
         // Skip cutscene
-        if (Input.GetKeyDown(InputManager.Instance.skip)) {
+        if (Input.GetKeyDown(InputManager.Instance.skip) && skipEnabled) {
             PlayTransition();
         }
         
@@ -40,7 +44,7 @@ public class CutsceneLoad : MonoBehaviour
                 SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(sceneID));
             }
             else {
-                StartCoroutine(LoadScene());
+                if (loadScene == null) loadScene = StartCoroutine(LoadScene());
             }
         }
     }
