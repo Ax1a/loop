@@ -10,11 +10,17 @@ public class MazeManager : MonoBehaviour
     public GameObject BlockItemsParent;
     public UnityEvent<MazeManager> OnBlockItemCollected;
     public UnityEvent OnWin;
-    public UnityEvent OnReset;
+    // public UnityEvent OnReset;
+    [HideInInspector] public bool canExit = false;
+    public MazePlayerMovement movementManager;
+    LifeSystem lifeSystem;
+    [SerializeField] private GameObject StartGamePanel;
 
     void Start()
     {
         TotalBlockItemCount = BlockItemsParent.transform.childCount;
+        lifeSystem = GetComponent<LifeSystem>();
+        StartGamePanel?.SetActive(true);
     }
     public void BlocksCollected()
     {
@@ -28,21 +34,24 @@ public class MazeManager : MonoBehaviour
     {
         if (BlockItemCount == TotalBlockItemCount)
         {
-            OnWin.Invoke();
+            // OnWin.Invoke();
+            canExit = true;
         }
-        else
-        {
-            Debug.Log("Collect all the block first");
-        }
+    }
+
+    public void StartGame ()
+    {
+        StartGamePanel?.SetActive(false);
     }
     public void ResetGame()
     {
         // To-do: Reset player initial position
         BlockItemCount = 0;
         ActivateBlockItems();
-
-
-        OnReset.Invoke();
+        movementManager.ResetPosition();
+        MazeUI.Instance.OnReset();
+        lifeSystem.StartGame();
+        // OnReset.Invoke();
     }
     public void ActivateBlockItems()
     {

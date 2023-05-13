@@ -36,9 +36,8 @@ public class MazeUI : MonoBehaviour
     public void OnReset()
     {
         blockText.text = "0";
-        interactionPanel.SetActive(false);
-        mazeManager.ResetGame();
-        movementManager.ResetPosition();
+        // interactionPanel.SetActive(false);
+        // mazeManager.ResetGame();
     }
 
     public void SetInteractionIndicator(string text) {

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.Events;
 
 [System.Serializable]
 public class QuestionAndAnswer
@@ -22,6 +23,8 @@ public class MazeQuizManager : MonoBehaviour
     private QuestionAndAnswer currentQuestion;
     public TextMeshProUGUI text;
     public CollectibleBlock collectibleBlock;
+    public LifeSystem lifeSystem;
+
     void Start()
     {
         GenerateQuestion();
@@ -45,6 +48,8 @@ public class MazeQuizManager : MonoBehaviour
         collectibleBlock.NotCollected();
         QuizPanel.gameObject.SetActive(false);
         Debug.Log("Answer is wrong");
+        //reduce -1 in heart
+        lifeSystem.ReduceLife();
 
     }
     private void GenerateQuestion()
