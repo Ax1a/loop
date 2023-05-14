@@ -35,22 +35,27 @@ public class MazeQuizManager : MonoBehaviour
 
     public void Correct()
     {
+        Debug.Log("Answer is correct");
         // scoreCount += 1;
         currentQuestion.Answered = true;
         currentPoints += 1;
         collectibleBlock.Collect();
+        MazeUI.Instance.DisableInteractionIndicator();
         QuizPanel.gameObject.SetActive(false);
-        Debug.Log("Answer is correct");
     }
     public void Wrong()
     {
-        currentQuestion.Answered = true;
-        collectibleBlock.NotCollected();
-        QuizPanel.gameObject.SetActive(false);
-        Debug.Log("Answer is wrong");
+        // Show Alert
+        MazeUI.Instance.ShowAlertPopup("Wrong Answer!");
+
         //reduce -1 in heart
         lifeSystem.ReduceLife();
 
+        currentQuestion.Answered = false;
+        collectibleBlock.NotCollected();
+
+        Debug.Log("Answer is wrong");
+        QuizPanel.gameObject.SetActive(false);
     }
     private void GenerateQuestion()
     {

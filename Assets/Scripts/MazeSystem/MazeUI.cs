@@ -11,6 +11,7 @@ public class MazeUI : MonoBehaviour
     public MazePlayerMovement movementManager;
     public GameObject interactionPanel;
     [SerializeField] private TextMeshProUGUI interactIndicator;
+    [SerializeField] private TextMeshProUGUI alertTxt;
     public static MazeUI Instance;
     
     private void Awake() {
@@ -47,6 +48,11 @@ public class MazeUI : MonoBehaviour
 
     public void DisableInteractionIndicator() {
         interactIndicator.transform.parent.gameObject.SetActive(false);
+    }
+
+    public void ShowAlertPopup(string text) {
+        alertTxt.text = text;
+        alertTxt.transform.parent.gameObject.SetActive(true);
     }
 }
  

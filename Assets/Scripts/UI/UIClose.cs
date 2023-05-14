@@ -22,7 +22,7 @@ public class UIClose : UIFade
         gameObject.SetActive(false);
         if (indicatorCanvas != null) {
             indicatorCanvas.SetActive(true);
-            UIController.Instance.onTopCanvas.SetActive(true);
+            if (UIController.Instance.onTopCanvas != null) UIController.Instance.onTopCanvas.SetActive(true);
         }
         else {
             Debug.Log("Indicator Canvas is null");

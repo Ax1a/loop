@@ -26,7 +26,10 @@ public class UIPopup : MonoBehaviour
 
         if (autoClose == true) {
             tweenGO.DOScale(0, showTime).SetEase(showEase).SetDelay(delayClose).OnComplete(() => {
-                UIController.Instance.DequeuePopUp(tweenGO.gameObject);
+                if (UIController.Instance != null) 
+                    UIController.Instance.DequeuePopUp(tweenGO.gameObject);
+                else
+                    gameObject.SetActive(false);
             });
         }
     }

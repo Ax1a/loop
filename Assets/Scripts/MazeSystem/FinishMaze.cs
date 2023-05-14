@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 // public class FinishMaze : MonoBehaviour
 // {
@@ -50,10 +51,12 @@ public class FinishMaze : MonoBehaviour
         {
             if (mazeManager.canExit)
             {
+                MazeUI.Instance.DisableInteractionIndicator();
                 gameObject.SetActive(false);
             }
             else
             {
+                MazeUI.Instance.ShowAlertPopup("Collect all the blocks first!");
                 Debug.Log("Collect all the block first");
             }
         }

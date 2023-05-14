@@ -8,7 +8,6 @@ public class SaveGame : MonoBehaviour
     [SerializeField] private Clock timeAndDate;
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject savingAnimation;
-    Energy _energy;
 
     public static SaveGame Instance;
 

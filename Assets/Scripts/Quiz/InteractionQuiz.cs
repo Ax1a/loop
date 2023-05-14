@@ -2,6 +2,7 @@
 public class InteractionQuiz
 {
     public int quizID;
+    public string quizScene;
     public bool isComplete = false;
     public bool isActive = false;
     public string quizTitle;

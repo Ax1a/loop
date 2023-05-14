@@ -318,8 +318,8 @@ public class ValidateController : MonoBehaviour
             startPanel.SetActive(false);
             winPanel.SetActive(true);
             gameOverPanel.SetActive(false);
-            QuestManager.Instance.AddQuestItem("Open assignment on computer", 1);
-            QuestManager.Instance.AddQuestItem("Answer the assignment", 1);
+            // QuestManager.Instance.AddQuestItem("Open assignment on computer", 1);
+            // QuestManager.Instance.AddQuestItem("Answer the assignment", 1);
             if (!interactionQuiz.data.isComplete) {
                 InteractionQuizManager.Instance.SetInteractionAsComplete(interactionQuiz);
                 moneyRewardTxt.text = moneyReward.ToString();
@@ -367,11 +367,11 @@ public class ValidateController : MonoBehaviour
     {
         if (!isStart)
         {
-            if (Energy.Instance.GetCurrentEnergy() > 0)
-            {
+            // if (Energy.Instance.GetCurrentEnergy() > 0)
+            // {
                 currentPoints = 0;
                 currTime = timeLimit;
-                Energy.Instance.UseEnergy(1);
+                // Energy.Instance.UseEnergy(1);
                 isStart = true;
                 startPanel.SetActive(false);
                 winPanel.SetActive(false);
@@ -382,15 +382,17 @@ public class ValidateController : MonoBehaviour
                     BotGuide.Instance.AddDialogue("Hello there! Let's put your block-building skills to the test and have some fun!");
                     BotGuide.Instance.AddDialogue("But first, let's cover the basics first before we dive into the interactive quiz.");
                     BotGuide.Instance.ShowDialogue();
-                    UIController.Instance.EnqueuePopup(highlightGuide);
+                    
+                    if (highlightGuide != null)
+                        UIController.Instance.EnqueuePopup(highlightGuide);
                 }
-            }
-            else
-            {
-                NPCDialogue.Instance.AddDialogue("I'm exhausted and need to rest. Where can I go to recharge and regain some energy?", DataManager.GetPlayerName());
-                NPCDialogue.Instance.ShowDialogue();
-                return;
-            }
+            // }
+            // else
+            // {
+            //     NPCDialogue.Instance.AddDialogue("I'm exhausted and need to rest. Where can I go to recharge and regain some energy?", DataManager.GetPlayerName());
+            //     NPCDialogue.Instance.ShowDialogue();
+            //     return;
+            // }
         }
     }
 

@@ -80,7 +80,7 @@ public class BotGuide : MonoBehaviour
     }
 
     public void ShowDialogue() {
-        tutorial.SetActive(false);
+        if (tutorial != null) tutorial.SetActive(false);
         // Display the first dialogue
         if (_dialogues?.Count > 0) {
             if (!UIController.Instance.popUpUIs.Contains(guideBot)) {
@@ -99,7 +99,7 @@ public class BotGuide : MonoBehaviour
                 UIController.Instance.DequeuePopUp(guideBot);
             }
             guideBot.SetActive(false);   
-            tutorial.SetActive(true);
+            if (tutorial != null) tutorial.SetActive(true);
             isActive = false;
         }
     }

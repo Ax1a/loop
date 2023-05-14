@@ -13,6 +13,7 @@ public class LogInAnimation : MonoBehaviour
     [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private TextMeshProUGUI passwordText;
     [SerializeField] private TextMeshProUGUI loginText;
+    [SerializeField] private TextMeshProUGUI userName;
     [SerializeField] private Image loginBtn;
     [SerializeField] private GameObject loading;
 
@@ -28,6 +29,7 @@ public class LogInAnimation : MonoBehaviour
         logInPanel.SetActive(true);
         passwordText.text = "";
         passwordBuilder.Clear();
+        userName.text = DataManager.GetPlayerName();
 
         StartCoroutine(PlayLoginAnimation());
     }
