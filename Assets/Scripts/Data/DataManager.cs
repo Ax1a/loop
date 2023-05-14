@@ -73,7 +73,7 @@ public static class DataManager
     public static void AddMoney(int amount)
     {
         playerData.money += amount;
-        GameSharedUI.Instance.UpdateMoneyUITxt();
+        if (GameSharedUI.Instance != null) GameSharedUI.Instance.UpdateMoneyUITxt();
         Debug.Log("Added Money: " + amount);
     }
 
@@ -85,8 +85,8 @@ public static class DataManager
     public static void SpendMoney(int amount)
     {
         playerData.money -= amount;
-        AudioManager.Instance.PlaySfx("Purchase");
-        GameSharedUI.Instance.UpdateMoneyUITxt();
+        if (AudioManager.Instance != null) AudioManager.Instance.PlaySfx("Purchase");
+        if (GameSharedUI.Instance != null) GameSharedUI.Instance.UpdateMoneyUITxt();
     }
 
     /*

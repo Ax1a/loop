@@ -98,6 +98,7 @@ public class MazePlayerMovement : MonoBehaviour
         // when to jump
         if(Input.GetKey(jumpKey) && readyToJump && grounded)
         {
+            AudioManager.Instance.PlaySfx("Hover");
             readyToJump = false;
             Jump();
 
