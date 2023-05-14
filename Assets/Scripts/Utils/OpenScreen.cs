@@ -7,6 +7,7 @@ using DG.Tweening;
 public class OpenScreen : MonoBehaviour
 {
     [SerializeField] private GameObject[] taskbarIcons;
+    GameObject _computerCanvas;
 
     void Update ()
     {
@@ -40,7 +41,9 @@ public class OpenScreen : MonoBehaviour
 
     public void OnClickedAudio()
     {
-        GameObject _computerCanvas = GameObject.FindGameObjectWithTag("mainCanvas");
+        if (_computerCanvas == null) _computerCanvas = GameObject.FindGameObjectWithTag("mainCanvas");
+        if (_computerCanvas == null) return;
+
         if (_computerCanvas.activeSelf)
         {
             if(Input.GetMouseButtonDown(0))

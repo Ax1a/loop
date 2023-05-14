@@ -69,13 +69,13 @@ public class MazePlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        StateHandler();
         if (!ThirdPersonCamera.Instance.IsControlEnabled()) return;
         // ground check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
 
         MyInput();
         SpeedControl();
-        StateHandler();
 
         // handle drag
         if (grounded)

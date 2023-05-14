@@ -28,10 +28,12 @@ public class ThirdPersonCamera : MonoBehaviour
 
     void Update()
     {
-        if (!isControlEnabled) 
+        if (!isControlEnabled) {
             freeLookCamera.m_XAxis.m_InputAxisName = "";
-        else 
+        }
+        else {
             freeLookCamera.m_XAxis.m_InputAxisName = "Mouse X";
+        }
         if (!isControlEnabled) return;
 
         Vector3 viewDir = player.position - new Vector3(transform.position.x, player.position.y, transform.position.z);

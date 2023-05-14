@@ -22,6 +22,7 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject Character;
     [SerializeField] private GameObject[] highlightGuides;
     public Queue<GameObject> popUpUIs = new Queue<GameObject>();
+    [SerializeField] private string sceneToLoad = "MainMenu";
     
     PlayerController _playerController;
 
@@ -45,7 +46,9 @@ public class UIController : MonoBehaviour
 
     private void Start() {
         AddButtonEvents();
-        _playerController = Character.GetComponent<PlayerController>();
+
+        if (Character != null)
+            _playerController = Character.GetComponent<PlayerController>();
     }
 
     void Update()
@@ -53,11 +56,13 @@ public class UIController : MonoBehaviour
         // Debug.Log("C++: " + DataManager.GetProgrammingLanguageProgress("c++"));
 
         if (!QueueIsEmpty()) {
-            foreach (var highlightGuide in highlightGuides)
-            {
-                if (highlightGuide.name == popUpUIs.Peek().name) {
-                    highlightGuide.SetActive(true);
-                }   
+            if (highlightGuides.Length > 0) {
+                foreach (var highlightGuide in highlightGuides)
+                {
+                    if (highlightGuide.name == popUpUIs.Peek().name) {
+                        highlightGuide.SetActive(true);
+                    }   
+                }
             }
 
             if (popUpUIs.Peek().name == "NewMissionPopUp" || popUpUIs.Peek().name == "MissionCompletePopUp"){
@@ -85,7 +90,8 @@ public class UIController : MonoBehaviour
             gameUIActive = true;
             ToggleTab("Container", "QuestCanvas");
         }
-
+        
+        if (_playerController == null) return;
         if (_anyActive == true) {
             _playerController.SetIsPanelActive(true);
         }
@@ -96,14 +102,14 @@ public class UIController : MonoBehaviour
 
     void AddButtonEvents() {
         // Prevent errors
-        continueBtn.onClick.RemoveAllListeners();
-        saveBtn.onClick.RemoveAllListeners();
-        optionBtn.onClick.RemoveAllListeners();
-        optionBtn.onClick.RemoveAllListeners();
+        if (continueBtn != null) continueBtn.onClick.RemoveAllListeners();
+        if (saveBtn != null) saveBtn.onClick.RemoveAllListeners();
+        if (optionBtn != null) optionBtn.onClick.RemoveAllListeners();
+        if (quitBtn != null) quitBtn.onClick.RemoveAllListeners();
 
-        continueBtn.onClick.AddListener(() => { CloseUI(1); });
-        quitBtn.onClick.AddListener(GoToMainMenu);
-        saveBtn.onClick.AddListener(SaveGameData);
+        if (continueBtn != null) continueBtn?.onClick.AddListener(() => { CloseUI(1); });
+        if (quitBtn != null) quitBtn?.onClick.AddListener(LoadNextScene);
+        if (saveBtn != null) saveBtn?.onClick.AddListener(SaveGameData);
     }
 
     public void ToggleTab(string tabToOpen, string tabCanvas) {
@@ -152,11 +158,11 @@ public class UIController : MonoBehaviour
 
     public void CloseUI(int index) {
         gameUI[index].SetActive(false);
-        mainUI.GetComponent<Canvas>().enabled = true;
+        if (mainUI != null) mainUI.GetComponent<Canvas>().enabled = true;
 
         SetPanelActive(false);
-        indicatorCanvas.SetActive(true);
-        onTopCanvas.SetActive(true);
+        if (indicatorCanvas != null) indicatorCanvas.SetActive(true);
+        if (onTopCanvas != null) onTopCanvas.SetActive(true);
         gameUIActive = false;
     }
 
@@ -198,7 +204,7 @@ public class UIController : MonoBehaviour
         }
     }
 
-    void GoToMainMenu() {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1, LoadSceneMode.Single);
+    void LoadNextScene() {
+        SceneManager.LoadScene(sceneToLoad, LoadSceneMode.Single);
     }
 }

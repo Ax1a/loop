@@ -5,7 +5,6 @@ using UnityEngine;
 public class Bed : MonoBehaviour, Interactable
 {
     [SerializeField] private Clock timeAndDate;
-    [SerializeField] GameObject EnergyPanel;
     [SerializeField] private string _prompt;
     [SerializeField] private GameObject sleepConfirmation;
     

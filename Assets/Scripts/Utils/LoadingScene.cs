@@ -13,11 +13,15 @@ public class LoadingScene : MonoBehaviour
         StartCoroutine(LoadSceneAsync(sceneID));
     }
 
+    public void LoadScene(string sceneName) {
+        StartCoroutine(LoadSceneAsync(sceneName));
+    }
+
     IEnumerator LoadSceneAsync(int sceneID) {
         LoadingBarFill.fillAmount = 0;
         LoadingScreen.SetActive(true);
 
-        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneID);
+        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneID, LoadSceneMode.Single);
         operation.allowSceneActivation = false;
 
         float progress = 0;
@@ -29,20 +33,31 @@ public class LoadingScene : MonoBehaviour
             if (LoadingBarFill.fillAmount >= 0.9f) {
                 LoadingBarFill.fillAmount = 1;
                 operation.allowSceneActivation = true;
-                // AudioManager.Instance.PlayMusic("CutScene");
             }
 
             yield return null;
         }
+    }
 
-        // LoadingScreen.SetActive(true);
+    IEnumerator LoadSceneAsync(string sceneName) {
+        LoadingBarFill.fillAmount = 0;
+        LoadingScreen.SetActive(true);
 
-        // while (!operation.isDone) {
-        //     float progressValue = Mathf.Clamp01(operation.progress / 0.9f);
-        //     LoadingBarFill.fillAmount = progressValue;
+        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
+        operation.allowSceneActivation = false;
 
-            // yield return null;
-        // }
-        // LoadingScreen.SetActive(false);
+        float progress = 0;
+
+        while (!operation.isDone) {
+            progress = Mathf.MoveTowards(progress, operation.progress, Time.deltaTime);
+            LoadingBarFill.fillAmount = progress;
+
+            if (LoadingBarFill.fillAmount >= 0.9f) {
+                LoadingBarFill.fillAmount = 1;
+                operation.allowSceneActivation = true;
+            }
+
+            yield return null;
+        }
     }
 }

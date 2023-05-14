@@ -10,6 +10,7 @@ public class InteractionQuizManager : MonoBehaviour
     [SerializeField] private Transform j_quizBtnParent; // Java
     [SerializeField] private GameObject quizBtnPrefab;
     [SerializeField] private GameObject quizBtnPlaceholder;
+    [SerializeField] private LoadingScene loadingScene;
     private List<InteractionQuiz> _interactionData = new List<InteractionQuiz>();
     public static InteractionQuizManager Instance;
 
@@ -48,8 +49,11 @@ public class InteractionQuizManager : MonoBehaviour
         // }
     }
 
-    public void EnablePanel(int id) {
-        interactionQuizPanels[id].SetActive(true);
+    public void LoadSceneMaze(int id) {
+        // interactionQuizPanels[id].SetActive(true);
+
+        //test
+        loadingScene.LoadScene("MazeTemplate");
     }
 
     public void FillLanguageButtons() {
@@ -173,7 +177,7 @@ public class InteractionQuizManager : MonoBehaviour
                 info.isComplete = true;
                 DataManager.SetInteractionQuizComplete(i);
                 FillLanguageButtons();
-                SaveGame.Instance.SaveGameState();
+                if(SaveGame.Instance != null) SaveGame.Instance.SaveGameState();
 
                 break;
             }
@@ -194,7 +198,7 @@ public class InteractionQuizManager : MonoBehaviour
                 info.isComplete = true;
                 DataManager.SetInteractionQuizComplete(i);
                 FillLanguageButtons();
-                SaveGame.Instance.SaveGameState();
+                if(SaveGame.Instance != null) SaveGame.Instance.SaveGameState();
 
                 break;
             }
@@ -215,7 +219,7 @@ public class InteractionQuizManager : MonoBehaviour
                 info.isActive = true;
                 DataManager.ActivateInteractionQuiz(i);
                 FillLanguageButtons();
-                SaveGame.Instance.SaveGameState();
+                if(SaveGame.Instance != null) SaveGame.Instance.SaveGameState();
 
                 break;
             }
@@ -235,7 +239,7 @@ public class InteractionQuizManager : MonoBehaviour
                 info.isActive = true;
                 DataManager.ActivateInteractionQuiz(i);
                 FillLanguageButtons();
-                SaveGame.Instance.SaveGameState();
+                if(SaveGame.Instance != null) SaveGame.Instance.SaveGameState();
 
                 break;
             }
@@ -250,7 +254,7 @@ public class InteractionQuizManager : MonoBehaviour
             info.isActive = true;
             DataManager.ActivateInteractionQuiz(i);
             FillLanguageButtons();
-            SaveGame.Instance.SaveGameState();
+            if(SaveGame.Instance != null) SaveGame.Instance.SaveGameState();
         }
     }
 }
