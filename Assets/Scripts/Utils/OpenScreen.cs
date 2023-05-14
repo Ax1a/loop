@@ -13,6 +13,12 @@ public class OpenScreen : MonoBehaviour
     {
         OnClickedAudio();
     }
+
+    private void OnEnable() {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
     public void openScreen(GameObject panel)
     {
         if (panel != null)
