@@ -133,9 +133,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2868068}
-  - component: {fileID: 2868072}
-  - component: {fileID: 2868071}
-  - component: {fileID: 2868070}
   - component: {fileID: 2868069}
   m_Layer: 6
   m_Name: Computer
@@ -178,49 +175,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.1815147, y: 1.914959, z: 1.1424536}
   m_Center: {x: -6.671914, y: 9.469784, z: 1.692993}
---- !u!114 &2868070
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2868067}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c83b5d6be284204ba85c17679d3fbcc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Panel: {fileID: 0}
---- !u!114 &2868071
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2868067}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93f7c34722690404da5a44f5c1041f5b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _mainCam: {fileID: 0}
-  _computerCanvas: {fileID: 0}
-  _hud: {fileID: 0}
-  _interactOverlay: {fileID: 0}
-  _prompt: Open Computer
-  isOpened: 0
---- !u!114 &2868072
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2868067}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &10795900
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9981,33 +9935,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 974285819}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &974285822
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 974285821}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &974285823
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 974285821}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 120dedc02fd69c2489fbad7b6da1a52d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timeAndDate: {fileID: 0}
-  _prompt: Go to sleep
-  sleepConfirmation: {fileID: 0}
 --- !u!65 &974285824
 BoxCollider:
   m_ObjectHideFlags: 0
