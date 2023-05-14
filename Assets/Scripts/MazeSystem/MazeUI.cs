@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 
 public class MazeUI : MonoBehaviour
-{   
+{
     public TextMeshProUGUI blockText;
     public MazeManager mazeManager;
     public MazePlayerMovement movementManager;
@@ -13,18 +13,25 @@ public class MazeUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI interactIndicator;
     [SerializeField] private TextMeshProUGUI alertTxt;
     public static MazeUI Instance;
-    
-    private void Awake() {
+    int collectedBlocks;
+    int goalBlockCount;
+
+    private void Awake()
+    {
         if (Instance == null) Instance = this;
     }
 
     void Start()
     {
         mazeManager.OnWin.AddListener(OnWin);
+        // goalBlockCount = mazeManager.TotalBlockItemCount;
+        UpdateCollectedText(mazeManager);
     }
-    public void UpdateCollectedText (MazeManager mazeManager)
+    public void UpdateCollectedText(MazeManager mazeManager)
     {
-        blockText.text = mazeManager.BlockItemCount.ToString();
+        collectedBlocks = mazeManager.BlockItemCount;
+        goalBlockCount = mazeManager.TotalBlockItemCount;
+        blockText.text = collectedBlocks + " / " + goalBlockCount;
     }
 
     private void OnWin()
@@ -36,17 +43,19 @@ public class MazeUI : MonoBehaviour
     }
     public void OnReset()
     {
-        blockText.text = "0";
-        // interactionPanel.SetActive(false);
-        // mazeManager.ResetGame();
+        collectedBlocks = 0;
+        goalBlockCount = mazeManager.TotalBlockItemCount;
+        blockText.text = collectedBlocks + " / " + goalBlockCount;
     }
 
-    public void SetInteractionIndicator(string text) {
+    public void SetInteractionIndicator(string text)
+    {
         interactIndicator.text = text;
         interactIndicator.transform.parent.gameObject.SetActive(true);
     }
 
-    public void DisableInteractionIndicator() {
+    public void DisableInteractionIndicator()
+    {
         interactIndicator.transform.parent.gameObject.SetActive(false);
     }
 
@@ -55,4 +64,3 @@ public class MazeUI : MonoBehaviour
         alertTxt.transform.parent.gameObject.SetActive(true);
     }
 }
- 

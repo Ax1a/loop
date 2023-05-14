@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class MazeManager : MonoBehaviour
 {
@@ -15,10 +16,13 @@ public class MazeManager : MonoBehaviour
     public MazePlayerMovement movementManager;
     LifeSystem lifeSystem;
     [SerializeField] private GameObject StartGamePanel;
-
-    void Start()
+    void Awake()
     {
         TotalBlockItemCount = BlockItemsParent.transform.childCount;
+    }
+    void Start()
+    {
+        // TotalBlockItemCount = BlockItemsParent.transform.childCount;
         lifeSystem = GetComponent<LifeSystem>();
         StartGamePanel?.SetActive(true);
     }
@@ -39,19 +43,21 @@ public class MazeManager : MonoBehaviour
         }
     }
 
-    public void StartGame ()
+    public void StartGame()
     {
         StartGamePanel?.SetActive(false);
     }
     public void ResetGame()
     {
-        // To-do: Reset player initial position
-        BlockItemCount = 0;
-        ActivateBlockItems();
-        movementManager.ResetPosition();
-        MazeUI.Instance.OnReset();
-        lifeSystem.StartGame();
-        // OnReset.Invoke();
+        // OLD FUNCTIONS FOR RESET GAME
+        // BlockItemCount = 0;
+        // ActivateBlockItems();
+        // movementManager.ResetPosition();
+        // MazeUI.Instance.OnReset();
+        // lifeSystem.StartGame();
+
+        // RESETING SCENE
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     public void ActivateBlockItems()
     {
