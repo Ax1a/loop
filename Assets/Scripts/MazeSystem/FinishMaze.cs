@@ -2,27 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-
-// public class FinishMaze : MonoBehaviour
-// {
-//     [SerializeField] MazeManager mazeManager;
-//     private bool canInteract = false;
-
-//     private void OnTriggerEnter(Collider other)
-//     {
-//         if (other.gameObject.tag == "Player")
-//         {
-//             if (mazeManager != null)
-//             {
-//                 mazeManager.CheckForWin();
-//             }
-//         }
-//     }
-//     private void OnTriggerExit(Collider other)
-//     {
-//         MazeUI.Instance.DisableInteractionIndicator();
-//     }
-// }
 public class FinishMaze : MonoBehaviour
 {
     [SerializeField] MazeManager mazeManager;
