@@ -6,13 +6,13 @@ using TMPro;
 public class InteractionQuizBtn : MonoBehaviour
 {
     public int quizID;
+    public string quizScene;
     [SerializeField] private TextMeshProUGUI quizTitleTxt;
     [SerializeField] private TextMeshProUGUI quizDescriptionTxt;
     [SerializeField] private GameObject isCompleteIndicator;
 
     public void ShowQuizPanel() {
-        // change to string
-        InteractionQuizManager.Instance.LoadSceneMaze(quizID);
+        InteractionQuizManager.Instance.LoadSceneMaze(quizScene);
     }
 
     public void ShowCompleteIndicator() {

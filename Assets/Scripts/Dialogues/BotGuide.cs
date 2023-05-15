@@ -23,6 +23,7 @@ public class BotGuide : MonoBehaviour
     [SerializeField] private GameObject character;
     [SerializeField] private Animator animator;
     [SerializeField] private GameObject tutorial;
+    [SerializeField] private ThirdPersonCamera cameraScript;
     
     [Header("Params")]
     [SerializeField] private float typingSpeed = 0.04f;
@@ -83,6 +84,9 @@ public class BotGuide : MonoBehaviour
         if (tutorial != null) tutorial.SetActive(false);
         // Display the first dialogue
         if (_dialogues?.Count > 0) {
+            if (cameraScript != null) {
+                cameraScript.ToggleControl(false);
+            }
             if (!UIController.Instance.popUpUIs.Contains(guideBot)) {
                 UIController.Instance.EnqueuePopup(guideBot);
             }
@@ -101,6 +105,9 @@ public class BotGuide : MonoBehaviour
             guideBot.SetActive(false);   
             if (tutorial != null) tutorial.SetActive(true);
             isActive = false;
+            if (cameraScript != null) {
+                cameraScript.ToggleControl(true);
+            }
         }
     }
 

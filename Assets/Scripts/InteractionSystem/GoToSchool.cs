@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GoToSchool : MonoBehaviour, Interactable
 {
@@ -13,6 +14,8 @@ public class GoToSchool : MonoBehaviour, Interactable
     [SerializeField] private Clock timeAndDate;
     [SerializeField] private CanvasGroup IndicatorCanvas;
     [SerializeField] private GameObject questGiver;
+    [SerializeField] private GameObject gameVolume;
+    [SerializeField] private GameObject fadePanel;
     
     [Header ("Character Objects")]
     [SerializeField] private GameObject bagMain;
@@ -70,6 +73,17 @@ public class GoToSchool : MonoBehaviour, Interactable
     }
 
     private IEnumerator PlayAnimation() {
+        // fadePanel.SetActive(true);
+
+        // AsyncOperation operation = SceneManager.LoadSceneAsync(3, LoadSceneMode.Additive);
+        // while (!operation.isDone)
+        // {
+        //     yield return null;
+        // }
+
+        // SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(3));
+        // fadePanel.SetActive(false);
+        // gameVolume.SetActive(false);
         clockAnimation.SetActive(true);
         AudioManager.Instance.PlaySfx("School");
         mainUI.SetActive(false);
@@ -91,6 +105,7 @@ public class GoToSchool : MonoBehaviour, Interactable
         timeAndDate.UpdateLightSettings();
         bagMain.SetActive(false);
         bagSupp.SetActive(false);
+        // gameVolume.SetActive(true);
     }
 }
 

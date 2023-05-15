@@ -19,6 +19,11 @@ public class PlayerController : MonoBehaviour
         _animator = GetComponentInChildren<Animator>();
     }
 
+    private void OnEnable() {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+
     void Update()
     {
         if (!_isPanelActive && !disableControl && !BotGuide.Instance.guideIsActive()){
