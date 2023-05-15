@@ -15,6 +15,8 @@ public class ThirdPersonCamera : MonoBehaviour
     [Header ("Params")]
     [SerializeField] private float rotationspeed;
     private bool isControlEnabled = true;
+    private bool stopCameraRotation = false;
+    private float lastCameraXAxis = 0;
     public static ThirdPersonCamera Instance;
 
     private void Awake() {
@@ -30,9 +32,16 @@ public class ThirdPersonCamera : MonoBehaviour
     {
         if (!isControlEnabled) {
             freeLookCamera.m_XAxis.m_InputAxisName = "";
+            if (!stopCameraRotation) lastCameraXAxis = freeLookCamera.m_XAxis.Value;
+            stopCameraRotation = true;
         }
         else {
+            stopCameraRotation = false;
             freeLookCamera.m_XAxis.m_InputAxisName = "Mouse X";
+        }
+
+        if (stopCameraRotation) {
+            freeLookCamera.m_XAxis.Value = lastCameraXAxis;
         }
         if (!isControlEnabled) return;
 

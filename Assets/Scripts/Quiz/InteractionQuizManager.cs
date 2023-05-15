@@ -49,11 +49,8 @@ public class InteractionQuizManager : MonoBehaviour
         // }
     }
 
-    public void LoadSceneMaze(int id) {
-        // interactionQuizPanels[id].SetActive(true);
-
-        //test
-        loadingScene.LoadScene("MazeTemplate");
+    public void LoadSceneMaze(string scene) {
+        loadingScene.LoadScene(scene);
     }
 
     public void FillLanguageButtons() {
@@ -97,7 +94,7 @@ public class InteractionQuizManager : MonoBehaviour
                     btnScript.SetQuizDescription(infoScript.quizDescription);
                     btnScript.quizID = i;
                     infoScript.quizID = i;
-
+                    btnScript.quizScene = infoScript.quizScene;
 
                     if (infoScript.isComplete) {
                         btnScript.ShowCompleteIndicator();

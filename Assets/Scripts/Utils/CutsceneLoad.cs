@@ -21,6 +21,7 @@ public class CutsceneLoad : MonoBehaviour
         loading = false;
         sceneLoaded = false;
         skipEnabled = false;
+        _transitionCG = null;
         loadScene = StartCoroutine(LoadScene());
     }
 
@@ -38,7 +39,8 @@ public class CutsceneLoad : MonoBehaviour
             PlayTransition();
         }
         
-        if (_transitionCG != null && _transitionCG.alpha == 1 && !loading) {
+        if (_transitionCG == null) return;
+        if (_transitionCG.alpha == 1 && !loading) {
             if (sceneLoaded) {
                 SceneManager.UnloadSceneAsync(gameObject.scene);
                 SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(sceneID));
@@ -59,15 +61,16 @@ public class CutsceneLoad : MonoBehaviour
             }
             sceneLoaded = true;
         }
-        else {
-            SceneManager.SetActiveScene(scene);
-            sceneLoaded = true;
-        }
+        // else {
+        //     sceneLoaded = true;
+        //     loading = false;
+        // }
     }
 
     public void PlayTransition() {
         transition.SetActive(true);
         _transitionCG = transition.GetComponent<CanvasGroup>();
+        loading = false;
     }
 
     private void PlayAnimation() {

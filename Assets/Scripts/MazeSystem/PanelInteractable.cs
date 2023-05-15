@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PanelInteractable : MonoBehaviour
 {
+    private bool isActive = false;
+
     void Start()
     {
         if (ThirdPersonCamera.Instance != null)
@@ -12,10 +14,19 @@ public class PanelInteractable : MonoBehaviour
             ThirdPersonCamera.Instance.ToggleCursor(true);
         }
     }
+    
+    private void LateUpdate() {
+        if (isActive && ThirdPersonCamera.Instance != null) {
+            ThirdPersonCamera.Instance.ToggleControl(false);
+            ThirdPersonCamera.Instance.ToggleCursor(true);
+        }
+    }
+
     private void OnEnable()
     {
         if (ThirdPersonCamera.Instance != null)
         {
+            isActive = true;
             ThirdPersonCamera.Instance.ToggleControl(false);
             ThirdPersonCamera.Instance.ToggleCursor(true);
         }
@@ -25,6 +36,7 @@ public class PanelInteractable : MonoBehaviour
     {
         if (ThirdPersonCamera.Instance != null)
         {
+            isActive = false;
             ThirdPersonCamera.Instance.ToggleControl(true);
             ThirdPersonCamera.Instance.ToggleCursor(false);
         }
