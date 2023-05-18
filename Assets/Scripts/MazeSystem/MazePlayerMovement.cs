@@ -133,6 +133,7 @@ public class MazePlayerMovement : MonoBehaviour
         // when to jump
         if(Input.GetKey(jumpKey) && readyToJump && grounded)
         {
+            //play sfx
             AudioManager.Instance.PlaySfx("Jump");
             readyToJump = false;
             Jump();
@@ -205,6 +206,8 @@ public class MazePlayerMovement : MonoBehaviour
         // Mode - Walking
         else if (grounded && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)))
         {
+            //play sfx
+            AudioManager.Instance.PlaySfx("Walk");
             state = MovementState.walking;
             moveSpeed = walkSpeed;
         }

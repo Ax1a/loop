@@ -114,6 +114,9 @@ public class AudioManager : MonoBehaviour
             case 2: // Third scene
                 PlayMusic("CutScene");
                 break;
+            default:
+                PlayMusic("MazeGame");
+                break;
         }
     }
 }

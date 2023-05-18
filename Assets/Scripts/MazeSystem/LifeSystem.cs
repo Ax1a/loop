@@ -42,10 +42,15 @@ public class LifeSystem : MonoBehaviour
 
     public IEnumerator GameOver()
     {
-        // Add death sound effect
+        //Play Sfx 
+        AudioManager.Instance.PlaySfx("Dead");
+
         AnimateRobot("isDying", true);
         yield return new WaitForSeconds(2.2f);
 
+        //Play Sfx 
+        AudioManager.Instance.PlaySfx("Loose");
+        
         GameOverPanel.SetActive(true);
     }
     public void StartGame()

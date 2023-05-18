@@ -34,13 +34,18 @@ public class FinishMaze : MonoBehaviour
         {
             if (mazeManager.canExit)
             {
+                //Play Sfx 
+                AudioManager.Instance.PlaySfx("Win");
+                MazeUI.Instance.DisableInteractionIndicator();
+                MazeUI.Instance.ShowSuccessPopup("Blocks Completed!");
                 if (coroutine == null)
                     coroutine = StartCoroutine(OpenGate());
             }
             else
             {
+                //Play Sfx 
+                AudioManager.Instance.PlaySfx("Loose");
                 MazeUI.Instance.ShowAlertPopup("Collect all the blocks first!");
-                Debug.Log("Collect all the block first");
             }
         }
     }

@@ -64,7 +64,6 @@ public class CollectibleBlock : MonoBehaviour
             collected = true;
             MazeGuide.Instance.RemoveBlock(gameObject);
             gameObject.SetActive(false);
-            Debug.Log("Collected");
         }
     }
     public void NotCollected()
