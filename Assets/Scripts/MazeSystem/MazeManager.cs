@@ -30,8 +30,7 @@ public class MazeManager : MonoBehaviour
     {
         BlockItemCount++;
         OnBlockItemCollected.Invoke(this);
-        Debug.Log("Item collected");
-        // CheckForWin();
+
     }
 
     public void CheckForWin()

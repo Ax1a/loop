@@ -35,16 +35,22 @@ public class MazeQuizManager : MonoBehaviour
 
     public void Correct()
     {
-        Debug.Log("Answer is correct");
+        //Play Sfx
+        AudioManager.Instance.PlaySfx("Correct");
+
         // scoreCount += 1;
         currentQuestion.Answered = true;
         currentPoints += 1;
         collectibleBlock.Collect();
+        MazeUI.Instance.ShowSuccessPopup("Blocks Obtained!");
         MazeUI.Instance.DisableInteractionIndicator();
         QuizPanel.gameObject.SetActive(false);
     }
     public void Wrong()
     {
+        //Play Sfx
+        AudioManager.Instance.PlaySfx("Wrong");
+
         // Show Alert
         MazeUI.Instance.ShowAlertPopup("Wrong Answer!");
 

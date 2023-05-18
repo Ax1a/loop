@@ -61,6 +61,29 @@ public class MazeUI : MonoBehaviour
 
     public void ShowAlertPopup(string text) {
         alertTxt.text = text;
-        alertTxt.transform.parent.gameObject.SetActive(true);
+        GameObject parent = alertTxt.transform.parent.gameObject;
+
+        parent.SetActive(true);
+
+        Image parentImage = parent.GetComponent<Image>();
+        if (parentImage != null)
+        {
+            Color red = new Color(160f / 255f, 17f / 255f, 21f / 255f, 1f);
+            parentImage.color = red;
+        }
+    }
+    public void ShowSuccessPopup(string text)
+    {
+        alertTxt.text = text;
+        GameObject parent = alertTxt.transform.parent.gameObject;
+
+        parent.SetActive(true);
+
+        Image parentImage = parent.GetComponent<Image>();
+        if (parentImage != null)
+        {
+            Color green = new Color(17f / 255f, 160f / 255f, 19f / 255f, 1f);
+            parentImage.color = green;
+        }
     }
 }
