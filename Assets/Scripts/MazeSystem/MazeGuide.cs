@@ -23,7 +23,7 @@ public class MazeGuide : MonoBehaviour
     }
 
     private void Update() {
-        if (Input.GetKeyDown(KeyCode.H)) {
+        if (Input.GetKeyDown(KeyCode.H) && ThirdPersonCamera.Instance.IsControlEnabled()) {
             ShowBuyGuidePanel();
         }
     }
@@ -69,7 +69,7 @@ public class MazeGuide : MonoBehaviour
             yield return null;
         }
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(.8f);
         
         guideObject.SetActive(false);
         guideObject.transform.position = playerPosition.position;

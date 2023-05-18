@@ -8,8 +8,13 @@ public class FinishMaze : MonoBehaviour
     [SerializeField] MazeManager mazeManager;
     [SerializeField] private GameObject button;
     [SerializeField] private GameObject forceField;
-    private bool canInteract = false;
+    private bool canInteract = false, triggered = false;
     Coroutine coroutine;
+
+    private void Start() {
+        triggered = false;
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))
@@ -32,10 +37,9 @@ public class FinishMaze : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E) && canInteract)
         {
-            if (mazeManager.canExit)
+            if (mazeManager.canExit && !triggered)
             {
-                //Play Sfx 
-                AudioManager.Instance.PlaySfx("Win");
+                triggered = true;
                 MazeUI.Instance.DisableInteractionIndicator();
                 MazeUI.Instance.ShowSuccessPopup("Blocks Completed!");
                 if (coroutine == null)
@@ -56,6 +60,7 @@ public class FinishMaze : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         button.transform.DOLocalMoveY(0.593f, .5f).SetEase(Ease.OutSine);
         yield return new WaitForSeconds(0.5f);
+        AudioManager.Instance.PlaySfx("Win");
         forceField.SetActive(false);
         coroutine = null;
     }
