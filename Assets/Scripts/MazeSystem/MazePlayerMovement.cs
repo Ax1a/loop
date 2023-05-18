@@ -69,11 +69,16 @@ public class MazePlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        StateHandler();
-        if (!ThirdPersonCamera.Instance.IsControlEnabled()) return;
+        if (!ThirdPersonCamera.Instance.IsControlEnabled()) {
+            animator.SetBool("isWalking", false);
+            animator.SetBool("isRunning", false);
+            
+            return;
+        }
         // ground check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
 
+        StateHandler();
         MyInput();
         AnimateRobot();
         SpeedControl();
