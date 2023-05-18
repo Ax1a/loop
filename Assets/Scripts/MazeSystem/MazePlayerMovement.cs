@@ -75,6 +75,7 @@ public class MazePlayerMovement : MonoBehaviour
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
 
         MyInput();
+        AnimateRobot();
         SpeedControl();
 
         // handle drag
@@ -82,6 +83,40 @@ public class MazePlayerMovement : MonoBehaviour
             rb.drag = groundDrag;
         else
             rb.drag = 0;
+    }
+
+    private void AnimateRobot() {
+        if (Input.GetKey(crouchKey))
+        {
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) {
+                animator.SetBool("isWalking", true);
+                animator.SetBool("isRunning", false);
+            }
+            else {
+                animator.SetBool("isWalking", false);
+                animator.SetBool("isRunning", false);
+            }
+        }
+        else if(grounded && Input.GetKey(sprintKey))
+        {
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) {
+                animator.SetBool("isWalking", false);
+                animator.SetBool("isRunning", true);
+            }
+            else {
+                animator.SetBool("isWalking", false);
+                animator.SetBool("isRunning", false);
+            }
+        }
+        else if (grounded && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)))
+        {
+            animator.SetBool("isWalking", true);
+            animator.SetBool("isRunning", false);
+        }
+        else {
+            animator.SetBool("isWalking", false);
+            animator.SetBool("isRunning", false);
+        }
     }
 
     private void FixedUpdate()
@@ -156,14 +191,6 @@ public class MazePlayerMovement : MonoBehaviour
         // Mode - Crouching
         if (Input.GetKey(crouchKey))
         {
-            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) {
-                animator.SetBool("isWalking", true);
-                animator.SetBool("isRunning", false);
-            }
-            else {
-                animator.SetBool("isWalking", false);
-                animator.SetBool("isRunning", false);
-            }
             state = MovementState.crouching;
             moveSpeed = crouchSpeed;
         }
@@ -173,14 +200,6 @@ public class MazePlayerMovement : MonoBehaviour
         {
             state = MovementState.sprinting;
             moveSpeed = sprintSpeed;
-            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) {
-                animator.SetBool("isWalking", false);
-                animator.SetBool("isRunning", true);
-            }
-            else {
-                animator.SetBool("isWalking", false);
-                animator.SetBool("isRunning", false);
-            }
         }
 
         // Mode - Walking
@@ -188,18 +207,12 @@ public class MazePlayerMovement : MonoBehaviour
         {
             state = MovementState.walking;
             moveSpeed = walkSpeed;
-            animator.SetBool("isWalking", true);
-            animator.SetBool("isRunning", false);
         }
 
         // Mode - Air
         else if (!grounded)
         {
             state = MovementState.air;
-        }
-        else {
-            animator.SetBool("isWalking", false);
-            animator.SetBool("isRunning", false);
         }
     }
 
