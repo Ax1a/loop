@@ -22,10 +22,10 @@ public class UIPopup : MonoBehaviour
     private void OnEnable() {
         if (tweenGO == null) { tweenGO = transform; }
         tweenGO.localScale = Vector3.zero;
-        tweenGO.DOScale(scale, showTime).SetEase(showEase);
+        tweenGO.DOScale(scale, showTime).SetUpdate(true).SetEase(showEase);
 
         if (autoClose == true) {
-            tweenGO.DOScale(0, showTime).SetEase(showEase).SetDelay(delayClose).OnComplete(() => {
+            tweenGO.DOScale(0, showTime).SetUpdate(true).SetEase(showEase).SetDelay(delayClose).OnComplete(() => {
                 if (UIController.Instance != null && !UIController.Instance.QueueIsEmpty()) 
                     UIController.Instance.DequeuePopUp(tweenGO.gameObject);
                 else

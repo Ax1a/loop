@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class LifeSystem : MonoBehaviour
 {
+    [SerializeField] private Animator animator;
     public GameObject lifeCountParent;
     private Image[] lifeImages;
     private int maxLives = 3;
@@ -34,23 +35,31 @@ public class LifeSystem : MonoBehaviour
     {
         currentLives--;
         SetLifeColors();
-        GameOver();
+        
+        if (currentLives == 0 && GameOverPanel != null)
+            StartCoroutine(GameOver());
     }
 
-    public void GameOver()
+    public IEnumerator GameOver()
     {
-        if (currentLives != 0 || GameOverPanel == null)
-        {
-            return;
-        }
+        // Add death sound effect
+        AnimateRobot("isDying", true);
+        yield return new WaitForSeconds(2.2f);
+
         GameOverPanel.SetActive(true);
     }
     public void StartGame()
     {
+        AnimateRobot("isDying", false);
         lifeImages = lifeCountParent.GetComponentsInChildren<Image>();
         currentLives = maxLives;
+        MazeGuide.Instance.hintBoughtCount = 0;
         SetLifeColors();
 
         GameOverPanel?.SetActive(false);
+    }
+
+    public void AnimateRobot(string boolName, bool enabled) {
+        animator.SetBool(boolName, enabled);
     }
 }

@@ -60,7 +60,7 @@ public class UIFade : MonoBehaviour
 						fadeTween.Kill(false);
 				}
 
-				fadeTween = canvasGroup.DOFade(endValue, duration).SetDelay(animationDelay);
+				fadeTween = canvasGroup.DOFade(endValue, duration).SetUpdate(true).SetDelay(animationDelay);
 				fadeTween.onComplete += onEnd;
 		}
 }
