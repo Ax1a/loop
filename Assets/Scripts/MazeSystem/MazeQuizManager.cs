@@ -42,7 +42,7 @@ public class MazeQuizManager : MonoBehaviour
         currentQuestion.Answered = true;
         currentPoints += 1;
         collectibleBlock.Collect();
-        MazeUI.Instance.ShowSuccessPopup("Blocks Obtained!");
+        MazeUI.Instance.ShowSuccessPopup("Block Obtained!");
         MazeUI.Instance.DisableInteractionIndicator();
         QuizPanel.gameObject.SetActive(false);
     }
