@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4262846308866996879}
   - component: {fileID: 4262846308866996878}
   - component: {fileID: 4262846308866996877}
+  - component: {fileID: 6521272590822381554}
   m_Layer: 14
   m_Name: Obstacle4
   m_TagString: Untagged
@@ -96,11 +97,25 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4262846308866996883}
   m_Material: {fileID: 13400000, guid: 3ad89b5cc8df80342be2142e6c1a2ebd, type: 2}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6521272590822381554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4262846308866996883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a94ffcc401d8aee499419917be09586c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifeSystem: {fileID: 0}
+  mazePlayerMovement: {fileID: 0}
 --- !u!1001 &2050523155531618312
 PrefabInstance:
   m_ObjectHideFlags: 0
