@@ -13,9 +13,10 @@ public class ValidateController : MonoBehaviour
     public int moneyReward;
     public int expReward;
     private bool isStart;
-    [SerializeField] private float timeLimit;
     public int currentPoints; // Hide
     private float currTime;
+    [SerializeField] private float timeLimit;
+    [SerializeField] private string questObjective;
 
     [Header ("Objects")]
     [SerializeField] private TextMeshProUGUI consoleTxt;
@@ -326,6 +327,7 @@ public class ValidateController : MonoBehaviour
                 expRewardTxt.text = expReward.ToString();
                 DataManager.AddExp(expReward);
                 DataManager.AddMoney(moneyReward);
+                DataManager.SavePlayerData();
             }
 
         }

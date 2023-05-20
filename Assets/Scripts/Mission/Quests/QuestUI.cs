@@ -234,6 +234,8 @@ public class QuestUI : MonoBehaviour
                 }
             }
         }
+
+        LayoutRefresher.Instance.RefreshContentFitter((RectTransform) l_questTitle.transform.parent.transform);
     }
 
     // Display when finished a mission

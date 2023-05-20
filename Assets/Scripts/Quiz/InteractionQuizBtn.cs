@@ -12,6 +12,7 @@ public class InteractionQuizBtn : MonoBehaviour
     [SerializeField] private GameObject isCompleteIndicator;
 
     public void ShowQuizPanel() {
+        SaveGame.Instance.SaveGameState();
         InteractionQuizManager.Instance.LoadSceneMaze(quizScene);
     }
 

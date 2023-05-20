@@ -15,14 +15,22 @@ public class GoToSchool : MonoBehaviour, Interactable
     [SerializeField] private CanvasGroup IndicatorCanvas;
     [SerializeField] private GameObject questGiver;
     [SerializeField] private GameObject gameVolume;
+    [SerializeField] private GameObject directionalLight;
     [SerializeField] private GameObject fadePanel;
     
     [Header ("Character Objects")]
     [SerializeField] private GameObject bagMain;
     [SerializeField] private GameObject bagSupp;
     [SerializeField] private GameObject smokeEffect;
+    [SerializeField] private GameObject shirt;
+    [SerializeField] private Color shirtColor;
+    private Renderer shirtRenderer;
     public bool isOpened = false;
     public string InteractionPrompt => _prompt;
+
+    private void Start() {
+        shirtRenderer = shirt.GetComponent<Renderer>();
+    }
 
     public bool Interact(InteractObject interactor)
     {
@@ -50,6 +58,7 @@ public class GoToSchool : MonoBehaviour, Interactable
                 timeAndDate.SetHourAndMinute(hoursToSchool, 30);
                 bagMain.SetActive(true);
                 bagSupp.SetActive(true);
+                shirtRenderer.material.color = shirtColor;
                 smokeEffect.SetActive(true);
                 StartCoroutine(PlayAnimation());   
             }
@@ -73,25 +82,35 @@ public class GoToSchool : MonoBehaviour, Interactable
     }
 
     private IEnumerator PlayAnimation() {
-        // fadePanel.SetActive(true);
+        yield return new WaitForSeconds(.5f);
+        fadePanel.SetActive(true);
 
-        // AsyncOperation operation = SceneManager.LoadSceneAsync(3, LoadSceneMode.Additive);
-        // while (!operation.isDone)
-        // {
-        //     yield return null;
-        // }
+        yield return new WaitForSeconds(1.5f);
 
-        // SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(3));
-        // fadePanel.SetActive(false);
-        // gameVolume.SetActive(false);
+        AsyncOperation operation = SceneManager.LoadSceneAsync(3, LoadSceneMode.Additive);
+        while (!operation.isDone)
+        {
+            yield return null;
+        }
+
+        directionalLight.SetActive(false);
+        yield return new WaitForSeconds(1f);
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName("SchoolScene"));
+
+        fadePanel.SetActive(false);
+        gameVolume.SetActive(false);
         clockAnimation.SetActive(true);
         AudioManager.Instance.PlaySfx("School");
         mainUI.SetActive(false);
         UIController.Instance.SetPanelActive(false);
         IndicatorCanvas.alpha = 0;
         UIController.Instance.onTopCanvas.SetActive(false);
+        smokeEffect.SetActive(false);
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(4f);
+
+        Color randomColor = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
+        shirtRenderer.material.color = randomColor;
 
         clockAnimation.SetActive(false);
         mainUI.SetActive(true);
@@ -105,7 +124,11 @@ public class GoToSchool : MonoBehaviour, Interactable
         timeAndDate.UpdateLightSettings();
         bagMain.SetActive(false);
         bagSupp.SetActive(false);
-        // gameVolume.SetActive(true);
+        gameVolume.SetActive(true);
+        directionalLight.SetActive(true);
+
+        SceneManager.UnloadSceneAsync("SchoolScene");
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName("MainGame"));
     }
 }
 

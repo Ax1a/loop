@@ -48,6 +48,7 @@ public class MazePlayerMovement : MonoBehaviour
     Vector3 moveDirection;
     Rigidbody rb;
     private bool isCrouching;
+    public bool canJump = true, canSprint = true, canCrouch = true;
     public enum MovementState
     {
         walking,
@@ -91,7 +92,7 @@ public class MazePlayerMovement : MonoBehaviour
     }
 
     private void AnimateRobot() {
-        if (Input.GetKey(crouchKey))
+        if (Input.GetKey(crouchKey) && canCrouch)
         {
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) {
                 animator.SetBool("isWalking", true);
@@ -102,7 +103,7 @@ public class MazePlayerMovement : MonoBehaviour
                 animator.SetBool("isRunning", false);
             }
         }
-        else if(grounded && Input.GetKey(sprintKey))
+        else if(grounded && Input.GetKey(sprintKey) && canSprint)
         {
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) {
                 animator.SetBool("isWalking", false);
@@ -136,7 +137,7 @@ public class MazePlayerMovement : MonoBehaviour
         verticalInput = Input.GetAxisRaw("Vertical");
 
         // when to jump
-        if(Input.GetKey(jumpKey) && readyToJump && grounded)
+        if(Input.GetKey(jumpKey) && readyToJump && grounded && canJump)
         {
             //play sfx
             AudioManager.Instance.PlaySfx("Jump");
@@ -147,7 +148,7 @@ public class MazePlayerMovement : MonoBehaviour
         }
 
         // start crouch
-        if (Input.GetKeyDown(crouchKey))
+        if (Input.GetKeyDown(crouchKey) && canCrouch)
         {
             transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
             rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
@@ -195,14 +196,14 @@ public class MazePlayerMovement : MonoBehaviour
     private void StateHandler()
     {
         // Mode - Crouching
-        if (Input.GetKey(crouchKey))
+        if (Input.GetKey(crouchKey) && canCrouch)
         {
             state = MovementState.crouching;
             moveSpeed = crouchSpeed;
         }
 
         // Mode - Sprinting
-        else if(grounded && Input.GetKey(sprintKey))
+        else if(grounded && Input.GetKey(sprintKey) && canSprint)
         {
             state = MovementState.sprinting;
             moveSpeed = sprintSpeed;
@@ -218,7 +219,7 @@ public class MazePlayerMovement : MonoBehaviour
         }
 
         // Mode - Air
-        else if (!grounded)
+        else if (!grounded && canJump)
         {
             state = MovementState.air;
         }

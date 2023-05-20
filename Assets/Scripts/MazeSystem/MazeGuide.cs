@@ -11,8 +11,10 @@ public class MazeGuide : MonoBehaviour
     [SerializeField] private GameObject buyGuidePanel;
     [SerializeField] private GameObject hintLimitAlert;
     [SerializeField] private TextMeshProUGUI hintLimit;
+    [SerializeField] private TextMeshProUGUI hintCostTxt;
     [SerializeField] private Transform playerPosition;
     [SerializeField] private int hintLimitCount;
+    [SerializeField] private int hintCost = 20;
     public int hintBoughtCount;
     private Transform currentDestination;
     private NavMeshAgent agent;
@@ -30,17 +32,21 @@ public class MazeGuide : MonoBehaviour
 
     private void ShowBuyGuidePanel() {
         buyGuidePanel.SetActive(true);
+        hintCost = hintBoughtCount == 0 ? hintCost : hintCost * hintBoughtCount;
+        hintCostTxt.text = hintCost.ToString();
         hintLimit.text = hintBoughtCount + " / " + hintLimitCount;
     }
 
     public void BuyGuideHint() {
         if (hintBoughtCount < hintLimitCount) {
             hintBoughtCount++;
+            guideObject.transform.position = playerPosition.position;
             CalculateNearestBlock();
             ShowGuide();
             buyGuidePanel.SetActive(false);
 
-            // Add deduction of money
+            // Deduct money based on the cost
+            DataManager.SpendMoney(hintCost);
         }
         else {
             hintLimitAlert.SetActive(true);
@@ -69,11 +75,10 @@ public class MazeGuide : MonoBehaviour
             yield return null;
         }
 
-        yield return new WaitForSeconds(.8f);
+        yield return new WaitForSeconds(1.5f);
         
         guideObject.SetActive(false);
         guideObject.transform.position = playerPosition.position;
-        yield return new WaitForSeconds(.5f);
 
         if (Vector3.Distance(currentDestination.position, playerPosition.position) > .8f) {
             ShowGuide();

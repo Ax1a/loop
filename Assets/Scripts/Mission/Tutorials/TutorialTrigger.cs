@@ -2,25 +2,46 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using DG.Tweening;
 
 public class TutorialTrigger : MonoBehaviour
 {
     [SerializeField] private string[] dialogues;
     [SerializeField] private string[] completeDialogues;
     [SerializeField] private string[] tasks;
+    [SerializeField] private GameObject[] highlightGuides;
     [SerializeField] private string taskTitle;
     [SerializeField] private TextMeshProUGUI taskTitleTxt;
     [SerializeField] private TextMeshProUGUI taskPrefab;
     [SerializeField] private GameObject taskPanel;
     [SerializeField] private Transform taskParent;
     [SerializeField] private List<KeyCode> keyTasks;
+    [SerializeField] private MazePlayerMovement mazeMovement;
     [SerializeField] private bool withKeyTask;
     private bool triggered;
     private bool tutorialComplete = false;
 
-    private void OnTriggerEnter(Collider other)
+    private void Start() {
+        mazeMovement.canJump = false;
+        mazeMovement.canSprint = false;
+        mazeMovement.canCrouch = false;
+    }
+
+    private void OnTriggerStay(Collider other)
     {
-        if (!triggered) {
+        if (!triggered && ThirdPersonCamera.Instance.IsControlEnabled()) {
+            if (keyTasks.Count > 0) {
+                if (keyTasks[0] == KeyCode.Space) {
+                    mazeMovement.canJump = true;
+                }
+                else if (keyTasks[0] == KeyCode.LeftControl) {
+                    mazeMovement.canCrouch = true;
+                }
+                else if (keyTasks[0] == KeyCode.LeftShift) {
+                    mazeMovement.canSprint = true;
+                }
+            }
+
             taskPanel.SetActive(true);
             AddDialogue(dialogues);
             taskTitleTxt.gameObject.SetActive(true);
@@ -58,13 +79,28 @@ public class TutorialTrigger : MonoBehaviour
 
     public IEnumerator TutorialComplete() {
         tutorialComplete = true;
-        yield return new WaitForSeconds(.5f);
+        taskPanel.transform.DOScale(1.2f, 1).SetEase(Ease.OutBounce);
+
+        TextMeshPro[] texts = taskPanel.GetComponentsInChildren<TextMeshPro>();
+        foreach (TextMeshPro text in texts)
+        {
+            text.color = Color.green;
+        }
+
+        yield return new WaitForSeconds(.8f);
+
+        foreach (TextMeshPro text in texts)
+        {
+            text.color = Color.white;
+        }
+        taskPanel.transform.DOScale(1f, 1).SetEase(Ease.InBounce);
         foreach (Transform child in taskParent)
         {
             Destroy(child.gameObject);
         }
 
         taskPanel.SetActive(false);
+        if (tasks.Length > 0) AudioManager.Instance.PlaySfx("Correct");
 
         AddDialogue(completeDialogues);
     }
