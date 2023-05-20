@@ -15,8 +15,6 @@ public class DamageScript : MonoBehaviour
             {
                 //Play sfx
                 AudioManager.Instance.PlaySfx("ElectricAttack");
-                lifeSystem.ReduceLife();
-                mazePlayerMovement.ResetPosition();
                 died = true;
                 StartCoroutine(AnimateDamage());
             }
