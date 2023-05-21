@@ -9,6 +9,7 @@ public class MazeManager : MonoBehaviour
     public int BlockItemCount { get; private set; }
     public int TotalBlockItemCount { get; private set; }
     public GameObject BlockItemsParent;
+    public GameObject gateBtnCamera;
     public UnityEvent<MazeManager> OnBlockItemCollected;
     public UnityEvent OnWin;
     // public UnityEvent OnReset;
@@ -29,8 +30,28 @@ public class MazeManager : MonoBehaviour
     public void BlocksCollected()
     {
         BlockItemCount++;
+
         OnBlockItemCollected.Invoke(this);
 
+        if (BlockItemCount == TotalBlockItemCount)
+        {
+            // OnWin.Invoke();
+            if (gateBtnCamera != null)
+                StartCoroutine(ShowCamera());
+            canExit = true;
+        }
+    }
+
+    private IEnumerator ShowCamera() {
+        while (!ThirdPersonCamera.Instance.IsControlEnabled()) {
+            yield return null;
+        }
+        yield return new WaitForSeconds(1.5f);
+        BotGuide.Instance.AddDialogue("Great! You have collected all the blocks, and you can unlock the gate now.");
+        BotGuide.Instance.ShowDialogue();
+        gateBtnCamera.SetActive(true);
+        yield return new WaitForSeconds(3f);
+        gateBtnCamera.SetActive(false);
     }
 
     public void CheckForWin()

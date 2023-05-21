@@ -60,6 +60,7 @@ public class MazeGuide : MonoBehaviour
 
             // Deduct money based on the cost
             DataManager.SpendMoney(currentHintCost);
+            DataManager.SavePlayerData();
         }
         else {
             hintLimitAlert.text = "Maximum limit reached!";

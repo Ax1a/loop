@@ -9,7 +9,8 @@ public class TutorialTrigger : MonoBehaviour
     [SerializeField] private string[] dialogues;
     [SerializeField] private string[] completeDialogues;
     [SerializeField] private string[] tasks;
-    [SerializeField] private GameObject[] highlightGuides;
+    [SerializeField] private GameObject highlightGuide;
+    [SerializeField] private GameObject interactableIndicator;
     [SerializeField] private string taskTitle;
     [SerializeField] private TextMeshProUGUI taskTitleTxt;
     [SerializeField] private TextMeshProUGUI taskPrefab;
@@ -25,6 +26,8 @@ public class TutorialTrigger : MonoBehaviour
         mazeMovement.canJump = false;
         mazeMovement.canSprint = false;
         mazeMovement.canCrouch = false;
+
+        if (taskParent.childCount > 0) Destroy(taskParent.GetChild(0).gameObject);
     }
 
     private void OnTriggerStay(Collider other)
@@ -44,9 +47,10 @@ public class TutorialTrigger : MonoBehaviour
 
             taskPanel.SetActive(true);
             AddDialogue(dialogues);
+
             taskTitleTxt.gameObject.SetActive(true);
             taskTitleTxt.text = taskTitle;
-            if (taskParent.childCount > 0) Destroy(taskParent.GetChild(0).gameObject);
+            
             // Add tasks
             for (int i = 0; i < tasks.Length; i++)
             {
@@ -54,8 +58,16 @@ public class TutorialTrigger : MonoBehaviour
                 _taskTxt.text = tasks[i];
             }
 
+            if (!BotGuide.Instance.guideIsActive())
+                StartCoroutine(DelayEnqueue());
+
             triggered = true;
         }
+    }
+
+    private IEnumerator DelayEnqueue() {
+        yield return new WaitForSeconds(0.1f);
+        if (highlightGuide != null) UIController.Instance.EnqueuePopup(highlightGuide);
     }
 
     private void Update() {
@@ -69,7 +81,14 @@ public class TutorialTrigger : MonoBehaviour
             foreach (var key in keyTasks)
             {
                 if (Input.GetKeyDown(key)) {
-                    keyTasks.Remove(key);
+                    if (key == KeyCode.E) {
+                        if (!interactableIndicator.activeInHierarchy) return;
+                        
+                        keyTasks.Remove(key);
+                    }
+                    else {
+                        keyTasks.Remove(key);
+                    }
 
                     break;
                 }
@@ -81,23 +100,12 @@ public class TutorialTrigger : MonoBehaviour
         tutorialComplete = true;
         taskPanel.transform.DOScale(1.2f, 1).SetEase(Ease.OutBounce);
 
-        foreach (Transform child in taskPanel.transform)
-        {
-            TextMeshPro text = child.GetComponent<TextMeshPro>();
-
-            if (text != null)
-                text.color = Color.green;
-        }
+        ChangeTutorialColor(Color.green);
 
         yield return new WaitForSeconds(.8f);
 
-        foreach (Transform child in taskPanel.transform)
-        {
-            TextMeshPro text = child.GetComponent<TextMeshPro>();
+        ChangeTutorialColor(Color.white);
 
-            if (text != null)
-                text.color = Color.white;
-        }
         taskPanel.transform.DOScale(1f, 1).SetEase(Ease.InBounce);
         foreach (Transform child in taskParent)
         {
@@ -117,5 +125,26 @@ public class TutorialTrigger : MonoBehaviour
             BotGuide.Instance.AddDialogue(dialogue);
         }
         BotGuide.Instance.ShowDialogue(); 
+    }
+
+    private void ChangeTutorialColor(Color color) {
+        foreach (Transform child in taskPanel.transform)
+        {
+            TextMeshProUGUI text = child.GetComponent<TextMeshProUGUI>();
+
+            if (text != null) {
+                text.color = color;
+            }
+            else {
+                foreach (Transform subChild in child.transform)
+                {
+                    TextMeshProUGUI text2 = subChild.GetComponent<TextMeshProUGUI>();
+
+                    if (text2 != null) {
+                        text2.color = color;
+                    }
+                }
+            }
+        }
     }
 }
