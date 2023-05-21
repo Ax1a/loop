@@ -29,9 +29,11 @@ public class QuestManager : MonoBehaviour
         else {
             questList = DataManager.QuestList;
             currentQuestList = DataManager.CurrentQuests;
-            QuestUI.Instance.activeQuest.AddRange(currentQuestList);
+            QuestUI.Instance?.activeQuest.AddRange(currentQuestList);
         }
-        if (DataManager.GetTutorialProgress() >= 5) mainQuestGiver.SetActive(true);
+
+        if (mainQuestGiver != null)
+            if (DataManager.GetTutorialProgress() >= 5) mainQuestGiver.SetActive(true);
     }
 
     public void QuestRequest(QuestObject QO) {
@@ -215,6 +217,7 @@ public class QuestManager : MonoBehaviour
 
     // Add progress to the quest
     public void AddQuestItem(string questObjective, int itemAmount) {
+        Debug.Log(questObjective);
         for (int i = 0; i < GetCurrentQuestCount(); i++) {
             Quest currentQuest = currentQuestList[i];
 
