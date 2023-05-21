@@ -18,6 +18,7 @@ public class LoadingScene : MonoBehaviour
     }
 
     IEnumerator LoadSceneAsync(int sceneID) {
+        DataManager.SavePlayerData();
         LoadingBarFill.fillAmount = 0;
         LoadingScreen.SetActive(true);
 
@@ -40,6 +41,7 @@ public class LoadingScene : MonoBehaviour
     }
 
     IEnumerator LoadSceneAsync(string sceneName) {
+        DataManager.SavePlayerData();
         LoadingBarFill.fillAmount = 0;
         LoadingScreen.SetActive(true);
 

@@ -102,6 +102,7 @@ public class TutorialTrigger : MonoBehaviour
 
         ChangeTutorialColor(Color.green);
 
+        if (tasks.Length > 0) AudioManager.Instance.PlaySfx("Correct");
         yield return new WaitForSeconds(.8f);
 
         ChangeTutorialColor(Color.white);
@@ -113,7 +114,6 @@ public class TutorialTrigger : MonoBehaviour
         }
 
         taskPanel.SetActive(false);
-        if (tasks.Length > 0) AudioManager.Instance.PlaySfx("Correct");
 
         AddDialogue(completeDialogues);
     }
