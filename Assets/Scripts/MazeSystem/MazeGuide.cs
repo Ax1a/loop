@@ -9,12 +9,13 @@ public class MazeGuide : MonoBehaviour
     [SerializeField] private List<GameObject> availableBlocks;
     [SerializeField] private GameObject guideObject;
     [SerializeField] private GameObject buyGuidePanel;
-    [SerializeField] private GameObject hintLimitAlert;
+    [SerializeField] private TextMeshProUGUI hintLimitAlert;
     [SerializeField] private TextMeshProUGUI hintLimit;
     [SerializeField] private TextMeshProUGUI hintCostTxt;
     [SerializeField] private Transform playerPosition;
     [SerializeField] private int hintLimitCount;
     [SerializeField] private int hintCost = 20;
+    private int currentHintCost;
     public int hintBoughtCount;
     private Transform currentDestination;
     private NavMeshAgent agent;
@@ -32,13 +33,25 @@ public class MazeGuide : MonoBehaviour
 
     private void ShowBuyGuidePanel() {
         buyGuidePanel.SetActive(true);
-        hintCost = hintBoughtCount == 0 ? hintCost : hintCost * hintBoughtCount;
-        hintCostTxt.text = hintCost.ToString();
+        currentHintCost = hintCost * (hintBoughtCount + 1);
+        hintCostTxt.text = currentHintCost.ToString();
         hintLimit.text = hintBoughtCount + " / " + hintLimitCount;
     }
 
     public void BuyGuideHint() {
+        if (availableBlocks.Count == 0) {
+            hintLimitAlert.text = "You have already collected all the blocks";
+            hintLimitAlert.transform.parent.gameObject.SetActive(true);
+            return;
+        }
+        
         if (hintBoughtCount < hintLimitCount) {
+            if (currentHintCost > DataManager.GetMoney()) {
+                hintLimitAlert.text = "Not enough money.";
+                hintLimitAlert.transform.parent.gameObject.SetActive(true);
+                return;
+            }
+            
             hintBoughtCount++;
             guideObject.transform.position = playerPosition.position;
             CalculateNearestBlock();
@@ -46,10 +59,11 @@ public class MazeGuide : MonoBehaviour
             buyGuidePanel.SetActive(false);
 
             // Deduct money based on the cost
-            DataManager.SpendMoney(hintCost);
+            DataManager.SpendMoney(currentHintCost);
         }
         else {
-            hintLimitAlert.SetActive(true);
+            hintLimitAlert.text = "Maximum limit reached!";
+            hintLimitAlert.transform.parent.gameObject.SetActive(true);
         }
     }
 

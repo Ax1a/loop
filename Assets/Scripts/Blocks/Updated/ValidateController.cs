@@ -319,8 +319,10 @@ public class ValidateController : MonoBehaviour
             startPanel.SetActive(false);
             winPanel.SetActive(true);
             gameOverPanel.SetActive(false);
-            // QuestManager.Instance.AddQuestItem("Open assignment on computer", 1);
-            // QuestManager.Instance.AddQuestItem("Answer the assignment", 1);
+
+            if (QuestManager.Instance != null)
+                QuestManager.Instance.AddQuestItem(questObjective, 1);
+            
             if (!interactionQuiz.data.isComplete) {
                 InteractionQuizManager.Instance.SetInteractionAsComplete(interactionQuiz);
                 moneyRewardTxt.text = moneyReward.ToString();

@@ -8,6 +8,7 @@ public class FinishMaze : MonoBehaviour
     [SerializeField] MazeManager mazeManager;
     [SerializeField] private GameObject button;
     [SerializeField] private GameObject forceField;
+    [SerializeField] private GameObject tutorialPanel;
     private bool canInteract = false, triggered = false;
     Coroutine coroutine;
 
@@ -24,7 +25,6 @@ public class FinishMaze : MonoBehaviour
                 mazeManager.CheckForWin();
                 MazeUI.Instance.SetInteractionIndicator("Open Gate");
                 canInteract = true;
-
             }
         }
     }
@@ -37,11 +37,16 @@ public class FinishMaze : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E) && canInteract)
         {
+            if (tutorialPanel != null) {
+                if (tutorialPanel.activeInHierarchy) {
+                    MazeUI.Instance.ShowSuccessPopup("Complete the tutorial first.");
+                }
+            }
             if (mazeManager.canExit && !triggered)
             {
                 triggered = true;
                 MazeUI.Instance.DisableInteractionIndicator();
-                MazeUI.Instance.ShowSuccessPopup("Blocks Completed!");
+                MazeUI.Instance.ShowSuccessPopup("Gate Opened!");
                 if (coroutine == null)
                     coroutine = StartCoroutine(OpenGate());
             }
