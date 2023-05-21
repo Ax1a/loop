@@ -46,7 +46,7 @@ public class MazeManager : MonoBehaviour
         while (!ThirdPersonCamera.Instance.IsControlEnabled()) {
             yield return null;
         }
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1.2f);
         BotGuide.Instance.AddDialogue("Great! You have collected all the blocks, and you can unlock the gate now.");
         BotGuide.Instance.ShowDialogue();
         gateBtnCamera.SetActive(true);
