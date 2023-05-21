@@ -10,8 +10,16 @@ public class InteractionQuizBtn : MonoBehaviour
     [SerializeField] private TextMeshProUGUI quizTitleTxt;
     [SerializeField] private TextMeshProUGUI quizDescriptionTxt;
     [SerializeField] private GameObject isCompleteIndicator;
+    [SerializeField] private GameObject confirmation;
 
-    public void ShowQuizPanel() {
+    public void ShowConfirmation() {
+        confirmation.SetActive(true);
+        confirmation.transform.SetParent(gameObject.transform.parent.transform.parent);
+        confirmation.transform.position = new Vector3(550f, 350f, 0);
+        confirmation.transform.SetAsLastSibling();
+    }
+
+    public void LoadMaze() {
         SaveGame.Instance.SaveGameState();
         InteractionQuizManager.Instance.LoadSceneMaze(quizScene);
     }

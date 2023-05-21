@@ -46,7 +46,7 @@ public class FinishMaze : MonoBehaviour
             {
                 triggered = true;
                 MazeUI.Instance.DisableInteractionIndicator();
-                MazeUI.Instance.ShowSuccessPopup("Gate Opened!");
+                MazeUI.Instance.ShowSuccessPopup("Gate Unlocked!");
                 if (coroutine == null)
                     coroutine = StartCoroutine(OpenGate());
             }

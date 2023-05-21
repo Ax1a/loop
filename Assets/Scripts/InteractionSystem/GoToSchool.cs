@@ -16,7 +16,6 @@ public class GoToSchool : MonoBehaviour, Interactable
     [SerializeField] private GameObject questGiver;
     [SerializeField] private GameObject gameVolume;
     [SerializeField] private GameObject directionalLight;
-    [SerializeField] private GameObject fadePanel;
     
     [Header ("Character Objects")]
     [SerializeField] private GameObject bagMain;
@@ -82,30 +81,32 @@ public class GoToSchool : MonoBehaviour, Interactable
     }
 
     private IEnumerator PlayAnimation() {
-        yield return new WaitForSeconds(.5f);
-        fadePanel.SetActive(true);
+        yield return new WaitForSeconds(1f);
 
-        yield return new WaitForSeconds(1.5f);
-
-        AsyncOperation operation = SceneManager.LoadSceneAsync(3, LoadSceneMode.Additive);
+        AsyncOperation operation = SceneManager.LoadSceneAsync("SchoolScene", LoadSceneMode.Additive);
         while (!operation.isDone)
         {
             yield return null;
         }
 
+        IndicatorCanvas.alpha = 0;
+        smokeEffect.SetActive(false);
+        mainUI.SetActive(false);
+        gameVolume.SetActive(false);
+        AudioManager.Instance.PlaySfx("School");
         directionalLight.SetActive(false);
         yield return new WaitForSeconds(1f);
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName("SchoolScene"));
 
-        fadePanel.SetActive(false);
-        gameVolume.SetActive(false);
-        clockAnimation.SetActive(true);
-        AudioManager.Instance.PlaySfx("School");
-        mainUI.SetActive(false);
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName("SchoolScene"));
+        SchoolCutscene.Instance.IsAnimating();
         UIController.Instance.SetPanelActive(false);
-        IndicatorCanvas.alpha = 0;
         UIController.Instance.onTopCanvas.SetActive(false);
-        smokeEffect.SetActive(false);
+
+        while (SchoolCutscene.Instance.isAnimating) {
+            yield return null;
+        }
+
+        clockAnimation.SetActive(true);
 
         yield return new WaitForSeconds(4f);
 
