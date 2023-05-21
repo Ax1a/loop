@@ -16,7 +16,7 @@ public class ValidateController : MonoBehaviour
     public int currentPoints; // Hide
     private float currTime;
     [SerializeField] private float timeLimit;
-    [SerializeField] private string questObjective;
+    [SerializeField] private string[] questObjectives;
 
     [Header ("Objects")]
     [SerializeField] private TextMeshProUGUI consoleTxt;
@@ -319,10 +319,10 @@ public class ValidateController : MonoBehaviour
             startPanel.SetActive(false);
             winPanel.SetActive(true);
             gameOverPanel.SetActive(false);
-
-            if (QuestManager.Instance != null)
-                QuestManager.Instance.AddQuestItem(questObjective, 1);
             
+            if (QuestManager.Instance != null)
+                AddQuestProgress();
+
             if (!interactionQuiz.data.isComplete) {
                 InteractionQuizManager.Instance.SetInteractionAsComplete(interactionQuiz);
                 moneyRewardTxt.text = moneyReward.ToString();
@@ -337,6 +337,13 @@ public class ValidateController : MonoBehaviour
             startPanel.SetActive(false);
             winPanel.SetActive(false);
             gameOverPanel.SetActive(true);
+        }
+    }
+
+    private void AddQuestProgress() {
+        foreach (var obj in questObjectives)
+        {
+            QuestManager.Instance.AddQuestItem(obj, 1);
         }
     }
 

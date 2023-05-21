@@ -184,7 +184,11 @@ public class QuestManager : MonoBehaviour
         QuestUI.Instance.activeQuest.Clear();
         QuestUI.Instance.activeQuest.AddRange(currentQuestList);
         CheckChainQuest(questID);
-        SaveGame.Instance.SaveGameState();
+        
+        if (SaveGame.Instance != null)
+            SaveGame.Instance.SaveGameState();
+        else
+            DataManager.SavePlayerData();
     }
 
     // This will check if the current mission has next mission

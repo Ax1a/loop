@@ -66,6 +66,7 @@ public class QuestUI : MonoBehaviour
 
     private void Update()
     {
+        if (l_questCanvas == null) return;
         if (Input.GetKeyDown(InputManager.Instance.quest) && !UIController.Instance.OtherPanelActive())
         {
             _onMainQTab = true;
@@ -318,6 +319,7 @@ public class QuestUI : MonoBehaviour
     // Clear Quest Data to avoid duplication
     public void ClearQuestData()
     {
+        if (l_questCanvas == null) return;
         ClearQuestUI();
 
         if (s_questPanelParent.childCount > 0)
