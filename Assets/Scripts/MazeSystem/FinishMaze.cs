@@ -50,7 +50,7 @@ public class FinishMaze : MonoBehaviour
                 if (coroutine == null)
                     coroutine = StartCoroutine(OpenGate());
             }
-            else
+            else if (!triggered)
             {
                 //Play Sfx 
                 AudioManager.Instance.PlaySfx("Loose");
