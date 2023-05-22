@@ -26,14 +26,14 @@ public class CutsceneLoad : MonoBehaviour
     }
 
     private IEnumerator Start() {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(4f);
         sequence = DOTween.Sequence();
         skipIndicator.SetActive(true);
         skipEnabled = true;
         PlayAnimation();
     }
 
-    private void Update() {
+    private void LateUpdate() {
         // Skip cutscene
         if (Input.GetKeyDown(InputManager.Instance.skip) && skipEnabled) {
             PlayTransition();
@@ -61,10 +61,6 @@ public class CutsceneLoad : MonoBehaviour
             }
             sceneLoaded = true;
         }
-        // else {
-        //     sceneLoaded = true;
-        //     loading = false;
-        // }
     }
 
     public void PlayTransition() {

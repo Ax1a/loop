@@ -118,8 +118,8 @@ public class GoToSchool : MonoBehaviour, Interactable
         UIController.Instance.SetPanelActive(false);
         UIController.Instance.onTopCanvas.SetActive(true);
         IndicatorCanvas.alpha = 1;
-        questGiver.SetActive(true);
-        SaveGame.Instance.SaveGameState();
+        
+        RandomAssignmentPicker();
         timeAndDate.UpdateLightRotation();
         DataManager.AddDaysAttended(1);
         timeAndDate.UpdateLightSettings();
@@ -127,9 +127,19 @@ public class GoToSchool : MonoBehaviour, Interactable
         bagSupp.SetActive(false);
         gameVolume.SetActive(true);
         directionalLight.SetActive(true);
+        SaveGame.Instance.SaveGameState();
 
         SceneManager.UnloadSceneAsync("SchoolScene");
         SceneManager.SetActiveScene(SceneManager.GetSceneByName("MainGame"));
+    }
+
+    private void RandomAssignmentPicker() {
+        questGiver.SetActive(true);
+
+        int randomChildIndex = Random.Range(0, questGiver.transform.childCount);
+        Transform randomAssignment = questGiver.transform.GetChild(randomChildIndex);
+
+        randomAssignment.gameObject.SetActive(true);
     }
 }
 

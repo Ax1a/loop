@@ -39,12 +39,27 @@ public class BlockVariable : BlockDrag
         variableArrayIndex.onValueChanged.AddListener(OnInputFieldValueChanged);
         if (_intArray.Count() > 0) {
             variableNameTxt.text = _intArray.Keys.First().ToString();
-            if (blockLanguage == BlockLanguage.Java || blockLanguage == BlockLanguage.C) variableArrayIndex.transform.parent.gameObject.SetActive(true);
+            if (blockLanguage == BlockLanguage.Java || blockLanguage == BlockLanguage.C) {
+                variableArrayIndex.transform.parent.gameObject.SetActive(true);
+                if (blockLanguage == BlockLanguage.Java && variableType.gameObject.activeInHierarchy) {
+                    variableArrayIndex.transform.parent.SetSiblingIndex(1);
+                }
+                else if (blockLanguage == BlockLanguage.Java && !variableType.gameObject.activeInHierarchy) {
+                    variableArrayIndex.transform.parent.SetSiblingIndex(2);
+                }
+            }
             // if (blockLanguage == BlockLanguage.Python) variableArrayIndex.transform.parent.gameObject.SetActive(false);
         }
         else if (_stringArray.Count() > 0) {
             variableNameTxt.text = _stringArray.Keys.First().ToString();
-            if (blockLanguage == BlockLanguage.Java || blockLanguage == BlockLanguage.C) variableArrayIndex.transform.parent.gameObject.SetActive(true);
+            if (blockLanguage == BlockLanguage.Java || blockLanguage == BlockLanguage.C) 
+                variableArrayIndex.transform.parent.gameObject.SetActive(true);
+                if (blockLanguage == BlockLanguage.Java && variableType.gameObject.activeInHierarchy) {
+                    variableArrayIndex.transform.SetSiblingIndex(1);
+                }
+                else if (blockLanguage == BlockLanguage.Java && !variableType.gameObject.activeInHierarchy) {
+                    variableArrayIndex.transform.SetSiblingIndex(2);
+                }
             // if (blockLanguage == BlockLanguage.Python) variableArrayIndex.transform.parent.gameObject.SetActive(false);
         }
         else if (_stringVar.Count() > 0) {
@@ -133,6 +148,13 @@ public class BlockVariable : BlockDrag
             if (_intArray.Count() > 0) {
                 _intArray = origBlockVariable._intArray;
 
+                if (blockLanguage == BlockLanguage.Java && variableType.gameObject.activeInHierarchy) {
+                    variableArrayIndex.transform.parent.SetSiblingIndex(1);
+                }
+                else if (blockLanguage == BlockLanguage.Java && !variableType.gameObject.activeInHierarchy) {
+                    variableArrayIndex.transform.parent.SetSiblingIndex(2);
+                }
+
                 if (variableArrayIndex.text != "") {
                     int index = int.Parse(variableArrayIndex.text);
 
@@ -146,6 +168,13 @@ public class BlockVariable : BlockDrag
             }
             else if (_stringArray.Count() > 0) {
                 _stringArray = origBlockVariable._stringArray;
+                
+                if (blockLanguage == BlockLanguage.Java && variableType.gameObject.activeInHierarchy) {
+                    variableArrayIndex.transform.parent.SetSiblingIndex(1);
+                }
+                else if (blockLanguage == BlockLanguage.Java && !variableType.gameObject.activeInHierarchy) {
+                    variableArrayIndex.transform.parent.SetSiblingIndex(2);
+                }
                 
                 if (variableArrayIndex.text != "") {
                     int index = int.Parse(variableArrayIndex.text);

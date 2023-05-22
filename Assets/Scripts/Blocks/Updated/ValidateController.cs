@@ -324,7 +324,7 @@ public class ValidateController : MonoBehaviour
                 AddQuestProgress();
 
             if (!interactionQuiz.data.isComplete) {
-                InteractionQuizManager.Instance.SetInteractionAsComplete(interactionQuiz);
+                if (InteractionQuizManager.Instance != null) InteractionQuizManager.Instance.SetInteractionAsComplete(interactionQuiz);
                 moneyRewardTxt.text = moneyReward.ToString();
                 expRewardTxt.text = expReward.ToString();
                 DataManager.AddExp(expReward);
@@ -341,6 +341,7 @@ public class ValidateController : MonoBehaviour
     }
 
     private void AddQuestProgress() {
+        if (questObjectives.Length == 0) return;
         foreach (var obj in questObjectives)
         {
             QuestManager.Instance.AddQuestItem(obj, 1);

@@ -258,7 +258,8 @@ public class QuizManager : MonoBehaviour
 
     IEnumerator DisplayRewards()
     {
-        InteractionQuizManager.Instance.ActivateInteractionQuiz(interactionID);
+        if (interactionID != -1)
+            InteractionQuizManager.Instance.ActivateInteractionQuiz(interactionID);
         //Display Money Reward
         //Money index: 0 
         yield return new WaitForSeconds(1f);

@@ -14,8 +14,8 @@ public class InteractionQuizBtn : MonoBehaviour
 
     public void ShowConfirmation() {
         confirmation.SetActive(true);
-        confirmation.transform.SetParent(gameObject.transform.parent.transform.parent);
-        confirmation.transform.position = new Vector3(550f, 350f, 0);
+        confirmation.transform.SetParent(gameObject.transform.parent.transform.parent.transform.parent);
+        confirmation.transform.position = new Vector3(550f, 290f, 0);
         confirmation.transform.SetAsLastSibling();
     }
 
