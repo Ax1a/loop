@@ -11,6 +11,7 @@ public class TutorialTrigger : MonoBehaviour
     [SerializeField] private string[] tasks;
     [SerializeField] private GameObject highlightGuide;
     [SerializeField] private GameObject interactableIndicator;
+    [SerializeField] private GameObject cameraGuide;
     [SerializeField] private string taskTitle;
     [SerializeField] private TextMeshProUGUI taskTitleTxt;
     [SerializeField] private TextMeshProUGUI taskPrefab;
@@ -23,9 +24,11 @@ public class TutorialTrigger : MonoBehaviour
     private bool tutorialComplete = false;
 
     private void Start() {
-        mazeMovement.canJump = false;
-        mazeMovement.canSprint = false;
-        mazeMovement.canCrouch = false;
+        if (withKeyTask) {
+            mazeMovement.canJump = false;
+            mazeMovement.canSprint = false;
+            mazeMovement.canCrouch = false;
+        }
 
         if (taskParent.childCount > 0) Destroy(taskParent.GetChild(0).gameObject);
     }
@@ -58,11 +61,28 @@ public class TutorialTrigger : MonoBehaviour
                 _taskTxt.text = tasks[i];
             }
 
+            if (cameraGuide != null) 
+                StartCoroutine(ShowCameraGuide());
+
             if (!BotGuide.Instance.guideIsActive())
                 StartCoroutine(DelayEnqueue());
 
             triggered = true;
         }
+    }
+    
+    private IEnumerator ShowCameraGuide() {
+        yield return new WaitForSeconds(0.1f);
+
+        cameraGuide.SetActive(true);
+
+        while (BotGuide.Instance.guideIsActive()) {
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(2f);
+
+        cameraGuide.SetActive(false);
     }
 
     private IEnumerator DelayEnqueue() {
