@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InteractionQuizManager : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class InteractionQuizManager : MonoBehaviour
     [SerializeField] private GameObject quizBtnPlaceholder;
     [SerializeField] private LoadingScene loadingScene;
     private List<InteractionQuiz> _interactionData = new List<InteractionQuiz>();
+    [SerializeField] private GameObject quizConfirmation;
+    [SerializeField] private Button quizConfirmationBtn;
     public static InteractionQuizManager Instance;
 
     private void Awake() {
@@ -50,6 +53,7 @@ public class InteractionQuizManager : MonoBehaviour
     }
 
     public void LoadSceneMaze(string scene) {
+        SaveGame.Instance.SaveGameState();
         loadingScene.LoadScene(scene);
     }
 
@@ -150,6 +154,12 @@ public class InteractionQuizManager : MonoBehaviour
                 GameObject.Destroy(item.gameObject);
             }
         }
+    }
+
+    public void ShowInteractionConfirmation(string scene) {
+        quizConfirmation.SetActive(true);
+        quizConfirmationBtn.onClick.RemoveAllListeners();
+        quizConfirmationBtn.onClick.AddListener(() => LoadSceneMaze(scene));
     }
 
     /*
