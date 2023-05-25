@@ -20,6 +20,8 @@ public class ShopCourse : MonoBehaviour
     [SerializeField] private GameObject[] courseSelectionProgress;
     [SerializeField] private TextMeshProUGUI[] courseRequirementTxt;
     [SerializeField] private GameObject insufficientMoneyTxt;
+    [SerializeField] private UIClose shopCourseClose;
+    [SerializeField] private GameObject uiGuide;
     [SerializeField] private TextMeshProUGUI reducedMoneyTxt;
     private int courseLevelRequirement = 0;
     private string[] _progLanguages = { "c++", "java", "python" };
@@ -112,6 +114,10 @@ public class ShopCourse : MonoBehaviour
             QuestManager.Instance.AddQuestItem("Buy any course from the shop", 1);
             AudioManager.Instance.PlaySfx("Purchase");
 
+            if (DataManager.FirstProgrammingLanguage()) {
+                StartCoroutine(ShowUIGuide());
+            }
+
             DataManager.SpendMoney(_coursePrices[languageIndex]);
 
             if (_coursePrices[languageIndex] > 0) {
@@ -147,6 +153,16 @@ public class ShopCourse : MonoBehaviour
             if (_showCoroutineInsufficient != null) StopCoroutine(_showCoroutineInsufficient);
             _showCoroutineInsufficient = StartCoroutine(ShowInsufficientText());
         }
+    }
+
+    private IEnumerator ShowUIGuide() {
+        yield return new WaitForSeconds(.5f);
+        shopCourseClose.AnimationClose();
+
+        yield return new WaitForSeconds(4f);
+        BotGuide.Instance.AddDialogue("Great! Now in school, you can gain an allowance based on the number of school days you have attended in 30 days."); 
+        BotGuide.Instance.ShowDialogue();
+        UIController.Instance.EnqueuePopup(uiGuide);
     }
 
     private void DisplayCourseStateIndicator() {

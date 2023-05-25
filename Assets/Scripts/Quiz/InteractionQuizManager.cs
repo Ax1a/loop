@@ -53,7 +53,8 @@ public class InteractionQuizManager : MonoBehaviour
     }
 
     public void LoadSceneMaze(string scene) {
-        SaveGame.Instance.SaveGameState();
+        if (SaveGame.Instance != null) SaveGame.Instance.SaveGameState();
+        if (Energy.Instance != null) Energy.Instance.UseEnergy(1);
         loadingScene.LoadScene(scene);
     }
 

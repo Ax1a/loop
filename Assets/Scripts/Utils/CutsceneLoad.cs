@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
@@ -15,6 +14,7 @@ public class CutsceneLoad : MonoBehaviour
     private bool loading = false;
     private bool sceneLoaded = false;
     private bool skipEnabled = false;
+    private AsyncOperation operation;
     private Coroutine loadScene;
 
     private void Awake() {
@@ -41,6 +41,7 @@ public class CutsceneLoad : MonoBehaviour
         
         if (_transitionCG == null) return;
         if (_transitionCG.alpha == 1 && !loading) {
+            operation.allowSceneActivation = true;
             if (sceneLoaded) {
                 SceneManager.UnloadSceneAsync(gameObject.scene);
                 SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(sceneID));
@@ -55,7 +56,8 @@ public class CutsceneLoad : MonoBehaviour
         loading = true;
         var scene = SceneManager.GetSceneByBuildIndex(sceneID);
         if (!scene.isLoaded) {
-            var operation = SceneManager.LoadSceneAsync(sceneID, LoadSceneMode.Single);
+            operation = SceneManager.LoadSceneAsync(sceneID, LoadSceneMode.Single);
+            operation.allowSceneActivation = false;
             while (!operation.isDone) {
                 yield return null;
             }

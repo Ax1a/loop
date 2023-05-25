@@ -95,6 +95,10 @@ public class QuestManager : MonoBehaviour
                 Debug.Log("Accepted quest");
                 // QuestUI.Instance.activeQuest.Add(questList[i]);
                 questList[i].progress = Quest.QuestProgress.ACCEPTED;
+                if (questList[i].interactionIDUnlock != -1)
+                    if (InteractionQuizManager.Instance != null) 
+                        InteractionQuizManager.Instance.ActivateInteractionQuiz(questList[i].interactionIDUnlock);
+
                 QuestUI.Instance.ShowNewQuestBanner(questList[i].title, questList[i].questType);
             }
         }
