@@ -9,6 +9,7 @@ public class Quest
     public string npcName;
     public string summary;
     public int nextQuest;
+    public int interactionIDUnlock = -1;
 
     public string[] questObjectives;
     public int[] questObjectiveCount;
