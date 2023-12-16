@@ -1,8 +1,10 @@
-# LOOP
-Simulation of programming life
+# LOOP - Simulation of Programming Life
 
-Add to .git/config on project file<br>
-==========================================================================
+
+### Merge Tool Setup
+
+Add to `.git/config` on project file<br>
+```
 <p>[merge]<br>
 tool = unityyamlmerge<br>
 
@@ -12,7 +14,9 @@ cmd = 'C:\\Program Files\\Unity\Hub\\Editor\\2022.1.23f1\\Editor\\Data\\Tools\\U
 [branch "smart-merge"]<br>
     remote = origin<br>
     merge = refs/heads/smart-merge </p>
-    
-Run git mergetool on git bash with directory of project file ex. <i>D:\Unity\Repo\loop</i>
-==========================================================================
+```
+<br>
+
+Run `git mergetool` on git bash with directory of project file 
+ex. <i>D:\Unity\Repo\loop</i>
 
